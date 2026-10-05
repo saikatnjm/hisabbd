@@ -1,6 +1,7 @@
 import { getRelatedCalculators } from "@/calculators/registry";
 import type { CalculatorMeta } from "@/calculators/types";
 import { CalculatorList } from "@/components/calculator/calculator-list";
+import { relatedLinkAttributes } from "@/lib/analytics";
 
 /** Related calculators from the registry. Renders nothing until there are any. */
 export function RelatedCalculators({
@@ -18,7 +19,10 @@ export function RelatedCalculators({
       <h2 id="related-heading" className="mb-4 font-display text-2xl font-bold tracking-tight text-slate-900">
         Related calculators
       </h2>
-      <CalculatorList calculators={related} />
+      <CalculatorList
+        calculators={related}
+        linkAttributes={(calc) => relatedLinkAttributes(calculator.slug, calc.slug, "related")}
+      />
     </section>
   );
 }

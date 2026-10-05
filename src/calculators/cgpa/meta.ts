@@ -17,10 +17,9 @@ export const cgpaCalculator: CalculatorMeta = {
     "credit hour",
     "সিজিপিএ",
     "জিপিএ",
-    "রেজাল্ট",
-  ],
+    "রেজাল্ট", "cgpa calculator bd", "final cgpa", "total cgpa", "semester cgpa"],
   seo: {
-    title: "CGPA Calculator: Cumulative GPA from Semester Results",
+    title: "CGPA Calculator Bangladesh: Combine Semester GPAs",
     description:
       "Calculate your CGPA from semester GPAs and credits, weighted correctly, on a 4.00 or 5.00 scale. Add a new semester to your current CGPA. Free and fast.",
   },

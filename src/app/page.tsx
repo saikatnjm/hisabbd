@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { categories } from "@/calculators/categories";
 import { getFeaturedCalculators, getOtherCalculators } from "@/calculators/featured";
 import { OG_IMAGE } from "@/calculators/metadata";
 import { calculatorPath, categoryHref } from "@/calculators/paths";
 import { calculators } from "@/calculators/registry";
 import { buildCategorySearchIndex, buildSearchIndex } from "@/calculators/search";
+import type { CalculatorMeta } from "@/calculators/types";
 import { upcomingCalculatorNames } from "@/calculators/upcoming";
 import { CalculatorList } from "@/components/calculator/calculator-list";
 import { CalculatorSearch } from "@/components/calculator/calculator-search";
+import { QuickPicks, type QuickPick } from "@/components/calculator/quick-picks";
 import { CategoryList } from "@/components/calculator/category-list";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
@@ -79,6 +80,10 @@ function formatList(items: readonly string[]): string {
   return `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
 }
 
+function toQuickPick(calc: CalculatorMeta): QuickPick {
+  return { slug: calc.slug, href: calculatorPath(calc.slug), label: calc.name.replace(/ Calculator$/, "") };
+}
+
 export default function HomePage() {
   const featured = getFeaturedCalculators();
   const hasCalculators = calculators.length > 0;
@@ -133,18 +138,7 @@ export default function HomePage() {
                 upcomingNote={upcomingNote}
               />
               {featured.length > 0 ? (
-                <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
-                  <span className="text-slate-600">Try:</span>
-                  {featured.map((calc) => (
-                    <Link
-                      key={calc.slug}
-                      href={calculatorPath(calc.slug)}
-                      className="inline-flex min-h-11 items-center rounded-xl border border-brand-200 bg-white px-3 font-medium text-slate-800 transition-colors hover:border-brand-400 hover:bg-brand-50"
-                    >
-                      {calc.name.replace(/ Calculator$/, "")}
-                    </Link>
-                  ))}
-                </div>
+                <QuickPicks featured={featured.map(toQuickPick)} all={calculators.map(toQuickPick)} />
               ) : (
                 <p className="mt-4 text-sm text-slate-600">{upcomingNote}</p>
               )}

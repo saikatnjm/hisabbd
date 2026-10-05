@@ -7,7 +7,7 @@ export const percentageCalculator: CalculatorMeta = {
   category: "everyday",
   icon: "percent",
   summary: "Work out a percentage of a number, a percentage change, or increase and decrease a number by a percentage.",
-  keywords: ["percentage", "percent", "percent of", "percentage change", "percentage increase", "percentage decrease", "%", "শতকরা", "শতাংশ"],
+  keywords: ["percentage", "percent", "percent of", "percentage change", "percentage increase", "percentage decrease", "%", "শতকরা", "শতাংশ", "percent calculator", "marks percentage", "shotokora", "% calculator", "increase decrease"],
   seo: {
     title: "Percentage Calculator: Percent of, Change and More",
     description:

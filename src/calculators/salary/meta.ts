@@ -17,10 +17,9 @@ export const salaryCalculator: CalculatorMeta = {
     "payslip",
     "monthly salary",
     "yearly salary",
-    "বেতন",
-  ],
+    "বেতন", "beton", "net pay", "in hand salary", "salary after deduction", "monthly to yearly"],
   seo: {
-    title: "Salary Calculator: Gross to Net Take-Home Pay",
+    title: "Salary Calculator BD: Gross to Net Take-Home Pay",
     description:
       "Estimate your net monthly and yearly take-home salary from your gross pay and the deductions you enter. Free, private and works on any phone.",
   },

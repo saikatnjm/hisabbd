@@ -15,15 +15,19 @@ import { cn } from "@/lib/cn";
 export function CalculatorCard({
   calculator,
   headingLevel = "h3",
+  linkAttributes,
 }: {
   calculator: CalculatorMeta;
   headingLevel?: "h2" | "h3" | "h4";
+  /** Extra data-* attributes for the link (e.g. analytics). */
+  linkAttributes?: Record<`data-${string}`, string>;
 }) {
   const Heading = headingLevel;
   const theme = categoryTheme[calculator.category];
 
   return (
     <Link
+      {...linkAttributes}
       href={calculatorPath(calculator.slug)}
       className="group flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 transition duration-200 hover:border-slate-300 hover:shadow-lift motion-safe:hover:-translate-y-0.5"
     >

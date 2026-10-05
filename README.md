@@ -51,6 +51,20 @@ public/og.png                    social sharing image
 3. Add `src/app/calculators/<slug>/page.tsx` (copy any existing route: `calculatorMetadata` + `CalculatorPage`).
 4. `npm run test` checks slugs, keywords, categories, related links and that the route exists. Homepage, search, category pages, footer, sitemap and structured data pick it up automatically.
 
-## Environment
+## Environment (all optional — set in Vercel → Settings → Environment Variables)
 
-`NEXT_PUBLIC_SITE_URL` (optional): public base URL for canonical links, sitemap and structured data. On Vercel it falls back to the project's production domain automatically, so set it only when you use a custom domain. Locally it falls back to `http://localhost:3000`.
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical base URL. Defaults to the Vercel production domain; set only for a custom domain. |
+| `GOOGLE_SITE_VERIFICATION` | Google Search Console HTML-tag token (the `content="…"` value only). |
+| `BING_SITE_VERIFICATION` | Bing Webmaster Tools `msvalidate.01` token. |
+| `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Turns on Umami analytics (cookieless). Off when unset. |
+| `NEXT_PUBLIC_UMAMI_SCRIPT_URL` | Umami script URL (defaults to Umami Cloud). |
+
+Redeploy after changing variables.
+
+## Privacy rules (keep these when adding features)
+
+- Calculator inputs never leave the browser: no URLs with values, no analytics properties with values, no storage of values.
+- Analytics events are typed in `src/lib/analytics.ts` and carry only calculator slugs, counts and flags.
+- `localStorage` holds only calculator slugs (`hisabbd:recent`, `hisabbd:favorites`).

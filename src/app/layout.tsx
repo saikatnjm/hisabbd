@@ -4,6 +4,7 @@ import { OG_IMAGE } from "@/calculators/metadata";
 import { siteConfig } from "@/config/site";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { AnalyticsScript } from "@/components/analytics/analytics-script";
 import "./globals.css";
 
 /** Display face for headings. Latin subset only; body text uses the system stack. */
@@ -31,7 +32,22 @@ export const metadata: Metadata = {
     images: [OG_IMAGE],
   },
   twitter: { card: "summary_large_image", images: [OG_IMAGE.url] },
+  verification: siteVerification(),
 };
+
+/**
+ * Search Console / Bing Webmaster ownership tags, from environment variables
+ * set in Vercel (only the token value, e.g. "AbC123…"). Omitted when unset.
+ */
+function siteVerification(): Metadata["verification"] {
+  const google = process.env.GOOGLE_SITE_VERIFICATION;
+  const bing = process.env.BING_SITE_VERIFICATION;
+  if (!google && !bing) return undefined;
+  return {
+    ...(google ? { google } : {}),
+    ...(bing ? { other: { "msvalidate.01": bing } } : {}),
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -54,6 +70,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </main>
         <SiteFooter />
+        <AnalyticsScript />
       </body>
     </html>
   );

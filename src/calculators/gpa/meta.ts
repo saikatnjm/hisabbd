@@ -18,10 +18,9 @@ export const gpaCalculator: CalculatorMeta = {
     "ugc grading",
     "জিপিএ",
     "গ্রেড পয়েন্ট",
-    "রেজাল্ট",
-  ],
+    "রেজাল্ট", "grade calculator", "result calculator", "university gpa", "gpa calculator bd", "semester gpa"],
   seo: {
-    title: "GPA Calculator: Semester GPA from Grades and Credits",
+    title: "GPA Calculator Bangladesh: UGC 4.00 Grading Scale",
     description:
       "Calculate your semester GPA from letter grades and credits on the Bangladesh university 4.00 scale (A+ to F). Decimal credits supported. Free and fast.",
   },

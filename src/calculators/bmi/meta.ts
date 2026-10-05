@@ -7,7 +7,7 @@ export const bmiCalculator: CalculatorMeta = {
   category: "health",
   icon: "scale",
   summary: "Find your body mass index from your height and weight, and the healthy weight range for your height.",
-  keywords: ["bmi", "body mass index", "weight", "height", "obesity", "overweight", "healthy weight", "ওজন", "উচ্চতা"],
+  keywords: ["bmi", "body mass index", "weight", "height", "obesity", "overweight", "healthy weight", "ওজন", "উচ্চতা", "body weight", "weight for height", "ideal weight", "ojon", "bmi calculator bd"],
   seo: {
     title: "BMI Calculator: Body Mass Index for Adults",
     description:

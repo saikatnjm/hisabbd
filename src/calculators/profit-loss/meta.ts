@@ -7,7 +7,7 @@ export const profitLossCalculator: CalculatorMeta = {
   category: "finance",
   icon: "trending",
   summary: "Find your profit or loss in Taka from the cost and selling price, with profit percentage and margin.",
-  keywords: ["profit", "loss", "profit and loss", "profit margin", "margin", "markup", "break-even", "selling price", "cost price", "লাভ", "ক্ষতি", "লাভ ক্ষতি"],
+  keywords: ["profit", "loss", "profit and loss", "profit margin", "margin", "markup", "break-even", "selling price", "cost price", "লাভ", "ক্ষতি", "লাভ ক্ষতি", "labh", "khoti", "business profit", "mark up", "profit percentage"],
   seo: {
     title: "Profit and Loss Calculator: Amount, % and Margin",
     description:

@@ -3,7 +3,10 @@ import { getCategory } from "@/calculators/categories";
 import { CALCULATORS_PATH, calculatorPath, categoryHref } from "@/calculators/paths";
 import type { CalculatorMeta } from "@/calculators/types";
 import { CalculatorIconTile } from "@/components/calculator/calculator-icon";
+import { CalculatorProvider } from "@/components/calculator/calculator-context";
+import { CalculatorPageActions } from "@/components/calculator/calculator-page-actions";
 import { FaqList } from "@/components/calculator/faq-list";
+import { NextCalculators } from "@/components/calculator/next-calculators";
 import { RelatedCalculators } from "@/components/calculator/related-calculators";
 import { CategoryIcon } from "@/components/calculator/category-icon";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
@@ -73,11 +76,15 @@ export function CalculatorPage({
             <CategoryIcon category={category.id} size="sm" />
             More {category.name} calculators
           </Link>
+          <CalculatorPageActions slug={calculator.slug} name={calculator.name} />
         </Container>
       </div>
 
       <Container className="py-6 sm:py-10">
-        <div className="max-w-3xl">{children}</div>
+        <div className="max-w-3xl">
+          <CalculatorProvider slug={calculator.slug}>{children}</CalculatorProvider>
+          <NextCalculators calculator={calculator} />
+        </div>
       </Container>
 
       <Container className="pb-12 sm:pb-16">

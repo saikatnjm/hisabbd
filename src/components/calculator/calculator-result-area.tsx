@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useCalculatorSlug } from "@/components/calculator/calculator-context";
+import { track } from "@/lib/analytics";
 
 /**
  * Holds a calculator's result (or its placeholder). Handles the parts every
@@ -23,6 +25,12 @@ export function CalculatorResultArea({
   placeholder: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const slug = useCalculatorSlug();
+
+  // One event per successful "Calculate" (slug only, never the inputs or result).
+  useEffect(() => {
+    if (revealKey > 0 && slug) track({ name: "calculation_completed", calculator: slug });
+  }, [revealKey, slug]);
 
   useEffect(() => {
     const el = ref.current;

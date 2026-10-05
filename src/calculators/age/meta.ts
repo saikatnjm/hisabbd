@@ -7,7 +7,7 @@ export const ageCalculator: CalculatorMeta = {
   category: "date-time",
   icon: "calendar",
   summary: "Calculate your exact age in years, months and days.",
-  keywords: ["age", "date of birth", "birthday", "how old", "dob", "বয়স", "জন্ম তারিখ"],
+  keywords: ["age", "date of birth", "birthday", "how old", "dob", "বয়স", "জন্ম তারিখ", "age calculator bd", "boyos", "boyosh", "jonmo tarikh", "birth date", "exact age"],
   seo: {
     title: "Age Calculator: Exact Age in Years, Months and Days",
     description:

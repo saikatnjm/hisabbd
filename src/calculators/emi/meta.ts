@@ -20,10 +20,9 @@ export const emiCalculator: CalculatorMeta = {
     "personal loan",
     "reducing balance",
     "loan interest",
-    "ঋণ",
-  ],
+    "ঋণ", "loan calculator", "bank loan", "interest calculator", "kisti calculator", "loan emi"],
   seo: {
-    title: "EMI Calculator: Monthly Loan Instalment and Interest",
+    title: "EMI Calculator Bangladesh: Loan Instalment in Taka",
     description:
       "Calculate your monthly EMI, total interest and total repayment for a home, car or personal loan, with a year-by-year breakdown. Free, no sign-up.",
   },

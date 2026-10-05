@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import {
   searchCalculators,
   searchCategories,
@@ -12,6 +12,7 @@ import type { CalculatorIconName, CategoryId } from "@/calculators/types";
 import { CalculatorIconTile } from "@/components/calculator/calculator-icon";
 import { CategoryIcon } from "@/components/calculator/category-icon";
 import { ArrowRightIcon, SearchIcon } from "@/components/ui/icons";
+import { track } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 
 interface Option {
@@ -66,6 +67,8 @@ export function CalculatorSearch({
   const statusId = `${baseId}-status`;
 
   const [query, setQuery] = useState("");
+  /** Debounce for the search analytics event (result count only, never the text). */
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
 
@@ -87,9 +90,20 @@ export function CalculatorSearch({
     ? `${options.length} suggestion${options.length === 1 ? "" : "s"}. Use up and down arrows to choose.`
     : message;
 
+  function reportSearch(value: string) {
+    if (searchTimer.current) clearTimeout(searchTimer.current);
+    if (!value.trim()) return;
+    searchTimer.current = setTimeout(() => {
+      const results =
+        searchCalculators(calculators, value).length + searchCategories(categories, value).length;
+      track({ name: "calculator_search", results });
+    }, 1200);
+  }
+
   function go(option: Option | undefined) {
     if (!option) return;
     setOpen(false);
+    track({ name: "search_result_clicked", target: option.kind === "category" ? option.categoryId : option.key.replace(/^calc-/, ""), kind: option.kind });
     if (option.kind === "category") window.location.assign(option.href);
     else router.push(option.href);
   }
@@ -141,6 +155,7 @@ export function CalculatorSearch({
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
+            reportSearch(event.target.value);
             setOpen(true);
             setActive(-1);
           }}

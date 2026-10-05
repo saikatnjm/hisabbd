@@ -16,8 +16,7 @@ export const dateDifferenceCalculator: CalculatorMeta = {
     "count days",
     "working days",
     "তারিখ",
-    "দিন গণনা",
-  ],
+    "দিন গণনা", "day counter", "date calculator", "duration", "days left", "koto din", "days between"],
   seo: {
     title: "Date Difference Calculator: Days Between Two Dates",
     description:

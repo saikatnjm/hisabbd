@@ -3,6 +3,8 @@
 import { useState, useSyncExternalStore } from "react";
 import { Button } from "@/components/ui/button";
 import { CopyIcon, ShareIcon } from "@/components/ui/icons";
+import { useCalculatorSlug } from "@/components/calculator/calculator-context";
+import { track } from "@/lib/analytics";
 
 const subscribe = () => () => {};
 const canShareSnapshot = () => typeof navigator.share === "function";
@@ -16,11 +18,13 @@ const serverSnapshot = () => false;
 export function ResultActions({ text, shareTitle }: { text: string; shareTitle: string }) {
   const canShare = useSyncExternalStore(subscribe, canShareSnapshot, serverSnapshot);
   const [status, setStatus] = useState("");
+  const slug = useCalculatorSlug();
 
   async function copy() {
     try {
       await navigator.clipboard.writeText(`${text}\n${window.location.href}`);
       setStatus("Copied to clipboard.");
+      if (slug) track({ name: "result_copied", calculator: slug });
     } catch {
       setStatus("Couldn’t copy automatically. Select the result and copy it manually.");
     }
@@ -30,6 +34,7 @@ export function ResultActions({ text, shareTitle }: { text: string; shareTitle: 
     try {
       await navigator.share({ title: shareTitle, text, url: window.location.href });
       setStatus("");
+      if (slug) track({ name: "result_shared", calculator: slug });
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") return;
       setStatus("Sharing didn’t work here. Use “Copy result” instead.");

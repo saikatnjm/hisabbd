@@ -7,7 +7,7 @@ export const discountCalculator: CalculatorMeta = {
   category: "finance",
   icon: "tag",
   summary: "Find the final price after a discount, how much you save, and the true total when two discounts are stacked.",
-  keywords: ["discount", "sale", "offer", "price after discount", "percent off", "extra discount", "ছাড়", "অফার"],
+  keywords: ["discount", "sale", "offer", "price after discount", "percent off", "extra discount", "ছাড়", "অফার", "sale price", "price after offer", "chhar", "discount percentage", "offer price"],
   seo: {
     title: "Discount Calculator: Final Price and Savings in ৳",
     description:
