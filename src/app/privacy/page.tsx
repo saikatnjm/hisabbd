@@ -1,7 +1,7 @@
 import { pageMetadata } from "@/calculators/metadata";
 import { ProsePage } from "@/components/layout/prose-page";
 import { ContentSection } from "@/components/ui/content-section";
-import { analyticsEnabled } from "@/config/analytics";
+import { analyticsEnabled, gaEnabled, umamiEnabled } from "@/config/analytics";
 
 export const metadata = pageMetadata({
   title: "Privacy",
@@ -41,18 +41,28 @@ export default function PrivacyPage() {
       <ContentSection id="accounts" title="Accounts, cookies and tracking">
         <ul>
           <li>There are no accounts or sign-ups.</li>
-          <li>HisabBD doesn’t use advertising or tracking cookies.</li>
+          <li>
+            {gaEnabled
+              ? "HisabBD doesn’t use advertising cookies. Google Analytics sets analytics cookies, described below."
+              : "HisabBD doesn’t use advertising or tracking cookies."}
+          </li>
           <li>Fonts are served from this website, not from a third-party font service.</li>
         </ul>
         {analyticsEnabled ? (
           <p>
-            HisabBD uses <strong>Umami</strong>, a privacy-focused analytics service that doesn’t
-            use cookies, to count page visits and a few anonymous actions: opening a calculator,
+            HisabBD uses{" "}
+            {gaEnabled ? <strong>Google Analytics</strong> : null}
+            {gaEnabled && umamiEnabled ? " and " : null}
+            {umamiEnabled ? <strong>Umami</strong> : null}
+            {gaEnabled
+              ? " (Google Analytics sets cookies to tell visits apart; advertising features are turned off),"
+              : ", a privacy-focused analytics service that doesn’t use cookies,"}{" "}
+            to count page visits and a few anonymous actions: opening a calculator,
             completing a calculation, searching (the number of results only, not what you typed),
             clicking a search result or a related calculator, saving a calculator, and copying or
             sharing a result. Each event records only which calculator it was.{" "}
             <strong>The values you enter and the results you get are never sent.</strong> If your
-            browser sends a “Do Not Track” signal, no analytics are collected.
+            browser sends a “Do Not Track” signal, Umami collects nothing.
           </p>
         ) : (
           <p>HisabBD doesn’t currently use any analytics.</p>

@@ -6,7 +6,7 @@
  * loan amounts …) and search text are never sent: the types below make that
  * impossible to do by accident.
  *
- * Events go to Umami (cookieless) when it is configured (see
+ * Events go to Google Analytics 4 and/or Umami when configured (see
  * components/analytics/analytics-script.tsx). Without configuration every call
  * is a no-op, so the site works the same and loads no extra script.
  */
@@ -29,6 +29,7 @@ interface UmamiTracker {
 declare global {
   interface Window {
     umami?: UmamiTracker;
+    gtag?: (command: "event", name: string, params?: Record<string, string | number | boolean>) => void;
   }
 }
 
@@ -37,6 +38,11 @@ export function track(event: AnalyticsEvent): void {
   const { name, ...data } = event;
   try {
     window.umami?.track(name, data);
+  } catch {
+    // Analytics must never break the page.
+  }
+  try {
+    window.gtag?.("event", name, data);
   } catch {
     // Analytics must never break the page.
   }

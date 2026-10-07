@@ -58,6 +58,7 @@ public/og.png                    social sharing image
 | `NEXT_PUBLIC_SITE_URL` | Canonical base URL. Defaults to the Vercel production domain; set only for a custom domain. |
 | `GOOGLE_SITE_VERIFICATION` | Google Search Console HTML-tag token (the `content="…"` value only). |
 | `BING_SITE_VERIFICATION` | Bing Webmaster Tools `msvalidate.01` token. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Turns on Google Analytics 4 (`G-XXXXXXXXXX`). Off when unset. |
 | `NEXT_PUBLIC_UMAMI_WEBSITE_ID` | Turns on Umami analytics (cookieless). Off when unset. |
 | `NEXT_PUBLIC_UMAMI_SCRIPT_URL` | Umami script URL (defaults to Umami Cloud). |
 
