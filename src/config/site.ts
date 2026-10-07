@@ -4,8 +4,12 @@
  */
 
 function resolveSiteUrl(): string {
-  const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return explicit.replace(/\/+$/, "");
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) {
+    // Tolerate a value entered without a scheme, e.g. "example.com".
+    const withScheme = /^https?:\/\//i.test(explicit) ? explicit : `https://${explicit}`;
+    return withScheme.replace(/\/+$/, "");
+  }
 
   // Provided automatically by Vercel (server-side only).
   const vercelProduction = process.env.VERCEL_PROJECT_PRODUCTION_URL;
