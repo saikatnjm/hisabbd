@@ -1,4 +1,16 @@
 import type { ComponentType } from "react";
+import { AgeFromDateOfBirthGuideContent } from "./age-from-date-of-birth/content";
+import { AgeFromDateOfBirthGuideContentBn } from "./age-from-date-of-birth/content.bn";
+import { ageFromDateOfBirthGuide } from "./age-from-date-of-birth/meta";
+import { CgpaCalculationGuideContent } from "./cgpa-calculation/content";
+import { CgpaCalculationGuideContentBn } from "./cgpa-calculation/content.bn";
+import { cgpaCalculationGuide } from "./cgpa-calculation/meta";
+import { HowEmiIsCalculatedGuideContent } from "./how-emi-is-calculated/content";
+import { HowEmiIsCalculatedGuideContentBn } from "./how-emi-is-calculated/content.bn";
+import { howEmiIsCalculatedGuide } from "./how-emi-is-calculated/meta";
+import { PercentageCalculationGuideContent } from "./percentage-calculation/content";
+import { PercentageCalculationGuideContentBn } from "./percentage-calculation/content.bn";
+import { percentageCalculationGuide } from "./percentage-calculation/meta";
 import { GovernmentJobAgeLimitGuideContent } from "./government-job-age-limit/content";
 import { GovernmentJobAgeLimitGuideContentBn } from "./government-job-age-limit/content.bn";
 import { governmentJobAgeLimitGuide } from "./government-job-age-limit/meta";
@@ -26,6 +38,10 @@ const entries: GuidePageEntry[] = [
   { meta: governmentJobAgeLimitGuide, Content: GovernmentJobAgeLimitGuideContent, ContentBn: GovernmentJobAgeLimitGuideContentBn },
   { meta: sscHscGpaCalculationGuide, Content: SscHscGpaCalculationGuideContent, ContentBn: SscHscGpaCalculationGuideContentBn },
   { meta: landMeasurementUnitsGuide, Content: LandMeasurementUnitsGuideContent, ContentBn: LandMeasurementUnitsGuideContentBn },
+  { meta: ageFromDateOfBirthGuide, Content: AgeFromDateOfBirthGuideContent, ContentBn: AgeFromDateOfBirthGuideContentBn },
+  { meta: cgpaCalculationGuide, Content: CgpaCalculationGuideContent, ContentBn: CgpaCalculationGuideContentBn },
+  { meta: howEmiIsCalculatedGuide, Content: HowEmiIsCalculatedGuideContent, ContentBn: HowEmiIsCalculatedGuideContentBn },
+  { meta: percentageCalculationGuide, Content: PercentageCalculationGuideContent, ContentBn: PercentageCalculationGuideContentBn },
 ];
 
 export const guidePages: Record<string, GuidePageEntry> = Object.fromEntries(

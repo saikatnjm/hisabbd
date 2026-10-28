@@ -105,4 +105,12 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
     submit: { en: "Write in words", bn: "কথায় লিখুন" },
     fields: [{ label: { en: "Amount", bn: "টাকার পরিমাণ" }, value: "125300.50" }],
   },
+  "vat-calculator": {
+    submit: { en: "Calculate VAT", bn: "ভ্যাট হিসাব করুন" },
+    fields: [{ label: { en: "Price excluding VAT", bn: "ভ্যাট ছাড়া দাম" }, value: "1000" }],
+  },
+  "bangla-date-converter": {
+    submit: { en: "Convert date", bn: "তারিখ রূপান্তর করুন" },
+    fields: [{ label: { en: "English (Gregorian) date", bn: "ইংরেজি তারিখ" }, value: "2026-10-28" }],
+  },
 };

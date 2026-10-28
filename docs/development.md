@@ -61,7 +61,23 @@ docker compose run --rm e2e        # npm run e2e in the Playwright image
 **What is covered:**
 
 - `e2e/calculators.spec.ts`: for every calculator in the registry, in English and Bangla: status 200, `<html lang>`, the H1, an empty Calculate shows a field error (`aria-invalid` or an `…-error` message), and one valid set of inputs fills the `aria-live` result announcement.
-- `e2e/site.spec.ts`: home search finds "age" / "বয়স"; `/embed/{en,bn}/age-calculator` have no site header or footer, `robots` `noindex, follow` and a `frame-ancestors` CSP, while normal pages send `X-Frame-Options: SAMEORIGIN`; unknown URLs in both locales are 404; `/sitemap.xml` lists every calculator in both locales.
+- `e2e/site.spec.ts`:
+  - home search finds "age" / "বয়স";
+  - `/embed/{en,bn}/age-calculator` have no site header or footer, `robots` `noindex, follow` and a `frame-ancestors` CSP, while normal pages send `X-Frame-Options: SAMEORIGIN`;
+  - the guides hub and every guide render in both locales, link to their calculator and carry `Article` JSON-LD;
+  - unknown URLs in both locales are 404;
+  - `/sitemap.xml` lists every calculator and guide in both locales and no embeds.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on every pull request and every push to `main`:
+
+| Job | What | Local equivalent |
+| --- | --- | --- |
+| `check` | `npm ci` then `npm run check` (lint, typecheck, unit tests, build) on Node 24 | `docker compose run --rm app npm run check` |
+| `e2e` | `npm ci` then `npm run e2e` inside `mcr.microsoft.com/playwright:v1.64.1-noble`; uploads `test-results/` (traces) when it fails | `docker compose run --rm e2e` |
+
+Vercel still builds and deploys on its own; CI's job is to show a red check on a pull request before you merge. To make it blocking, enable branch protection on `main` (GitHub → Settings → Branches → require the `check` and `e2e` status checks). When upgrading Playwright, change the image tag here, in `docker-compose.yml`, and the pinned `@playwright/test` version together.
 
 **Adding a calculator:** add an entry for its slug to `CALCULATOR_INPUTS` in `e2e/calculator-inputs.ts` (the test fails for a registry slug without one). Give the submit button text and the minimum required fields, with each label copied from the widget's `STRINGS` in both locales; fields left out keep their defaults. Use `kind: "select"` with the option value for a `<select>`, and `YYYY-MM-DD` for date inputs. Row-based widgets have a visually hidden prefix in the label ("Course 1 Grade").
 

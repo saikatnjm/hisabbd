@@ -26,6 +26,8 @@ export const CALCULATOR_ICONS = [
   "certificate",
   "land",
   "text",
+  "receipt",
+  "calendar-day",
 ] as const;
 
 export type CalculatorIconName = (typeof CALCULATOR_ICONS)[number];

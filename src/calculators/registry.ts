@@ -1,5 +1,6 @@
 import { ageCalculator } from "./age/meta";
 import { amountInWordsCalculator } from "./amount-in-words/meta";
+import { banglaDateCalculator } from "./bangla-date/meta";
 import { bmiCalculator } from "./bmi/meta";
 import { cgpaCalculator } from "./cgpa/meta";
 import { dateDifferenceCalculator } from "./date-difference/meta";
@@ -12,6 +13,7 @@ import { percentageCalculator } from "./percentage/meta";
 import { profitLossCalculator } from "./profit-loss/meta";
 import { salaryCalculator } from "./salary/meta";
 import { sscHscGpaCalculator } from "./ssc-hsc-gpa/meta";
+import { vatCalculator } from "./vat/meta";
 import { CATEGORY_IDS, type CalculatorMeta, type CategoryId } from "./types";
 
 export { calculatorPath } from "./paths";
@@ -38,6 +40,8 @@ export const calculators: readonly CalculatorMeta[] = [
   sscHscGpaCalculator,
   landCalculator,
   amountInWordsCalculator,
+  vatCalculator,
+  banglaDateCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

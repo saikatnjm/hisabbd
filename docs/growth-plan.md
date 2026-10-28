@@ -24,14 +24,24 @@ Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped 
 | – | Related links: Age → Job Age; GPA → SSC/HSC GPA; GPA pages point SSC/HSC students to the new calculator | |
 | – | Sitemap grew from 40 to 48 URLs (24 pages × 2 locales) | `/sitemap.xml` |
 
-### Built on branch `feat/guides-and-smoke-tests` (not yet merged)
+### Shipped: merged in PR #2 and live (verified: `/guides` 200, sitemap 56 URLs)
+
+| Item | What is live | Where |
+| --- | --- | --- |
+| C2 (1–3) | Guides hub + three guides (Bangla-first, English too): government job age limit, SSC/HSC GPA with 4th subject, land measurement units. `Article` JSON-LD, sitemap entries, "Guides" in header and footer nav, "Read the guide" links on their calculators. | `/guides`, `/guides/<slug>`, `/bn/guides/…`; code in `src/guides/` |
+| Q1 | Browser smoke tests (Playwright 1.64.1, Chromium): every calculator in both locales, home search, embeds and framing headers, guides, 404s, sitemap: `docker compose run --rm e2e` | `e2e/`, `playwright.config.ts` |
+| Q2 | Stray `hisabbd-bangla-i18n.patch` removed | |
+
+### Built on branch `feat/date-vat-guides-ci` (not yet merged)
 
 | Item | What | Where |
 | --- | --- | --- |
-| C2 | Guides hub + first three guides (Bangla-first, English too, 750–950 words each, worked examples reuse the calculators' tested numbers, sources cited): government job age limit, SSC/HSC GPA with 4th subject, land measurement units. `Article` JSON-LD, sitemap entries, "Guides" in header and footer nav, "Read the guide" link on the job-age, SSC/HSC GPA and land calculator pages. | `/guides`, `/guides/<slug>`, `/bn/guides/…`; code in `src/guides/` |
-| Q1 | Browser smoke tests (Playwright 1.64.1, Chromium): all 14 calculators in both locales (load, `lang`, empty-submit errors, one valid calculation), home search, embeds and framing headers, guides hub and pages, 404s, sitemap. 38 tests, about 1 minute including the build: `docker compose run --rm e2e` | `e2e/`, `playwright.config.ts` |
-| Q2 | Stray `hisabbd-bangla-i18n.patch` removed | |
-| – | Job-age and SSC/HSC Bangla text now uses Western digits in prose, per the i18n convention (scale names like "৫.০০ স্কেল" and "১ম/২য় পত্র" excepted) | |
+| N9 | Bangla Date Converter: today's Bangla date (আজকের বাংলা তারিখ), Gregorian ↔ Bangla on the revised 2019 calendar, season, weekday, Bangla-digit and Western forms; sourced (Dhaka Tribune 2019, Daily Star 2020) | `/calculators/bangla-date-converter`, `/bn/…` |
+| N11 | VAT Calculator: add or remove VAT, Standard 15% plus reduced 10/7.5/5% presets for some goods and services (NBR VAT FAQ; PwC Tax Summaries reviewed 31 Jul 2026) or custom; paisa-exact; warns about the "15% of gross" mistake | `/calculators/vat-calculator`, `/bn/…` |
+| C2 (4–7) | Four more guides: age from date of birth, CGPA, how EMI is calculated (with a full amortisation example and a flat-rate comparison), percentages. Worked numbers checked against the calculators. Seven guides in total. | `/guides/…` |
+| Q4 | GitHub Actions CI on every pull request and push to `main`: `npm run check` plus the Playwright suite in the pinned image; traces uploaded on failure | `.github/workflows/ci.yml` |
+| – | Smoke suite now 42 tests (16 calculators × 2 locales + site checks); pre-filled fields are cleared before the empty-submit check | `e2e/` |
+| – | Docs: VAT and Bangla date specs, CI section, the digit convention corrected (older Age and Date Difference Bangla pages still use Bangla digits; convert them on next edit) | `docs/` |
 
 ### Open
 
@@ -41,9 +51,10 @@ Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped 
 | T7 contact page + methodology | ⏳ Needs a public contact email from the owner |
 | N8 Income tax | ⏳ Needs the official Finance Act 2026 / NBR slab text by ~10 Nov 2026, else July 2027 |
 | N13 Admission score calculators (new) | ⏳ Blocked: 2026-27 circulars not yet confirmed (checked 28 Oct, see §6 N13 notes) |
-| C2 guides 4–8, T6 social images | ⏳ Not started, no blockers (guides 1–3 built, see above) |
-| N5–N7, N10–N12 (rate- or law-dependent) | ⏳ Need verified official figures (see rules in §6) |
-| N9 Bangla date converter | ⏳ Not started (target 1 Apr 2027) |
+| C2 guide 8 (zakat, January), T6 social images | ⏳ Not started, no blockers (guides 1–7 built) |
+| N5–N7, N10, N12 (rate- or law-dependent) | ⏳ Need verified official figures (see rules in §6) |
+| Q5 Branch protection on `main` requiring the CI checks | ⏳ **Owner action** (GitHub → Settings → Branches) |
+| Q6 Convert the Age and Date Difference Bangla pages to Western digits | ⏳ Small cleanup |
 
 ## 1. Summary
 
@@ -64,9 +75,10 @@ N1–N4 and T3 shipped, so the bottleneck is now **getting indexed and getting t
 | 2 | On BCS circular day (~1 Nov) post the job-age calculator in BCS-prep Facebook groups; post the SSC/HSC GPA calculator in HSC/admission groups now | Owner | D1 |
 | 3 | Decide on a custom domain **before** outreach builds more links to `vercel.app` | Owner | T2 |
 | 4 | Get the official AY 2026-27 slab text, or decide to skip tax until July 2027 (decide by ~10 Nov) | Owner → agent | N8 |
-| 5 | ✅ Bangla guides 1–3 (job age, SSC/HSC GPA, land) and the guides hub, built on the branch | Agent | C2 |
+| 5 | ✅ Guides 1–3 + hub and smoke tests (PR #2, live); ✅ guides 4–7, Bangla date converter, VAT calculator and CI (branch `feat/date-vat-guides-ci`) | Agent | C2, Q1, N9, N11, Q4 |
 | 6 | Admission score calculators: researched 28 Oct; ⏳ blocked until the 2026-27 circulars publish (see §6 N13 notes) | Agent | N13 |
-| 7 | ✅ Browser smoke tests for all 14 calculators in both locales, built on the branch | Agent | Q1 |
+| 7 | Next agent batch: T6 social images; savings certificates/FDR/DPS (N5) and MFS charges (N10) with dated official sources; Q6 digit cleanup | Agent | T6, N5, N10, Q6 |
+| 8 | Require the CI checks before merging to `main` | Owner | Q5 |
 
 ## 2. Current state (audited 28 Oct 2026; re-checked after PR #1 deployed)
 
@@ -180,9 +192,9 @@ Scoring: **Demand** (H/M/L, to be confirmed in Trends), **Timing** (when it must
 | N6 | Zakat / যাকাত ক্যালকুলেটর | H (seasonal) | **15 Jan 2027** | M | Medium | Nisab basis selectable |
 | N7 | Gold Value & Units / সোনার দাম ও ভরি | M | 15 Jan 2027 | S | Medium | Pairs with N6 |
 | N8 | Income Tax (salaried) / আয়কর ক্যালকুলেটর | H (Nov peak) | 10 Nov 2026 or July 2027 | L | **Very high** | Only from the Finance Act text |
-| N9 | Bangla Date Converter / বাংলা তারিখ | M | 1 Apr 2027 | M | Low | Revised Bangla calendar (Bangladesh, 2019 revision) |
+| N9 ✅ | Bangla Date Converter / বাংলা তারিখ রূপান্তর | M–H (daily "আজকের বাংলা তারিখ") | **Built 28 Oct 2026** (moved up from Apr 2027) | M | Low | `src/calculators/bangla-date/` |
 | N10 | MFS Cash-Out Charge / বিকাশ-নগদ চার্জ | M | Dec 2026 | S | High | Presets with as-of dates |
-| N11 | VAT / ভ্যাট ক্যালকুলেটর | M | Jan 2027 | S | Low | Rate is an input, 15% default with source |
+| N11 ✅ | VAT / ভ্যাট ক্যালকুলেটর | M | **Built 28 Oct 2026** | S | Low | `src/calculators/vat/`; review presets after each budget |
 | N12 | Electricity Bill / বিদ্যুৎ বিল | M | Later | M | High | Tariff slabs as data with BERC source |
 | N13 | Admission Score / ভর্তি স্কোর ক্যালকুলেটর (medical, university units) | H (Nov–Feb, after HSC results) | Dec 2026 | M | **High** | New. Each admission circular publishes how SSC/HSC GPA marks combine with exam marks, and the formulas change yearly. Build from the 2026-27 circulars only, one dated, sourced preset per exam, user-overridable. Related: N2. |
 
@@ -229,10 +241,10 @@ These shipped in PR #1. The authoritative description of what was built is now [
 1. সরকারি চাকরির বয়স কীভাবে হিসাব হয় (সার্কুলারের তারিখ অনুযায়ী) → N1 (live)
 2. এসএসসি/এইচএসসি জিপিএ কীভাবে হিসাব হয়, চতুর্থ বিষয়সহ → N2 (live)
 3. জমি মাপার নিয়ম: শতাংশ, কাঠা, বিঘা → N3 (live)
-4. জন্ম তারিখ দিয়ে বয়স বের করার নিয়ম → Age
-5. সিজিপিএ হিসাবের নিয়ম (ক্রেডিট-ওয়েটেড কেন) → CGPA
-6. ইএমআই কীভাবে হিসাব হয় (রিডিউসিং ব্যালেন্স বনাম ফ্ল্যাট রেট) → EMI
-7. শতাংশ বের করার নিয়ম (৫টি সাধারণ প্রশ্ন) → Percentage
+4. ✅ জন্ম তারিখ দিয়ে বয়স বের করার নিয়ম → Age (`age-from-date-of-birth`)
+5. ✅ সিজিপিএ হিসাবের নিয়ম (ক্রেডিট-ওয়েটেড কেন) → CGPA (`cgpa-calculation`)
+6. ✅ ইএমআই কীভাবে হিসাব হয় (রিডিউসিং ব্যালান্স বনাম ফ্ল্যাট রেট) → EMI (`how-emi-is-calculated`)
+7. ✅ শতাংশ বের করার নিয়ম (5টি সাধারণ হিসাব) → Percentage (`percentage-calculation`)
 8. যাকাতের নিসাব ও হিসাব → N6 (publish in January)
 
 Add an `Article` JSON-LD builder with `datePublished` / `dateModified`.
@@ -270,10 +282,11 @@ Links from other sites are the main constraint for a new domain. All outreach co
 | 28 Oct 2026 | ✅ Shipped N1–N4, T3, T4, T5, T7 (schema), T8, T9, C1 (age) in PR #1 |
 | 28 Oct – 1 Nov 2026 | T1 (Search Console/Bing), T2 decision; D1 on BCS circular day and in HSC groups |
 | Nov 2026 | ✅ C2 guides 1–3 + guides hub and ✅ Q1 smoke tests built; T7 contact (needs email); N8 only if sourced by 10 Nov; N13 once circulars publish; D1 tax groups |
-| Dec 2026 | N13 admission scores; N5, N10; T6 social images; D3 embed outreach; first GSC title-rewrite pass |
-| 1–15 Jan 2027 | N6, N7, guide 8, N11; check gold, savings and MFS data |
+| 28 Oct 2026 (branch) | ✅ N9 Bangla date, ✅ N11 VAT, ✅ guides 4–7, ✅ Q4 CI |
+| Dec 2026 | N13 admission scores (once circulars publish); N5, N10; T6 social images; Q6; D3 embed outreach; first GSC title-rewrite pass |
+| 1–15 Jan 2027 | N6, N7, guide 8; check gold, savings, MFS and VAT data |
 | Feb – Mar 2027 | Zakat-season distribution; C2 guides 4–7 |
-| 1 Apr 2027 | N9 (before 14 Apr) |
+| 1 Apr 2027 | Promote N9 for Pohela Boishakh (14 Apr) |
 | May – Jul 2027 | N2 refresh for SSC; after the budget (early Jun) refresh all rate data; N8 for AY 2027-28 in July |
 
 **Data review reminders** (put them in a calendar): savings certificate rates (Jan and Jul), MFS charges (quarterly), gold price (the page asks the user for it), tax slabs (July), government job age rule and BCS presets in `src/calculators/job-age/logic.ts` (each new BCS circular, and when the law changes; bump `updatedOn`), admission formulas (each circular).
@@ -285,6 +298,9 @@ Links from other sites are the main constraint for a new domain. All outreach co
 | Q1 ✅ | Browser smoke tests (Playwright) built: every calculator in both locales, one valid and one invalid calculation, embeds, guides, 404s, sitemap. Run `docker compose run --rm e2e` before each deploy; when adding a calculator, add its inputs to `e2e/calculator-inputs.ts`. Next: run it in CI (GitHub Actions) on pull requests. | Unit tests only covered logic; the 14 interactive widgets had no UI tests. |
 | Q2 ✅ | Removed the stray `hisabbd-bangla-i18n.patch` from the repo root. | Nothing read it; 460 KB of noise. |
 | Q3 | Keep `experimental.globalNotFound` under watch on Next.js upgrades. | T4 depends on an experimental flag. |
+| Q4 ✅ | CI: `.github/workflows/ci.yml` runs `npm run check` and the Playwright suite on pull requests and pushes to `main`. | Catch breakage before Vercel deploys it. |
+| Q5 | Branch protection on `main` requiring the `check` and `e2e` jobs (owner, GitHub settings). | Makes CI blocking, not just advisory. |
+| Q6 | Convert Bangla-digit prose in the Age and Date Difference Bangla content and meta to Western digits. | Consistency with the documented convention. |
 
 ## 12. What not to do
 
