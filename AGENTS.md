@@ -22,6 +22,7 @@ docker compose run --rm app npm run typecheck # next typegen && tsc --noEmit
 docker compose run --rm app npm run test      # vitest run (src/**/*.test.ts)
 docker compose run --rm app npm run build     # next build (stop the dev server first: they share .next)
 docker compose run --rm app npm run check     # lint + typecheck + test + build, in order
+docker compose run --rm e2e                   # Playwright smoke tests in Chromium (builds, then next start on :3100)
 ```
 
 If Node ≥ 20.9 is available locally, the same `npm run …` scripts work directly.
@@ -52,6 +53,7 @@ src/app/sitemap.ts, robots.ts  generated from the registry
 src/calculators/registry.ts    list of all calculators + validateRegistry()
 src/calculators/page-registry.tsx  slug → {meta, Calculator, Content, ContentBn} (drives /bn pages)
 src/calculators/<name>/        meta.ts, logic.ts, logic.test.ts, <name>-calculator.tsx, content.tsx, content.bn.tsx
+src/guides/                    guide articles (/guides/<slug>): registry.ts, page-registry.tsx, <slug>/{meta,content,content.bn}
 src/components/                ui/, calculator/, layout/, pages/, home/, seo/, analytics/
 src/config/site.ts             site name, URL resolution, locale, currency, timezone
 src/i18n/                      locales.ts (paths), ui.ts (chrome strings), locale-context.tsx (useLocale)
@@ -63,6 +65,7 @@ src/lib/                       number, format, plain-date, analytics, saved-calc
 | Task | Read |
 | --- | --- |
 | Add a new calculator | `docs/adding-a-calculator.md` (step-by-step checklist with templates) |
+| Add or edit a guide article | `docs/architecture.md` → "Guides" |
 | Change a calculator's maths or limits | `docs/calculators.md`, then that calculator's `logic.ts` header and `logic.test.ts` |
 | Translate or change wording | `docs/i18n.md` |
 | Titles, descriptions, sitemap, structured data | `docs/seo.md` |

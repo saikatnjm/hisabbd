@@ -24,3 +24,8 @@ next-env.d.ts
 .DS_Store
 *.pem
 npm-debug.log*
+
+# playwright (npm run e2e)
+/test-results/
+/playwright-report/
+/blob-report/

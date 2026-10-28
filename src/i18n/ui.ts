@@ -18,6 +18,7 @@ export interface UiStrings {
     menu: string;
     /** Breadcrumb segment for the calculators index. */
     calculators: string;
+    guides: string;
     /** Label and text of the language switcher (names the OTHER language). */
     switchLocale: string;
     switchLocaleLabel: string;
@@ -56,6 +57,17 @@ export interface UiStrings {
     shareThisCalculator: string;
   };
   form: { reset: string };
+  guides: {
+    hubTitle: string;
+    hubIntro: string;
+    /** Link on a calculator page to its guide. */
+    readGuide: (title: string) => string;
+    /** Call to action at the end of a guide. */
+    useCalculator: (name: string) => string;
+    published: (date: string) => string;
+    updated: (date: string) => string;
+    moreGuides: string;
+  };
   embed: {
     /** Summary of the "embed this calculator" disclosure on calculator pages. */
     summary: string;
@@ -85,6 +97,7 @@ const en: UiStrings = {
     search: "Search",
     menu: "Menu",
     calculators: "Calculators",
+    guides: "Guides",
     switchLocale: "বাংলা",
     switchLocaleLabel: "বাংলায় দেখুন",
   },
@@ -125,6 +138,15 @@ const en: UiStrings = {
     shareThisCalculator: "this calculator",
   },
   form: { reset: "Reset" },
+  guides: {
+    hubTitle: "Guides",
+    hubIntro: "Plain explanations of the rules behind everyday calculations in Bangladesh, each with a worked example and a calculator to try.",
+    readGuide: (title) => `Read the guide: ${title}`,
+    useCalculator: (name) => `Work it out with the ${name}`,
+    published: (date) => `Published ${date}`,
+    updated: (date) => `Updated ${date}`,
+    moreGuides: "More guides",
+  },
   embed: {
     summary: "Add this calculator to your website",
     intro:
@@ -154,6 +176,7 @@ const bn: UiStrings = {
     search: "খুঁজুন",
     menu: "মেনু",
     calculators: "ক্যালকুলেটর",
+    guides: "গাইড",
     switchLocale: "English",
     switchLocaleLabel: "View in English",
   },
@@ -193,6 +216,15 @@ const bn: UiStrings = {
     shareThisCalculator: "এই ক্যালকুলেটরটি",
   },
   form: { reset: "রিসেট" },
+  guides: {
+    hubTitle: "হিসাবের নিয়ম ও গাইড",
+    hubIntro: "বাংলাদেশের দৈনন্দিন হিসাবগুলোর নিয়ম সহজ ভাষায়, প্রতিটিতে উদাহরণ আর হাতে-কলমে চেষ্টা করার জন্য একটি ক্যালকুলেটর।",
+    readGuide: (title) => `গাইড পড়ুন: ${title}`,
+    useCalculator: (name) => `${name} দিয়ে হিসাব করুন`,
+    published: (date) => `প্রকাশ: ${date}`,
+    updated: (date) => `হালনাগাদ: ${date}`,
+    moreGuides: "আরও গাইড",
+  },
   embed: {
     summary: "আপনার ওয়েবসাইটে এই ক্যালকুলেটর যোগ করুন",
     intro:

@@ -27,7 +27,7 @@ Root defaults (`rootMetadata(locale)` in `src/components/layout/root-document.ts
 
 ## Sitemap and robots
 
-`src/app/sitemap.ts` emits one entry **per locale** for `/`, `/calculators`, `/about`, `/privacy`, `/terms`, every `/categories/<id>` and every `/calculators/<slug>`. Each entry carries `alternates.languages` (en-BD, bn-BD, x-default). Calculator entries use `lastModified = updatedOn ?? addedOn`. Set `updatedOn` in meta whenever a calculator's rules or figures are re-checked; it also shows as "Rules last reviewed: <date>" on the page.
+`src/app/sitemap.ts` emits one entry **per locale** for `/`, `/calculators`, `/guides`, `/about`, `/privacy`, `/terms`, every `/categories/<id>`, every `/calculators/<slug>` and every `/guides/<slug>` (`lastModified = updatedOn ?? publishedOn`). Each entry carries `alternates.languages` (en-BD, bn-BD, x-default). Calculator entries use `lastModified = updatedOn ?? addedOn`. Set `updatedOn` in meta whenever a calculator's rules or figures are re-checked; it also shows as "Rules last reviewed: <date>" on the page.
 
 `src/app/manifest.ts` serves `/manifest.webmanifest` (name, theme colour, icon) so the site can be added to a phone's home screen.
 
@@ -46,6 +46,7 @@ Builders in `src/lib/seo/structured-data.ts`, rendered by `components/seo/json-l
 | `WebApplication` | Each calculator page | meta (localized name/description), `applicationCategory: UtilitiesApplication`, free `Offer` in BDT, `inLanguage` |
 | `BreadcrumbList` | Calculator pages, category pages, `/calculators` index | Localized trail, e.g. Home › Calculators › Name |
 | `FAQPage` | Calculator pages with FAQs | `faqs` or `faqsBn`, matching what is visible on the page |
+| `Article` | Guide pages (`/guides/<slug>`) | guide meta: localized headline/description, `datePublished`, `dateModified`, author and publisher → Organization `@id` (the Organization is included in the same graph) |
 
 Rule: only mark up what is visible. FAQ schema uses the same list the page renders in that language.
 

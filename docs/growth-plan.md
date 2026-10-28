@@ -24,6 +24,15 @@ Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped 
 | – | Related links: Age → Job Age; GPA → SSC/HSC GPA; GPA pages point SSC/HSC students to the new calculator | |
 | – | Sitemap grew from 40 to 48 URLs (24 pages × 2 locales) | `/sitemap.xml` |
 
+### Built on branch `feat/guides-and-smoke-tests` (not yet merged)
+
+| Item | What | Where |
+| --- | --- | --- |
+| C2 | Guides hub + first three guides (Bangla-first, English too, 750–950 words each, worked examples reuse the calculators' tested numbers, sources cited): government job age limit, SSC/HSC GPA with 4th subject, land measurement units. `Article` JSON-LD, sitemap entries, "Guides" in header and footer nav, "Read the guide" link on the job-age, SSC/HSC GPA and land calculator pages. | `/guides`, `/guides/<slug>`, `/bn/guides/…`; code in `src/guides/` |
+| Q1 | Browser smoke tests (Playwright 1.64.1, Chromium): all 14 calculators in both locales (load, `lang`, empty-submit errors, one valid calculation), home search, embeds and framing headers, guides hub and pages, 404s, sitemap. 38 tests, about 1 minute including the build: `docker compose run --rm e2e` | `e2e/`, `playwright.config.ts` |
+| Q2 | Stray `hisabbd-bangla-i18n.patch` removed | |
+| – | Job-age and SSC/HSC Bangla text now uses Western digits in prose, per the i18n convention (scale names like "৫.০০ স্কেল" and "১ম/২য় পত্র" excepted) | |
+
 ### Open
 
 | Item | Status / blocker |
@@ -31,11 +40,10 @@ Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped 
 | T1 Search Console / Bing, T2 custom domain, D1–D6 distribution | ⏳ **Owner action** (accounts, domain, posting) |
 | T7 contact page + methodology | ⏳ Needs a public contact email from the owner |
 | N8 Income tax | ⏳ Needs the official Finance Act 2026 / NBR slab text by ~10 Nov 2026, else July 2027 |
-| N13 Admission score calculators (new) | ⏳ Needs the 2026-27 admission circulars as sources |
-| C2 guides (first three for N1–N3), T6 social images | ⏳ Not started, no blockers |
+| N13 Admission score calculators (new) | ⏳ Blocked: 2026-27 circulars not yet confirmed (checked 28 Oct, see §6 N13 notes) |
+| C2 guides 4–8, T6 social images | ⏳ Not started, no blockers (guides 1–3 built, see above) |
 | N5–N7, N10–N12 (rate- or law-dependent) | ⏳ Need verified official figures (see rules in §6) |
 | N9 Bangla date converter | ⏳ Not started (target 1 Apr 2027) |
-| Q1 browser smoke tests, Q2 remove stray patch file | ⏳ See §11 |
 
 ## 1. Summary
 
@@ -56,9 +64,9 @@ N1–N4 and T3 shipped, so the bottleneck is now **getting indexed and getting t
 | 2 | On BCS circular day (~1 Nov) post the job-age calculator in BCS-prep Facebook groups; post the SSC/HSC GPA calculator in HSC/admission groups now | Owner | D1 |
 | 3 | Decide on a custom domain **before** outreach builds more links to `vercel.app` | Owner | T2 |
 | 4 | Get the official AY 2026-27 slab text, or decide to skip tax until July 2027 (decide by ~10 Nov) | Owner → agent | N8 |
-| 5 | Write Bangla guides 1–3 (job age, SSC/HSC GPA, land) and the guides hub | Agent | C2 |
-| 6 | Research the 2026-27 admission circulars and build admission score calculators | Agent | N13 |
-| 7 | Add browser smoke tests for all 14 calculators in both locales | Agent | Q1 |
+| 5 | ✅ Bangla guides 1–3 (job age, SSC/HSC GPA, land) and the guides hub, built on the branch | Agent | C2 |
+| 6 | Admission score calculators: researched 28 Oct; ⏳ blocked until the 2026-27 circulars publish (see §6 N13 notes) | Agent | N13 |
+| 7 | ✅ Browser smoke tests for all 14 calculators in both locales, built on the branch | Agent | Q1 |
 
 ## 2. Current state (audited 28 Oct 2026; re-checked after PR #1 deployed)
 
@@ -184,6 +192,10 @@ Scoring: **Demand** (H/M/L, to be confirmed in Trends), **Timing** (when it must
 - Inputs: SSC GPA, HSC GPA (optionally 4th-subject-excluded GPA where a circular asks for it), expected exam marks; preset = exam/unit with its weightings and minimum GPA requirements.
 - Output: GPA-based marks, total score, whether the minimum GPA requirement is met.
 - Rules: no preset without a link to the circular and an as-of date; set `updatedOn`; say "the circular's wording wins".
+- **Research, 28 Oct 2026 (not yet buildable):**
+  - Medical (MBBS) 2026-27: no official DGHS circular yet. Third-party sites describe 300 marks = 100 written + SSC GPA × 15 + HSC GPA × 25, but they conflict on the minimum combined GPA (8.50 vs 9.00) and the Biology minimum (3.50 vs 4.00).
+  - Dhaka University 2026-27: applications open 11–25 Nov 2026 across five units (MCQ + written). Eligibility GPAs are known only from the 2025-26 notice, and no GPA-to-marks formula for 2026-27 was found.
+  - Re-check when the circulars are published, and build only from them.
 
 ### Specs for the first four (shipped)
 
@@ -257,7 +269,7 @@ Links from other sites are the main constraint for a new domain. All outreach co
 | --- | --- |
 | 28 Oct 2026 | ✅ Shipped N1–N4, T3, T4, T5, T7 (schema), T8, T9, C1 (age) in PR #1 |
 | 28 Oct – 1 Nov 2026 | T1 (Search Console/Bing), T2 decision; D1 on BCS circular day and in HSC groups |
-| Nov 2026 | C2 guides 1–3 + guides hub; Q1 smoke tests; T7 contact (needs email); N8 only if sourced by 10 Nov; D1 tax groups |
+| Nov 2026 | ✅ C2 guides 1–3 + guides hub and ✅ Q1 smoke tests built; T7 contact (needs email); N8 only if sourced by 10 Nov; N13 once circulars publish; D1 tax groups |
 | Dec 2026 | N13 admission scores; N5, N10; T6 social images; D3 embed outreach; first GSC title-rewrite pass |
 | 1–15 Jan 2027 | N6, N7, guide 8, N11; check gold, savings and MFS data |
 | Feb – Mar 2027 | Zakat-season distribution; C2 guides 4–7 |
@@ -270,8 +282,8 @@ Links from other sites are the main constraint for a new domain. All outreach co
 
 | ID | Item | Why |
 | --- | --- | --- |
-| Q1 | Browser smoke tests (Playwright): open every calculator in both locales, run one valid and one invalid calculation, check that the result or error appears and that `/embed/*` renders. Run them in Docker in CI or before deploy. | Only logic is unit-tested today (484 tests); 14 interactive widgets have no UI tests. |
-| Q2 | Remove the stray `hisabbd-bangla-i18n.patch` from the repo root (deleted locally, not yet committed as of 28 Oct). | Nothing reads it; 460 KB of noise. |
+| Q1 ✅ | Browser smoke tests (Playwright) built: every calculator in both locales, one valid and one invalid calculation, embeds, guides, 404s, sitemap. Run `docker compose run --rm e2e` before each deploy; when adding a calculator, add its inputs to `e2e/calculator-inputs.ts`. Next: run it in CI (GitHub Actions) on pull requests. | Unit tests only covered logic; the 14 interactive widgets had no UI tests. |
+| Q2 ✅ | Removed the stray `hisabbd-bangla-i18n.patch` from the repo root. | Nothing read it; 460 KB of noise. |
 | Q3 | Keep `experimental.globalNotFound` under watch on Next.js upgrades. | T4 depends on an experimental flag. |
 
 ## 12. What not to do

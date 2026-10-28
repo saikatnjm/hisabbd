@@ -1,5 +1,6 @@
 import { categories } from "@/calculators/categories";
 import { CALCULATORS_PATH, categoryHref } from "@/calculators/paths";
+import { GUIDES_PATH } from "@/guides/paths";
 import { localePath, type Locale } from "@/i18n/locales";
 import { ui } from "@/i18n/ui";
 
@@ -13,6 +14,7 @@ export function primaryNav(locale: Locale): readonly NavLink[] {
   const t = ui[locale].nav;
   return [
     { name: t.allCalculators, href: localePath(locale, CALCULATORS_PATH) },
+    { name: t.guides, href: localePath(locale, GUIDES_PATH) },
     { name: t.about, href: localePath(locale, "/about") },
   ];
 }
@@ -28,6 +30,7 @@ export function categoryNav(locale: Locale): readonly (NavLink & { id: (typeof c
 export function legalNav(locale: Locale): readonly NavLink[] {
   const t = ui[locale].nav;
   return [
+    { name: t.guides, href: localePath(locale, GUIDES_PATH) },
     { name: t.about, href: localePath(locale, "/about") },
     { name: t.privacy, href: localePath(locale, "/privacy") },
     { name: t.terms, href: localePath(locale, "/terms") },

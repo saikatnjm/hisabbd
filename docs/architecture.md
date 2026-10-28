@@ -47,6 +47,7 @@
     │       ├── page.tsx, about/, privacy/, terms/, calculators/page.tsx
     │       ├── calculators/[slug]/page.tsx        ONE dynamic route for all calculators (page-registry)
     │       └── categories/[category]/page.tsx
+    ├── guides/               explanatory articles (see "Guides" below)
     ├── calculators/
     │   ├── types.ts              CalculatorMeta, Category, CATEGORY_IDS, CALCULATOR_ICONS, FaqItem
     │   ├── registry.ts           `calculators` array + validateRegistry + lookups
@@ -165,6 +166,32 @@ LocaleShell: skip link, SiteHeader, <main id="main">, SiteFooter
 - **Every query word must be a prefix of some word** in the name, other-language name, summary, category name, slug or keywords. So "age" matches "Age Calculator" but not "percentage".
 - Score 3 if the name starts with the full query, 2 if every query word prefixes a name word, otherwise 1. Ties break alphabetically by name. Default limits: 6 calculators, 3 categories.
 - Only the number of results is sent to analytics (`calculator_search`), never the query text.
+
+## Guides
+
+Explanatory articles that answer a common question and lead to one calculator (growth plan item C2). The structure mirrors calculators:
+
+```
+src/guides/
+  types.ts            GuideMeta: slug, title/titleBn, summary/summaryBn, seo/seoBn, calculator, publishedOn, updatedOn?
+  paths.ts            GUIDES_PATH ("/guides"), guidePath(slug)
+  registry.ts         `guides` list + validateGuides + getGuide + getGuidesForCalculator
+  page-registry.tsx   slug → { meta, Content, ContentBn } (drives both locales' routes)
+  registry.test.ts    validity + every guide has article components
+  <slug>/meta.ts, content.tsx, content.bn.tsx
+```
+
+- **Routes:** `/guides` and `/bn/guides` (hub, `GuidesIndexPage`), `/guides/[slug]` and `/bn/guides/[slug]` (static, `GuidePage`).
+- **`GuidePage`:** breadcrumbs, H1, summary, published/updated dates, the article, a call-to-action card for the calculator, and links to other guides.
+- **JSON-LD:** `Organization`, `Article`, `BreadcrumbList`.
+- **Linking:** each calculator with a guide shows "Read the guide: …" under its summary. Guides appear in the header nav, the footer, and the sitemap (`lastModified = updatedOn ?? publishedOn`).
+
+**Adding a guide:**
+1. Create `src/guides/<slug>/` with `meta.ts`, `content.tsx` and `content.bn.tsx`. The content files are Server Components built from `ContentSection` blocks, and each one links to its calculator in running text.
+2. Add the meta to `guides` in `registry.ts`.
+3. Add the entry to `page-registry.tsx`.
+
+Tests fail if the calculator slug is unknown or Bangla text is missing. Write Bangla first, reuse the calculator's worked-example numbers, and don't add FAQ sections (FAQs live on the calculator page).
 
 ## Related calculators
 

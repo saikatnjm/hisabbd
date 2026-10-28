@@ -1,6 +1,8 @@
 import type { CalculatorMeta, FaqItem } from "@/calculators/types";
 import { calculatorPath } from "@/calculators/paths";
 import { absoluteUrl, siteConfig } from "@/config/site";
+import { guidePath } from "@/guides/paths";
+import type { GuideMeta } from "@/guides/types";
 import { localePath, type Locale } from "@/i18n/locales";
 
 /*
@@ -37,6 +39,23 @@ export function organizationSchema(): Schema {
     name: siteConfig.name,
     url: absoluteUrl("/"),
     logo: absoluteUrl("/icon.svg"),
+  };
+}
+
+/** A guide article, published by the site's Organization. */
+export function articleSchema(guide: GuideMeta, locale: Locale = "en"): Schema {
+  const bn = locale === "bn";
+  return {
+    "@type": "Article",
+    headline: bn ? guide.titleBn : guide.title,
+    description: bn ? guide.seoBn.description : guide.seo.description,
+    url: absoluteUrl(localePath(locale, guidePath(guide.slug))),
+    inLanguage: locale,
+    datePublished: guide.publishedOn,
+    dateModified: guide.updatedOn ?? guide.publishedOn,
+    author: { "@id": `${absoluteUrl("/")}#organization` },
+    publisher: { "@id": `${absoluteUrl("/")}#organization` },
+    image: absoluteUrl("/og.png"),
   };
 }
 
