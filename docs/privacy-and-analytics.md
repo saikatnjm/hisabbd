@@ -7,10 +7,12 @@ Privacy is a product promise, stated on `/privacy` and `/about`. Treat these rul
 1. **Calculator inputs and results never leave the browser.** They must not appear in:
    - URLs or query strings (no shareable "result links"),
    - analytics event properties,
-   - `localStorage`, `sessionStorage`, cookies or IndexedDB,
+   - cookies, `sessionStorage` or IndexedDB,
    - any network request.
+
+   The one place typed values may be kept is the **calculation history** in `localStorage` (below). It is on the visitor's device only, shown to them, and they can turn it off or clear it.
 2. **Search text is never sent.** Only the number of results.
-3. **Storage holds calculator slugs only.**
+3. **Storage is limited to four keys:** slugs (`hisabbd:recent`, `hisabbd:favorites`), settings (`hisabbd:prefs`) and the calculation history (`hisabbd:history`). Anything else needs a privacy-page update first.
 4. **No accounts, no advertising cookies, no third-party fonts.**
 5. **Analytics is optional and off by default.** With no env vars set, no analytics script loads and `track()` is a no-op.
 6. Sharing a calculator page shares its URL only. "Share result" sends plain text to the OS share sheet or clipboard, which the user controls.
@@ -58,6 +60,32 @@ It exports `gaEnabled`, `umamiEnabled` and `analyticsEnabled`. The Privacy page 
 `track(event)` sends to `window.umami?.track` and `window.gtag?.("event", …)`, each wrapped in try/catch so analytics can never break the page.
 
 **Adding an event:** add a variant to `AnalyticsEvent` with only slugs, ids, counts, booleans or small enums. Update the event list on the Privacy pages (`src/app/(en)/privacy/page.tsx` and `src/app/bn/privacy/page.tsx`) if users would describe it differently.
+
+## Preferences (remembered settings)
+
+`src/lib/preferences.ts`, hook `src/lib/use-preference.ts`, key `hisabbd:prefs`.
+
+- Stores which unit, mode, scale or preset a visitor last chose in each calculator, e.g. BMI cm/ft+in and kg/lb, SSC or HSC, CGPA 4 or 5, EMI rate and tenure units, salary period, percentage mode, VAT mode and rate preset, land units and katha size, Bangla date mode.
+- **Settings only, never personal values.** A date of birth, grade, price or salary is not a preference.
+- Each preference is declared with its allowed values (`choicePreference`, `numberPreference`) as a module-level constant in the widget. Stored values outside the allowed set are ignored.
+- The server render uses the fallback; the stored choice applies right after hydration. Reset in a calculator keeps preferences.
+
+## Calculation history ("Your recent calculations")
+
+`src/lib/calculation-history.ts`, hooks `src/lib/use-calculation-history.ts`; UI in `components/calculator/recent-calculations.tsx` (under each calculator) and `components/home/home-recent-calculations.tsx` (homepage).
+
+| | |
+| --- | --- |
+| Key | `hisabbd:history` |
+| Entry | `{ id, slug, at, locale, inputs (raw form values as strings), summary (the result's share text) }` |
+| Limits | 5 per calculator, 30 in total, newest first; repeating the same inputs moves the entry to the top |
+| Default | **On**. The setting `site/history` in `hisabbd:prefs` turns saving off. |
+| Controls | Under each calculator: Use again, remove one entry, clear this calculator's history, a "Save my calculations on this device" checkbox. On `/privacy`: the same checkbox and "Clear everything saved on this device" (`clearAllLocalData`, which removes all four keys). |
+
+- Widgets call `record(inputs, summary)` once per successful Calculate. `<RecentCalculations onRestore={…}>` gives the saved inputs back. The widget validates them like any other input, fills the form and shows the result.
+- Read-back is sanitized: malformed or oversized entries are dropped.
+- Shared devices: anyone using the same browser sees the history. That is why the controls are always next to it and the privacy page says so plainly.
+- Never send history anywhere, never put it in a URL, never track its contents. "Use again" increments `revealKey`, so it counts as a `calculation_completed` (slug only).
 
 ## Saved calculators (favourites and recents)
 

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -14,6 +15,9 @@ import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { formatPercent, formatTaka } from "@/lib/format";
 import { roundTo } from "@/lib/number";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import { DEDUCTION_PRESETS } from "./deduction-presets";
 import {
   calculateSalary,
@@ -28,6 +32,32 @@ import {
 const GROSS_ID = "salary-gross";
 const ADD_BUTTON_ID = "salary-add-deduction";
 const TOTAL_ERROR_ID = "salary-deductions-error";
+
+/** Whether the gross is per month or per year is remembered in this browser. */
+const PERIOD = choicePreference<SalaryPeriod>("salary-calculator", "period", ["month", "year"], "month");
+
+/** Deductions as saved in the calculation history: [name, type, value] per row, as JSON. */
+const deductionsToJson = (rows: readonly DeductionInput[]) =>
+  JSON.stringify(rows.map((row) => [row.name, row.type, row.value]));
+
+/** Saved deductions back as row values. The JSON comes from storage, so malformed rows are dropped. */
+function deductionsFromJson(json: string | undefined): Omit<DeductionInput, "id">[] {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(json ?? "");
+  } catch {
+    return [];
+  }
+  if (!Array.isArray(parsed)) return [];
+  const rows: Omit<DeductionInput, "id">[] = [];
+  for (const item of parsed as unknown[]) {
+    if (!Array.isArray(item)) continue;
+    const [name, type, value]: unknown[] = item;
+    if (typeof name !== "string" || (type !== "percent" && type !== "fixed") || typeof value !== "string") continue;
+    rows.push({ name, type, value });
+  }
+  return rows;
+}
 
 const STRINGS = {
   en: {
@@ -188,10 +218,11 @@ export function SalaryCalculator() {
     { value: "year", label: t.perYear },
   ];
   const [gross, setGross] = useState("");
-  const [period, setPeriod] = useState<SalaryPeriod>("month");
+  const [period, setPeriod] = usePreference(PERIOD);
   const [rows, setRows] = useState<DeductionInput[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const nextId = useRef(1);
   const pendingFocus = useRef<string | null>(null);
   const grossRef = useRef<HTMLInputElement>(null);
@@ -236,6 +267,7 @@ export function SalaryCalculator() {
     const check = calculateSalary({ gross, period, deductions: rows });
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record({ gross, period, deductions: deductionsToJson(rows) }, shareText(t, check.result));
       return;
     }
     const first = check.errors[0];
@@ -248,9 +280,19 @@ export function SalaryCalculator() {
     }
   }
 
+  /** Fills the form from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const savedPeriod = saved.period ?? "";
+    if (PERIOD.isValid(savedPeriod)) setPeriod(savedPeriod);
+    setGross(saved.gross ?? "");
+    setRows(deductionsFromJson(saved.deductions).map((row) => ({ id: nextId.current++, ...row })));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  /** Clears the amounts; the remembered period stays. */
   function onReset() {
     setGross("");
-    setPeriod("month");
     setRows([]);
     setSubmitted(false);
     setRevealCount(0);
@@ -412,6 +454,7 @@ export function SalaryCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

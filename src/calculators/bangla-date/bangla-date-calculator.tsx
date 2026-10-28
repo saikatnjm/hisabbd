@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -14,6 +15,9 @@ import type { Locale } from "@/i18n/locales";
 import { formatPlainDate, weekdayName } from "@/lib/format";
 import { checkNumber } from "@/lib/number";
 import { dayOfWeek, parsePlainDate } from "@/lib/plain-date";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import { useToday } from "@/lib/use-today";
 import {
   BANGLA_MONTHS,
@@ -34,6 +38,11 @@ import {
 type Mode = "toBangla" | "toGregorian";
 type Field = "gregorianDate" | "banglaYear" | "banglaMonth" | "banglaDay";
 type CalcError = Extract<BanglaDateCalculation, { ok: false }>["errors"][number];
+
+const MODE_ORDER: readonly Mode[] = ["toBangla", "toGregorian"];
+/** The conversion direction is remembered in this browser. */
+const MODE_PREF = choicePreference("bangla-date-converter", "mode", MODE_ORDER, "toBangla");
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 const FIELD_IDS: Record<Field, string> = {
   gregorianDate: "bangla-date-gregorian",
@@ -180,7 +189,7 @@ export function BanglaDateCalculator() {
   const locale = useLocale();
   const t = STRINGS[locale];
   const today = useToday();
-  const [mode, setMode] = useState<Mode>("toBangla");
+  const [mode, setMode] = usePreference(MODE_PREF);
   /** null = follow today's date. */
   const [gregorianInput, setGregorianInput] = useState<string | null>(null);
   const [banglaYear, setBanglaYear] = useState("");
@@ -194,6 +203,7 @@ export function BanglaDateCalculator() {
     banglaMonth: useRef<HTMLSelectElement>(null),
     banglaDay: useRef<HTMLInputElement>(null),
   };
+  const { record } = useCalculationHistory();
 
   const gregorianDate = gregorianInput ?? today;
   const convert = () =>
@@ -222,8 +232,12 @@ export function BanglaDateCalculator() {
   function onSubmit() {
     setSubmitted(true);
     const check = convert();
-    if (check.ok) setRevealCount((n) => n + 1);
-    else {
+    if (check.ok) {
+      setRevealCount((n) => n + 1);
+      const typed: Record<string, string> =
+        mode === "toBangla" ? { gregorianDate } : { banglaYear, banglaMonth, banglaDay };
+      record({ mode, ...typed }, shareText(t, locale, check.result));
+    } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
@@ -234,6 +248,24 @@ export function BanglaDateCalculator() {
     setSubmitted(false);
   }
 
+  /**
+   * Fills the form from a saved conversion and shows its result. Sets the
+   * mode directly, since onModeChange would clear it.
+   */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    const savedMode = MODE_ORDER.find((m) => m === saved.mode);
+    const month = text("banglaMonth");
+    if (savedMode) setMode(savedMode);
+    setGregorianInput(DATE_PATTERN.test(text("gregorianDate")) ? text("gregorianDate") : null);
+    setBanglaYear(text("banglaYear"));
+    setBanglaMonth(BANGLA_MONTHS.some((_, i) => String(i + 1) === month) ? month : "");
+    setBanglaDay(text("banglaDay"));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  /** Clears what was typed; the remembered direction stays. */
   function onReset() {
     setGregorianInput(null);
     setBanglaYear("");
@@ -350,6 +382,7 @@ export function BanglaDateCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

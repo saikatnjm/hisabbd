@@ -5,6 +5,7 @@ import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
 import { ResultActions } from "@/components/calculator/result-actions";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { AffixInput, FormField, SegmentedControl } from "@/components/ui/form";
@@ -12,6 +13,9 @@ import { ResultPanel } from "@/components/ui/result";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { countBn, formatPercent, formatTaka, pluralize } from "@/lib/format";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import {
   calculateLoan,
   MAX_LOAN,
@@ -23,6 +27,10 @@ import {
   type RateUnit,
   type TenureUnit,
 } from "./logic";
+
+/** Remembered in this browser: whether the rate is per year or per month, and the tenure unit. */
+const RATE_UNIT = choicePreference("emi-calculator", "rateUnit", ["year", "month"] as const, "year");
+const TENURE_UNIT = choicePreference("emi-calculator", "tenureUnit", ["years", "months"] as const, "years");
 
 const FIELD_IDS: Record<EmiField, string> = {
   amount: "emi-amount",
@@ -213,11 +221,12 @@ export function EmiCalculator() {
   ];
   const [amount, setAmount] = useState("");
   const [rate, setRate] = useState("");
-  const [rateUnit, setRateUnit] = useState<RateUnit>("year");
+  const [rateUnit, setRateUnit] = usePreference(RATE_UNIT);
   const [tenure, setTenure] = useState("");
-  const [tenureUnit, setTenureUnit] = useState<TenureUnit>("years");
+  const [tenureUnit, setTenureUnit] = usePreference(TENURE_UNIT);
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const refs: Record<EmiField, React.RefObject<HTMLInputElement | null>> = {
     amount: useRef<HTMLInputElement>(null),
     rate: useRef<HTMLInputElement>(null),
@@ -237,18 +246,32 @@ export function EmiCalculator() {
     const check = calculateLoan(inputs);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record(inputs, shareText(t, check.result));
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
   }
 
+  /** Fills the form from a saved calculation (values come from storage, so each is checked) and shows the result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    const savedRateUnit = text("rateUnit");
+    const savedTenureUnit = text("tenureUnit");
+    setAmount(text("amount"));
+    setRate(text("rate"));
+    if (RATE_UNIT.isValid(savedRateUnit)) setRateUnit(savedRateUnit);
+    setTenure(text("tenure"));
+    if (TENURE_UNIT.isValid(savedTenureUnit)) setTenureUnit(savedTenureUnit);
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  // Keeps the remembered rate and tenure units; clears only what was typed.
   function onReset() {
     setAmount("");
     setRate("");
-    setRateUnit("year");
     setTenure("");
-    setTenureUnit("years");
     setSubmitted(false);
     setRevealCount(0);
     refs.amount.current?.focus();
@@ -346,6 +369,7 @@ export function EmiCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -11,10 +12,11 @@ import { FieldMessage, Input, Label, Select } from "@/components/ui/form";
 import { ResultPanel } from "@/components/ui/result";
 import { DEFAULT_GRADING_SCALE } from "@/calculators/education/grading-scales";
 import { AddRowButton, RemoveRowButton } from "@/calculators/education/row-controls";
-import { useRowList } from "@/calculators/education/use-row-list";
+import { rowsFromJson, rowsToJson, useRowList } from "@/calculators/education/use-row-list";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { countBn, formatNumber, pluralize } from "@/lib/format";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
 import {
   calculateGpa,
   MAX_COURSE_CREDITS,
@@ -31,6 +33,9 @@ const INITIAL_ROWS = 3;
 const fieldId = (rowId: number, field: "name" | "grade" | "credits") => `gpa-course-${rowId}-${field}`;
 const firstFieldId = (rowId: number) => fieldId(rowId, "name");
 const createRow = (id: number): CourseRowInput => ({ id, name: "", grade: "", credits: "" });
+
+/** Row fields saved in the calculation history (as JSON, in this order). */
+const SAVED_FIELDS = ["name", "grade", "credits"] as const;
 
 const gpaText = (value: number) => formatNumber(value, { decimals: 2, minDecimals: 2 });
 
@@ -152,6 +157,7 @@ export function GpaCalculator() {
   const { rows } = list;
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
 
   const calc = submitted ? calculateGpa(rows, SCALE) : null;
   const errorList = calc && !calc.ok ? calc.errors : [];
@@ -167,6 +173,7 @@ export function GpaCalculator() {
     const check = calculateGpa(rows, SCALE);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record({ rows: rowsToJson(rows, SAVED_FIELDS) }, shareText(t, check.result));
       return;
     }
     const first = check.errors[0];
@@ -175,6 +182,13 @@ export function GpaCalculator() {
     if (targetRow === undefined) return;
     const target = first.field === "credits" ? "credits" : "grade";
     document.getElementById(fieldId(targetRow, target))?.focus();
+  }
+
+  /** Fills the form from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    list.replaceRows(rowsFromJson(saved.rows, SAVED_FIELDS));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
   }
 
   function onReset() {
@@ -299,6 +313,7 @@ export function GpaCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

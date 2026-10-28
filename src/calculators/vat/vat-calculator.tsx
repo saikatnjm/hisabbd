@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -14,6 +15,9 @@ import type { Locale } from "@/i18n/locales";
 import { formatNumber, formatPlainDate, formatTaka } from "@/lib/format";
 import { roundTo } from "@/lib/number";
 import { parsePlainDate } from "@/lib/plain-date";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import {
   calculateVat,
   MAX_AMOUNT,
@@ -31,6 +35,9 @@ const FIELD_IDS: Record<VatField, string> = { amount: "vat-amount", rate: "vat-r
 const PRESET_ID = "vat-rate-preset";
 const PRESET_IDS: readonly VatPresetId[] = ["standard", "reduced10", "reduced7_5", "reduced5", "custom"];
 const MODE_ORDER: readonly VatMode[] = ["add", "remove"];
+/** The mode and rate preset are remembered in this browser; a custom rate is not. */
+const MODE_PREF = choicePreference("vat-calculator", "mode", MODE_ORDER, "add");
+const PRESET_PREF = choicePreference("vat-calculator", "preset", PRESET_IDS, "standard");
 
 /** Whole Taka are shown without paisa; anything else with exactly 2 decimals. */
 function money(value: number): string {
@@ -206,9 +213,9 @@ function headline(r: VatResult): number {
 export function VatCalculator() {
   const locale = useLocale();
   const t = STRINGS[locale];
-  const [mode, setMode] = useState<VatMode>("add");
+  const [mode, setMode] = usePreference(MODE_PREF);
   const [amount, setAmount] = useState("");
-  const [preset, setPreset] = useState<VatPresetId>("standard");
+  const [preset, setPreset] = usePreference(PRESET_PREF);
   const [customRate, setCustomRate] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
@@ -216,6 +223,7 @@ export function VatCalculator() {
     amount: useRef<HTMLInputElement>(null),
     rate: useRef<HTMLInputElement>(null),
   };
+  const { record } = useCalculationHistory();
 
   const modeOptions = MODE_ORDER.map((value) => ({ value, label: t.modes[value] }));
   const rawRate = preset === "custom" ? customRate : String(VAT_RATE_PRESETS[preset].value);
@@ -247,16 +255,34 @@ export function VatCalculator() {
     const check = calculateVat(mode, amount, rawRate);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      // The custom rate box is only used (and shown) for Custom.
+      const rate: Record<string, string> = preset === "custom" ? { customRate } : {};
+      record({ mode, amount, preset, ...rate }, shareText(t, check.result));
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
   }
 
+  /**
+   * Fills the form from a saved calculation and shows its result. Sets the
+   * mode directly, since changeMode would clear it.
+   */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    const savedMode = MODE_ORDER.find((m) => m === saved.mode);
+    const savedPreset = PRESET_IDS.find((id) => id === saved.preset);
+    if (savedMode) setMode(savedMode);
+    if (savedPreset) setPreset(savedPreset);
+    setAmount(text("amount"));
+    setCustomRate(text("customRate"));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  /** Clears what was typed; the remembered mode and rate preset stay. */
   function onReset() {
-    setMode("add");
     setAmount("");
-    setPreset("standard");
     setCustomRate("");
     setSubmitted(false);
     setRevealCount(0);
@@ -346,6 +372,7 @@ export function VatCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

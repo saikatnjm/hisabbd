@@ -4,16 +4,20 @@ import { useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { FieldMessage, Input, Label, SegmentedControl } from "@/components/ui/form";
 import { ResultPanel } from "@/components/ui/result";
 import { AddRowButton, RemoveRowButton } from "@/calculators/education/row-controls";
-import { useRowList } from "@/calculators/education/use-row-list";
+import { rowsFromJson, rowsToJson, useRowList } from "@/calculators/education/use-row-list";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { countBn, formatNumber, pluralize } from "@/lib/format";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import {
   calculateCgpa,
   MAX_TERM_CREDITS,
@@ -30,6 +34,11 @@ const INITIAL_ROWS = 2;
 const fieldId = (rowId: number, field: "name" | "gpa" | "credits") => `cgpa-term-${rowId}-${field}`;
 const firstFieldId = (rowId: number) => fieldId(rowId, "name");
 const createRow = (id: number): TermRowInput => ({ id, name: "", gpa: "", credits: "" });
+
+/** The grading scale is remembered in this browser. */
+const SCALE_PREF = choicePreference("cgpa-calculator", "scale", ["4", "5"] as const, "4");
+/** Row fields saved in the calculation history (as JSON, in this order). */
+const SAVED_FIELDS = ["name", "gpa", "credits"] as const;
 
 const cgpaText = (value: number) => formatNumber(value, { decimals: 2, minDecimals: 2 });
 const scaleText = (scale: ScaleMax) => formatNumber(scale, { minDecimals: 2 });
@@ -156,9 +165,10 @@ export function CgpaCalculator() {
     focusTargetId: firstFieldId,
   });
   const { rows } = list;
-  const [scaleValue, setScaleValue] = useState<"4" | "5">("4");
+  const [scaleValue, setScaleValue] = usePreference(SCALE_PREF);
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const scale: ScaleMax = scaleValue === "5" ? 5 : 4;
 
   const calc = submitted ? calculateCgpa(rows, scale) : null;
@@ -175,6 +185,7 @@ export function CgpaCalculator() {
     const check = calculateCgpa(rows, scale);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record({ scale: scaleValue, rows: rowsToJson(rows, SAVED_FIELDS) }, shareText(t, check.result, scale));
       return;
     }
     const first = check.errors[0];
@@ -184,9 +195,18 @@ export function CgpaCalculator() {
     document.getElementById(fieldId(targetRow, first.field === "credits" ? "credits" : "gpa"))?.focus();
   }
 
+  /** Fills the form from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const savedScale = saved.scale ?? "";
+    if (SCALE_PREF.isValid(savedScale)) setScaleValue(savedScale);
+    list.replaceRows(rowsFromJson(saved.rows, SAVED_FIELDS));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  /** Clears the semesters; the remembered scale stays. */
   function onReset() {
     list.resetRows();
-    setScaleValue("4");
     setSubmitted(false);
     setRevealCount(0);
   }
@@ -310,6 +330,7 @@ export function CgpaCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

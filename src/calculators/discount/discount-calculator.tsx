@@ -5,6 +5,7 @@ import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
 import { ResultActions } from "@/components/calculator/result-actions";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { AffixInput, FormField } from "@/components/ui/form";
@@ -13,6 +14,7 @@ import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { formatPercent, formatTaka } from "@/lib/format";
 import { roundTo } from "@/lib/number";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
 import { calculateDiscount, MAX_PRICE, type DiscountError, type DiscountField, type DiscountResult } from "./logic";
 
 const FIELD_IDS: Record<DiscountField, string> = {
@@ -159,6 +161,7 @@ export function DiscountCalculator() {
   const [extraDiscount, setExtraDiscount] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const refs: Record<DiscountField, React.RefObject<HTMLInputElement | null>> = {
     price: useRef<HTMLInputElement>(null),
     discount: useRef<HTMLInputElement>(null),
@@ -178,10 +181,22 @@ export function DiscountCalculator() {
     const check = calculateDiscount(price, discount, rawExtra);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record({ price, discount, extraOn: String(extraOn), extraDiscount }, shareText(t, check.result));
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
+  }
+
+  /** Fills the form from a saved calculation (values come from storage, so each is checked) and shows the result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    setPrice(text("price"));
+    setDiscount(text("discount"));
+    setExtraOn(saved.extraOn === "true");
+    setExtraDiscount(text("extraDiscount"));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
   }
 
   function onReset() {
@@ -280,6 +295,7 @@ export function DiscountCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

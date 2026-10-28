@@ -8,6 +8,7 @@ import { upcomingCalculatorNames } from "@/calculators/upcoming";
 import { CalculatorList } from "@/components/calculator/calculator-list";
 import { CalculatorSearch } from "@/components/calculator/calculator-search";
 import { QuickPicks, type QuickPick } from "@/components/calculator/quick-picks";
+import { HomeRecentCalculations } from "@/components/home/home-recent-calculations";
 import { CategoryList } from "@/components/calculator/category-list";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
@@ -225,6 +226,16 @@ export function HomePage({ locale }: { locale: Locale }) {
           </div>
         </Container>
       </section>
+
+      <HomeRecentCalculations
+        calculators={calculators.map((calc) => ({
+          slug: calc.slug,
+          name: bn ? calc.nameBn : calc.name,
+          href: localePath(locale, calculatorPath(calc.slug)),
+          icon: calc.icon,
+          category: calc.category,
+        }))}
+      />
 
       <Section id="categories" title={t.categoriesTitle} description={t.categoriesDescription}>
         <CategoryList locale={locale} getHref={(category) => localePath(locale, categoryHref(category.id))} />

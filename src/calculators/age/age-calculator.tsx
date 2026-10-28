@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -11,6 +12,7 @@ import { ResultPanel } from "@/components/ui/result";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { countBn, formatNumber, formatPlainDate, joinList, pluralize, weekdayName } from "@/lib/format";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
 import { useToday } from "@/lib/use-today";
 import { calculateAge, type AgeError, type AgeField, type AgeResult } from "./logic";
 
@@ -159,6 +161,7 @@ export function AgeCalculator() {
   const [submitted, setSubmitted] = useState(false);
   /** Increments on each successful Calculate, to reveal and scroll to the result. */
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const dobRef = useRef<HTMLInputElement>(null);
   const asOfRef = useRef<HTMLInputElement>(null);
 
@@ -176,9 +179,19 @@ export function AgeCalculator() {
     const check = calculateAge(dateOfBirth, calculationDate, today);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      // An empty calculation date means "today", so using it again gives the age as of that day.
+      record({ dateOfBirth, calculationDate: calculationDateInput ?? "" }, shareText(t, locale, check.result));
     } else {
       (check.errors[0]?.field === "calculationDate" ? asOfRef : dobRef).current?.focus();
     }
+  }
+
+  /** Fills the form from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    setDateOfBirth(saved.dateOfBirth ?? "");
+    setCalculationDateInput(saved.calculationDate || null);
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
   }
 
   function onReset() {
@@ -243,6 +256,7 @@ export function AgeCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

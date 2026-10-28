@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -12,6 +13,10 @@ import { ResultPanel } from "@/components/ui/result";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { formatNumber } from "@/lib/format";
+import { normalizeDigits } from "@/lib/number";
+import { choicePreference, numberPreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import {
   AREA_UNIT_ORDER,
   calculateLand,
@@ -48,6 +53,15 @@ const UNIT_SELECT_ID = "land-unit";
 const MODE_ORDER: readonly LandMode[] = ["convert", "measure"];
 const SHAPE_ORDER: readonly LandShape[] = ["rectangle", "four-sides", "triangle"];
 
+/** Settings remembered in this browser (never the areas or measurements typed). */
+const SCOPE = "land-calculator";
+const MODE_PREF = choicePreference(SCOPE, "mode", MODE_ORDER, "convert");
+const UNIT_PREF = choicePreference(SCOPE, "unit", AREA_UNIT_ORDER, "decimal");
+const SHAPE_PREF = choicePreference(SCOPE, "shape", SHAPE_ORDER, "rectangle");
+const LENGTH_UNIT_PREF = choicePreference(SCOPE, "length-unit", LENGTH_UNIT_ORDER, "ft");
+/** The katha size is a unit definition, so it is remembered too. */
+const KATHA_PREF = numberPreference(SCOPE, "katha-size", { min: 1, max: 10000 }, String(STANDARD_KATHA_SQ_FT));
+
 /** The figures people ask for most, shown large: শতাংশ, কাঠা, বর্গফুট. */
 const HEADLINE_UNITS: readonly AreaUnit[] = ["decimal", "katha", "sqft"];
 
@@ -75,6 +89,7 @@ const EMPTY_LENGTHS: Record<LengthField, string> = {
   sideB: "",
   sideC: "",
 };
+const LENGTH_FIELDS = Object.keys(EMPTY_LENGTHS) as LengthField[];
 
 interface FieldText {
   label: string;
@@ -415,13 +430,16 @@ function shareText(t: Strings, r: LandResult): string {
 export function LandCalculator() {
   const locale = useLocale();
   const t = STRINGS[locale];
-  const [mode, setMode] = useState<LandMode>("convert");
+  const [mode, setMode] = usePreference(MODE_PREF);
   const [amount, setAmount] = useState("");
-  const [unit, setUnit] = useState<AreaUnit>("decimal");
-  const [shape, setShape] = useState<LandShape>("rectangle");
-  const [lengthUnit, setLengthUnit] = useState<LengthUnit>("ft");
+  const [unit, setUnit] = usePreference(UNIT_PREF);
+  const [shape, setShape] = usePreference(SHAPE_PREF);
+  const [lengthUnit, setLengthUnit] = usePreference(LENGTH_UNIT_PREF);
   const [lengths, setLengths] = useState<Record<LengthField, string>>(EMPTY_LENGTHS);
-  const [kathaSize, setKathaSize] = useState(String(STANDARD_KATHA_SQ_FT));
+  const [rememberedKatha, setRememberedKatha] = usePreference(KATHA_PREF);
+  /** The katha size as typed; null = show the remembered size. */
+  const [typedKatha, setTypedKatha] = useState<string | null>(null);
+  const kathaSize = typedKatha ?? rememberedKatha;
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
   const refs: Record<LandField, React.RefObject<HTMLInputElement | null>> = {
@@ -437,6 +455,7 @@ export function LandCalculator() {
     sideC: useRef<HTMLInputElement>(null),
     kathaSize: useRef<HTMLInputElement>(null),
   };
+  const { record } = useCalculationHistory();
 
   const modeOptions = MODE_ORDER.map((value) => ({ value, label: t.modes[value] }));
   const shapeOptions = SHAPE_ORDER.map((value) => ({ value, label: t.shapes[value] }));
@@ -464,25 +483,56 @@ export function LandCalculator() {
     setRevealCount(0);
   }
 
+  /** Remembers a typed katha size once it is a valid one. */
+  function changeKathaSize(value: string) {
+    setTypedKatha(value);
+    const normalized = normalizeDigits(value).trim();
+    if (KATHA_PREF.isValid(normalized)) setRememberedKatha(normalized);
+  }
+
   function onSubmit() {
     setSubmitted(true);
     const check = calculateLand(input);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      const measured: Record<string, string> =
+        mode === "convert"
+          ? { amount, unit }
+          : { shape, lengthUnit, ...Object.fromEntries(SHAPE_FIELDS[shape].map((f) => [f, lengths[f]])) };
+      record({ mode, ...measured, kathaSize }, shareText(t, check.result));
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
   }
 
+  /**
+   * Fills the form from a saved calculation and shows its result. Sets the
+   * mode and shape directly, since changeMode/changeShape would clear it.
+   */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    const savedMode = MODE_ORDER.find((m) => m === saved.mode);
+    const savedUnit = AREA_UNIT_ORDER.find((u) => u === saved.unit);
+    const savedShape = SHAPE_ORDER.find((s) => s === saved.shape);
+    const savedLengthUnit = LENGTH_UNIT_ORDER.find((u) => u === saved.lengthUnit);
+    if (savedMode) setMode(savedMode);
+    if (savedUnit) setUnit(savedUnit);
+    if (savedShape) setShape(savedShape);
+    if (savedLengthUnit) setLengthUnit(savedLengthUnit);
+    setAmount(text("amount"));
+    setLengths(Object.fromEntries(LENGTH_FIELDS.map((f) => [f, text(f)])) as Record<LengthField, string>);
+    if (text("kathaSize")) changeKathaSize(text("kathaSize"));
+    else setTypedKatha(null);
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  /** Clears what was typed; the remembered mode, units, shape and katha size stay. */
   function onReset() {
-    setMode("convert");
     setAmount("");
-    setUnit("decimal");
-    setShape("rectangle");
-    setLengthUnit("ft");
     setLengths(EMPTY_LENGTHS);
-    setKathaSize(String(STANDARD_KATHA_SQ_FT));
+    setTypedKatha(null);
     setSubmitted(false);
     setRevealCount(0);
     refs.amount.current?.focus();
@@ -579,7 +629,7 @@ export function LandCalculator() {
                 autoComplete="off"
                 suffix={t.kathaSuffix}
                 value={kathaSize}
-                onChange={(event) => setKathaSize(event.target.value)}
+                onChange={(event) => changeKathaSize(event.target.value)}
               />
             )}
           </FormField>
@@ -599,6 +649,7 @@ export function LandCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

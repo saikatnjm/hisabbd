@@ -65,6 +65,9 @@ Styling rules: use Tailwind classes only (no CSS modules, no inline `style` exce
 | `CategoryList`, `CategoryIcon`, `CalculatorIconTile` | server | Category tiles with counts; coloured icon tiles |
 | `CalculatorSearch` | client | Accessible combobox (arrow keys, Enter, Escape) over the serialized index; shows suggestions when empty |
 | `QuickPicks` | client | Home chip row: featured, or the user's favourites and recents |
+| `RecentCalculations` | client | "Your recent calculations" under a widget: Use again, remove, clear, save on/off. Hidden when empty. |
+| `HomeRecentCalculations` (`components/home/`) | client | The latest 4 saved calculations across calculators on the homepage |
+| `LocalDataControls` (`components/layout/`) | client | Privacy page: history on/off and "Clear everything saved on this device" |
 
 Education helpers (`src/calculators/education/`): `useRowList({ createRow, initialCount, maxRows, focusTargetId: (rowId) => domId })` gives rows stable incrementing ids and moves focus after add/remove/reset. `AddRowButton` / `RemoveRowButton` explain when the row limit is reached.
 
@@ -87,6 +90,8 @@ Reset → idle, all fields cleared, focus first field
 - Field ids come from a `FIELD_IDS` record; refs from a `Record<Field, RefObject>` for focus management.
 - The result view is a separate component that reads `STRINGS[useLocale()]`.
 - Date fields use `<Input type="date">`. Default "today" values come from `useToday()`, which returns `""` during SSR.
+- **Remembered settings:** units, modes, scales and presets use `usePreference(PREF)` instead of `useState`. `PREF` is a module-level `choicePreference(slug, key, choices, fallback)`. Reset keeps them.
+- **History:** on a successful Calculate, call `record(inputs, summary)` from `useCalculationHistory()`. Render `<RecentCalculations onRestore={restore} />` after `CalculatorResultArea`. `restore` validates the saved values, sets the fields (and preferences), then sets `submitted` and increments `revealCount` so the result shows.
 
 ## Accessibility checklist
 

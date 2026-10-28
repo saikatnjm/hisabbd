@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -13,6 +14,9 @@ import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { cn } from "@/lib/cn";
 import { countBn, formatPlainDate, joinList, pluralize } from "@/lib/format";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import { useToday } from "@/lib/use-today";
 import {
   calculateJobAge,
@@ -34,6 +38,9 @@ const FIELD_IDS: Record<JobAgeField, string> = {
 };
 const PRESET_ID = "job-age-preset";
 const PRESET_IDS: readonly JobAgePresetId[] = ["bcs", "govt", "custom"];
+/** The age-limit preset is remembered in this browser; the limits typed for Custom are not. */
+const PRESET_PREF = choicePreference("government-job-age-calculator", "preset", PRESET_IDS, "bcs");
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 /** All widget strings, per locale. The maths in logic.ts is language-free. */
 const STRINGS = {
@@ -304,7 +311,7 @@ export function JobAgeCalculator() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   /** null = follow today's date. */
   const [referenceDateInput, setReferenceDateInput] = useState<string | null>(null);
-  const [preset, setPreset] = useState<JobAgePresetId>("bcs");
+  const [preset, setPreset] = usePreference(PRESET_PREF);
   const [minAge, setMinAge] = useState("");
   const [maxAge, setMaxAge] = useState("");
   const [relaxation, setRelaxation] = useState("");
@@ -318,6 +325,7 @@ export function JobAgeCalculator() {
     maxAge: useRef<HTMLInputElement>(null),
     relaxation: useRef<HTMLInputElement>(null),
   };
+  const { record } = useCalculationHistory();
 
   const referenceDate = referenceDateInput ?? today;
   const input: JobAgeInput = { dateOfBirth, referenceDate, preset, minAge, maxAge, relaxation };
@@ -342,14 +350,35 @@ export function JobAgeCalculator() {
   function onSubmit() {
     setSubmitted(true);
     const check = calculateJobAge(input);
-    if (check.ok) setRevealCount((n) => n + 1);
-    else refs[check.errors[0]!.field].current?.focus();
+    if (check.ok) {
+      setRevealCount((n) => n + 1);
+      // The minimum and maximum boxes are only used (and shown) for Custom.
+      const limits: Record<string, string> = preset === "custom" ? { minAge, maxAge } : {};
+      record({ dateOfBirth, referenceDate, preset, ...limits, relaxation }, shareText(t, locale, check.result));
+    } else {
+      refs[check.errors[0]!.field].current?.focus();
+    }
   }
 
+  /** Fills the form from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    const date = (key: string) => (DATE_PATTERN.test(text(key)) ? text(key) : "");
+    const savedPreset = PRESET_IDS.find((id) => id === saved.preset);
+    setDateOfBirth(date("dateOfBirth"));
+    setReferenceDateInput(date("referenceDate") || null);
+    if (savedPreset) setPreset(savedPreset);
+    setMinAge(text("minAge"));
+    setMaxAge(text("maxAge"));
+    setRelaxation(text("relaxation"));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  /** Clears what was typed; the remembered age-limit preset stays. */
   function onReset() {
     setDateOfBirth("");
     setReferenceDateInput(null);
-    setPreset("bcs");
     setMinAge("");
     setMaxAge("");
     setRelaxation("");
@@ -478,6 +507,7 @@ export function JobAgeCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

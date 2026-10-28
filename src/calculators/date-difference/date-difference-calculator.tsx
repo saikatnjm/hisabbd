@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { ResultActions } from "@/components/calculator/result-actions";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { FormField, Input } from "@/components/ui/form";
@@ -12,6 +13,9 @@ import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { countBn, formatNumber, formatPlainDate, joinList, pluralize, weekdayName } from "@/lib/format";
 import { dayOfWeek } from "@/lib/plain-date";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import { useToday } from "@/lib/use-today";
 import {
   calculateDateDifference,
@@ -19,6 +23,9 @@ import {
   type DateDifferenceField,
   type DateDifferenceResult,
 } from "./logic";
+
+/** Remembered in this browser: whether the end date is counted. */
+const INCLUDE_END_DATE = choicePreference("date-difference-calculator", "includeEndDate", ["false", "true"] as const, "false");
 
 const FIELD_IDS: Record<DateDifferenceField, string> = {
   startDate: "date-diff-start",
@@ -140,9 +147,11 @@ export function DateDifferenceCalculator() {
   const [startDate, setStartDate] = useState("");
   /** null = follow today's date. */
   const [endDateInput, setEndDateInput] = useState<string | null>(null);
-  const [includeEndDate, setIncludeEndDate] = useState(false);
+  const [includeEndDatePref, setIncludeEndDatePref] = usePreference(INCLUDE_END_DATE);
+  const includeEndDate = includeEndDatePref === "true";
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const startRef = useRef<HTMLInputElement>(null);
   const endRef = useRef<HTMLInputElement>(null);
 
@@ -157,14 +166,30 @@ export function DateDifferenceCalculator() {
   function onSubmit() {
     setSubmitted(true);
     const check = calculateDateDifference(startDate, endDate, { includeEndDate });
-    if (check.ok) setRevealCount((n) => n + 1);
-    else (check.errors[0]?.field === "endDate" ? endRef : startRef).current?.focus();
+    if (check.ok) {
+      setRevealCount((n) => n + 1);
+      // The end date actually used (today's date if it was left alone), so "Use again" gives the same answer.
+      record({ startDate, endDate, includeEndDate: includeEndDatePref }, shareText(t, locale, check.result));
+    } else {
+      (check.errors[0]?.field === "endDate" ? endRef : startRef).current?.focus();
+    }
   }
 
+  /** Fills the form from a saved calculation (values come from storage, so each is checked) and shows the result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    const savedInclude = text("includeEndDate");
+    setStartDate(text("startDate"));
+    setEndDateInput(typeof saved.endDate === "string" ? saved.endDate : null);
+    if (INCLUDE_END_DATE.isValid(savedInclude)) setIncludeEndDatePref(savedInclude);
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  // Keeps the remembered "include end date" choice; clears only the dates.
   function onReset() {
     setStartDate("");
     setEndDateInput(null);
-    setIncludeEndDate(false);
     setSubmitted(false);
     setRevealCount(0);
     startRef.current?.focus();
@@ -206,7 +231,7 @@ export function DateDifferenceCalculator() {
           <input
             type="checkbox"
             checked={includeEndDate}
-            onChange={(event) => setIncludeEndDate(event.target.checked)}
+            onChange={(event) => setIncludeEndDatePref(event.target.checked ? "true" : "false")}
             aria-describedby="date-diff-include-hint"
             className="mt-0.5 size-5 shrink-0 accent-brand-600"
           />
@@ -236,6 +261,7 @@ export function DateDifferenceCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

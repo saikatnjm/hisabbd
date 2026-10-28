@@ -31,7 +31,12 @@ If Node ≥ 20.9 is available locally, the same `npm run …` scripts work direc
 
 ## Hard rules (do not break these)
 
-1. **Privacy.** Calculator input values and results never leave the browser. No values in URLs, query strings, analytics events, `localStorage`, cookies or network requests. Analytics events are a closed union type in `src/lib/analytics.ts` carrying only slugs, counts and flags. `localStorage` holds only calculator slugs (`hisabbd:recent`, `hisabbd:favorites`). See `docs/privacy-and-analytics.md`.
+1. **Privacy.** Calculator input values and results never leave the browser. No values in URLs, query strings, analytics events, cookies or network requests. Analytics events are a closed union type in `src/lib/analytics.ts` carrying only slugs, counts and flags. `localStorage` holds:
+   - `hisabbd:recent` / `hisabbd:favorites`: slugs;
+   - `hisabbd:prefs`: unit/mode settings, never personal values (`src/lib/preferences.ts`);
+   - `hisabbd:history`: recent calculations (`src/lib/calculation-history.ts`).
+
+   History is the **only** place typed values may be stored. It is user-visible, can be turned off and cleared, and stays on the device. See `docs/privacy-and-analytics.md`.
 2. **Bilingual parity.** Every user-visible string ships in English and Bangla. New calculators need `nameBn`, `summaryBn`, `seoBn`, `faqsBn`, a `content.bn.tsx`, and `bn` entries in the widget's `STRINGS`. The registry validator fails the tests if Bangla meta fields are empty. See `docs/i18n.md`.
 3. **Pure logic, separate UI.** Every calculation lives in `src/calculators/<name>/logic.ts` as pure functions with no React, no DOM, no clock and no UI strings, and has a `logic.test.ts`. Widgets only parse state, call logic and render.
 4. **No guessed regulations.** Tax slabs, provident-fund rates, university grading quirks, lender fees and the like are not hard-coded. The user enters them, or the page states the assumption. Document every assumption in the comment block at the top of `logic.ts` and on the content page.
