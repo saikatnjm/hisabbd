@@ -28,21 +28,22 @@
 ├── hisabbd-bangla-i18n.patch     exported patch; NOT used by the build
 └── src/
     ├── app/
-    │   ├── layout.tsx            <html>, font, global metadata, viewport, <AnalyticsScript/>
+    │   ├── (no layout.tsx)       each locale has its own root layout (see below)
     │   ├── globals.css           Tailwind import + design tokens + utilities + keyframes
     │   ├── icon.svg              favicon
-    │   ├── not-found.tsx         404 (English shell)
-    │   ├── robots.ts, sitemap.ts
+    │   ├── global-not-found.tsx  404 for any unmatched URL (full document; English + a Bangla line)
+    │   ├── robots.ts, sitemap.ts, manifest.ts
     │   ├── (en)/                 route group → no URL segment
-    │   │   ├── layout.tsx        <LocaleShell locale="en">
+    │   │   ├── layout.tsx        ROOT layout: <RootDocument locale="en"> + <LocaleShell locale="en">
     │   │   ├── page.tsx          /
     │   │   ├── about/ privacy/ terms/
     │   │   ├── calculators/page.tsx               /calculators
     │   │   ├── calculators/<slug>/page.tsx        one static file per calculator
     │   │   └── categories/[category]/page.tsx     static params from CATEGORY_IDS
+    │   ├── embed/[locale]/       ROOT layout for /embed/<en|bn>/<slug>: widget only, noindex,
+    │   │                         no analytics, frameable by other sites
     │   └── bn/                   /bn/…
-    │       ├── layout.tsx        <LocaleShell locale="bn"> + <SetHtmlLang lang="bn"/> + bn title template
-    │       ├── set-html-lang.tsx client effect that sets document.documentElement.lang
+    │       ├── layout.tsx        ROOT layout: <RootDocument locale="bn"> (<html lang="bn">) + <LocaleShell locale="bn">
     │       ├── page.tsx, about/, privacy/, terms/, calculators/page.tsx
     │       ├── calculators/[slug]/page.tsx        ONE dynamic route for all calculators (page-registry)
     │       └── categories/[category]/page.tsx
@@ -131,7 +132,7 @@ Tests enforce consistency (`npm run test`):
 
 - **Everything is static.** Dynamic segments set `dynamicParams = false` and use `generateStaticParams`. There are no API routes, server actions, `fetch` calls or cookies.
 - **Server Components** handle pages, layouts, `CalculatorPage`, content, FAQ, related lists, breadcrumbs, JSON-LD and footer.
-- **Client Components** handle calculator widgets, `CalculatorForm`, `CalculatorResultArea`, `CalculatorProvider`, search, quick picks, page actions (save/share), result actions (copy/share), mobile menu, language toggle, analytics listener, and `SetHtmlLang`.
+- **Client Components** handle calculator widgets, `CalculatorForm`, `CalculatorResultArea`, `CalculatorProvider`, search, quick picks, page actions (save/share), result actions (copy/share), mobile menu, language toggle, and analytics listener.
 - **Locale reaches client components** through `LocaleProvider` (set in `LocaleShell`), read with `useLocale()`. Server components receive `locale` as a prop.
 - **Browser-only state** (today's date, saved calculators) uses `useSyncExternalStore` with a server snapshot (`""` / empty list), so there is no hydration mismatch and no effects are needed.
 - **`CalculatorProvider`** wraps each widget. On mount it records the slug in "recent" and fires `calculator_opened`. It also provides the slug to shared result components for analytics.
@@ -139,15 +140,20 @@ Tests enforce consistency (`npm run test`):
 ## Routing and layouts
 
 ```
-RootLayout (src/app/layout.tsx)         <html lang="en"> <body> … <AnalyticsScript/>
-├── (en)/layout.tsx  → LocaleShell("en")   skip link, SiteHeader, <main id="main">, SiteFooter
-└── bn/layout.tsx    → LocaleShell("bn") + SetHtmlLang("bn"), Bangla default title/description
+(no shared root layout)
+├── (en)/layout.tsx  ROOT → RootDocument("en") <html lang="en"> + LocaleShell("en")
+├── bn/layout.tsx    ROOT → RootDocument("bn") <html lang="bn"> + LocaleShell("bn")
+└── global-not-found.tsx  → full document for unmatched URLs (experimental.globalNotFound)
+
+RootDocument (components/layout/root-document.tsx): font, globals.css, <body>, <AnalyticsScript/>
+LocaleShell: skip link, SiteHeader, <main id="main">, SiteFooter
 ```
 
 - English URLs have no prefix because `(en)` is a route group.
+- Navigating between locales crosses root layouts, so it is a full page load.
 - `localePath(locale, path)` builds links. Always use it (or the nav helpers in `components/layout/nav-links.ts`) instead of hard-coding `/bn`.
 - `switchLocalePath(pathname)` powers the language toggle.
-- `not-found.tsx` lives at the app root and renders its own English `LocaleShell`.
+- Site-wide metadata (metadataBase, title template, verification tags, viewport) comes from `rootMetadata(locale)` / `rootViewport` in each root layout.
 
 ## Search
 
@@ -182,4 +188,4 @@ RootLayout (src/app/layout.tsx)         <html lang="en"> <body> … <AnalyticsSc
 
 ## Security headers
 
-Applied to every path (`next.config.ts`): `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: SAMEORIGIN`, `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()`.
+Applied to every path (`next.config.ts`): `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()`. Every path except `/embed/*` also gets `X-Frame-Options: SAMEORIGIN`; `/embed/*` gets `Content-Security-Policy: frame-ancestors *` so other sites can frame it.

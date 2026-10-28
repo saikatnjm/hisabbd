@@ -1,13 +1,17 @@
 import { ageCalculator } from "./age/meta";
+import { amountInWordsCalculator } from "./amount-in-words/meta";
 import { bmiCalculator } from "./bmi/meta";
 import { cgpaCalculator } from "./cgpa/meta";
 import { dateDifferenceCalculator } from "./date-difference/meta";
 import { discountCalculator } from "./discount/meta";
 import { emiCalculator } from "./emi/meta";
 import { gpaCalculator } from "./gpa/meta";
+import { jobAgeCalculator } from "./job-age/meta";
+import { landCalculator } from "./land/meta";
 import { percentageCalculator } from "./percentage/meta";
 import { profitLossCalculator } from "./profit-loss/meta";
 import { salaryCalculator } from "./salary/meta";
+import { sscHscGpaCalculator } from "./ssc-hsc-gpa/meta";
 import { CATEGORY_IDS, type CalculatorMeta, type CategoryId } from "./types";
 
 export { calculatorPath } from "./paths";
@@ -15,7 +19,8 @@ export { calculatorPath } from "./paths";
 /**
  * Registry of all published calculators.
  * Each calculator lives in `src/calculators/<name>/` (meta, logic, tests, UI)
- * and has a route at `src/app/calculators/<slug>/page.tsx`. Only its metadata
+ * and has a route at `src/app/(en)/calculators/<slug>/page.tsx` (Bangla pages
+ * come from page-registry.tsx). Only its metadata
  * is imported here, so this file stays free of client code.
  */
 export const calculators: readonly CalculatorMeta[] = [
@@ -29,6 +34,10 @@ export const calculators: readonly CalculatorMeta[] = [
   emiCalculator,
   salaryCalculator,
   dateDifferenceCalculator,
+  jobAgeCalculator,
+  sscHscGpaCalculator,
+  landCalculator,
+  amountInWordsCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -62,6 +71,9 @@ export function validateRegistry(list: readonly CalculatorMeta[]): string[] {
     if (calc.keywords.length === 0) errors.push(`No search keywords in "${calc.slug}"`);
     if (!isValidIsoDate(calc.addedOn)) {
       errors.push(`Invalid addedOn date "${calc.addedOn}" in "${calc.slug}"`);
+    }
+    if (calc.updatedOn !== undefined && (!isValidIsoDate(calc.updatedOn) || calc.updatedOn < calc.addedOn)) {
+      errors.push(`Invalid updatedOn date "${calc.updatedOn}" in "${calc.slug}"`);
     }
   }
 

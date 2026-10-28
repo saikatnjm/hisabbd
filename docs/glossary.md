@@ -23,7 +23,9 @@
 | **GPA** | Grade Point Average for one semester/term: credit-weighted average of grade points. |
 | **CGPA** | Cumulative GPA across terms: credit-weighted average of term GPAs. |
 | **Credit / credit hour** | Weight of a course. Can be fractional (0.75, 1.5). |
-| **SSC / HSC** | Secondary / Higher Secondary Certificate (school-leaving exams). Their GPA has special "4th subject" rules and is **not** supported. |
+| **SSC / HSC** | Secondary / Higher Secondary Certificate (school-leaving exams). 5.00 board scale; the optional (4th) subject adds max(0, GP − 2) and is not in the divisor; capped at 5.00. Handled by the SSC & HSC GPA Calculator, not the university GPA calculator. |
+| **Circular / "age as on" date** | A government job advertisement and the date on which candidates' age is counted. Maximum age for direct recruitment is 32 (2026 law). |
+| **Shotangsho / decimal (শতাংশ), katha (কাঠা), bigha (বিঘা)** | Land units: 1 decimal = 435.6 sq ft, 1 katha = 720 sq ft (standard; varies by region), 1 bigha = 20 katha ≈ 33 decimal, 1 acre = 100 decimal. |
 | **Truncation vs rounding** | Some institutions cut off at 2 decimals instead of rounding. HisabBD rounds and explains the difference on the page. |
 
 ## Finance

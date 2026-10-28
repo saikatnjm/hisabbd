@@ -63,7 +63,7 @@ All optional. Copy `.env.example` to `.env.local` for local use (`.env*` is git-
 
 - Vercel builds from source with `next build`. The Docker image is **not** used for deployment.
 - The output is entirely static (all routes pre-rendered), with security headers from `next.config.ts`.
-- The production fallback domain is the Vercel project domain (for example `hisabbd-five.vercel.app`) unless `NEXT_PUBLIC_SITE_URL` is set.
+- The live site is `https://bd-hisab.vercel.app` (the Vercel production domain, used as the canonical fallback) unless `NEXT_PUBLIC_SITE_URL` is set.
 - After deploy, submit `<site>/sitemap.xml` in Search Console and Bing Webmaster Tools.
 
 ## Git and commits

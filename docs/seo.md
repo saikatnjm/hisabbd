@@ -17,7 +17,7 @@ All SEO output is derived from the registry and `siteConfig`, so it always match
 
 Home pages (`src/app/(en)/page.tsx`, `src/app/bn/page.tsx`) set their metadata by hand with the same shape.
 
-Root defaults (`src/app/layout.tsx`): `metadataBase = siteConfig.url`, title template `%s | HisabBD`, default title `HisabBD — <tagline>`, `formatDetection` off (so numbers don't become phone links on iOS), and `themeColor #006a4e`.
+Root defaults (`rootMetadata(locale)` in `src/components/layout/root-document.tsx`, used by both root layouts): `metadataBase = siteConfig.url`, title template `%s | HisabBD`, default title `HisabBD — <tagline in that language>`, `formatDetection` off (so numbers don't become phone links on iOS), verification tags, and `themeColor #006a4e`. The server HTML has `<html lang="en">` on English pages and `<html lang="bn">` on `/bn` pages.
 
 ### Writing titles and descriptions
 
@@ -27,7 +27,9 @@ Root defaults (`src/app/layout.tsx`): `metadataBase = siteConfig.url`, title tem
 
 ## Sitemap and robots
 
-`src/app/sitemap.ts` emits one entry **per locale** for `/`, `/calculators`, `/about`, `/privacy`, `/terms`, every `/categories/<id>` and every `/calculators/<slug>`. Each entry carries `alternates.languages` (en-BD, bn-BD, x-default). Calculator entries use `lastModified = addedOn`.
+`src/app/sitemap.ts` emits one entry **per locale** for `/`, `/calculators`, `/about`, `/privacy`, `/terms`, every `/categories/<id>` and every `/calculators/<slug>`. Each entry carries `alternates.languages` (en-BD, bn-BD, x-default). Calculator entries use `lastModified = updatedOn ?? addedOn`. Set `updatedOn` in meta whenever a calculator's rules or figures are re-checked; it also shows as "Rules last reviewed: <date>" on the page.
+
+`src/app/manifest.ts` serves `/manifest.webmanifest` (name, theme colour, icon) so the site can be added to a phone's home screen.
 
 `src/app/robots.ts`: `allow: /` for all user agents, plus `sitemap: <siteUrl>/sitemap.xml`.
 
@@ -39,7 +41,8 @@ Builders in `src/lib/seo/structured-data.ts`, rendered by `components/seo/json-l
 
 | Schema | Where | Built from |
 | --- | --- | --- |
-| `WebSite` | Home | `siteConfig`, locale |
+| `Organization` | Home | `siteConfig` (name, url, logo `/icon.svg`); `@id` `<site>/#organization` |
+| `WebSite` | Home | `siteConfig`, locale; `publisher` → the Organization `@id` |
 | `WebApplication` | Each calculator page | meta (localized name/description), `applicationCategory: UtilitiesApplication`, free `Offer` in BDT, `inLanguage` |
 | `BreadcrumbList` | Calculator pages, category pages, `/calculators` index | Localized trail, e.g. Home › Calculators › Name |
 | `FAQPage` | Calculator pages with FAQs | `faqs` or `faqsBn`, matching what is visible on the page |

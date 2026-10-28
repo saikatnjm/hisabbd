@@ -57,8 +57,8 @@ export function GpaCalculatorContent() {
           </table>
         </div>
         <p>
-          This calculator is for university-style letter grades and credits. It is not meant for SSC or HSC
-          results, which follow their own rules.
+          This calculator is for university-style letter grades and credits. SSC and HSC results follow
+          their own rules; use the SSC &amp; HSC GPA Calculator for those.
         </p>
       </ContentSection>
 

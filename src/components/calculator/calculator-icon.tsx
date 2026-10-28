@@ -1,13 +1,17 @@
 import type { CalculatorIconName, CategoryId } from "@/calculators/types";
 import {
   BookIcon,
+  BriefcaseIcon,
   CalendarIcon,
   CalendarRangeIcon,
+  CertificateIcon,
   GraduationIcon,
+  LandIcon,
   LandmarkIcon,
   PercentIcon,
   ScaleIcon,
   TagIcon,
+  TextIcon,
   TrendingIcon,
   WalletIcon,
 } from "@/components/ui/icons";
@@ -25,6 +29,10 @@ const icons: Record<CalculatorIconName, (p: React.SVGProps<SVGSVGElement>) => Re
   trending: TrendingIcon,
   landmark: LandmarkIcon,
   wallet: WalletIcon,
+  briefcase: BriefcaseIcon,
+  certificate: CertificateIcon,
+  land: LandIcon,
+  text: TextIcon,
 };
 
 const sizes = {

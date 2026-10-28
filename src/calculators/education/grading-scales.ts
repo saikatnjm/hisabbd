@@ -8,7 +8,8 @@
  * country. Institutions may differ (some use other cut-offs, extra grades or a
  * different maximum), so users should always check their own handbook.
  *
- * Deliberately NOT included: SSC/HSC scales. Their GPA rules (for example the
+ * Not included here: SSC/HSC (5.00 board scale), which lives in
+ * ssc-hsc-gpa/logic.ts because its GPA rules (for example the
  * optional/fourth subject) work differently and a plain weighted average
  * would give misleading results.
  */

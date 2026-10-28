@@ -25,6 +25,18 @@ export function websiteSchema(locale: Locale = "en"): Schema {
     url: absoluteUrl(localePath(locale, "/")),
     description: locale === "bn" ? siteConfig.descriptionBn : siteConfig.description,
     inLanguage: locale,
+    publisher: { "@id": `${absoluteUrl("/")}#organization` },
+  };
+}
+
+/** The publisher behind the site; linked from WebSite via `publisher`. */
+export function organizationSchema(): Schema {
+  return {
+    "@type": "Organization",
+    "@id": `${absoluteUrl("/")}#organization`,
+    name: siteConfig.name,
+    url: absoluteUrl("/"),
+    logo: absoluteUrl("/icon.svg"),
   };
 }
 

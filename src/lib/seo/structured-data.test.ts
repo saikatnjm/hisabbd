@@ -4,8 +4,10 @@ import {
   breadcrumbSchema,
   calculatorSchema,
   faqSchema,
+  organizationSchema,
   schemaGraph,
   serializeJsonLd,
+  websiteSchema,
 } from "./structured-data";
 
 describe("structured data", () => {
@@ -15,6 +17,13 @@ describe("structured data", () => {
     expect(schema.name).toBe("Age Calculator");
     expect(String(schema.url).endsWith("/calculators/age-calculator")).toBe(true);
     expect(String(schema.url).startsWith("http")).toBe(true);
+  });
+
+  it("links the website to its publisher organization", () => {
+    const org = organizationSchema();
+    expect(org["@type"]).toBe("Organization");
+    expect(websiteSchema("bn").publisher).toEqual({ "@id": org["@id"] });
+    expect(String(org.logo).startsWith("http")).toBe(true);
   });
 
   it("numbers breadcrumb items from 1", () => {
