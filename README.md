@@ -44,12 +44,18 @@ src/
 public/og.png                    social sharing image
 ```
 
+## Documentation
+
+Full docs live in [`docs/`](docs/README.md). AI coding agents should start at [`AGENTS.md`](AGENTS.md).
+
 ## Adding a calculator
 
-1. Create `src/calculators/<name>/` following `age/` (or `discount/` for money inputs): `meta.ts`, pure `logic.ts` + `logic.test.ts`, a client widget built from the shared form/result components, and `content.tsx` (FAQs live in `meta.ts`).
-2. Add the meta to `calculators` in `registry.ts`.
-3. Add `src/app/calculators/<slug>/page.tsx` (copy any existing route: `calculatorMetadata` + `CalculatorPage`).
-4. `npm run test` checks slugs, keywords, categories, related links and that the route exists. Homepage, search, category pages, footer, sitemap and structured data pick it up automatically.
+1. Create `src/calculators/<name>/` following `age/` (or `discount/` for money inputs): `meta.ts` (English + Bangla fields and FAQs), pure `logic.ts` + `logic.test.ts`, a client widget with `en`/`bn` strings, `content.tsx` and `content.bn.tsx`.
+2. Add the meta to `calculators` in `registry.ts` and an entry to `calculatorPages` in `page-registry.tsx`.
+3. Add `src/app/(en)/calculators/<slug>/page.tsx` (copy any existing route). The `/bn` page is generated automatically.
+4. `npm run test` checks slugs, keywords, categories, related links, Bangla fields and that the routes exist. Homepage, search, category pages, footer, sitemap and structured data pick it up automatically.
+
+Full checklist: [`docs/adding-a-calculator.md`](docs/adding-a-calculator.md).
 
 ## Environment (all optional — set in Vercel → Settings → Environment Variables)
 
