@@ -2,22 +2,40 @@
 
 How HisabBD gets indexed, ranks for what people in Bangladesh actually search, and grows repeat visitors. Written 28 October 2026 against the live site `https://bd-hisab.vercel.app`.
 
-Items are numbered so agents can pick one up ("implement C2", "do T3"). Every new calculator must still follow the hard rules in [`../AGENTS.md`](../AGENTS.md): privacy, both languages, pure logic, and no guessed regulations.
+Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped items are marked ✅ and listed under Status. Every new calculator must still follow the hard rules in [`../AGENTS.md`](../AGENTS.md): privacy, both languages, pure logic, and no guessed regulations.
 
 ## Status (updated 28 Oct 2026)
 
-| Item | Status |
+### Shipped: merged in PR #1 and live on bd-hisab.vercel.app (verified 28 Oct 2026)
+
+| Item | What is live | Where |
+| --- | --- | --- |
+| N1 | Government Job Age Calculator: age on the circular date, BCS (21–32) / other jobs (18–32) / custom presets, relaxation years, eligible birth-date window, borderline warning, "Rules last reviewed" date | `/calculators/government-job-age-calculator`, `/bn/…` |
+| N2 | SSC & HSC GPA Calculator: 5.00 board scale, 4th-subject bonus, 5.00 cap, fail on a main-subject F | `/calculators/ssc-hsc-gpa-calculator`, `/bn/…` |
+| N3 | Land Area Calculator: decimal/katha/bigha/acre/sq ft/… conversion, area from sides (rectangle, four sides, triangle), editable katha size | `/calculators/land-calculator`, `/bn/…` |
+| N4 | Taka Amount in Words: English (lakh/crore and million) and Bangla words, Bangla digits, copy per line | `/calculators/amount-in-words`, `/bn/…` |
+| T3 | One root layout per locale: Bangla pages ship `<html lang="bn">` in the server HTML | `src/app/(en)/layout.tsx`, `src/app/bn/layout.tsx` |
+| T4 | Unknown URLs (English and `/bn`) return a real 404, `noindex`, with a Bangla line and a link to `/bn` | `src/app/global-not-found.tsx` |
+| T5 | Optional `updatedOn` in meta → "Rules last reviewed" line + sitemap `lastModified` | job-age calculator uses it |
+| T7 (part) | `Organization` JSON-LD linked from `WebSite` as `publisher` | home pages |
+| T8 | Embeddable calculators for other websites: `noindex`, no analytics, frameable only there, shares link to the full page; embed code under "Add this calculator to your website" on every calculator page | `/embed/<en\|bn>/<slug>` |
+| T9 | Web app manifest (add to home screen) | `/manifest.webmanifest` |
+| C1 (part) | Age Calculator Bangla title targets "জন্ম তারিখ দিয়ে সঠিক বয়স বের করুন" | `/bn/calculators/age-calculator` |
+| – | Related links: Age → Job Age; GPA → SSC/HSC GPA; GPA pages point SSC/HSC students to the new calculator | |
+| – | Sitemap grew from 40 to 48 URLs (24 pages × 2 locales) | `/sitemap.xml` |
+
+### Open
+
+| Item | Status / blocker |
 | --- | --- |
-| N1 Government Job Age, N2 SSC/HSC GPA, N3 Land, N4 Amount in Words | ✅ Built (not yet deployed) |
-| T3 `<html lang="bn">` in server HTML, T4 404 for `/bn` (bilingual global 404) | ✅ Built |
-| T5 `updatedOn` + "Rules last reviewed", T7 `Organization` schema, T8 embeds, T9 manifest | ✅ Built |
-| C1 Age Bangla title ("জন্ম তারিখ দিয়ে…") | ✅ Built; other title changes wait for Search Console data |
 | T1 Search Console / Bing, T2 custom domain, D1–D6 distribution | ⏳ **Owner action** (accounts, domain, posting) |
-| T7 contact page | ⏳ Needs a public contact email from the owner |
-| T6 per-calculator social images | ⏳ Not started (needs designed PNGs; don't render Bangla with `next/og`) |
-| C2 guides hub, C3 intent pages | ⏳ Not started |
-| N5–N8, N10–N12 (rate- or law-dependent) | ⏳ Blocked on verified official figures (see rules in §6) |
+| T7 contact page + methodology | ⏳ Needs a public contact email from the owner |
+| N8 Income tax | ⏳ Needs the official Finance Act 2026 / NBR slab text by ~10 Nov 2026, else July 2027 |
+| N13 Admission score calculators (new) | ⏳ Needs the 2026-27 admission circulars as sources |
+| C2 guides (first three for N1–N3), T6 social images | ⏳ Not started, no blockers |
+| N5–N7, N10–N12 (rate- or law-dependent) | ⏳ Need verified official figures (see rules in §6) |
 | N9 Bangla date converter | ⏳ Not started (target 1 Apr 2027) |
+| Q1 browser smoke tests, Q2 remove stray patch file | ⏳ See §11 |
 
 ## 1. Summary
 
@@ -28,34 +46,39 @@ The site is technically sound but **not yet visible in search**. A `site:` searc
 3. **Win Bangla queries first.** Bangla search results have fewer good answers than English ones.
 4. **Distribute where Bangladeshi users actually are**: Facebook groups, WhatsApp shares, university and job-prep communities.
 
-### Next 7 days, in order
+### Next steps, in order (as of 28 Oct 2026)
 
-| # | Action | Item |
-| --- | --- | --- |
-| 1 | Verify Google Search Console and Bing, submit the sitemap, request indexing of the top 10 URLs | T1 |
-| 2 | Decide on a custom domain **before** any outreach builds links to `vercel.app` | T2 |
-| 3 | Ship the **Government Job Age Eligibility Calculator** (50th BCS circular expected 1 Nov) | N1 |
-| 4 | Ship the **SSC/HSC GPA Calculator** (HSC results 29 Oct; admissions run to February) | N2 |
-| 5 | Serve `lang="bn"` in the server HTML of `/bn` pages | T3 |
+N1–N4 and T3 shipped, so the bottleneck is now **getting indexed and getting the first links**.
 
-## 2. Current state (audited 28 Oct 2026)
+| # | Action | Who | Item |
+| --- | --- | --- | --- |
+| 1 | Verify Google Search Console and Bing, submit `/sitemap.xml`, request indexing for `/`, `/bn` and the 4 new calculators in both locales | Owner | T1 |
+| 2 | On BCS circular day (~1 Nov) post the job-age calculator in BCS-prep Facebook groups; post the SSC/HSC GPA calculator in HSC/admission groups now | Owner | D1 |
+| 3 | Decide on a custom domain **before** outreach builds more links to `vercel.app` | Owner | T2 |
+| 4 | Get the official AY 2026-27 slab text, or decide to skip tax until July 2027 (decide by ~10 Nov) | Owner → agent | N8 |
+| 5 | Write Bangla guides 1–3 (job age, SSC/HSC GPA, land) and the guides hub | Agent | C2 |
+| 6 | Research the 2026-27 admission circulars and build admission score calculators | Agent | N13 |
+| 7 | Add browser smoke tests for all 14 calculators in both locales | Agent | Q1 |
+
+## 2. Current state (audited 28 Oct 2026; re-checked after PR #1 deployed)
 
 | Check | Status |
 | --- | --- |
 | Pages live, 200, static, cached on Vercel | ✅ |
 | `robots.txt` allows everything and points to the sitemap | ✅ |
-| `sitemap.xml`: 40 URLs (20 pages × 2 locales) with hreflang alternates | ✅ |
+| `sitemap.xml`: 48 URLs (24 pages × 2 locales) with hreflang alternates; embeds excluded | ✅ (was 40) |
 | Canonical + hreflang `en-BD` / `bn-BD` / `x-default` on every page | ✅ |
-| JSON-LD: `WebSite` (home); `WebApplication`, `BreadcrumbList`, `FAQPage` (calculators) | ✅ |
+| JSON-LD: `Organization` + `WebSite` (home); `WebApplication`, `BreadcrumbList`, `FAQPage` (calculators) | ✅ (`Organization` added) |
 | Bangla titles and descriptions on `/bn` pages | ✅ |
-| GA4 loaded | ✅ |
-| `google-site-verification` / `msvalidate.01` meta tags | ❌ absent (unless verified another way) |
-| Appears in search results (`site:bd-hisab.vercel.app`) | ❌ no results |
-| `<html lang>` on `/bn` pages in the server HTML | ❌ `"en"` (only fixed after JavaScript runs) |
-| Domain | ⚠️ `*.vercel.app` subdomain: weak brand, and moving later costs ranking |
-| Contact / author / methodology info (trust signals for money and health topics) | ⚠️ About page only; no contact |
-| Per-calculator social images | ⚠️ one shared `og.png` |
-| `.env.example` and docs referenced `hisabbd-five.vercel.app` | ⚠️ outdated; updated to `bd-hisab.vercel.app` |
+| `<html lang>` on `/bn` pages in the server HTML | ✅ `"bn"` (was `"en"`) |
+| Unknown URLs | ✅ HTTP 404, `noindex` |
+| Web app manifest | ✅ `/manifest.webmanifest` |
+| GA4 loaded | ✅ (not loaded in embeds) |
+| `google-site-verification` / `msvalidate.01` meta tags | ❌ absent (unless verified another way): T1 |
+| Appears in search results (`site:bd-hisab.vercel.app`) | ❌ no results as of 28 Oct: T1 |
+| Domain | ⚠️ `*.vercel.app` subdomain: weak brand, and moving later costs ranking: T2 |
+| Contact / author / methodology info (trust signals for money and health topics) | ⚠️ About page only; no contact: T7 |
+| Per-calculator social images | ⚠️ one shared `og.png`: T6 |
 
 ## 3. Demand analysis
 
@@ -125,13 +148,13 @@ Record the peak weeks. Shift the ship dates in §8 so each page is live **4–6 
 
 | ID | Change | Why | Where |
 | --- | --- | --- | --- |
-| T3 | Give each locale its own root layout (`src/app/(en)/layout.tsx` and `src/app/bn/layout.tsx` each render `<html lang>`). Remove `<html>` from `src/app/layout.tsx` and delete `SetHtmlLang`. Handle 404s with `global-not-found` or one `not-found` per root. | Bangla pages currently ship `lang="en"`. Fixes screen readers before JS runs and removes a mixed language signal. Switching locales becomes a full page load, which the toggle already is in effect. | `src/app/**/layout.tsx` |
-| T4 | Bangla 404 for `/bn/*` paths | Unknown `/bn` URLs currently fall back to the English 404 | `src/app/bn/not-found.tsx` |
-| T5 | Add an optional `updatedOn` to `CalculatorMeta`, use it in the sitemap `lastModified`, and show "Last reviewed: <date>" on rule-dependent calculators | Freshness signal; trust on finance pages | `types.ts`, `sitemap.ts`, `CalculatorPage` |
+| T3 ✅ | **Shipped.** Each locale has its own root layout (`src/app/(en)/layout.tsx`, `src/app/bn/layout.tsx`) rendering `<html lang>` through `RootDocument`; `src/app/layout.tsx` and `SetHtmlLang` are gone. | Bangla pages shipped `lang="en"`. Fixes screen readers before JS runs and removes a mixed language signal. | `src/app/**/layout.tsx`, `components/layout/root-document.tsx` |
+| T4 ✅ | **Shipped** as one bilingual `global-not-found.tsx` (`experimental.globalNotFound`), since a 404 can't know the requested locale | Unknown `/bn` URLs fell back to the English-only 404 | `src/app/global-not-found.tsx` |
+| T5 ✅ | **Shipped.** Optional `updatedOn` in `CalculatorMeta` (validated ≥ `addedOn`), used as sitemap `lastModified` and shown as "Rules last reviewed: <date>". Set it on every rule-dependent calculator. | Freshness signal; trust on finance pages | `types.ts`, `registry.ts`, `sitemap.ts`, `CalculatorPage` |
 | T6 | Per-calculator social images. Use static 1200×630 PNGs in `public/og/<slug>.png` wired through `calculatorMetadata`. **Don't** render Bangla text with `next/og`: its renderer (Satori) doesn't shape Bengali conjuncts correctly. | Facebook and WhatsApp are the main sharing channels; a specific preview gets more clicks than a generic one | `metadata.ts`, `public/og/` |
-| T7 | Trust pages: `/contact` (email), and a methodology section on About ("how we check formulas; sources; how to report an error"). Add `Organization` schema with logo and contact. | Google weighs who is behind money and health advice | `src/app/(en)/…`, `src/app/bn/…`, `structured-data.ts` |
-| T8 | Embeddable widgets: `/embed/<slug>` (both locales) renders only the widget plus an attribution link. Relax framing **only** there (`Content-Security-Policy: frame-ancestors *` and no `X-Frame-Options`). Mark it `noindex`. | Bloggers and coaching sites can embed a calculator, which earns links (§6). Privacy is unchanged because inputs stay in the iframe. | `next.config.ts` headers per path, new route |
-| T9 | Web app manifest + icons (installable; no offline caching needed) | Repeat visits from the phone home screen | `src/app/manifest.ts` |
+| T7 (part ✅) | `Organization` schema **shipped** (name, url, logo, linked from `WebSite`). **Open:** `/contact` (needs a public email from the owner; then add `contactPoint` to the schema) and a methodology section on About ("how we check formulas; sources; how to report an error"). | Google weighs who is behind money and health advice | `src/app/(en)/…`, `src/app/bn/…`, `structured-data.ts` |
+| T8 ✅ | **Shipped** at `/embed/<en\|bn>/<slug>`: widget plus attribution link, `noindex` with a canonical to the full page, no analytics, `Content-Security-Policy: frame-ancestors *` only on `/embed/*`; Copy/Share link to the full page (`shareablePath`). The embed code appears under "Add this calculator to your website" on each calculator page. | Bloggers and coaching sites can embed a calculator, which earns links (D3). Privacy is unchanged because inputs stay in the iframe. | `src/app/embed/`, `next.config.ts`, `components/calculator/embed-code.tsx` |
+| T9 ✅ | **Shipped:** web app manifest with the SVG icon. Add 192/512 PNG icons if install prompts matter. | Repeat visits from the phone home screen | `src/app/manifest.ts` |
 | T10 | IndexNow ping on deploy (Bing/Yandex) | Faster recrawl after updates | Optional build step |
 | T11 | Keep `FAQPage` markup, but don't count on FAQ rich results | Google limits FAQ rich results to authoritative government and health sites, so the markup rarely shows | Info only |
 
@@ -141,10 +164,10 @@ Scoring: **Demand** (H/M/L, to be confirmed in Trends), **Timing** (when it must
 
 | ID | Calculator (EN / BN) | Demand | Live by | Effort | Rule risk | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| N1 | Government Job Age Eligibility / সরকারি চাকরির বয়স ক্যালকুলেটর | H | **1–3 Nov 2026** | S | Medium | Reuses `age/logic.ts` |
-| N2 | SSC/HSC GPA / এসএসসি-এইচএসসি জিপিএ ক্যালকুলেটর | H | **Nov 2026** | M | Low–Med | 5.00 scale with the 4th-subject rule |
-| N3 | Land Area Converter / জমির পরিমাপ ক্যালকুলেটর | H | Nov 2026 | M | Low | Evergreen, Bangla-heavy |
-| N4 | Amount in Words / টাকা কথায় | H | Dec 2026 | M | None | Bangla number words 0–99 come from a lookup table |
+| N1 ✅ | Government Job Age Eligibility / সরকারি চাকরির বয়স ক্যালকুলেটর | H | **Shipped 28 Oct 2026** | S | Medium | `src/calculators/job-age/` |
+| N2 ✅ | SSC/HSC GPA / এসএসসি ও এইচএসসি জিপিএ ক্যালকুলেটর | H | **Shipped 28 Oct 2026** | M | Low–Med | `src/calculators/ssc-hsc-gpa/` |
+| N3 ✅ | Land Area / জমির পরিমাপ ক্যালকুলেটর | H | **Shipped 28 Oct 2026** | M | Low | `src/calculators/land/` |
+| N4 ✅ | Amount in Words / টাকা কথায় | H | **Shipped 28 Oct 2026** | M | None | `src/calculators/amount-in-words/` |
 | N5 | Savings: Sanchayapatra / FDR / DPS | H | Dec 2026 | M | **High** | User-entered rate; dated, sourced presets |
 | N6 | Zakat / যাকাত ক্যালকুলেটর | H (seasonal) | **15 Jan 2027** | M | Medium | Nisab basis selectable |
 | N7 | Gold Value & Units / সোনার দাম ও ভরি | M | 15 Jan 2027 | S | Medium | Pairs with N6 |
@@ -153,8 +176,18 @@ Scoring: **Demand** (H/M/L, to be confirmed in Trends), **Timing** (when it must
 | N10 | MFS Cash-Out Charge / বিকাশ-নগদ চার্জ | M | Dec 2026 | S | High | Presets with as-of dates |
 | N11 | VAT / ভ্যাট ক্যালকুলেটর | M | Jan 2027 | S | Low | Rate is an input, 15% default with source |
 | N12 | Electricity Bill / বিদ্যুৎ বিল | M | Later | M | High | Tariff slabs as data with BERC source |
+| N13 | Admission Score / ভর্তি স্কোর ক্যালকুলেটর (medical, university units) | H (Nov–Feb, after HSC results) | Dec 2026 | M | **High** | New. Each admission circular publishes how SSC/HSC GPA marks combine with exam marks, and the formulas change yearly. Build from the 2026-27 circulars only, one dated, sourced preset per exam, user-overridable. Related: N2. |
 
-### Specs for the first four
+### N13 notes (new)
+
+- Demand follows HSC results (29 Oct 2026) and runs through the admission season (Nov 2026 – Feb 2027).
+- Inputs: SSC GPA, HSC GPA (optionally 4th-subject-excluded GPA where a circular asks for it), expected exam marks; preset = exam/unit with its weightings and minimum GPA requirements.
+- Output: GPA-based marks, total score, whether the minimum GPA requirement is met.
+- Rules: no preset without a link to the circular and an as-of date; set `updatedOn`; say "the circular's wording wins".
+
+### Specs for the first four (shipped)
+
+These shipped in PR #1. The authoritative description of what was built is now [calculators.md](calculators.md). Differences from the specs below: N2's board scale lives in `ssc-hsc-gpa/logic.ts` (`BD_BOARD_5_SCALE`), not `education/grading-scales.ts`; N1 counts "aged 32 years 11 months" as meeting a 32 maximum and shows a borderline warning because the official convention couldn't be verified; N3 is in the `everyday` category.
 
 **N1 Government Job Age Eligibility.** Inputs: date of birth, the circular's reference date ("age as of"), minimum age, maximum age, and optional extra years for a quota or relaxation (user-entered). Output: age on the reference date (years/months/days, via `calendarDifference`); eligible / too young / too old; and the **date-of-birth window** that qualifies ("born between X and Y"). Preset: "Government job / BCS (direct recruitment): maximum 32", citing the 2026 act and the circular-date convention, with an as-of date, and editable. Category `date-time`; related: age-calculator. A guide (C2) explains "age on circular date" in Bangla.
 
@@ -174,16 +207,16 @@ Scoring: **Demand** (H/M/L, to be confirmed in Trends), **Timing** (when it must
 ## 7. On-page content
 
 **C1. Match titles and H1s to real queries (both locales).**
-- Age (bn): add the phrase people type, e.g. "জন্ম তারিখ দিয়ে বয়স বের করুন", to the title or description.
+- ✅ Age (bn): shipped. The title is now "বয়স ক্যালকুলেটর: জন্ম তারিখ দিয়ে সঠিক বয়স বের করুন".
 - Pick one Bangla term per concept and use it in `nameBn`, `seoBn.title` and H1. For example, Date Difference uses "তারিখের পার্থক্য" in its name but "তারিখের ব্যবধান" in its title. Choose using Trends/GSC data.
 - Add the assessment year or "2026" only to rule-dependent pages (tax, savings rates), never to evergreen math.
 - Revisit after 4–6 weeks of GSC data: rewrite titles on pages with high impressions but CTR under 2%.
 
-**C2. Guides hub** (`/guides/<slug>` and `/bn/guides/<slug>`, Server Components, linked from each related calculator). These are informational articles that answer the question and then send the reader to the calculator. Write Bangla-first; each 600–1,200 words with worked examples and sources. Starting list:
+**C2. Guides hub** (`/guides/<slug>` and `/bn/guides/<slug>`, Server Components, linked from each related calculator). These are informational articles that answer the question and then send the reader to the calculator. Write Bangla-first; each 600–1,200 words with worked examples and sources. **Next up: guides 1–3, because their calculators (N1–N3) are now live and in season.** Starting list:
 
-1. সরকারি চাকরির বয়স কীভাবে হিসাব হয় (সার্কুলারের তারিখ অনুযায়ী) → N1
-2. এসএসসি/এইচএসসি জিপিএ কীভাবে হিসাব হয়, চতুর্থ বিষয়সহ → N2
-3. জমি মাপার নিয়ম: শতাংশ, কাঠা, বিঘা → N3
+1. সরকারি চাকরির বয়স কীভাবে হিসাব হয় (সার্কুলারের তারিখ অনুযায়ী) → N1 (live)
+2. এসএসসি/এইচএসসি জিপিএ কীভাবে হিসাব হয়, চতুর্থ বিষয়সহ → N2 (live)
+3. জমি মাপার নিয়ম: শতাংশ, কাঠা, বিঘা → N3 (live)
 4. জন্ম তারিখ দিয়ে বয়স বের করার নিয়ম → Age
 5. সিজিপিএ হিসাবের নিয়ম (ক্রেডিট-ওয়েটেড কেন) → CGPA
 6. ইএমআই কীভাবে হিসাব হয় (রিডিউসিং ব্যালেন্স বনাম ফ্ল্যাট রেট) → EMI
@@ -204,14 +237,15 @@ Links from other sites are the main constraint for a new domain. All outreach co
 | --- | --- | --- |
 | D1 | Facebook groups: university pages (CGPA), BCS/job-prep groups (N1 on circular days), HSC/admission groups (N2 on results day), tax help groups (Nov) | One genuinely helpful post per group, with a worked example and a link. Answer questions. No repeat posting. |
 | D2 | WhatsApp / Messenger | Copy and Share already append the page URL, which is good. T6 social images make those shares more clickable. |
-| D3 | Embeds (T8) | Offer an embed snippet to education bloggers, coaching centres and university clubs. Each embed carries an attribution link. |
+| D3 | Embeds (T8, live) | Offer the embed code (under "Add this calculator to your website" on each page) to education bloggers, coaching centres, BCS-prep sites and university clubs. Best candidates: job age, SSC/HSC GPA, CGPA, land. Each embed carries an attribution link. |
 | D4 | Community answers | Answer GPA, EMI and land questions on Reddit r/bangladesh and Bangla Q&A sites, linking only when the calculator is the answer. |
 | D5 | Developer channels | Open-source the calculation logic (or the whole repo) with a README linking to the site. Post a "how we handle Bangla digits and plain dates" write-up on dev.to or a Bangla tech blog. |
 | D6 | Local press / tech blogs | Pitch "free, private, bilingual calculator site" around a seasonal hook (tax week, zakat). |
 
 ## 9. Measurement
 
-- **Weekly (first 8 weeks):** GSC indexed pages (target: all 40 within 4 weeks), impressions, top queries by page, CTR, Core Web Vitals.
+- **Weekly (first 8 weeks):** GSC indexed pages (target: all 48 sitemap URLs within 4 weeks; `/embed/*` should stay excluded as "noindex"), impressions, top queries by page, CTR, Core Web Vitals.
+- **Data-driven loop (from ~4–6 weeks after indexing):** rewrite titles with high impressions but low CTR; strengthen pages ranking 8–20 (content, internal links, a guide); pick new calculators from queries that already show the site but that it doesn't answer.
 - **Monthly:** GA4 `calculation_completed` ÷ `calculator_opened` per calculator (does the tool work for people?), plus `related_calculator_clicked` and returning users.
 - **Per launch:** impressions 14 and 28 days after launch versus the seasonal peak date. If a page isn't indexed within 14 days, request indexing and add internal links to it.
 - **Targets to sanity-check later**, as a direction rather than a promise: full index coverage by end of Nov 2026; first 1,000 monthly organic clicks by Feb 2027 (zakat season); Bangla pages producing at least half of clicks.
@@ -221,17 +255,26 @@ Links from other sites are the main constraint for a new domain. All outreach co
 
 | Date | Ship / do |
 | --- | --- |
-| 28 Oct – 1 Nov 2026 | T1, T2 decision, N1, T3 |
-| Nov 2026 | N2 + guide 2, N3 + guide 3, C1 titles, T5, T7; N8 only if sourced by 10 Nov; D1 for HSC/BCS/tax groups |
-| Dec 2026 | N4, N5, N10, T6, T8; first GSC title-rewrite pass |
+| 28 Oct 2026 | ✅ Shipped N1–N4, T3, T4, T5, T7 (schema), T8, T9, C1 (age) in PR #1 |
+| 28 Oct – 1 Nov 2026 | T1 (Search Console/Bing), T2 decision; D1 on BCS circular day and in HSC groups |
+| Nov 2026 | C2 guides 1–3 + guides hub; Q1 smoke tests; T7 contact (needs email); N8 only if sourced by 10 Nov; D1 tax groups |
+| Dec 2026 | N13 admission scores; N5, N10; T6 social images; D3 embed outreach; first GSC title-rewrite pass |
 | 1–15 Jan 2027 | N6, N7, guide 8, N11; check gold, savings and MFS data |
-| Feb – Mar 2027 | Zakat-season distribution; C2 guides 4–7; T9 |
+| Feb – Mar 2027 | Zakat-season distribution; C2 guides 4–7 |
 | 1 Apr 2027 | N9 (before 14 Apr) |
 | May – Jul 2027 | N2 refresh for SSC; after the budget (early Jun) refresh all rate data; N8 for AY 2027-28 in July |
 
-**Data review reminders** (put them in a calendar): savings certificate rates (Jan and Jul), MFS charges (quarterly), gold price (the page asks the user for it), tax slabs (July), government job age rule (when the law changes).
+**Data review reminders** (put them in a calendar): savings certificate rates (Jan and Jul), MFS charges (quarterly), gold price (the page asks the user for it), tax slabs (July), government job age rule and BCS presets in `src/calculators/job-age/logic.ts` (each new BCS circular, and when the law changes; bump `updatedOn`), admission formulas (each circular).
 
-## 11. What not to do
+## 11. Engineering and quality
+
+| ID | Item | Why |
+| --- | --- | --- |
+| Q1 | Browser smoke tests (Playwright): open every calculator in both locales, run one valid and one invalid calculation, check that the result or error appears and that `/embed/*` renders. Run them in Docker in CI or before deploy. | Only logic is unit-tested today (484 tests); 14 interactive widgets have no UI tests. |
+| Q2 | Remove the stray `hisabbd-bangla-i18n.patch` from the repo root (deleted locally, not yet committed as of 28 Oct). | Nothing reads it; 460 KB of noise. |
+| Q3 | Keep `experimental.globalNotFound` under watch on Next.js upgrades. | T4 depends on an experimental flag. |
+
+## 12. What not to do
 
 - Mass-generated near-duplicate pages, keyword stuffing, or hidden text.
 - Buying links, link exchanges or spammy directory submissions.
