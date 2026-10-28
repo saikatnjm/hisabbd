@@ -70,22 +70,9 @@ export function SiteFooter({ locale }: { locale: Locale }) {
       <Container>
         <div className="border-t border-brand-100 py-6 text-sm text-slate-600">
           <p>{t.disclaimer}</p>
-          <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-            <p>
-              © {COPYRIGHT_YEAR} {siteConfig.name}
-            </p>
-            <p>
-              {t.madeBy}{" "}
-              <a
-                href="https://github.com/saikatnjm"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-brand-700 underline-offset-4 hover:underline"
-              >
-                @saikatnjm
-              </a>
-            </p>
-          </div>
+          <p className="mt-2">
+            © {COPYRIGHT_YEAR} {siteConfig.name}
+          </p>
         </div>
       </Container>
     </footer>

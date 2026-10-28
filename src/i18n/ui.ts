@@ -59,7 +59,6 @@ export interface UiStrings {
     categories: string;
     site: string;
     disclaimer: string;
-    madeBy: string;
     hisabMeans: string;
   };
 }
@@ -121,7 +120,6 @@ const en: UiStrings = {
     site: "HisabBD",
     disclaimer:
       "Results are for general information. For important financial, health or academic decisions, confirm with the relevant institution or a qualified professional.",
-    madeBy: "Made by",
     hisabMeans: "হিসাব = calculation.",
   },
 };
@@ -182,7 +180,6 @@ const bn: UiStrings = {
     site: "হিসাবBD",
     disclaimer:
       "ফলাফলগুলো সাধারণ তথ্যের জন্য। গুরুত্বপূর্ণ আর্থিক, স্বাস্থ্য বা শিক্ষাসংক্রান্ত সিদ্ধান্তের আগে সংশ্লিষ্ট প্রতিষ্ঠান বা যোগ্য পেশাদারের কাছে যাচাই করে নিন।",
-    madeBy: "তৈরি করেছেন",
     hisabMeans: "হিসাব মানে ক্যালকুলেশন।",
   },
 };
