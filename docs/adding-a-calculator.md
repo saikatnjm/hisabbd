@@ -23,7 +23,8 @@ Below, `<name>` is the folder (e.g. `vat`), `<slug>` is the URL id (e.g. `vat-ca
 - [ ] 10. Optionally, add it to `featuredSlugs` (`featured.ts`) and to other calculators' `related`
 - [ ] 11. If it introduces a new category, see "New category" below
 - [ ] 12. Add its inputs to `CALCULATOR_INPUTS` in `e2e/calculator-inputs.ts` (labels and submit text from the widget's `STRINGS`, both locales)
-- [ ] 13. Run `npm run check` and `docker compose run --rm e2e`
+- [ ] 13. Generate its social preview images: `docker compose run --rm e2e npm run og`, then commit the new `public/og/<slug>.en.png` and `.bn.png` (see docs/seo.md → "Social preview images"; `og-images.test.ts` fails without them)
+- [ ] 14. Run `npm run check` and `docker compose run --rm e2e`
 
 Nothing else needs editing. Home, `/calculators`, category pages, search, related links, footer, sitemap, JSON-LD and the `/bn` route all pick it up from the registry.
 

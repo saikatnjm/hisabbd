@@ -46,7 +46,7 @@ export default async function EmbedPage({ params }: { params: Params }) {
 
   return (
     <main className="p-3 sm:p-4">
-      <CalculatorProvider slug={meta.slug}>
+      <CalculatorProvider slug={meta.slug} name={name}>
         <Calculator />
       </CalculatorProvider>
       <p className="mt-4 text-sm text-slate-600">

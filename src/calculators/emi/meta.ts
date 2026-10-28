@@ -33,7 +33,7 @@ export const emiCalculator: CalculatorMeta = {
       "হোম, কার বা পার্সোনাল লোনের মাসিক ইএমআই, মোট সুদ ও মোট পরিশোধ হিসাব করুন, বছরভিত্তিক ভাঙা হিসাবসহ। ফ্রি, কোনো সাইনআপ লাগে না।",
   },
   addedOn: "2026-10-05",
-  related: ["salary-calculator", "percentage-calculator"],
+  related: ["salary-calculator", "fdr-calculator", "sanchayapatra-calculator", "percentage-calculator"],
   faqs: [
     {
       question: "What is an EMI?",

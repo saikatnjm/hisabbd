@@ -41,7 +41,8 @@ src/
     seo/json-ld.tsx              structured data
   lib/                           plain-date (timezone-safe dates), number (parsing, Bangla digits,
                                  rounding), format (৳, %, lakh grouping), seo/structured-data
-public/og.png                    social sharing image
+public/og.png                    fallback social image (about, privacy, index pages)
+public/og/                       per-page social images (calculators, guides, home; EN + BN), see docs/seo.md
 ```
 
 ## Documentation

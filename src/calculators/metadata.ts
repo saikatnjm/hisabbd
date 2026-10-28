@@ -2,10 +2,51 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { DEFAULT_LOCALE, HREFLANG, localePath, OG_LOCALE, type Locale } from "@/i18n/locales";
 import { calculatorPath } from "./paths";
+import type { GuideMeta } from "@/guides/types";
 import type { CalculatorMeta } from "./types";
 
-/** Shared Open Graph image (public/og.png), used by every page. */
-export const OG_IMAGE = { url: "/og.png", width: 1200, height: 630, alt: `${siteConfig.name}: ${siteConfig.tagline}` };
+/** Size of every social preview image (the Facebook / WhatsApp large-card size). */
+export const OG_IMAGE_SIZE = { width: 1200, height: 630 } as const;
+
+/**
+ * Shared Open Graph image (public/og.png): the fallback for pages without their
+ * own image (about, categories, the calculator index…).
+ */
+export const OG_IMAGE = { url: "/og.png", ...OG_IMAGE_SIZE, alt: `${siteConfig.name}: ${siteConfig.tagline}` };
+
+/** A page's own social preview image: a URL under /og/ plus its alt text. */
+export interface OgImage {
+  url: string;
+  alt: string;
+}
+
+/**
+ * Per-page social preview images are static PNGs in public/og/, one per page
+ * and locale, rendered in Chromium by scripts/og/og-images.spec.ts
+ * (`docker compose run --rm e2e npm run og`). They are not drawn with
+ * next/og because its renderer (Satori) can't shape Bengali conjuncts.
+ * src/calculators/og-images.test.ts fails when a page's file is missing.
+ */
+const OG_DIR = "/og";
+const OG_EXT = "png";
+
+/** Social preview image of a calculator page: /og/<slug>.<locale>.png */
+export function calculatorOgImage(calc: Pick<CalculatorMeta, "slug" | "name" | "nameBn">, locale: Locale): OgImage {
+  return { url: `${OG_DIR}/${calc.slug}.${locale}.${OG_EXT}`, alt: locale === "bn" ? calc.nameBn : calc.name };
+}
+
+/** Social preview image of a guide page: /og/guides/<slug>.<locale>.png */
+export function guideOgImage(guide: Pick<GuideMeta, "slug" | "title" | "titleBn">, locale: Locale): OgImage {
+  return { url: `${OG_DIR}/guides/${guide.slug}.${locale}.${OG_EXT}`, alt: locale === "bn" ? guide.titleBn : guide.title };
+}
+
+/** Social preview image of the home page: /og/home.<locale>.png */
+export function homeOgImage(locale: Locale): OgImage {
+  return {
+    url: `${OG_DIR}/home.${locale}.${OG_EXT}`,
+    alt: `${siteConfig.name}: ${locale === "bn" ? siteConfig.taglineBn : siteConfig.tagline}`,
+  };
+}
 
 /**
  * Page metadata (title, description, canonical, hreflang, Open Graph, Twitter)
@@ -17,6 +58,7 @@ export function pageMetadata({
   description,
   path,
   locale = DEFAULT_LOCALE,
+  image,
 }: {
   /** Page title without the site name (the layout template appends it). */
   title: string;
@@ -24,8 +66,11 @@ export function pageMetadata({
   /** English path of the page, e.g. "/calculators/age-calculator". */
   path: string;
   locale?: Locale;
+  /** The page's own social preview image; defaults to the shared OG_IMAGE. */
+  image?: OgImage;
 }): Metadata {
   const fullTitle = `${title} | ${siteConfig.name}`;
+  const ogImage = image ? { ...image, ...OG_IMAGE_SIZE } : OG_IMAGE;
   const canonical = localePath(locale, path);
   return {
     title,
@@ -46,9 +91,9 @@ export function pageMetadata({
       url: canonical,
       title: fullTitle,
       description,
-      images: [OG_IMAGE],
+      images: [ogImage],
     },
-    twitter: { card: "summary_large_image", title: fullTitle, description, images: [OG_IMAGE.url] },
+    twitter: { card: "summary_large_image", title: fullTitle, description, images: [ogImage.url] },
   };
 }
 
@@ -59,5 +104,6 @@ export function calculatorMetadata(calc: CalculatorMeta, locale: Locale = DEFAUL
     description: seo.description,
     path: calculatorPath(calc.slug),
     locale,
+    image: calculatorOgImage(calc, locale),
   });
 }

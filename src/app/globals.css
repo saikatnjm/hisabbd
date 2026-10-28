@@ -105,3 +105,23 @@
     animation: result-in 220ms ease-out both;
   }
 }
+
+/* Print / Save as PDF: just the calculator, its inputs and the result. */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .bg-graph {
+    background-image: none;
+  }
+
+  .shadow-lift {
+    box-shadow: none;
+  }
+}

@@ -19,6 +19,8 @@ export type AnalyticsEvent =
   | { name: "related_calculator_clicked"; from: string; to: string; placement: "next" | "related" }
   | { name: "result_copied"; calculator: string }
   | { name: "result_shared"; calculator: string }
+  | { name: "result_image_shared"; calculator: string; method: "share" | "download" }
+  | { name: "result_printed"; calculator: string }
   | { name: "page_shared"; calculator: string; method: "share" | "copy" }
   | { name: "favorite_toggled"; calculator: string; favorite: boolean };
 

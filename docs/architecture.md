@@ -24,7 +24,9 @@
 ├── next.config.ts                security headers
 ├── vitest.config.mts, eslint.config.mjs, postcss.config.mjs, tsconfig.json
 ├── .env.example                  all optional env vars
-├── public/og.png                 1200×630 social image used by every page
+├── public/og.png                 fallback 1200×630 social image (pages without their own)
+├── public/og/                    per-page social images, EN + BN (generated: `docker compose run --rm e2e npm run og`)
+├── scripts/og/                   the Playwright generator for public/og
 ├── hisabbd-bangla-i18n.patch     exported patch; NOT used by the build
 └── src/
     ├── app/

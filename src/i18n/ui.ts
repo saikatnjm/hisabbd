@@ -55,6 +55,10 @@ export interface UiStrings {
     linkCopied: string;
     linkCopyFailed: (url: string) => string;
     shareThisCalculator: string;
+    shareImage: string;
+    imageSaved: string;
+    imageFailed: string;
+    print: string;
   };
   form: { reset: string };
   guides: {
@@ -153,6 +157,10 @@ const en: UiStrings = {
     linkCopied: "Link copied.",
     linkCopyFailed: (url) => `Couldn’t copy automatically. The link is ${url}`,
     shareThisCalculator: "this calculator",
+    shareImage: "Share as image",
+    imageSaved: "Image saved. Share it from your photos or downloads.",
+    imageFailed: "Couldn’t make the image here. Use “Copy result” instead.",
+    print: "Print or save as PDF",
   },
   form: { reset: "Reset" },
   guides: {
@@ -245,6 +253,10 @@ const bn: UiStrings = {
     linkCopied: "লিংক কপি হয়েছে।",
     linkCopyFailed: (url) => `স্বয়ংক্রিয়ভাবে কপি করা যায়নি। লিংকটি হলো ${url}`,
     shareThisCalculator: "এই ক্যালকুলেটরটি",
+    shareImage: "ছবি হিসেবে শেয়ার করুন",
+    imageSaved: "ছবি সেভ হয়েছে। গ্যালারি বা ডাউনলোড থেকে শেয়ার করুন।",
+    imageFailed: "এখানে ছবি তৈরি করা গেল না। এর বদলে “ফলাফল কপি করুন” ব্যবহার করুন।",
+    print: "প্রিন্ট বা পিডিএফ সেভ",
   },
   form: { reset: "রিসেট" },
   guides: {

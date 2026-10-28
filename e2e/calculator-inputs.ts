@@ -113,4 +113,27 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
     submit: { en: "Convert date", bn: "তারিখ রূপান্তর করুন" },
     fields: [{ label: { en: "English (Gregorian) date", bn: "ইংরেজি তারিখ" }, value: "2026-10-28" }],
   },
+  "sanchayapatra-calculator": {
+    submit: { en: "Calculate profit", bn: "মুনাফা হিসাব করুন" },
+    fields: [{ label: { en: "Investment amount", bn: "বিনিয়োগের পরিমাণ" }, value: "100000" }],
+  },
+  "mfs-cash-out-charge-calculator": {
+    submit: { en: "Calculate charge", bn: "চার্জ হিসাব করুন" },
+    fields: [{ label: { en: "Cash out amount", bn: "ক্যাশ আউটের পরিমাণ" }, value: "1000" }],
+  },
+  "fdr-calculator": {
+    submit: { en: "Calculate FDR", bn: "এফডিআর হিসাব করুন" },
+    fields: [
+      { label: { en: "Deposit amount", bn: "জমার পরিমাণ" }, value: "100000" },
+      { label: { en: "Interest rate (per year)", bn: "বার্ষিক সুদের হার" }, value: "9" },
+    ],
+  },
+  "dps-calculator": {
+    submit: { en: "Calculate DPS", bn: "ডিপিএস হিসাব করুন" },
+    fields: [
+      { label: { en: "Monthly instalment", bn: "মাসিক কিস্তি" }, value: "5000" },
+      { label: { en: "Interest rate (per year)", bn: "বার্ষিক সুদের হার" }, value: "9" },
+      { label: { en: "Tenure", bn: "মেয়াদ" }, value: "5" },
+    ],
+  },
 };

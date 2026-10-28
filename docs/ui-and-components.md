@@ -55,7 +55,12 @@ Styling rules: use Tailwind classes only (no CSS modules, no inline `style` exce
 | `CalculatorResultArea` | client | `{ revealKey, announcement, result, placeholder }`. Holds the `aria-live="polite"` sr-only announcement, reveal animation and scroll-into-view, and fires `calculation_completed`. |
 | `ResultPlaceholder` | server-safe | `{ title, preview?, children }`: shown before the first result and while inputs need fixing |
 | `ResultStats` | server-safe | `items: { label, value }[]`: two-column `<dl>` of secondary figures |
-| `ResultActions` | client | `{ text, shareTitle }`: Copy (Clipboard API) and Share (Web Share API, only where supported), with status messages. Remount with `key={text}`. |
+| `ResultActions` | client | `{ text, shareTitle }`:
+- Copy (Clipboard API) and Share (Web Share API, only where supported).
+- **Share as image**: a branded 1080×1080 card drawn on a canvas by `src/lib/result-card.ts`; shared as a file where supported, otherwise downloaded.
+- **Print or save as PDF** (`window.print()`).
+
+Shows status messages; remount with `key={text}`. Uses the calculator name from `CalculatorProvider`. |
 | `numberErrorMessage` | – | Code → localized sentence (see [i18n.md](i18n.md)) |
 | `CalculatorPageActions` | client | Save (favourite) and Share-page buttons in the header band |
 | `NextCalculators` | server | "Try next" links under the widget |
@@ -92,6 +97,16 @@ Reset → idle, all fields cleared, focus first field
 - Date fields use `<Input type="date">`. Default "today" values come from `useToday()`, which returns `""` during SSR.
 - **Remembered settings:** units, modes, scales and presets use `usePreference(PREF)` instead of `useState`. `PREF` is a module-level `choicePreference(slug, key, choices, fallback)`. Reset keeps them.
 - **History:** on a successful Calculate, call `record(inputs, summary)` from `useCalculationHistory()`. Render `<RecentCalculations onRestore={restore} />` after `CalculatorResultArea`. `restore` validates the saved values, sets the fields (and preferences), then sets `submitted` and increments `revealCount` so the result shows.
+
+## Print
+
+"Print or save as PDF" prints the calculator's H1, summary, form values and result, plus a print-only line with the page address. `print:hidden` hides:
+- the header and footer;
+- page actions and form buttons;
+- Try next, related, recent calculations and the embed code;
+- the explanatory content and FAQ.
+
+`globals.css` has the `@media print` rules (page margin, no graph background, exact colours). Mark new chrome with `print:hidden`.
 
 ## Accessibility checklist
 

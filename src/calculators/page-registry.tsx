@@ -27,10 +27,18 @@ import { DiscountCalculator } from "./discount/discount-calculator";
 import { DiscountCalculatorContent } from "./discount/content";
 import { DiscountCalculatorContentBn } from "./discount/content.bn";
 import { discountCalculator } from "./discount/meta";
+import { DpsCalculator } from "./dps/dps-calculator";
+import { DpsCalculatorContent } from "./dps/content";
+import { DpsCalculatorContentBn } from "./dps/content.bn";
+import { dpsCalculator } from "./dps/meta";
 import { EmiCalculator } from "./emi/emi-calculator";
 import { EmiCalculatorContent } from "./emi/content";
 import { EmiCalculatorContentBn } from "./emi/content.bn";
 import { emiCalculator } from "./emi/meta";
+import { FdrCalculator } from "./fdr/fdr-calculator";
+import { FdrCalculatorContent } from "./fdr/content";
+import { FdrCalculatorContentBn } from "./fdr/content.bn";
+import { fdrCalculator } from "./fdr/meta";
 import { GpaCalculator } from "./gpa/gpa-calculator";
 import { GpaCalculatorContent } from "./gpa/content";
 import { GpaCalculatorContentBn } from "./gpa/content.bn";
@@ -43,6 +51,10 @@ import { LandCalculator } from "./land/land-calculator";
 import { LandCalculatorContent } from "./land/content";
 import { LandCalculatorContentBn } from "./land/content.bn";
 import { landCalculator } from "./land/meta";
+import { MfsChargeCalculator } from "./mfs-charge/mfs-charge-calculator";
+import { MfsChargeCalculatorContent } from "./mfs-charge/content";
+import { MfsChargeCalculatorContentBn } from "./mfs-charge/content.bn";
+import { mfsChargeCalculator } from "./mfs-charge/meta";
 import { PercentageCalculator } from "./percentage/percentage-calculator";
 import { PercentageCalculatorContent } from "./percentage/content";
 import { PercentageCalculatorContentBn } from "./percentage/content.bn";
@@ -55,6 +67,10 @@ import { SalaryCalculator } from "./salary/salary-calculator";
 import { SalaryCalculatorContent } from "./salary/content";
 import { SalaryCalculatorContentBn } from "./salary/content.bn";
 import { salaryCalculator } from "./salary/meta";
+import { SanchayapatraCalculator } from "./sanchayapatra/sanchayapatra-calculator";
+import { SanchayapatraCalculatorContent } from "./sanchayapatra/content";
+import { SanchayapatraCalculatorContentBn } from "./sanchayapatra/content.bn";
+import { sanchayapatraCalculator } from "./sanchayapatra/meta";
 import { SscHscGpaCalculator } from "./ssc-hsc-gpa/ssc-hsc-gpa-calculator";
 import { SscHscGpaCalculatorContent } from "./ssc-hsc-gpa/content";
 import { SscHscGpaCalculatorContentBn } from "./ssc-hsc-gpa/content.bn";
@@ -99,6 +115,10 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: amountInWordsCalculator, Calculator: AmountInWordsCalculator, Content: AmountInWordsContent, ContentBn: AmountInWordsContentBn },
       { meta: vatCalculator, Calculator: VatCalculator, Content: VatCalculatorContent, ContentBn: VatCalculatorContentBn },
       { meta: banglaDateCalculator, Calculator: BanglaDateCalculator, Content: BanglaDateCalculatorContent, ContentBn: BanglaDateCalculatorContentBn },
+      { meta: sanchayapatraCalculator, Calculator: SanchayapatraCalculator, Content: SanchayapatraCalculatorContent, ContentBn: SanchayapatraCalculatorContentBn },
+      { meta: mfsChargeCalculator, Calculator: MfsChargeCalculator, Content: MfsChargeCalculatorContent, ContentBn: MfsChargeCalculatorContentBn },
+      { meta: fdrCalculator, Calculator: FdrCalculator, Content: FdrCalculatorContent, ContentBn: FdrCalculatorContentBn },
+      { meta: dpsCalculator, Calculator: DpsCalculator, Content: DpsCalculatorContent, ContentBn: DpsCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

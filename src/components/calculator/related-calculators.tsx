@@ -1,3 +1,4 @@
+import { cn } from "@/lib/cn";
 import { getRelatedCalculators } from "@/calculators/registry";
 import type { CalculatorMeta } from "@/calculators/types";
 import { CalculatorList } from "@/components/calculator/calculator-list";
@@ -19,7 +20,7 @@ export function RelatedCalculators({
   if (related.length === 0) return null;
 
   return (
-    <section aria-labelledby="related-heading" className={className}>
+    <section aria-labelledby="related-heading" className={cn(className, "print:hidden")}>
       <h2 id="related-heading" className="mb-4 font-display text-2xl font-bold tracking-tight text-slate-900">
         {ui[locale].calculatorPage.related}
       </h2>

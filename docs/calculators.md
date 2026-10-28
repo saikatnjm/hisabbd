@@ -1,6 +1,6 @@
 # Calculator specifications
 
-The exact behaviour of all 16 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
+The exact behaviour of all 20 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
 
 ## Shared conventions
 
@@ -404,9 +404,89 @@ Every day from 2020 to 2030 round-trips.
 
 ---
 
+## Sanchayapatra Profit Calculator
+
+`src/calculators/sanchayapatra/` · slug `sanchayapatra-calculator` · category `finance` · `updatedOn` set
+
+**Schemes:** 5-year Bangladesh (profit at maturity), 3-month profit-bearing (quarterly, 3 years), Paribar (monthly, 5 years) and Pensioner (monthly, 5 years). The scheme choice is remembered; the default is Paribar.
+
+**Rates:** from IRD order 08.00.0000.000.041.22.0006.20.85 (effective 1 July 2025), confirmed unchanged for July–December 2026 (NSD scheme sheets; Bangla Tribune, 2 Jul 2026).
+- Two tiers by the investor's total national-savings holding: up to ৳7.5 lakh, and above.
+- The figure used is the rate held to maturity. The rate field is pre-filled and editable, with a "Use the official rate" link.
+
+**Source tax:**
+- Pre-filled at 10% (Income Tax Act 2023, s.105), editable.
+- The 5% (up to ৳5 lakh) and Pensioner 0% figures conflict across FY2026-27 reports, so they are shown as information, not presets.
+
+**Logic:** simple profit, not compounded, per payout period. Totals over the term: gross profit, tax, net, and amount received. Purchase limits are shown as information only.
+
+**Example:** Paribar ৳1,00,000 at 11.93%, 10% tax → ৳994.17 a month gross, ৳894.75 net; ৳59,650 gross and ৳53,685 net over 5 years.
+
+**Review:** every January and July, when the rates are reset.
+
+---
+
+## FDR Calculator
+
+`src/calculators/fdr/` · slug `fdr-calculator` · category `finance`
+
+**Inputs:**
+- Principal and the rate the bank quotes (no rate presets, because banks differ).
+- Term in months, with presets 3/6/12/24/36.
+- Interest: simple (the default) or reinvested monthly/quarterly/yearly.
+- Tax: 10%, or 15% for someone who must file a return but gives the bank no proof of return (Income Tax Act 2023 s.102/142), or another rate.
+- Excise duty: estimate from the bands, enter a total, or leave out.
+
+**Formulas:**
+- Simple: P × (1 + r·months/12).
+- Reinvested every p months: P × (1 + r·p/12)^⌊n/p⌋ × (1 + r·(n mod p)/12).
+- Excise is charged once a year on the year-end balance, using the FY2026-27 bands in `fdr/deposit-tax.ts` (nil up to ৳4 lakh, then ৳150 / 500 / 3,000 / 5,000 / 10,000 / 20,000 / 50,000).
+
+**Examples:**
+- ৳1,00,000 at 9% for 12 months, simple, 10% tax → net ৳1,08,100.
+- ৳5,00,000 at 10% for 36 months, quarterly → maturity ৳6,72,444.
+
+## DPS Calculator
+
+`src/calculators/dps/` · slug `dps-calculator` · category `finance`
+
+**Inputs:** the monthly instalment, rate, tenure in years, compounding (monthly by default; quarterly or yearly simulated), and the same tax and excise options as FDR.
+
+**Method:** an annuity-due. Each instalment is paid at the start of the month and the scheme matures one month after the last. M = A × ((1+i)^n − 1)/i × (1+i), where i = R/1200. A yearly breakdown table is shown.
+
+**Example:** ৳5,000 a month at 9% for 5 years → maturity ৳3,79,949, interest ৳79,949, net ৳3,71,954.
+
+## bKash & Nagad Cash Out Charge Calculator
+
+`src/calculators/mfs-charge/` · slug `mfs-cash-out-charge-calculator` · category `finance` · `updatedOn` set
+
+**Modes:**
+- "Cash I want": charge = amount × rate ÷ 1000.
+- "My balance": cash = balance ÷ (1 + rate/1000).
+
+**Presets (৳ per ৳1,000, checked 28 Oct 2026, from the providers' own pages):**
+
+| Provider and channel | Rate |
+| --- | --- |
+| bKash Priyo Agent (up to ৳50,000 a month) | 13.95 |
+| bKash other agent | 18.50 |
+| Nagad USSD / Islamic app | 15.00 |
+| Rocket agent | 16.70 |
+| Rocket DBBL ATM / branch | 9.00 |
+| Upay agent | 14.00 |
+| Upay UCB ATM | 8.00 |
+
+Where a provider's own pages disagree (Nagad's regular app, bKash ATM), there is no preset and the user enters the rate. Amounts are rounded to 2 decimals; app charges may differ by a few paisa.
+
+**Example:** ৳10,000 balance at 18.50 → ৳9,818.36 cash + ৳181.64 charge.
+
+**Review:** quarterly.
+
+---
+
 ## Per-calculator metadata (registry)
 
-The original 10 have `addedOn: "2026-10-05"`; the 6 added since have `"2026-10-28"`. Related links:
+The original 10 have `addedOn: "2026-10-05"`; the 10 added since have `"2026-10-28"`. Related links:
 
 | Slug | `related` |
 | --- | --- |
@@ -417,8 +497,8 @@ The original 10 have `addedOn: "2026-10-05"`; the 6 added since have `"2026-10-2
 | percentage-calculator | discount-calculator, profit-loss-calculator, gpa-calculator |
 | discount-calculator | percentage-calculator, profit-loss-calculator |
 | profit-loss-calculator | discount-calculator, percentage-calculator |
-| emi-calculator | salary-calculator, percentage-calculator |
-| salary-calculator | emi-calculator, percentage-calculator |
+| emi-calculator | salary-calculator, fdr-calculator, sanchayapatra-calculator, percentage-calculator |
+| salary-calculator | emi-calculator, dps-calculator, sanchayapatra-calculator, percentage-calculator |
 | date-difference-calculator | age-calculator |
 | government-job-age-calculator | age-calculator, date-difference-calculator |
 | ssc-hsc-gpa-calculator | gpa-calculator, cgpa-calculator |
@@ -426,6 +506,9 @@ The original 10 have `addedOn: "2026-10-05"`; the 6 added since have `"2026-10-2
 | amount-in-words | discount-calculator, salary-calculator |
 | vat-calculator | discount-calculator, profit-loss-calculator, percentage-calculator |
 | bangla-date-converter | date-difference-calculator, age-calculator |
+| sanchayapatra-calculator | fdr-calculator, dps-calculator, emi-calculator |
+| fdr-calculator / dps-calculator | each other, sanchayapatra-calculator, emi-calculator |
+| mfs-cash-out-charge-calculator | vat-calculator, percentage-calculator, amount-in-words |
 
 Featured (home "Try:" chips and search suggestions), in order: age, bmi, gpa, emi, percentage, salary.
 
