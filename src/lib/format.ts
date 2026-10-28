@@ -99,3 +99,32 @@ export function formatPlainDate(
   const text = `${date.day} ${months[date.month - 1]} ${date.year}`;
   return options.weekday ? `${weekdayName(dayOfWeek(date), locale)}, ${text}` : text;
 }
+
+const MINUTE = 60_000;
+const HOUR = 60 * MINUTE;
+const DAY = 24 * HOUR;
+
+/**
+ * How long ago a moment was, for history lists: "just now", "5 min ago",
+ * "3 hours ago", "2 days ago", then the date ("5 October 2026").
+ * `now` is passed in so this stays pure.
+ */
+export function formatTimeAgo(at: number, now: number, locale: Locale = "en"): string {
+  const diff = Math.max(0, now - at);
+  const bn = locale === "bn";
+  if (diff < MINUTE) return bn ? "এইমাত্র" : "just now";
+  if (diff < HOUR) {
+    const m = Math.floor(diff / MINUTE);
+    return bn ? `${m} মিনিট আগে` : `${m} min ago`;
+  }
+  if (diff < DAY) {
+    const h = Math.floor(diff / HOUR);
+    return bn ? `${h} ঘণ্টা আগে` : `${h} hour${h === 1 ? "" : "s"} ago`;
+  }
+  if (diff < 7 * DAY) {
+    const d = Math.floor(diff / DAY);
+    return bn ? `${d} দিন আগে` : `${d} day${d === 1 ? "" : "s"} ago`;
+  }
+  const date = new Date(at);
+  return formatPlainDate({ year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() }, { locale });
+}

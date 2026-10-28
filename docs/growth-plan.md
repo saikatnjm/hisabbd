@@ -32,7 +32,20 @@ Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped 
 | Q1 | Browser smoke tests (Playwright 1.64.1, Chromium): every calculator in both locales, home search, embeds and framing headers, guides, 404s, sitemap: `docker compose run --rm e2e` | `e2e/`, `playwright.config.ts` |
 | Q2 | Stray `hisabbd-bangla-i18n.patch` removed | |
 
-### Built on branch `feat/date-vat-guides-ci` (not yet merged)
+### Shipped: merged in PR #3
+
+N9 Bangla date converter, N11 VAT calculator, guides 4–7 and Q4 CI (details below).
+
+### Built on branch `feat/personalization` (not yet merged)
+
+| Item | What | Where |
+| --- | --- | --- |
+| P1 | Remembered settings per calculator: units, modes, scales, presets, katha size. Settings only, never personal values. Reset keeps them. | `src/lib/preferences.ts`, `usePreference` |
+| P2 | "Your recent calculations" under every calculator (last 5: summary, time ago, Use again, remove, clear, save on/off) and on the homepage (latest 4). On by default; stays on the device. | `src/lib/calculation-history.ts`, `components/calculator/recent-calculations.tsx`, `components/home/home-recent-calculations.tsx` |
+| P3 | Privacy pages (EN/BN) rewritten for local history and settings, with controls: save on/off and "Clear everything saved on this device" | `/privacy`, `components/layout/local-data-controls.tsx` |
+| – | Browser tests: a unit survives a reload; history saved, used again, shown on home, cleared; turning saving off stops new entries | `e2e/personalization.spec.ts` |
+
+### PR #3 details
 
 | Item | What | Where |
 | --- | --- | --- |

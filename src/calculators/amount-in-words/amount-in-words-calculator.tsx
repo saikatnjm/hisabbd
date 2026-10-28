@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -15,6 +16,7 @@ import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { ui } from "@/i18n/ui";
 import { formatTaka } from "@/lib/format";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
 import {
   calculateAmountInWords,
   MAX_AMOUNT,
@@ -55,6 +57,8 @@ const STRINGS = {
     shareTitle: "Taka amount in words with HisabBD",
     shareText: (digits: string, english: string, bangla: string) =>
       `৳${digits} in words:\nEnglish: ${english}\nBangla: ${bangla}\nWritten with HisabBD’s Taka Amount in Words.`,
+    /** One line for "Your recent calculations" (the share text spans several lines and both languages). */
+    historySummary: (digits: string, words: string) => `৳${digits} in words: ${words}`,
   },
   bn: {
     submit: "কথায় লিখুন",
@@ -83,6 +87,7 @@ const STRINGS = {
     shareTitle: "HisabBD দিয়ে টাকা কথায়",
     shareText: (digits: string, english: string, bangla: string) =>
       `৳${digits} কথায়:\nবাংলা: ${bangla}\nইংরেজি: ${english}\nHisabBD-র টাকা কথায় লেখার ক্যালকুলেটরে লেখা।`,
+    historySummary: (digits: string, words: string) => `৳${digits} কথায়: ${words}`,
   },
 } as const;
 
@@ -110,6 +115,7 @@ export function AmountInWordsCalculator() {
   const refs: Record<AmountInWordsField, React.RefObject<HTMLInputElement | null>> = {
     amount: useRef<HTMLInputElement>(null),
   };
+  const { record } = useCalculationHistory();
 
   const calc = submitted ? calculateAmountInWords(amount) : null;
   const errorFor = (field: AmountInWordsField) => {
@@ -123,10 +129,19 @@ export function AmountInWordsCalculator() {
     const check = calculateAmountInWords(amount);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      const { digits, english, bangla } = check.result;
+      record({ amount }, t.historySummary(digits, locale === "bn" ? bangla : english));
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
+  }
+
+  /** Fills the amount from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    setAmount(typeof saved.amount === "string" ? saved.amount : "");
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
   }
 
   function onReset() {
@@ -171,6 +186,7 @@ export function AmountInWordsCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
 import { ResultActions } from "@/components/calculator/result-actions";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { AffixInput, FormField, SegmentedControl } from "@/components/ui/form";
@@ -12,6 +13,9 @@ import { ResultPanel } from "@/components/ui/result";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { formatNumber, formatPercent } from "@/lib/format";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import {
   calculatePercentage,
   type PercentageDirection,
@@ -38,6 +42,10 @@ interface ModeConfig {
 }
 
 const MODE_ORDER: readonly PercentageMode[] = ["percent-of", "what-percent", "change", "increase-decrease", "reverse"];
+
+/** Remembered in this browser: the last question chosen, and increase or decrease. */
+const MODE = choicePreference("percentage-calculator", "mode", MODE_ORDER, "percent-of");
+const DIRECTION = choicePreference("percentage-calculator", "direction", ["increase", "decrease"] as const, "increase");
 
 const MODES: Record<Locale, Record<PercentageMode, ModeConfig>> = {
   en: {
@@ -305,6 +313,12 @@ function summarize(t: Strings, r: PercentageResult): Summary {
   }
 }
 
+/** The text copied or shared for a result. */
+function shareText(t: Strings, r: PercentageResult): string {
+  const summary = summarize(t, r);
+  return `${summary.sentence} (${summary.working}). ${t.shareSuffix}`;
+}
+
 function extraStats(t: Strings, r: PercentageResult): { label: string; value: string; wide?: boolean }[] {
   switch (r.mode) {
     case "change":
@@ -334,12 +348,13 @@ export function PercentageCalculator() {
   const locale = useLocale();
   const t = STRINGS[locale];
   const modes = MODES[locale];
-  const [mode, setMode] = useState<PercentageMode>("percent-of");
-  const [direction, setDirection] = useState<PercentageDirection>("increase");
+  const [mode, setMode] = usePreference(MODE);
+  const [direction, setDirection] = usePreference(DIRECTION);
   const [a, setA] = useState("");
   const [b, setB] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const refs: Record<PercentageField, React.RefObject<HTMLInputElement | null>> = {
     a: useRef<HTMLInputElement>(null),
     b: useRef<HTMLInputElement>(null),
@@ -370,15 +385,32 @@ export function PercentageCalculator() {
     const check = calculatePercentage(mode, a, b, { direction });
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record({ mode, a, b, direction }, shareText(t, check.result));
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
   }
 
+  /**
+   * Fills the form from a saved calculation (values come from storage, so each
+   * is checked) and shows the result. Sets the mode directly rather than via
+   * changeMode, which would hide the result again.
+   */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    const savedMode = text("mode");
+    const savedDirection = text("direction");
+    if (MODE.isValid(savedMode)) setMode(savedMode);
+    if (DIRECTION.isValid(savedDirection)) setDirection(savedDirection);
+    setA(text("a"));
+    setB(text("b"));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  // Keeps the remembered mode and direction; clears only the numbers.
   function onReset() {
-    setMode("percent-of");
-    setDirection("increase");
     setA("");
     setB("");
     setSubmitted(false);
@@ -449,6 +481,7 @@ export function PercentageCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }
@@ -477,7 +510,7 @@ function PercentageResultView({ result: r }: { result: PercentageResult }) {
 
       <ResultActions
         key={`${summary.sentence}|${summary.working}`}
-        text={`${summary.sentence} (${summary.working}). ${t.shareSuffix}`}
+        text={shareText(t, r)}
         shareTitle={t.shareTitle}
       />
     </div>

@@ -72,6 +72,7 @@ Redeploy after changing variables.
 
 ## Privacy rules (keep these when adding features)
 
-- Calculator inputs never leave the browser: no URLs with values, no analytics properties with values, no storage of values.
+- Calculator inputs never leave the browser: no URLs with values, no analytics properties with values, nothing sent to a server.
+- Inputs may be kept in this browser only through the calculation history (`src/lib/calculation-history.ts`): user-visible, can be turned off and cleared.
 - Analytics events are typed in `src/lib/analytics.ts` and carry only calculator slugs, counts and flags.
-- `localStorage` holds only calculator slugs (`hisabbd:recent`, `hisabbd:favorites`).
+- `localStorage` keys: `hisabbd:recent` and `hisabbd:favorites` (slugs), `hisabbd:prefs` (unit/mode settings), `hisabbd:history` (recent calculations).

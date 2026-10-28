@@ -68,6 +68,23 @@ export interface UiStrings {
     updated: (date: string) => string;
     moreGuides: string;
   };
+  history: {
+    title: string;
+    /** Under the list: where it is kept. */
+    savedOnDevice: string;
+    useAgain: string;
+    /** Accessible name of an entry's remove button. */
+    remove: (when: string) => string;
+    clear: string;
+    /** Checkbox: keep saving new calculations on this device. */
+    saveToggle: string;
+    offNote: string;
+    restored: (when: string) => string;
+    homeTitle: string;
+    homeIntro: string;
+    clearAll: string;
+    clearedAll: string;
+  };
   embed: {
     /** Summary of the "embed this calculator" disclosure on calculator pages. */
     summary: string;
@@ -147,6 +164,20 @@ const en: UiStrings = {
     updated: (date) => `Updated ${date}`,
     moreGuides: "More guides",
   },
+  history: {
+    title: "Your recent calculations",
+    savedOnDevice: "Saved only in this browser on this device. Nothing is sent to HisabBD.",
+    useAgain: "Use again",
+    remove: (when) => `Remove the calculation from ${when}`,
+    clear: "Clear this history",
+    saveToggle: "Save my calculations on this device",
+    offNote: "Saving is off, so new calculations aren't remembered.",
+    restored: (when) => `Filled in from your calculation ${when}.`,
+    homeTitle: "Your recent calculations",
+    homeIntro: "Pick up where you left off. Only this browser remembers these.",
+    clearAll: "Clear everything saved on this device",
+    clearedAll: "Cleared. Nothing from HisabBD is saved in this browser now.",
+  },
   embed: {
     summary: "Add this calculator to your website",
     intro:
@@ -224,6 +255,20 @@ const bn: UiStrings = {
     published: (date) => `প্রকাশ: ${date}`,
     updated: (date) => `হালনাগাদ: ${date}`,
     moreGuides: "আরও গাইড",
+  },
+  history: {
+    title: "আপনার সাম্প্রতিক হিসাব",
+    savedOnDevice: "শুধু এই ডিভাইসের এই ব্রাউজারে সংরক্ষিত। HisabBD-তে কিছুই পাঠানো হয় না।",
+    useAgain: "আবার ব্যবহার করুন",
+    remove: (when) => `${when}-এর হিসাবটি মুছুন`,
+    clear: "এই ইতিহাস মুছুন",
+    saveToggle: "এই ডিভাইসে আমার হিসাব সংরক্ষণ করুন",
+    offNote: "সংরক্ষণ বন্ধ আছে, তাই নতুন হিসাব মনে রাখা হচ্ছে না।",
+    restored: (when) => `আপনার ${when}-এর হিসাব থেকে ঘরগুলো পূরণ করা হয়েছে।`,
+    homeTitle: "আপনার সাম্প্রতিক হিসাব",
+    homeIntro: "যেখানে থেমেছিলেন সেখান থেকে শুরু করুন। শুধু এই ব্রাউজারই এগুলো মনে রাখে।",
+    clearAll: "এই ডিভাইসে সংরক্ষিত সবকিছু মুছুন",
+    clearedAll: "মুছে ফেলা হয়েছে। এই ব্রাউজারে এখন HisabBD-র কিছুই সংরক্ষিত নেই।",
   },
   embed: {
     summary: "আপনার ওয়েবসাইটে এই ক্যালকুলেটর যোগ করুন",

@@ -3,6 +3,33 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
+ * Rows as saved in the calculation history: one array of the given text
+ * fields per row (ids are not kept), as JSON.
+ */
+export function rowsToJson<K extends string>(rows: readonly Record<K, string>[], fields: readonly K[]): string {
+  return JSON.stringify(rows.map((row) => fields.map((field) => row[field])));
+}
+
+/**
+ * Saved rows (from rowsToJson) back as field values. The JSON comes from
+ * storage, so anything malformed is dropped: a bad row, or everything if it doesn't parse.
+ */
+export function rowsFromJson<K extends string>(json: string | undefined, fields: readonly K[]): Record<K, string>[] {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(json ?? "");
+  } catch {
+    return [];
+  }
+  if (!Array.isArray(parsed)) return [];
+  return parsed.flatMap((row: unknown) => {
+    if (!Array.isArray(row) || row.length !== fields.length || !row.every((v) => typeof v === "string")) return [];
+    const values: readonly string[] = row;
+    return [Object.fromEntries(fields.map((field, i) => [field, values[i] ?? ""])) as Record<K, string>];
+  });
+}
+
+/**
  * State for a list of input rows (courses, semesters) that can be added and
  * removed. Rows get stable incrementing ids, so React keys and input ids never
  * depend on the array index. After add / remove / reset, focus moves to the
@@ -65,12 +92,27 @@ export function useRowList<T extends { id: number }>({
     setRows(fresh);
   }
 
+  /**
+   * Replaces every row at once (fresh ids), e.g. when restoring a saved
+   * calculation. Keeps at most maxRows; an empty list means the initial empty
+   * rows. Focus stays where it is.
+   */
+  function replaceRows(values: readonly Partial<Omit<T, "id">>[]) {
+    const fresh =
+      values.length > 0
+        ? values.slice(0, maxRows).map((value) => ({ ...createRow(takeId()), ...value }))
+        : Array.from({ length: initialCount }, () => createRow(takeId()));
+    pendingFocus.current = null;
+    setRows(fresh);
+  }
+
   return {
     rows,
     updateRow,
     addRow,
     removeRow,
     resetRows,
+    replaceRows,
     canAdd: rows.length < maxRows,
     canRemove: rows.length > 1,
   };

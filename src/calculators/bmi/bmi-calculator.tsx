@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
@@ -12,6 +13,9 @@ import { ResultPanel } from "@/components/ui/result";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { formatNumber } from "@/lib/format";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import {
   calculateBmi,
   kgToLb,
@@ -23,6 +27,10 @@ import {
   type HeightUnit,
   type WeightUnit,
 } from "./logic";
+
+/** Units are remembered in this browser; the measurements themselves only in the calculation history. */
+const HEIGHT_UNIT = choicePreference<HeightUnit>("bmi-calculator", "heightUnit", ["cm", "ftin"], "cm");
+const WEIGHT_UNIT = choicePreference<WeightUnit>("bmi-calculator", "weightUnit", ["kg", "lb"], "kg");
 
 const FIELD_IDS: Record<BmiField, string> = {
   heightCm: "bmi-height-cm",
@@ -246,14 +254,15 @@ function shareText(t: Strings, r: BmiResult): string {
 export function BmiCalculator() {
   const locale = useLocale();
   const t = STRINGS[locale];
-  const [heightUnit, setHeightUnit] = useState<HeightUnit>("cm");
+  const [heightUnit, setHeightUnit] = usePreference(HEIGHT_UNIT);
   const [heightCm, setHeightCm] = useState("");
   const [heightFeet, setHeightFeet] = useState("");
   const [heightInches, setHeightInches] = useState("");
-  const [weightUnit, setWeightUnit] = useState<WeightUnit>("kg");
+  const [weightUnit, setWeightUnit] = usePreference(WEIGHT_UNIT);
   const [weight, setWeight] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const refs: Record<BmiField, React.RefObject<HTMLInputElement | null>> = {
     heightCm: useRef<HTMLInputElement>(null),
     heightFeet: useRef<HTMLInputElement>(null),
@@ -274,18 +283,38 @@ export function BmiCalculator() {
     const check = calculateBmi(input);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      // Only the fields of the chosen height unit, so the same measurement isn't saved twice.
+      record(
+        heightUnit === "cm"
+          ? { heightUnit, heightCm, weightUnit, weight }
+          : { heightUnit, heightFeet, heightInches, weightUnit, weight },
+        shareText(t, check.result),
+      );
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
   }
 
+  /** Fills the form from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const savedHeightUnit = saved.heightUnit ?? "";
+    const savedWeightUnit = saved.weightUnit ?? "";
+    if (HEIGHT_UNIT.isValid(savedHeightUnit)) setHeightUnit(savedHeightUnit);
+    if (WEIGHT_UNIT.isValid(savedWeightUnit)) setWeightUnit(savedWeightUnit);
+    setHeightCm(saved.heightCm ?? "");
+    setHeightFeet(saved.heightFeet ?? "");
+    setHeightInches(saved.heightInches ?? "");
+    setWeight(saved.weight ?? "");
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
+  }
+
+  /** Clears the measurements; the remembered units stay. */
   function onReset() {
-    setHeightUnit("cm");
     setHeightCm("");
     setHeightFeet("");
     setHeightInches("");
-    setWeightUnit("kg");
     setWeight("");
     setSubmitted(false);
     setRevealCount(0);
@@ -397,6 +426,7 @@ export function BmiCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }

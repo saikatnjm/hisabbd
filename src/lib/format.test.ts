@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatNumber, formatPercent, formatTaka, joinList, pluralize } from "./format";
+import { formatNumber, formatPercent, formatTaka, formatTimeAgo, joinList, pluralize } from "./format";
 
 describe("formatNumber", () => {
   it("uses Bangladeshi grouping and trims decimals", () => {
@@ -38,5 +38,28 @@ describe("text helpers", () => {
     expect(pluralize(1, "year")).toBe("1 year");
     expect(pluralize(1500, "day")).toBe("1,500 days");
     expect(joinList(["a", "b", "c"])).toBe("a, b and c");
+  });
+});
+
+describe("formatTimeAgo", () => {
+  const now = Date.UTC(2026, 9, 28, 12, 0, 0);
+  const min = 60_000;
+
+  it("uses minutes, hours and days, then the date", () => {
+    expect(formatTimeAgo(now - 10_000, now)).toBe("just now");
+    expect(formatTimeAgo(now - 5 * min, now)).toBe("5 min ago");
+    expect(formatTimeAgo(now - 60 * min, now)).toBe("1 hour ago");
+    expect(formatTimeAgo(now - 3 * 60 * min, now)).toBe("3 hours ago");
+    expect(formatTimeAgo(now - 2 * 24 * 60 * min, now)).toBe("2 days ago");
+    expect(formatTimeAgo(now - 30 * 24 * 60 * min, now)).toMatch(/2026$/);
+  });
+
+  it("has Bangla wording with Western digits", () => {
+    expect(formatTimeAgo(now - 5 * min, now, "bn")).toBe("5 মিনিট আগে");
+    expect(formatTimeAgo(now - 3 * 60 * min, now, "bn")).toBe("3 ঘণ্টা আগে");
+  });
+
+  it("never shows a future time", () => {
+    expect(formatTimeAgo(now + 5 * min, now)).toBe("just now");
   });
 });

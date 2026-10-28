@@ -14,7 +14,7 @@ Below, `<name>` is the folder (e.g. `vat`), `<slug>` is the URL id (e.g. `vat-ca
 - [ ] 1. Create `src/calculators/<name>/logic.ts` with pure functions and a numbered rules comment
 - [ ] 2. Create `src/calculators/<name>/logic.test.ts`
 - [ ] 3. Create `src/calculators/<name>/meta.ts` with all English and Bangla fields
-- [ ] 4. Create `src/calculators/<name>/<name>-calculator.tsx` (client widget with `en` + `bn` STRINGS)
+- [ ] 4. Create `src/calculators/<name>/<name>-calculator.tsx` (client widget with `en` + `bn` STRINGS; settings via `usePreference`, history via `useCalculationHistory` + `<RecentCalculations>`; see docs/ui-and-components.md → "The widget pattern")
 - [ ] 5. Create `src/calculators/<name>/content.tsx` and `content.bn.tsx`
 - [ ] 6. Add the meta to `calculators` in `src/calculators/registry.ts`
 - [ ] 7. Add an entry to `calculatorPages` in `src/calculators/page-registry.tsx`

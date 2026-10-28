@@ -1,12 +1,13 @@
 import { pageMetadata } from "@/calculators/metadata";
 import { ProsePage } from "@/components/layout/prose-page";
 import { ContentSection } from "@/components/ui/content-section";
+import { LocalDataControls } from "@/components/layout/local-data-controls";
 import { analyticsEnabled, gaEnabled, umamiEnabled } from "@/config/analytics";
 
 export const metadata = pageMetadata({
   title: "Privacy",
   description:
-    "How HisabBD handles your information: calculations run in your browser, nothing you enter is stored or sent, no accounts and no tracking cookies.",
+    "How HisabBD handles your information: calculations run in your browser, nothing you enter is sent anywhere, recent calculations stay on your device, and no accounts.",
   path: "/privacy",
 });
 
@@ -15,27 +16,35 @@ export default function PrivacyPage() {
     <ProsePage
       title="Privacy"
       intro="A short, plain explanation of what happens to your information on HisabBD."
-      updated="5 October 2026"
+      updated="28 October 2026"
     >
       <ContentSection id="inputs" title="What you type into calculators">
         <p>
-          Calculations run in your browser. The numbers and dates you enter aren’t sent to HisabBD’s
-          servers and aren’t stored by HisabBD. They’re cleared when you reset the calculator or leave
-          the page.
+          Calculations run in your browser. The numbers and dates you enter are never sent to
+          HisabBD’s servers, never put in a link and never passed to analytics.
+        </p>
+        <p>
+          To show “Your recent calculations”, your browser keeps your last few calculations on this
+          device: what you entered and a one-line result, up to 5 per calculator and 30 in total. They
+          stay in your browser’s local storage, so anyone using this browser on this device can see
+          them. You can remove one, turn saving off, or clear everything below.
         </p>
         <p>
           If you use <strong>Copy result</strong> or <strong>Share</strong>, the result goes to your
           clipboard or to the app you choose, and from there it’s up to you.
         </p>
       </ContentSection>
-      <ContentSection id="saved" title="Saved and recently used calculators">
+      <ContentSection id="saved" title="Saved on this device">
+        <p>Your browser also remembers, on this device only:</p>
+        <ul>
+          <li>which calculators you opened recently and which ones you saved (only their names, for example “age-calculator”);</li>
+          <li>your settings in each calculator, such as cm or feet, kg or lb, HSC or SSC, or your katha size.</li>
+        </ul>
         <p>
-          To show “Your calculators” on the homepage, your browser remembers which calculators you
-          opened recently and which ones you saved. Only the calculator’s name (for example
-          “age-calculator”) is stored, in your browser’s local storage. Nothing you type into a
-          calculator is stored, and this list is never sent to HisabBD. Clearing your browser’s
-          site data removes it.
+          None of this is sent to HisabBD. Clearing your browser’s site data removes it, or use the
+          controls here:
         </p>
+        <LocalDataControls />
       </ContentSection>
 
       <ContentSection id="accounts" title="Accounts, cookies and tracking">

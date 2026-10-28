@@ -3,17 +3,21 @@
 import { useEffect, useState } from "react";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { FieldMessage, FormField, Input, Label, SegmentedControl, Select } from "@/components/ui/form";
 import { ResultPanel } from "@/components/ui/result";
 import { AddRowButton, RemoveRowButton } from "@/calculators/education/row-controls";
-import { useRowList } from "@/calculators/education/use-row-list";
+import { rowsFromJson, rowsToJson, useRowList } from "@/calculators/education/use-row-list";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { countBn, formatNumber, joinList, pluralize } from "@/lib/format";
 import { roundTo } from "@/lib/number";
+import { choicePreference } from "@/lib/preferences";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
+import { usePreference } from "@/lib/use-preference";
 import {
   BD_BOARD_5_SCALE,
   calculateSscHscGpa,
@@ -29,7 +33,8 @@ import {
 type Exam = "ssc" | "hsc";
 
 const SCALE = BD_BOARD_5_SCALE;
-const DEFAULT_EXAM: Exam = "hsc";
+/** The exam is remembered in this browser; HSC on a first visit. */
+const EXAM = choicePreference<Exam>("ssc-hsc-gpa-calculator", "exam", ["ssc", "hsc"], "hsc");
 /** Starting rows only (typical main-subject counts); the divisor is whatever is entered. */
 const DEFAULT_ROWS: Record<Exam, number> = { ssc: 9, hsc: 6 };
 const EXAM_CONTROL_NAME = "ssc-hsc-exam";
@@ -37,6 +42,8 @@ const FOURTH_ID = "ssc-hsc-fourth";
 
 const fieldId = (rowId: number, field: "name" | "grade") => `ssc-hsc-subject-${rowId}-${field}`;
 const firstFieldId = (rowId: number) => fieldId(rowId, "name");
+/** Row fields saved in the calculation history (as JSON, in this order). */
+const SAVED_FIELDS = ["name", "grade"] as const;
 
 const gpaText = (value: number) => formatNumber(value, { decimals: 2, minDecimals: 2 });
 const pointText = (value: number) => formatNumber(value, { minDecimals: 2 });
@@ -209,37 +216,66 @@ function shareText(t: Strings, exam: Exam, r: SscHscGpaResult, rows: readonly Su
   );
 }
 
-/** How the form should start after a (re)mount: the exam, rows carried over and where focus goes. */
+/** How the form should start after a (re)mount: rows carried over, whether to show the result, where focus goes. */
 interface FormSetup {
-  exam: Exam;
   /** Rows carried over by position (row id = index + 1). */
   seed: readonly { name: string; grade: string }[];
+  /** Start with exactly the seed's rows (a restored calculation) instead of at least the exam's usual count. */
+  exactRows: boolean;
   fourth: string;
+  /** Show the result straight away (a restored calculation). */
+  calculated: boolean;
   focus: "exam" | "first" | null;
 }
 
-const INITIAL_SETUP: FormSetup = { exam: DEFAULT_EXAM, seed: [], fourth: "", focus: null };
+const INITIAL_SETUP: FormSetup = { seed: [], exactRows: false, fourth: "", calculated: false, focus: null };
 
 /**
  * The exam choice sets how many rows the form starts with, and useRowList
- * takes its row count once. So switching exam (or Reset) remounts the form
- * with a new setup; on a switch the grades already chosen are carried over.
+ * takes its row count once. So switching exam, Reset or restoring a saved
+ * calculation remounts the form with a new setup; on a switch the grades
+ * already chosen are carried over. The exam is part of the key, so a
+ * remembered exam applied after hydration also starts the form afresh.
  */
 export function SscHscGpaCalculator() {
+  const [exam, setExam] = usePreference(EXAM);
   const [{ setup, generation }, setState] = useState({ setup: INITIAL_SETUP, generation: 0 });
+
+  function restart(next: FormSetup, nextExam: Exam = exam) {
+    setState((s) => ({ setup: next, generation: s.generation + 1 }));
+    if (nextExam !== exam) setExam(nextExam);
+  }
+
+  /** Fills the form from a saved calculation and shows its result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const savedExam = saved.exam ?? "";
+    const seed = rowsFromJson(saved.rows, SAVED_FIELDS);
+    restart(
+      { seed, exactRows: true, fourth: saved.fourth ?? "", calculated: true, focus: null },
+      EXAM.isValid(savedExam) ? savedExam : exam,
+    );
+  }
+
   return (
-    <SscHscGpaForm
-      key={generation}
-      setup={setup}
-      onRestart={(next) => setState((s) => ({ setup: next, generation: s.generation + 1 }))}
-    />
+    <div>
+      <SscHscGpaForm key={`${exam}-${generation}`} exam={exam} setup={setup} onRestart={restart} />
+      <RecentCalculations onRestore={restore} />
+    </div>
   );
 }
 
-function SscHscGpaForm({ setup, onRestart }: { setup: FormSetup; onRestart: (next: FormSetup) => void }) {
+function SscHscGpaForm({
+  exam,
+  setup,
+  onRestart,
+}: {
+  exam: Exam;
+  setup: FormSetup;
+  onRestart: (next: FormSetup, nextExam?: Exam) => void;
+}) {
   const locale = useLocale();
   const t = STRINGS[locale];
-  const { exam, seed } = setup;
+  const { seed } = setup;
   const examOptions = [
     { value: "ssc", label: t.examName.ssc },
     { value: "hsc", label: t.examName.hsc },
@@ -247,14 +283,18 @@ function SscHscGpaForm({ setup, onRestart }: { setup: FormSetup; onRestart: (nex
   const list = useRowList<SubjectRowInput>({
     // Ids 1…n take the carried-over rows; later ids (added rows) start blank.
     createRow: (id) => ({ id, name: seed[id - 1]?.name ?? "", grade: seed[id - 1]?.grade ?? "" }),
-    initialCount: Math.min(MAX_SUBJECTS, Math.max(DEFAULT_ROWS[exam], seed.length)),
+    initialCount: Math.min(
+      MAX_SUBJECTS,
+      setup.exactRows && seed.length > 0 ? seed.length : Math.max(DEFAULT_ROWS[exam], seed.length),
+    ),
     maxRows: MAX_SUBJECTS,
     focusTargetId: firstFieldId,
   });
   const { rows } = list;
   const [fourth, setFourth] = useState(setup.fourth);
-  const [submitted, setSubmitted] = useState(false);
-  const [revealCount, setRevealCount] = useState(0);
+  const [submitted, setSubmitted] = useState(setup.calculated);
+  const [revealCount, setRevealCount] = useState(setup.calculated ? 1 : 0);
+  const { record } = useCalculationHistory();
 
   // After a remount, keep keyboard and screen-reader users where they were.
   useEffect(() => {
@@ -279,7 +319,7 @@ function SscHscGpaForm({ setup, onRestart }: { setup: FormSetup; onRestart: (nex
     let end = rows.length;
     while (end > 0 && isBlankSubjectRow(rows[end - 1]!)) end -= 1;
     const carried = rows.slice(0, end).map(({ name, grade }) => ({ name, grade }));
-    onRestart({ exam: next, seed: carried, fourth, focus: "exam" });
+    onRestart({ ...INITIAL_SETUP, seed: carried, fourth, focus: "exam" }, next);
   }
 
   function onSubmit() {
@@ -287,6 +327,10 @@ function SscHscGpaForm({ setup, onRestart }: { setup: FormSetup; onRestart: (nex
     const check = calculateSscHscGpa(rows, fourth, SCALE);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record(
+        { exam, rows: rowsToJson(rows, SAVED_FIELDS), fourth },
+        shareText(t, exam, check.result, rows, locale),
+      );
       return;
     }
     const first = check.errors[0];
@@ -299,6 +343,7 @@ function SscHscGpaForm({ setup, onRestart }: { setup: FormSetup; onRestart: (nex
     if (targetRow !== undefined) document.getElementById(fieldId(targetRow, "grade"))?.focus();
   }
 
+  /** Empty rows for the current exam; the remembered exam stays. */
   function onReset() {
     onRestart({ ...INITIAL_SETUP, focus: "first" });
   }

@@ -5,6 +5,7 @@ import { CalculatorForm } from "@/components/calculator/calculator-form";
 import { CalculatorResultArea } from "@/components/calculator/calculator-result-area";
 import { numberErrorMessage } from "@/components/calculator/number-messages";
 import { ResultActions } from "@/components/calculator/result-actions";
+import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { AffixInput, FormField } from "@/components/ui/form";
@@ -14,6 +15,7 @@ import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
 import { formatPercent, formatTaka } from "@/lib/format";
 import { roundTo } from "@/lib/number";
+import { useCalculationHistory } from "@/lib/use-calculation-history";
 import {
   calculateProfitLoss,
   MAX_PRICE,
@@ -151,6 +153,7 @@ export function ProfitLossCalculator() {
   const [selling, setSelling] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [revealCount, setRevealCount] = useState(0);
+  const { record } = useCalculationHistory();
   const refs: Record<ProfitLossField, React.RefObject<HTMLInputElement | null>> = {
     cost: useRef<HTMLInputElement>(null),
     selling: useRef<HTMLInputElement>(null),
@@ -168,10 +171,20 @@ export function ProfitLossCalculator() {
     const check = calculateProfitLoss(cost, selling);
     if (check.ok) {
       setRevealCount((n) => n + 1);
+      record({ cost, selling }, shareText(t, check.result));
     } else {
       const first = check.errors[0];
       if (first) refs[first.field].current?.focus();
     }
+  }
+
+  /** Fills the form from a saved calculation (values come from storage, so each is checked) and shows the result. */
+  function restore(saved: Readonly<Record<string, string>>) {
+    const text = (key: string) => (typeof saved[key] === "string" ? saved[key] : "");
+    setCost(text("cost"));
+    setSelling(text("selling"));
+    setSubmitted(true);
+    setRevealCount((n) => n + 1);
   }
 
   function onReset() {
@@ -232,6 +245,7 @@ export function ProfitLossCalculator() {
           </ResultPlaceholder>
         }
       />
+      <RecentCalculations onRestore={restore} />
     </div>
   );
 }
