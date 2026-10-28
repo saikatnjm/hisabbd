@@ -9,6 +9,8 @@ import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { AffixInput, FormField, SegmentedControl } from "@/components/ui/form";
 import { ResultPanel } from "@/components/ui/result";
+import { useLocale } from "@/i18n/locale-context";
+import type { Locale } from "@/i18n/locales";
 import { formatNumber } from "@/lib/format";
 import {
   calculateBmi,
@@ -38,39 +40,153 @@ const WEIGHT_UNITS: readonly { value: WeightUnit; label: string }[] = [
   { value: "lb", label: "lb" },
 ];
 
-const CATEGORY_NAMES: Record<BmiCategoryId, string> = {
-  underweight: "Underweight",
-  healthy: "Healthy weight",
-  overweight: "Overweight",
-  obesity: "Obesity",
-};
+const STRINGS = {
+  en: {
+    submit: "Calculate BMI",
+    heightUnit: "Height unit",
+    weightUnit: "Weight unit",
+    height: "Height",
+    feet: "Feet",
+    inches: "Inches",
+    weight: "Weight",
+    heightPlaceholder: "e.g. 165",
+    weightPlaceholderKg: "e.g. 62",
+    weightPlaceholderLb: "e.g. 137",
+    adultsNote: "For adults aged 18 and over.",
+    announcement: (bmi: string, category: string) => `Your BMI is ${bmi}: ${category}.`,
+    placeholderTitleFirst: "Your BMI will appear here",
+    placeholderTitleFix: "Almost there",
+    placeholderFirst: "Enter your height and weight, then select Calculate BMI.",
+    placeholderFix: "Fix the highlighted fields above and your BMI will show here.",
+    resultTitle: "Your body mass index",
+    category: "Category",
+    usedLabel: "Height and weight used",
+    rangeLabel: "Healthy weight range for your height",
+    rangeTo: "to",
+    screeningNote:
+      "BMI is a screening measure for adults, not a diagnosis. It isn’t meant for children, teenagers, pregnancy or very muscular people.",
+    shareTitle: "BMI calculated with HisabBD",
+    shareText: (bmi: string, category: string, cm: string, kg: string, min: string, max: string, unit: string) =>
+      `BMI ${bmi} (${category}) at ${cm} cm and ${kg} kg. Healthy weight range for this height: ${min} to ${max} ${unit}. BMI is a screening measure, not a diagnosis. Calculated with HisabBD’s BMI Calculator.`,
+    categoryNames: {
+      underweight: "Underweight",
+      healthy: "Healthy weight",
+      overweight: "Overweight",
+      obesity: "Obesity",
+    } as Record<BmiCategoryId, string>,
+    categoryNotes: {
+      underweight:
+        "This is below the adult healthy range. Some people are naturally slim, but if you have lost weight without trying or feel unwell, it’s worth talking to a doctor.",
+      healthy:
+        "This is within the adult healthy range. BMI doesn’t measure body fat, fitness or overall health, so it is only one piece of the picture.",
+      overweight:
+        "This is above the adult healthy range. BMI alone doesn’t show body fat or health, so look at it together with things like waist size, diet and activity, and ask a doctor if you’re unsure.",
+      obesity:
+        "On average, a higher BMI goes with a higher risk of some health problems, but BMI alone is not a diagnosis. A doctor can look at your whole health and suggest next steps.",
+    } as Record<BmiCategoryId, string>,
+    obesityClasses: { 1: "class I", 2: "class II", 3: "class III" } as Record<1 | 2 | 3, string>,
+    bandRanges: {
+      underweight: "below 18.5",
+      healthy: "18.5 to 24.9",
+      overweight: "25 to 29.9",
+      obesity: "30 and above",
+    } as Record<BmiCategoryId, string>,
+    errHeightCmLabel: "height in centimetres",
+    errHeightCmMin: "at least 50 cm",
+    errHeightCmMax: "272 cm or less",
+    errTotalHeight:
+      "The total height must be between about 50 cm and 272 cm (roughly 1 ft 8 in to 8 ft 11 in).",
+    errFeetLabel: "feet",
+    errFeetMin: "at least 1",
+    errFeetMax: "8 or less",
+    errInchesLabel: "inches",
+    errInchesMin: "0 or more",
+    errInchesMax: "less than 12 (put whole feet in the feet box)",
+    errWeightLabel: "weight",
+    weightMin: (v: string) => `at least ${v}`,
+    weightMax: (v: string) => `${v} or less`,
+  },
+  bn: {
+    submit: "বিএমআই হিসাব করুন",
+    heightUnit: "উচ্চতার একক",
+    weightUnit: "ওজনের একক",
+    height: "উচ্চতা",
+    feet: "ফুট",
+    inches: "ইঞ্চি",
+    weight: "ওজন",
+    heightPlaceholder: "যেমন 165",
+    weightPlaceholderKg: "যেমন 62",
+    weightPlaceholderLb: "যেমন 137",
+    adultsNote: "১৮ বছর বা তার বেশি বয়সী প্রাপ্তবয়স্কদের জন্য।",
+    announcement: (bmi: string, category: string) => `আপনার বিএমআই ${bmi}: ${category}।`,
+    placeholderTitleFirst: "আপনার বিএমআই এখানে দেখা যাবে",
+    placeholderTitleFix: "প্রায় হয়ে গেছে",
+    placeholderFirst: "উচ্চতা ও ওজন লিখে “বিএমআই হিসাব করুন” চাপুন।",
+    placeholderFix: "ওপরে চিহ্নিত ঘরগুলো ঠিক করলেই বিএমআই এখানে দেখা যাবে।",
+    resultTitle: "আপনার বডি মাস ইনডেক্স",
+    category: "ক্যাটাগরি",
+    usedLabel: "যে উচ্চতা ও ওজন ধরা হয়েছে",
+    rangeLabel: "আপনার উচ্চতায় স্বাস্থ্যকর ওজনের সীমা",
+    rangeTo: "থেকে",
+    screeningNote:
+      "বিএমআই প্রাপ্তবয়স্কদের জন্য একটি প্রাথমিক যাচাই মাত্র, কোনো রোগনির্ণয় নয়। শিশু-কিশোর, গর্ভাবস্থা বা খুব পেশিবহুল মানুষের জন্য এটি প্রযোজ্য নয়।",
+    shareTitle: "HisabBD দিয়ে বিএমআই হিসাব",
+    shareText: (bmi: string, category: string, cm: string, kg: string, min: string, max: string, unit: string) =>
+      `বিএমআই ${bmi} (${category}) — ${cm} সেমি, ${kg} কেজিতে। এই উচ্চতায় স্বাস্থ্যকর ওজনের সীমা: ${min} থেকে ${max} ${unit}। বিএমআই প্রাথমিক যাচাই মাত্র, রোগনির্ণয় নয়। HisabBD-র বিএমআই ক্যালকুলেটরে হিসাব করা।`,
+    categoryNames: {
+      underweight: "কম ওজন",
+      healthy: "স্বাস্থ্যকর ওজন",
+      overweight: "বাড়তি ওজন",
+      obesity: "স্থূলতা",
+    } as Record<BmiCategoryId, string>,
+    categoryNotes: {
+      underweight:
+        "এটি প্রাপ্তবয়স্কদের স্বাস্থ্যকর সীমার নিচে। কেউ কেউ স্বাভাবিকভাবেই রোগা, তবে চেষ্টা ছাড়াই ওজন কমে গেলে বা অসুস্থ লাগলে ডাক্তারের সাথে কথা বলা ভালো।",
+      healthy:
+        "এটি প্রাপ্তবয়স্কদের স্বাস্থ্যকর সীমার মধ্যে। বিএমআই শরীরের চর্বি, ফিটনেস বা সার্বিক স্বাস্থ্য মাপে না, তাই এটি পুরো ছবির একটি অংশ মাত্র।",
+      overweight:
+        "এটি প্রাপ্তবয়স্কদের স্বাস্থ্যকর সীমার ওপরে। শুধু বিএমআই দিয়ে চর্বি বা স্বাস্থ্য বোঝা যায় না, তাই কোমরের মাপ, খাদ্যাভ্যাস ও চলাফেরার সাথে মিলিয়ে দেখুন, আর সংশয় থাকলে ডাক্তারকে জিজ্ঞেস করুন।",
+      obesity:
+        "গড়ে, বেশি বিএমআই-এর সাথে কিছু স্বাস্থ্য-ঝুঁকিও বাড়ে, তবে শুধু বিএমআই কোনো রোগনির্ণয় নয়। ডাক্তার আপনার সার্বিক স্বাস্থ্য দেখে পরবর্তী করণীয় বলতে পারবেন।",
+    } as Record<BmiCategoryId, string>,
+    obesityClasses: { 1: "ক্লাস I", 2: "ক্লাস II", 3: "ক্লাস III" } as Record<1 | 2 | 3, string>,
+    bandRanges: {
+      underweight: "18.5-এর নিচে",
+      healthy: "18.5 থেকে 24.9",
+      overweight: "25 থেকে 29.9",
+      obesity: "30 বা তার বেশি",
+    } as Record<BmiCategoryId, string>,
+    errHeightCmLabel: "সেন্টিমিটারে উচ্চতা",
+    errHeightCmMin: "কমপক্ষে 50 সেমি",
+    errHeightCmMax: "272 সেমি বা তার কম",
+    errTotalHeight: "মোট উচ্চতা মোটামুটি 50 থেকে 272 সেমির মধ্যে হতে হবে (প্রায় 1 ফুট 8 ইঞ্চি থেকে 8 ফুট 11 ইঞ্চি)।",
+    errFeetLabel: "ফুট",
+    errFeetMin: "কমপক্ষে 1",
+    errFeetMax: "8 বা তার কম",
+    errInchesLabel: "ইঞ্চি",
+    errInchesMin: "0 বা তার বেশি",
+    errInchesMax: "12-র কম (পুরো ফুট ফুটের ঘরে লিখুন)",
+    errWeightLabel: "ওজন",
+    weightMin: (v: string) => `কমপক্ষে ${v}`,
+    weightMax: (v: string) => `${v} বা তার কম`,
+  },
+} as const;
 
-const CATEGORY_NOTES: Record<BmiCategoryId, string> = {
-  underweight:
-    "This is below the adult healthy range. Some people are naturally slim, but if you have lost weight without trying or feel unwell, it’s worth talking to a doctor.",
-  healthy:
-    "This is within the adult healthy range. BMI doesn’t measure body fat, fitness or overall health, so it is only one piece of the picture.",
-  overweight:
-    "This is above the adult healthy range. BMI alone doesn’t show body fat or health, so look at it together with things like waist size, diet and activity, and ask a doctor if you’re unsure.",
-  obesity:
-    "On average, a higher BMI goes with a higher risk of some health problems, but BMI alone is not a diagnosis. A doctor can look at your whole health and suggest next steps.",
-};
+type Strings = (typeof STRINGS)[Locale];
 
 /** The visual scale runs from BMI 15 to 40; values outside are pinned to the ends. */
 const SCALE_MIN = 15;
 const SCALE_MAX = 40;
-const SCALE_BANDS: readonly { id: BmiCategoryId; from: number; to: number; color: string; range: string }[] = [
-  { id: "underweight", from: 15, to: 18.5, color: "bg-sky-400", range: "below 18.5" },
-  { id: "healthy", from: 18.5, to: 25, color: "bg-emerald-500", range: "18.5 to 24.9" },
-  { id: "overweight", from: 25, to: 30, color: "bg-amber-400", range: "25 to 29.9" },
-  { id: "obesity", from: 30, to: 40, color: "bg-rose-500", range: "30 and above" },
+const SCALE_BANDS: readonly { id: BmiCategoryId; from: number; to: number; color: string }[] = [
+  { id: "underweight", from: 15, to: 18.5, color: "bg-sky-400" },
+  { id: "healthy", from: 18.5, to: 25, color: "bg-emerald-500" },
+  { id: "overweight", from: 25, to: 30, color: "bg-amber-400" },
+  { id: "obesity", from: 30, to: 40, color: "bg-rose-500" },
 ];
 
-const OBESITY_CLASS_NAMES = { 1: "class I", 2: "class II", 3: "class III" } as const;
-
-function categoryLabel(r: BmiResult): string {
-  const name = CATEGORY_NAMES[r.category];
-  return r.obesityClass ? `${name} (${OBESITY_CLASS_NAMES[r.obesityClass]})` : name;
+function categoryLabel(t: Strings, r: BmiResult): string {
+  const name = t.categoryNames[r.category];
+  return r.obesityClass ? `${name} (${t.obesityClasses[r.obesityClass]})` : name;
 }
 
 function scalePercent(bmi: number): number {
@@ -79,52 +195,57 @@ function scalePercent(bmi: number): number {
 }
 
 /** Weight limits as shown in messages, in the chosen unit (rounded inwards so they are valid). */
-function weightLimits(unit: WeightUnit): { min: string; max: string } {
-  if (unit === "kg") return { min: `at least ${WEIGHT_RANGE_KG.min} kg`, max: `${WEIGHT_RANGE_KG.max} kg or less` };
+function weightLimits(t: Strings, unit: WeightUnit): { min: string; max: string } {
+  if (unit === "kg") {
+    return { min: t.weightMin(`${WEIGHT_RANGE_KG.min} kg`), max: t.weightMax(`${WEIGHT_RANGE_KG.max} kg`) };
+  }
   const min = Math.ceil(kgToLb(WEIGHT_RANGE_KG.min) * 100) / 100;
   const max = Math.floor(kgToLb(WEIGHT_RANGE_KG.max) * 100) / 100;
-  return { min: `at least ${formatNumber(min)} lb`, max: `${formatNumber(max)} lb or less` };
+  return { min: t.weightMin(`${formatNumber(min)} lb`), max: t.weightMax(`${formatNumber(max)} lb`) };
 }
 
-function errorMessage(error: BmiError, weightUnit: WeightUnit): string {
+function errorMessage(t: Strings, locale: Locale, error: BmiError, weightUnit: WeightUnit): string {
   switch (error.field) {
     case "heightCm":
-      return numberErrorMessage(error.code === "height-range" ? "invalid" : error.code, {
-        label: "height in centimetres",
-        min: "at least 50 cm",
-        max: "272 cm or less",
-      });
+      return numberErrorMessage(
+        error.code === "height-range" ? "invalid" : error.code,
+        { label: t.errHeightCmLabel, min: t.errHeightCmMin, max: t.errHeightCmMax },
+        locale,
+      );
     case "heightFeet":
-      if (error.code === "height-range") {
-        return "The total height must be between about 50 cm and 272 cm (roughly 1 ft 8 in to 8 ft 11 in).";
-      }
-      return numberErrorMessage(error.code, { label: "feet", min: "at least 1", max: "8 or less" });
+      if (error.code === "height-range") return t.errTotalHeight;
+      return numberErrorMessage(error.code, { label: t.errFeetLabel, min: t.errFeetMin, max: t.errFeetMax }, locale);
     case "heightInches":
-      return numberErrorMessage(error.code === "height-range" ? "invalid" : error.code, {
-        label: "inches",
-        min: "0 or more",
-        max: "less than 12 (put whole feet in the feet box)",
-      });
+      return numberErrorMessage(
+        error.code === "height-range" ? "invalid" : error.code,
+        { label: t.errInchesLabel, min: t.errInchesMin, max: t.errInchesMax },
+        locale,
+      );
     case "weight":
-      return numberErrorMessage(error.code === "height-range" ? "invalid" : error.code, {
-        label: "weight",
-        ...weightLimits(weightUnit),
-      });
+      return numberErrorMessage(
+        error.code === "height-range" ? "invalid" : error.code,
+        { label: t.errWeightLabel, ...weightLimits(t, weightUnit) },
+        locale,
+      );
   }
 }
 
-function shareText(r: BmiResult): string {
+function shareText(t: Strings, r: BmiResult): string {
   const range = r.healthyWeightRange;
-  return (
-    `BMI ${formatNumber(r.bmiRounded, { decimals: 1, minDecimals: 1 })} (${categoryLabel(r)}) ` +
-    `at ${formatNumber(r.heightCm, { decimals: 1 })} cm and ${formatNumber(r.weightKg, { decimals: 1 })} kg. ` +
-    `Healthy weight range for this height: ${formatNumber(range.min, { decimals: 1 })} to ` +
-    `${formatNumber(range.max, { decimals: 1 })} ${range.unit}. BMI is a screening measure, not a diagnosis. ` +
-    `Calculated with HisabBD’s BMI Calculator.`
+  return t.shareText(
+    formatNumber(r.bmiRounded, { decimals: 1, minDecimals: 1 }),
+    categoryLabel(t, r),
+    formatNumber(r.heightCm, { decimals: 1 }),
+    formatNumber(r.weightKg, { decimals: 1 }),
+    formatNumber(range.min, { decimals: 1 }),
+    formatNumber(range.max, { decimals: 1 }),
+    range.unit,
   );
 }
 
 export function BmiCalculator() {
+  const locale = useLocale();
+  const t = STRINGS[locale];
   const [heightUnit, setHeightUnit] = useState<HeightUnit>("cm");
   const [heightCm, setHeightCm] = useState("");
   const [heightFeet, setHeightFeet] = useState("");
@@ -144,7 +265,7 @@ export function BmiCalculator() {
   const calc = submitted ? calculateBmi(input) : null;
   const errorFor = (field: BmiField) => {
     const error = calc && !calc.ok ? calc.errors.find((e) => e.field === field) : undefined;
-    return error ? errorMessage(error, weightUnit) : undefined;
+    return error ? errorMessage(t, locale, error, weightUnit) : undefined;
   };
   const result = calc?.ok ? calc.result : null;
 
@@ -173,18 +294,18 @@ export function BmiCalculator() {
 
   return (
     <div>
-      <CalculatorForm onSubmit={onSubmit} onReset={onReset} submitLabel="Calculate BMI">
+      <CalculatorForm onSubmit={onSubmit} onReset={onReset} submitLabel={t.submit}>
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="space-y-4">
             <SegmentedControl
               name="bmi-height-unit"
-              legend="Height unit"
+              legend={t.heightUnit}
               options={HEIGHT_UNITS}
               value={heightUnit}
               onChange={setHeightUnit}
             />
             {heightUnit === "cm" ? (
-              <FormField id={FIELD_IDS.heightCm} label="Height" error={errorFor("heightCm")}>
+              <FormField id={FIELD_IDS.heightCm} label={t.height} error={errorFor("heightCm")}>
                 {(control) => (
                   <AffixInput
                     {...control}
@@ -193,7 +314,7 @@ export function BmiCalculator() {
                     inputMode="decimal"
                     autoComplete="off"
                     suffix="cm"
-                    placeholder="e.g. 165"
+                    placeholder={t.heightPlaceholder}
                     value={heightCm}
                     onChange={(event) => setHeightCm(event.target.value)}
                   />
@@ -201,7 +322,7 @@ export function BmiCalculator() {
               </FormField>
             ) : (
               <div className="grid grid-cols-2 gap-3">
-                <FormField id={FIELD_IDS.heightFeet} label="Feet" error={errorFor("heightFeet")}>
+                <FormField id={FIELD_IDS.heightFeet} label={t.feet} error={errorFor("heightFeet")}>
                   {(control) => (
                     <AffixInput
                       {...control}
@@ -216,7 +337,7 @@ export function BmiCalculator() {
                     />
                   )}
                 </FormField>
-                <FormField id={FIELD_IDS.heightInches} label="Inches" error={errorFor("heightInches")}>
+                <FormField id={FIELD_IDS.heightInches} label={t.inches} error={errorFor("heightInches")}>
                   {(control) => (
                     <AffixInput
                       {...control}
@@ -238,12 +359,12 @@ export function BmiCalculator() {
           <div className="space-y-4">
             <SegmentedControl
               name="bmi-weight-unit"
-              legend="Weight unit"
+              legend={t.weightUnit}
               options={WEIGHT_UNITS}
               value={weightUnit}
               onChange={setWeightUnit}
             />
-            <FormField id={FIELD_IDS.weight} label="Weight" error={errorFor("weight")}>
+            <FormField id={FIELD_IDS.weight} label={t.weight} error={errorFor("weight")}>
               {(control) => (
                 <AffixInput
                   {...control}
@@ -252,7 +373,7 @@ export function BmiCalculator() {
                   inputMode="decimal"
                   autoComplete="off"
                   suffix={weightUnit}
-                  placeholder={weightUnit === "kg" ? "e.g. 62" : "e.g. 137"}
+                  placeholder={weightUnit === "kg" ? t.weightPlaceholderKg : t.weightPlaceholderLb}
                   value={weight}
                   onChange={(event) => setWeight(event.target.value)}
                 />
@@ -260,21 +381,19 @@ export function BmiCalculator() {
             </FormField>
           </div>
         </div>
-        <p className="mt-5 text-sm text-slate-600">For adults aged 18 and over.</p>
+        <p className="mt-5 text-sm text-slate-600">{t.adultsNote}</p>
       </CalculatorForm>
 
       <CalculatorResultArea
         revealKey={revealCount}
-        announcement={result ? `Your BMI is ${formatNumber(result.bmiRounded, { decimals: 1, minDecimals: 1 })}: ${categoryLabel(result)}.` : ""}
+        announcement={result ? t.announcement(formatNumber(result.bmiRounded, { decimals: 1, minDecimals: 1 }), categoryLabel(t, result)) : ""}
         result={result && <BmiResultView result={result} />}
         placeholder={
           <ResultPlaceholder
-            title={calc ? "Almost there" : "Your BMI will appear here"}
+            title={calc ? t.placeholderTitleFix : t.placeholderTitleFirst}
             preview={<p className="font-display text-4xl font-bold tracking-tight">–.–</p>}
           >
-            {calc
-              ? "Fix the highlighted fields above and your BMI will show here."
-              : "Enter your height and weight, then select Calculate BMI."}
+            {calc ? t.placeholderFix : t.placeholderFirst}
           </ResultPlaceholder>
         }
       />
@@ -283,16 +402,18 @@ export function BmiCalculator() {
 }
 
 function BmiResultView({ result: r }: { result: BmiResult }) {
+  const locale = useLocale();
+  const t = STRINGS[locale];
   const range = r.healthyWeightRange;
   const stats = [
-    { label: "Category", value: categoryLabel(r) },
+    { label: t.category, value: categoryLabel(t, r) },
     {
-      label: "Height and weight used",
+      label: t.usedLabel,
       value: `${formatNumber(r.heightCm, { decimals: 1 })} cm, ${formatNumber(r.weightKg, { decimals: 1 })} kg`,
     },
     {
-      label: "Healthy weight range for your height",
-      value: `${formatNumber(range.min, { decimals: 1 })} to ${formatNumber(range.max, { decimals: 1 })} ${range.unit}`,
+      label: t.rangeLabel,
+      value: `${formatNumber(range.min, { decimals: 1 })} ${t.rangeTo} ${formatNumber(range.max, { decimals: 1 })} ${range.unit}`,
       wide: true,
     },
   ];
@@ -300,33 +421,31 @@ function BmiResultView({ result: r }: { result: BmiResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
-        title="Your body mass index"
+        title={t.resultTitle}
         titleId="bmi-result-heading"
         value={
           <p className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
             <span className="font-display text-5xl font-bold tracking-tight sm:text-6xl">
               {formatNumber(r.bmiRounded, { decimals: 1, minDecimals: 1 })}
             </span>
-            <span className="text-xl font-semibold text-slate-800">{categoryLabel(r)}</span>
+            <span className="text-xl font-semibold text-slate-800">{categoryLabel(t, r)}</span>
           </p>
         }
       >
         <BmiScale bmi={r.bmiRounded} current={r.category} />
-        <p className="mt-4 rounded-xl bg-white/70 px-4 py-3 text-slate-800">{CATEGORY_NOTES[r.category]}</p>
+        <p className="mt-4 rounded-xl bg-white/70 px-4 py-3 text-slate-800">{t.categoryNotes[r.category]}</p>
         <ResultStats items={stats} className="mt-5" />
-        <p className="mt-4 text-sm text-slate-600">
-          BMI is a screening measure for adults, not a diagnosis. It isn’t meant for children, teenagers, pregnancy
-          or very muscular people.
-        </p>
+        <p className="mt-4 text-sm text-slate-600">{t.screeningNote}</p>
       </ResultPanel>
 
-      <ResultActions key={shareText(r)} text={shareText(r)} shareTitle="BMI calculated with HisabBD" />
+      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }
 
 /** Decorative colour scale; the category is always also written as text. */
 function BmiScale({ bmi, current }: { bmi: number; current: BmiCategoryId }) {
+  const t = STRINGS[useLocale()];
   return (
     <div>
       <div aria-hidden="true" className="relative pt-3 pb-1">
@@ -351,7 +470,7 @@ function BmiScale({ bmi, current }: { bmi: number; current: BmiCategoryId }) {
           <li key={band.id} className="flex items-center gap-2">
             <span aria-hidden="true" className={`size-3 shrink-0 rounded-full ${band.color}`} />
             <span className={band.id === current ? "font-semibold text-slate-900" : undefined}>
-              {CATEGORY_NAMES[band.id]}: {band.range}
+              {t.categoryNames[band.id]}: {t.bandRanges[band.id]}
             </span>
           </li>
         ))}

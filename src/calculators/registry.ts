@@ -56,6 +56,9 @@ export function validateRegistry(list: readonly CalculatorMeta[]): string[] {
     if (!calc.name.trim() || !calc.seo.title.trim() || !calc.seo.description.trim()) {
       errors.push(`Missing name or SEO fields in "${calc.slug}"`);
     }
+    if (!calc.nameBn.trim() || !calc.summaryBn.trim() || !calc.seoBn.title.trim() || !calc.seoBn.description.trim()) {
+      errors.push(`Missing Bangla name, summary or SEO fields in "${calc.slug}"`);
+    }
     if (calc.keywords.length === 0) errors.push(`No search keywords in "${calc.slug}"`);
     if (!isValidIsoDate(calc.addedOn)) {
       errors.push(`Invalid addedOn date "${calc.addedOn}" in "${calc.slug}"`);

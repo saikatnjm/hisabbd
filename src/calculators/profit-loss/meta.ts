@@ -7,11 +7,17 @@ export const profitLossCalculator: CalculatorMeta = {
   category: "finance",
   icon: "trending",
   summary: "Find your profit or loss in Taka from the cost and selling price, with profit percentage and margin.",
+  summaryBn: "ক্রয়মূল্য ও বিক্রয়মূল্য থেকে টাকায় লাভ-ক্ষতি, লাভের শতাংশ ও মার্জিন বের করুন।",
   keywords: ["profit", "loss", "profit and loss", "profit margin", "margin", "markup", "break-even", "selling price", "cost price", "লাভ", "ক্ষতি", "লাভ ক্ষতি", "labh", "khoti", "business profit", "mark up", "profit percentage"],
   seo: {
     title: "Profit and Loss Calculator: Amount, % and Margin",
     description:
       "Enter the cost price and selling price to see your profit or loss in Taka, the percentage on cost, and the profit margin on the selling price. Free to use.",
+  },
+  seoBn: {
+    title: "লাভ-ক্ষতি ক্যালকুলেটর: টাকায় লাভ, % ও মার্জিন",
+    description:
+      "ক্রয়মূল্য ও বিক্রয়মূল্য দিলেই টাকায় লাভ বা ক্ষতি, খরচের ওপর লাভের শতাংশ আর বিক্রয়মূল্যের ওপর মার্জিন দেখুন। সম্পূর্ণ ফ্রি।",
   },
   addedOn: "2026-10-05",
   related: ["discount-calculator", "percentage-calculator"],
@@ -45,6 +51,38 @@ export const profitLossCalculator: CalculatorMeta = {
       question: "Does this include other costs like delivery, rent or tax?",
       answer:
         "No. It compares only the two prices you enter. If you want the result to include delivery, packaging or other expenses, add them to the cost price first.",
+    },
+  ],
+  faqsBn: [
+    {
+      question: "লাভ-ক্ষতি কীভাবে হিসাব করব?",
+      answer:
+        "বিক্রয়মূল্য থেকে ক্রয়মূল্য বাদ দিন। ধনাত্মক হলে লাভ, ঋণাত্মক হলে ক্ষতি, আর শূন্য হলে সমান সমান। ৳80-তে কেনা জিনিস ৳100-তে বিক্রি করলে লাভ ৳20।",
+    },
+    {
+      question: "লাভের শতাংশ কীভাবে হিসাব হয়?",
+      answer:
+        "লাভ (বা ক্ষতি)-কে ক্রয়মূল্য দিয়ে ভাগ করে 100 দিয়ে গুণ করুন। ক্রয়মূল্য ৳80 আর বিক্রয়মূল্য ৳100 হলে: 20 ÷ 80 × 100 = 25%। এটিই প্রচলিত সংখ্যা, একে মার্কআপও বলে।",
+    },
+    {
+      question: "লাভের মার্জিন আর মার্কআপের পার্থক্য কী?",
+      answer:
+        "দুটোই একই লাভ ব্যবহার করে, কিন্তু ভাগ হয় আলাদা দামে। মার্কআপ (ক্রয়মূল্যের ওপর দেখানো শতাংশ) ভাগ হয় ক্রয়মূল্য দিয়ে; মার্জিন ভাগ হয় বিক্রয়মূল্য দিয়ে। ক্রয়মূল্য ৳80 ও বিক্রয়মূল্য ৳100 হলে মার্কআপ 25%, মার্জিন 20%। মার্জিন কখনো 100% ছুঁতে পারে না, মার্কআপ যত খুশি হতে পারে।",
+    },
+    {
+      question: "কখন সমান সমান (ব্রেক-ইভেন) হয়?",
+      answer:
+        "যখন বিক্রয়মূল্য আর ক্রয়মূল্য পয়সা পর্যন্ত সমান। তুলনার আগে দুটো দামই নিকটতম পয়সায় রাউন্ড করা হয়, তাই রাউন্ডিংয়ের সামান্য পার্থক্য কখনো ভুয়া লাভ বা ক্ষতি তৈরি করে না।",
+    },
+    {
+      question: "বিক্রয়মূল্য ৳0 হলে লাভের মার্জিন দেখা যায় না কেন?",
+      answer:
+        "মার্জিন ভাগ হয় বিক্রয়মূল্য দিয়ে, আর শূন্য দিয়ে ভাগের কোনো উত্তর নেই। ক্রয়মূল্যের ওপর ক্ষতি তখনো দেখানো হয়: ৳500-এর জিনিস বিনামূল্যে দিলে ক্ষতি ৳500, অর্থাৎ ক্রয়মূল্যের 100%।",
+    },
+    {
+      question: "ডেলিভারি, ভাড়া বা ট্যাক্সের মতো খরচ কি এতে ধরা হয়?",
+      answer:
+        "না। এটি শুধু আপনার দেওয়া দুটি দাম তুলনা করে। ডেলিভারি, প্যাকেজিং বা অন্য খরচ ধরতে চাইলে আগে সেগুলো ক্রয়মূল্যের সাথে যোগ করে নিন।",
     },
   ],
 };

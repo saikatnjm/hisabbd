@@ -6,12 +6,16 @@ import { useId, useRef, useState } from "react";
 import { CategoryIcon } from "@/components/calculator/category-icon";
 import { categoryNav, primaryNav } from "@/components/layout/nav-links";
 import { CloseIcon, MenuIcon } from "@/components/ui/icons";
+import { useLocale } from "@/i18n/locale-context";
+import { ui } from "@/i18n/ui";
 
 /**
  * Small-screen navigation. Closes on navigation (the pathname changes),
  * on Escape, and when a link is chosen.
  */
 export function MobileMenu() {
+  const locale = useLocale();
+  const t = ui[locale].nav;
   const pathname = usePathname();
   const panelId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -39,7 +43,7 @@ export function MobileMenu() {
         className="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-xl px-3 text-sm font-semibold text-slate-900 hover:bg-brand-50"
       >
         {open ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
-        Menu
+        {t.menu}
       </button>
       <div
         id={panelId}
@@ -48,7 +52,7 @@ export function MobileMenu() {
       >
         <nav aria-label="Menu" className="mx-auto max-w-5xl px-4 py-4">
           <ul className="space-y-1">
-            {primaryNav.map((item) => (
+            {primaryNav(locale).map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -60,9 +64,9 @@ export function MobileMenu() {
               </li>
             ))}
           </ul>
-          <p className="mt-4 mb-2 px-3 text-sm font-semibold text-slate-500">Categories</p>
+          <p className="mt-4 mb-2 px-3 text-sm font-semibold text-slate-500">{t.categories}</p>
           <ul className="grid grid-cols-2 gap-1">
-            {categoryNav.map((item) => (
+            {categoryNav(locale).map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}

@@ -24,7 +24,9 @@ export interface GradeBand {
 export interface GradingScale {
   id: string;
   name: string;
+  nameBn: string;
   description: string;
+  descriptionBn: string;
   /** Highest grade point on the scale. */
   maxPoint: number;
   /** Best grade first. */
@@ -34,8 +36,11 @@ export interface GradingScale {
 export const BD_UGC_4_SCALE: GradingScale = {
   id: "bd-ugc-4",
   name: "Bangladesh university (UGC uniform grading, 4.00 scale)",
+  nameBn: "বাংলাদেশের বিশ্ববিদ্যালয় (ইউজিসি অভিন্ন গ্রেডিং, ৪.০০ স্কেল)",
   description:
     "The uniform grading system published by Bangladesh’s University Grants Commission and used by many universities. Check your own university’s handbook, as some differ.",
+  descriptionBn:
+    "বাংলাদেশের বিশ্ববিদ্যালয় মঞ্জুরি কমিশনের (ইউজিসি) প্রকাশিত অভিন্ন গ্রেডিং পদ্ধতি, যা দেশের অনেক বিশ্ববিদ্যালয়ে ব্যবহৃত হয়। কিছু প্রতিষ্ঠানে ভিন্নতা আছে, তাই নিজের বিশ্ববিদ্যালয়ের হ্যান্ডবুক দেখে নিন।",
   maxPoint: 4,
   grades: [
     { letter: "A+", point: 4.0, marksRange: { min: 80, max: 100 } },

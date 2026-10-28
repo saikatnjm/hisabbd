@@ -7,6 +7,7 @@ export interface Category {
   name: string;
   nameBn: string;
   description: string;
+  descriptionBn: string;
 }
 
 /** Icon keys a calculator can use (rendered by components/calculator/calculator-icon.tsx). */
@@ -30,6 +31,11 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface SeoFields {
+  title: string;
+  description: string;
+}
+
 /**
  * Server-safe calculator metadata. Contains no React components so it can be
  * imported anywhere (routes, sitemap, metadata) without adding client JS.
@@ -44,15 +50,18 @@ export interface CalculatorMeta {
   icon: CalculatorIconName;
   /** One sentence used as the page intro, in cards and in search. */
   summary: string;
+  /** Bangla version of `summary`, used on /bn pages. */
+  summaryBn: string;
   /** Extra search terms: synonyms, abbreviations, Bangla words. Not shown. */
   keywords: readonly string[];
-  seo: {
-    title: string;
-    description: string;
-  };
+  seo: SeoFields;
+  /** Bangla SEO title and description, used on /bn pages. */
+  seoBn: SeoFields;
   /** Publish date (YYYY-MM-DD). Drives "Recently added" — real data only. */
   addedOn: string;
   /** Slugs of related calculators (must exist in the registry). */
   related: readonly string[];
   faqs?: readonly FaqItem[];
+  /** Bangla FAQs shown (and marked up) on /bn pages. */
+  faqsBn?: readonly FaqItem[];
 }

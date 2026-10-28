@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { StarIcon } from "@/components/ui/icons";
 import { useSavedCalculators } from "@/lib/use-saved-calculators";
+import { useLocale } from "@/i18n/locale-context";
+import { ui } from "@/i18n/ui";
 
 export interface QuickPick {
   slug: string;
@@ -20,6 +22,7 @@ const chipClasses =
  * shows those instead, in the same single row (no layout jump).
  */
 export function QuickPicks({ featured, all }: { featured: readonly QuickPick[]; all: readonly QuickPick[] }) {
+  const t = ui[useLocale()].quickPicks;
   const favorites = useSavedCalculators("favorites");
   const recent = useSavedCalculators("recent");
   const bySlug = new Map(all.map((item) => [item.slug, item]));
@@ -33,11 +36,11 @@ export function QuickPicks({ featured, all }: { featured: readonly QuickPick[]; 
 
   return (
     <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
-      <span className="text-slate-600">{showPersonal ? "Your calculators:" : "Try:"}</span>
+      <span className="text-slate-600">{showPersonal ? t.yours : t.try}</span>
       {items.map((item) => (
         <Link key={item.slug} href={item.href} className={chipClasses}>
           {showPersonal && favorites.includes(item.slug) && (
-            <StarIcon className="size-4 fill-sun-300 text-finance-ink" aria-label="Saved" role="img" />
+            <StarIcon className="size-4 fill-sun-300 text-finance-ink" aria-label={t.saved} role="img" />
           )}
           {item.label}
         </Link>

@@ -21,8 +21,11 @@ function resolveSiteUrl(): string {
 export const siteConfig = {
   name: "HisabBD",
   tagline: "Free Online Calculators for Bangladesh",
+  taglineBn: "বাংলাদেশের জন্য ফ্রি অনলাইন ক্যালকুলেটর",
   description:
     "Free online calculators for Bangladesh: age, BMI, GPA, CGPA, percentage, discount, profit and loss, loan EMI, salary and date difference. Fast, mobile friendly, no signup.",
+  descriptionBn:
+    "বাংলাদেশের জন্য ফ্রি অনলাইন ক্যালকুলেটর: বয়স, বিএমআই, জিপিএ, সিজিপিএ, শতকরা, ডিসকাউন্ট, লাভ-ক্ষতি, লোন ইএমআই, বেতন ও তারিখের ব্যবধান। দ্রুত, মোবাইল-বান্ধব, কোনো সাইনআপ লাগে না।",
   url: resolveSiteUrl(),
   locale: "en-BD",
   language: "en",

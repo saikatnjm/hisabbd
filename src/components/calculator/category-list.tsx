@@ -6,17 +6,20 @@ import type { Category } from "@/calculators/types";
 import { CategoryIcon } from "@/components/calculator/category-icon";
 import { categoryTheme } from "@/components/calculator/category-theme";
 import { cn } from "@/lib/cn";
+import type { Locale } from "@/i18n/locales";
+import { ui } from "@/i18n/ui";
 
-function CategoryCardBody({ category, count }: { category: Category; count: number }) {
+function CategoryCardBody({ category, count, locale }: { category: Category; count: number; locale: Locale }) {
   const theme = categoryTheme[category.id];
+  const t = ui[locale].categoryList;
   return (
     <>
       <CategoryIcon category={category.id} className="bg-white/80" />
       <div className="min-w-0">
-        <h3 className="font-display text-lg font-semibold text-slate-900">{category.name}</h3>
-        <p className="mt-0.5 text-sm text-slate-700">{category.description}</p>
+        <h3 className="font-display text-lg font-semibold text-slate-900">{locale === "bn" ? category.nameBn : category.name}</h3>
+        <p className="mt-0.5 text-sm text-slate-700">{locale === "bn" ? category.descriptionBn : category.description}</p>
         <p className={cn("mt-2 text-xs font-semibold", theme.ink)}>
-          {count === 0 ? "Coming soon" : `${count} calculator${count === 1 ? "" : "s"}`}
+          {count === 0 ? t.comingSoon : t.count(count)}
         </p>
       </div>
     </>
@@ -27,7 +30,7 @@ function CategoryCardBody({ category, count }: { category: Category; count: numb
  * Category tiles. Counts come from calculator metadata, so new calculators
  * appear automatically. Pass `getHref` once category pages exist.
  */
-export function CategoryList({ getHref }: { getHref?: (category: Category) => string }) {
+export function CategoryList({ getHref, locale = "en" }: { getHref?: (category: Category) => string; locale?: Locale }) {
   return (
     <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
       {categories.map((category) => {
@@ -45,11 +48,11 @@ export function CategoryList({ getHref }: { getHref?: (category: Category) => st
                 id={categoryAnchorId(category.id)}
                 className={cn(classes, "transition duration-200 hover:shadow-lift motion-safe:hover:-translate-y-0.5")}
               >
-                <CategoryCardBody category={category} count={count} />
+                <CategoryCardBody category={category} count={count} locale={locale} />
               </Link>
             ) : (
               <div id={categoryAnchorId(category.id)} tabIndex={-1} className={classes}>
-                <CategoryCardBody category={category} count={count} />
+                <CategoryCardBody category={category} count={count} locale={locale} />
               </div>
             )}
           </li>

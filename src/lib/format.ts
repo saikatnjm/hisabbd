@@ -1,3 +1,4 @@
+import type { Locale } from "@/i18n/locales";
 import { roundTo } from "@/lib/number";
 import { dayOfWeek, type PlainDate } from "@/lib/plain-date";
 
@@ -14,6 +15,13 @@ const MONTHS = [
 ] as const;
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
+
+const MONTHS_BN = [
+  "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
+  "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর",
+] as const;
+
+const WEEKDAYS_BN = ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"] as const;
 
 const NOT_A_NUMBER = "–";
 const formatters = new Map<string, Intl.NumberFormat>();
@@ -62,21 +70,32 @@ export function pluralize(count: number, singular: string, plural = `${singular}
   return `${formatNumber(count)} ${count === 1 ? singular : plural}`;
 }
 
-/** ["a", "b", "c"] → "a, b and c". */
-export function joinList(items: readonly string[]): string {
+/** ["a", "b", "c"] → "a, b and c" (bn: "a, b ও c"). */
+export function joinList(items: readonly string[], locale: Locale = "en"): string {
   if (items.length <= 1) return items.join("");
-  return `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
+  const joiner = locale === "bn" ? " ও " : " and ";
+  return `${items.slice(0, -1).join(", ")}${joiner}${items.at(-1)}`;
 }
 
-export function weekdayName(weekday: number): string {
-  return WEEKDAYS[weekday] ?? "";
+/** Bangla has no plural suffix: 3 → "৩টি নয়, 3 দিন". Digits stay Western for consistency. */
+export function countBn(count: number, unit: string): string {
+  return `${formatNumber(count)} ${unit}`;
+}
+
+export function weekdayName(weekday: number, locale: Locale = "en"): string {
+  return (locale === "bn" ? WEEKDAYS_BN : WEEKDAYS)[weekday] ?? "";
 }
 
 /**
  * Day-month-year as commonly written in Bangladesh: "5 October 2026".
  * Built from plain numbers (no Date/Intl) so server and browser always agree.
  */
-export function formatPlainDate(date: PlainDate, options: { weekday?: boolean } = {}): string {
-  const text = `${date.day} ${MONTHS[date.month - 1]} ${date.year}`;
-  return options.weekday ? `${weekdayName(dayOfWeek(date))}, ${text}` : text;
+export function formatPlainDate(
+  date: PlainDate,
+  options: { weekday?: boolean; locale?: Locale } = {},
+): string {
+  const locale = options.locale ?? "en";
+  const months = locale === "bn" ? MONTHS_BN : MONTHS;
+  const text = `${date.day} ${months[date.month - 1]} ${date.year}`;
+  return options.weekday ? `${weekdayName(dayOfWeek(date), locale)}, ${text}` : text;
 }

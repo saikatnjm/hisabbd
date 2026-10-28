@@ -9,7 +9,9 @@ import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { AffixInput, FormField, SegmentedControl } from "@/components/ui/form";
 import { ResultPanel } from "@/components/ui/result";
-import { formatPercent, formatTaka, pluralize } from "@/lib/format";
+import { useLocale } from "@/i18n/locale-context";
+import type { Locale } from "@/i18n/locales";
+import { countBn, formatPercent, formatTaka, pluralize } from "@/lib/format";
 import {
   calculateLoan,
   MAX_LOAN,
@@ -28,60 +30,187 @@ const FIELD_IDS: Record<EmiField, string> = {
   tenure: "emi-tenure",
 };
 
-const RATE_UNITS: readonly { value: RateUnit; label: string }[] = [
-  { value: "year", label: "per year" },
-  { value: "month", label: "per month" },
-];
+const STRINGS = {
+  en: {
+    submit: "Calculate EMI",
+    loanAmount: "Loan amount",
+    rateLegend: "Interest rate is",
+    perYear: "per year",
+    perMonth: "per month",
+    interestRate: "Interest rate",
+    tenureLegend: "Tenure is in",
+    years: "years",
+    months: "months",
+    loanTenure: "Loan tenure",
+    tenureHint: "A whole number.",
+    amountPlaceholder: "e.g. 5,00,000",
+    ratePlaceholder: "e.g. 9",
+    tenureYearsPlaceholder: "e.g. 5",
+    tenureMonthsPlaceholder: "e.g. 60",
+    announcement: (emi: string, interest: string) => `Monthly EMI ${emi}. Total interest ${interest}.`,
+    placeholderTitleFirst: "Your monthly EMI will appear here",
+    placeholderTitleFix: "Almost there",
+    placeholderFirst: "Enter the loan amount, interest rate and tenure, then select Calculate EMI.",
+    placeholderFix: "Fix the highlighted fields above and your EMI will show here.",
+    resultTitle: "Monthly EMI",
+    perMonthNote: "per month, rounded to the nearest Taka",
+    totalInterest: "Total interest",
+    totalPayment: "Total payment",
+    statLoanAmount: "Loan amount",
+    instalments: "Number of instalments",
+    whereGoes: "Where your total payment goes",
+    principal: "Principal",
+    interest: "Interest",
+    seeBreakdown: "See year-by-year breakdown",
+    tableCaption: "Principal paid, interest paid and remaining balance for each loan year",
+    year: "Year",
+    principalPaid: "Principal paid",
+    interestPaid: "Interest paid",
+    remainingBalance: "Remaining balance",
+    instalmentCount: (n: number) => pluralize(n, "instalment"),
+    roundingNote: "Whole Taka. Rounded figures in a row may differ from their sum by ৳1.",
+    methodNote: (months: number) =>
+      `Standard reducing-balance method with ${months} equal monthly instalments. Actual bank EMIs can differ because of fees, insurance, rounding or rate type.`,
+    tenureYears: (n: number) => pluralize(n, "year"),
+    tenureMonths: (n: number) => pluralize(n, "month"),
+    errAmountLabel: "loan amount",
+    errAmountMin: "more than ৳0",
+    errMax: (max: string) => `${max} or less`,
+    errRateLabel: "interest rate",
+    errRateMin: "0% or more",
+    errRateMax: "100% or less",
+    errTenureLabel: "loan tenure",
+    errTenureMinYears: "at least 1 year",
+    errTenureMinMonths: "at least 1 month",
+    errTenureMaxYears: `${MAX_TENURE_YEARS} years or less`,
+    errTenureMaxMonths: `${MAX_TENURE_MONTHS} months (${MAX_TENURE_YEARS} years) or less`,
+    shareText: (amount: string, rate: string, tenure: string, emi: string, interest: string, total: string) =>
+      `Loan of ${amount} at ${rate} for ${tenure}: monthly EMI about ${emi}, total interest ${interest}, total payment ${total} (reducing-balance method). Calculated with HisabBD’s EMI Calculator.`,
+    shareTitle: "EMI calculated with HisabBD",
+  },
+  bn: {
+    submit: "ইএমআই হিসাব করুন",
+    loanAmount: "লোনের পরিমাণ",
+    rateLegend: "সুদের হার",
+    perYear: "বছরে",
+    perMonth: "মাসে",
+    interestRate: "সুদের হার",
+    tenureLegend: "মেয়াদ",
+    years: "বছর",
+    months: "মাস",
+    loanTenure: "লোনের মেয়াদ",
+    tenureHint: "পূর্ণ সংখ্যায়।",
+    amountPlaceholder: "যেমন 5,00,000",
+    ratePlaceholder: "যেমন 9",
+    tenureYearsPlaceholder: "যেমন 5",
+    tenureMonthsPlaceholder: "যেমন 60",
+    announcement: (emi: string, interest: string) => `মাসিক ইএমআই ${emi}। মোট সুদ ${interest}।`,
+    placeholderTitleFirst: "আপনার মাসিক ইএমআই এখানে দেখা যাবে",
+    placeholderTitleFix: "প্রায় হয়ে গেছে",
+    placeholderFirst: "লোনের পরিমাণ, সুদের হার ও মেয়াদ লিখে “ইএমআই হিসাব করুন” চাপুন।",
+    placeholderFix: "ওপরে চিহ্নিত ঘরগুলো ঠিক করলেই ইএমআই এখানে দেখা যাবে।",
+    resultTitle: "মাসিক ইএমআই",
+    perMonthNote: "প্রতি মাসে, নিকটতম টাকায় রাউন্ড করা",
+    totalInterest: "মোট সুদ",
+    totalPayment: "মোট পরিশোধ",
+    statLoanAmount: "লোনের পরিমাণ",
+    instalments: "কিস্তির সংখ্যা",
+    whereGoes: "মোট পরিশোধের টাকা কোথায় যায়",
+    principal: "আসল",
+    interest: "সুদ",
+    seeBreakdown: "বছরভিত্তিক হিসাব দেখুন",
+    tableCaption: "প্রতি বছরের পরিশোধিত আসল, পরিশোধিত সুদ ও অবশিষ্ট ব্যালান্স",
+    year: "বছর",
+    principalPaid: "আসল পরিশোধ",
+    interestPaid: "সুদ পরিশোধ",
+    remainingBalance: "অবশিষ্ট ব্যালান্স",
+    instalmentCount: (n: number) => countBn(n, "কিস্তি"),
+    roundingNote: "পুরো টাকায়। রাউন্ড করার কারণে কোনো সারির অঙ্কের যোগফল ৳1 এদিক-ওদিক হতে পারে।",
+    methodNote: (months: number) =>
+      `প্রচলিত রিডিউসিং-ব্যালান্স পদ্ধতিতে ${months}টি সমান মাসিক কিস্তি ধরা হয়েছে। ফি, বিমা, রাউন্ডিং বা হারের ধরনের কারণে ব্যাংকের আসল ইএমআই ভিন্ন হতে পারে।`,
+    tenureYears: (n: number) => countBn(n, "বছর"),
+    tenureMonths: (n: number) => countBn(n, "মাস"),
+    errAmountLabel: "লোনের পরিমাণ",
+    errAmountMin: "৳0-র বেশি",
+    errMax: (max: string) => `${max} বা তার কম`,
+    errRateLabel: "সুদের হার",
+    errRateMin: "0% বা তার বেশি",
+    errRateMax: "100% বা তার কম",
+    errTenureLabel: "লোনের মেয়াদ",
+    errTenureMinYears: "কমপক্ষে 1 বছর",
+    errTenureMinMonths: "কমপক্ষে 1 মাস",
+    errTenureMaxYears: `${MAX_TENURE_YEARS} বছর বা তার কম`,
+    errTenureMaxMonths: `${MAX_TENURE_MONTHS} মাস (${MAX_TENURE_YEARS} বছর) বা তার কম`,
+    shareText: (amount: string, rate: string, tenure: string, emi: string, interest: string, total: string) =>
+      `${amount} লোন, সুদ ${rate}, মেয়াদ ${tenure}: মাসিক ইএমআই প্রায় ${emi}, মোট সুদ ${interest}, মোট পরিশোধ ${total} (রিডিউসিং-ব্যালান্স পদ্ধতি)। HisabBD-র ইএমআই ক্যালকুলেটরে হিসাব করা।`,
+    shareTitle: "HisabBD দিয়ে ইএমআই হিসাব",
+  },
+} as const;
 
-const TENURE_UNITS: readonly { value: TenureUnit; label: string }[] = [
-  { value: "years", label: "years" },
-  { value: "months", label: "months" },
-];
+type Strings = (typeof STRINGS)[Locale];
 
 function percent(value: number): string {
   return formatPercent(value, { decimals: 1 });
 }
 
-function rateText(r: EmiResult): string {
-  return `${formatPercent(r.rateInput, { decimals: 4 })} ${r.rateUnit === "year" ? "per year" : "per month"}`;
+function rateText(t: Strings, r: EmiResult): string {
+  return `${formatPercent(r.rateInput, { decimals: 4 })} ${r.rateUnit === "year" ? t.perYear : t.perMonth}`;
 }
 
-function tenureText(months: number): string {
-  if (months % 12 === 0) return pluralize(months / 12, "year");
-  return pluralize(months, "month");
+function tenureText(t: Strings, months: number): string {
+  if (months % 12 === 0) return t.tenureYears(months / 12);
+  return t.tenureMonths(months);
 }
 
-function errorMessage(error: EmiError, tenureUnit: TenureUnit): string {
+function errorMessage(t: Strings, locale: Locale, error: EmiError, tenureUnit: TenureUnit): string {
   switch (error.field) {
     case "amount":
-      return numberErrorMessage(error.code, {
-        label: "loan amount",
-        min: "more than ৳0",
-        max: `${formatTaka(MAX_LOAN)} or less`,
-      });
+      return numberErrorMessage(
+        error.code,
+        { label: t.errAmountLabel, min: t.errAmountMin, max: t.errMax(formatTaka(MAX_LOAN)) },
+        locale,
+      );
     case "rate":
-      return numberErrorMessage(error.code, { label: "interest rate", min: "0% or more", max: "100% or less" });
+      return numberErrorMessage(
+        error.code,
+        { label: t.errRateLabel, min: t.errRateMin, max: t.errRateMax },
+        locale,
+      );
     case "tenure":
-      return numberErrorMessage(error.code, {
-        label: "loan tenure",
-        min: tenureUnit === "years" ? "at least 1 year" : "at least 1 month",
-        max:
-          tenureUnit === "years"
-            ? `${MAX_TENURE_YEARS} years or less`
-            : `${MAX_TENURE_MONTHS} months (${MAX_TENURE_YEARS} years) or less`,
-      });
+      return numberErrorMessage(
+        error.code,
+        {
+          label: t.errTenureLabel,
+          min: tenureUnit === "years" ? t.errTenureMinYears : t.errTenureMinMonths,
+          max: tenureUnit === "years" ? t.errTenureMaxYears : t.errTenureMaxMonths,
+        },
+        locale,
+      );
   }
 }
 
-function shareText(r: EmiResult): string {
-  return (
-    `Loan of ${formatTaka(r.amount)} at ${rateText(r)} for ${tenureText(r.months)}: ` +
-    `monthly EMI about ${formatTaka(r.emi)}, total interest ${formatTaka(r.totalInterest)}, ` +
-    `total payment ${formatTaka(r.totalPayment)} (reducing-balance method). Calculated with HisabBD’s EMI Calculator.`
+function shareText(t: Strings, r: EmiResult): string {
+  return t.shareText(
+    formatTaka(r.amount),
+    rateText(t, r),
+    tenureText(t, r.months),
+    formatTaka(r.emi),
+    formatTaka(r.totalInterest),
+    formatTaka(r.totalPayment),
   );
 }
 
 export function EmiCalculator() {
+  const locale = useLocale();
+  const t = STRINGS[locale];
+  const rateUnits: readonly { value: RateUnit; label: string }[] = [
+    { value: "year", label: t.perYear },
+    { value: "month", label: t.perMonth },
+  ];
+  const tenureUnits: readonly { value: TenureUnit; label: string }[] = [
+    { value: "years", label: t.years },
+    { value: "months", label: t.months },
+  ];
   const [amount, setAmount] = useState("");
   const [rate, setRate] = useState("");
   const [rateUnit, setRateUnit] = useState<RateUnit>("year");
@@ -99,7 +228,7 @@ export function EmiCalculator() {
   const calc = submitted ? calculateLoan(inputs) : null;
   const errorFor = (field: EmiField) => {
     const error = calc && !calc.ok ? calc.errors.find((e) => e.field === field) : undefined;
-    return error ? errorMessage(error, tenureUnit) : undefined;
+    return error ? errorMessage(t, locale, error, tenureUnit) : undefined;
   };
   const result = calc?.ok ? calc.result : null;
 
@@ -127,10 +256,10 @@ export function EmiCalculator() {
 
   return (
     <div>
-      <CalculatorForm onSubmit={onSubmit} onReset={onReset} submitLabel="Calculate EMI">
+      <CalculatorForm onSubmit={onSubmit} onReset={onReset} submitLabel={t.submit}>
         <div className="grid gap-6 sm:grid-cols-2">
           <div className="sm:col-span-2 sm:max-w-[calc(50%-0.75rem)]">
-            <FormField id={FIELD_IDS.amount} label="Loan amount" error={errorFor("amount")}>
+            <FormField id={FIELD_IDS.amount} label={t.loanAmount} error={errorFor("amount")}>
               {(control) => (
                 <AffixInput
                   {...control}
@@ -139,7 +268,7 @@ export function EmiCalculator() {
                   inputMode="decimal"
                   autoComplete="off"
                   prefix="৳"
-                  placeholder="e.g. 5,00,000"
+                  placeholder={t.amountPlaceholder}
                   value={amount}
                   onChange={(event) => setAmount(event.target.value)}
                 />
@@ -150,12 +279,12 @@ export function EmiCalculator() {
           <div className="space-y-4">
             <SegmentedControl
               name="emi-rate-unit"
-              legend="Interest rate is"
-              options={RATE_UNITS}
+              legend={t.rateLegend}
+              options={rateUnits}
               value={rateUnit}
               onChange={setRateUnit}
             />
-            <FormField id={FIELD_IDS.rate} label="Interest rate" error={errorFor("rate")}>
+            <FormField id={FIELD_IDS.rate} label={t.interestRate} error={errorFor("rate")}>
               {(control) => (
                 <AffixInput
                   {...control}
@@ -164,7 +293,7 @@ export function EmiCalculator() {
                   inputMode="decimal"
                   autoComplete="off"
                   suffix="%"
-                  placeholder="e.g. 9"
+                  placeholder={t.ratePlaceholder}
                   value={rate}
                   onChange={(event) => setRate(event.target.value)}
                 />
@@ -175,15 +304,15 @@ export function EmiCalculator() {
           <div className="space-y-4">
             <SegmentedControl
               name="emi-tenure-unit"
-              legend="Tenure is in"
-              options={TENURE_UNITS}
+              legend={t.tenureLegend}
+              options={tenureUnits}
               value={tenureUnit}
               onChange={setTenureUnit}
             />
             <FormField
               id={FIELD_IDS.tenure}
-              label="Loan tenure"
-              hint="A whole number."
+              label={t.loanTenure}
+              hint={t.tenureHint}
               error={errorFor("tenure")}
             >
               {(control) => (
@@ -193,8 +322,8 @@ export function EmiCalculator() {
                   type="text"
                   inputMode="numeric"
                   autoComplete="off"
-                  suffix={tenureUnit}
-                  placeholder={tenureUnit === "years" ? "e.g. 5" : "e.g. 60"}
+                  suffix={tenureUnit === "years" ? t.years : t.months}
+                  placeholder={tenureUnit === "years" ? t.tenureYearsPlaceholder : t.tenureMonthsPlaceholder}
                   value={tenure}
                   onChange={(event) => setTenure(event.target.value)}
                 />
@@ -206,20 +335,14 @@ export function EmiCalculator() {
 
       <CalculatorResultArea
         revealKey={revealCount}
-        announcement={
-          result
-            ? `Monthly EMI ${formatTaka(result.emi)}. Total interest ${formatTaka(result.totalInterest)}.`
-            : ""
-        }
+        announcement={result ? t.announcement(formatTaka(result.emi), formatTaka(result.totalInterest)) : ""}
         result={result && <EmiResultView result={result} />}
         placeholder={
           <ResultPlaceholder
-            title={calc ? "Almost there" : "Your monthly EMI will appear here"}
+            title={calc ? t.placeholderTitleFix : t.placeholderTitleFirst}
             preview={<p className="font-display text-4xl font-bold tracking-tight">৳–</p>}
           >
-            {calc
-              ? "Fix the highlighted fields above and your EMI will show here."
-              : "Enter the loan amount, interest rate and tenure, then select Calculate EMI."}
+            {calc ? t.placeholderFix : t.placeholderFirst}
           </ResultPlaceholder>
         }
       />
@@ -228,31 +351,32 @@ export function EmiCalculator() {
 }
 
 function EmiResultView({ result: r }: { result: EmiResult }) {
+  const t = STRINGS[useLocale()];
   const stats = [
-    { label: "Total interest", value: formatTaka(r.totalInterest) },
-    { label: "Total payment", value: formatTaka(r.totalPayment) },
-    { label: "Loan amount", value: formatTaka(r.amount) },
-    { label: "Number of instalments", value: `${r.months} (${tenureText(r.months)})` },
+    { label: t.totalInterest, value: formatTaka(r.totalInterest) },
+    { label: t.totalPayment, value: formatTaka(r.totalPayment) },
+    { label: t.statLoanAmount, value: formatTaka(r.amount) },
+    { label: t.instalments, value: `${r.months} (${tenureText(t, r.months)})` },
   ];
 
   return (
     <div className="space-y-4">
       <ResultPanel
-        title="Monthly EMI"
+        title={t.resultTitle}
         titleId="emi-result-heading"
         value={
           <>
             <p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">
               {formatTaka(r.emi)}
             </p>
-            <p className="mt-1 text-sm text-slate-600">per month, rounded to the nearest Taka</p>
+            <p className="mt-1 text-sm text-slate-600">{t.perMonthNote}</p>
           </>
         }
       >
         <ResultStats items={stats} />
 
         <div className="mt-5">
-          <p className="text-sm font-medium text-slate-800">Where your total payment goes</p>
+          <p className="text-sm font-medium text-slate-800">{t.whereGoes}</p>
           <div aria-hidden="true" className="mt-2 flex h-4 overflow-hidden rounded-full bg-slate-200">
             <div className="bg-brand-600" style={{ width: `${r.principalSharePercent}%` }} />
             <div className="bg-amber-500" style={{ width: `${r.interestSharePercent}%` }} />
@@ -260,28 +384,28 @@ function EmiResultView({ result: r }: { result: EmiResult }) {
           <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-slate-700">
             <li>
               <span aria-hidden="true" className="mr-1.5 inline-block size-2.5 rounded-sm bg-brand-600" />
-              Principal: <strong>{percent(r.principalSharePercent)}</strong>
+              {t.principal}: <strong>{percent(r.principalSharePercent)}</strong>
             </li>
             <li>
               <span aria-hidden="true" className="mr-1.5 inline-block size-2.5 rounded-sm bg-amber-500" />
-              Interest: <strong>{percent(r.interestSharePercent)}</strong>
+              {t.interest}: <strong>{percent(r.interestSharePercent)}</strong>
             </li>
           </ul>
         </div>
 
         <details className="mt-5 rounded-xl bg-white/70 px-4 py-3">
           <summary className="min-h-11 cursor-pointer py-2 font-semibold text-slate-900">
-            See year-by-year breakdown
+            {t.seeBreakdown}
           </summary>
           <div className="mt-2 overflow-x-auto">
             <table className="w-full min-w-[28rem] text-right text-sm">
-              <caption className="sr-only">Principal paid, interest paid and remaining balance for each loan year</caption>
+              <caption className="sr-only">{t.tableCaption}</caption>
               <thead>
                 <tr className="border-b border-slate-300 text-slate-600">
-                  <th scope="col" className="py-2 pr-3 text-left font-medium">Year</th>
-                  <th scope="col" className="px-3 py-2 font-medium">Principal paid</th>
-                  <th scope="col" className="px-3 py-2 font-medium">Interest paid</th>
-                  <th scope="col" className="py-2 pl-3 font-medium">Remaining balance</th>
+                  <th scope="col" className="py-2 pr-3 text-left font-medium">{t.year}</th>
+                  <th scope="col" className="px-3 py-2 font-medium">{t.principalPaid}</th>
+                  <th scope="col" className="px-3 py-2 font-medium">{t.interestPaid}</th>
+                  <th scope="col" className="py-2 pl-3 font-medium">{t.remainingBalance}</th>
                 </tr>
               </thead>
               <tbody>
@@ -291,7 +415,7 @@ function EmiResultView({ result: r }: { result: EmiResult }) {
                       {row.year}
                       {row.instalments < 12 && (
                         <span className="block text-xs font-normal text-slate-600">
-                          {pluralize(row.instalments, "instalment")}
+                          {t.instalmentCount(row.instalments)}
                         </span>
                       )}
                     </th>
@@ -303,18 +427,13 @@ function EmiResultView({ result: r }: { result: EmiResult }) {
               </tbody>
             </table>
           </div>
-          <p className="mt-2 text-xs text-slate-600">
-            Whole Taka. Rounded figures in a row may differ from their sum by ৳1.
-          </p>
+          <p className="mt-2 text-xs text-slate-600">{t.roundingNote}</p>
         </details>
 
-        <p className="mt-4 text-sm text-slate-600">
-          Standard reducing-balance method with {r.months} equal monthly instalments. Actual bank EMIs can differ
-          because of fees, insurance, rounding or rate type.
-        </p>
+        <p className="mt-4 text-sm text-slate-600">{t.methodNote(r.months)}</p>
       </ResultPanel>
 
-      <ResultActions key={shareText(r)} text={shareText(r)} shareTitle="EMI calculated with HisabBD" />
+      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

@@ -9,13 +9,14 @@ import { CalculatorList } from "@/components/calculator/calculator-list";
 import { CalculatorSearch } from "@/components/calculator/calculator-search";
 import { buttonClasses } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { LocaleShell } from "@/components/layout/locale-shell";
 
 export const metadata: Metadata = { title: "Page not found", robots: { index: false } };
 
 /** 404: helps visitors find a calculator instead of a dead end. */
 export default function NotFound() {
   return (
-    <>
+    <LocaleShell locale="en">
       <div className="border-b border-brand-100 bg-brand-50 bg-graph">
         <Container className="py-10 sm:py-14">
           <p className="font-display text-6xl font-bold text-brand-600" aria-hidden="true">
@@ -45,6 +46,6 @@ export default function NotFound() {
         </h2>
         <CalculatorList calculators={getFeaturedCalculators()} />
       </Container>
-    </>
+    </LocaleShell>
   );
 }

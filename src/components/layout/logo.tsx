@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { localePath, type Locale } from "@/i18n/locales";
 
 /** Mark: a division sign (÷) on a green tile; the top dot nods to the flag's red circle. */
 export function LogoMark({ className = "size-9" }: { className?: string }) {
@@ -12,10 +13,10 @@ export function LogoMark({ className = "size-9" }: { className?: string }) {
   );
 }
 
-export function Logo() {
+export function Logo({ locale = "en" }: { locale?: Locale }) {
   return (
     <Link
-      href="/"
+      href={localePath(locale, "/")}
       className="group inline-flex min-h-11 items-center gap-2.5 rounded-xl font-display text-2xl font-bold tracking-tight text-slate-900"
     >
       <LogoMark className="size-9 transition-transform duration-200 motion-safe:group-hover:-rotate-12" />

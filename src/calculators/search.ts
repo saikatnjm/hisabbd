@@ -1,4 +1,5 @@
 import { getCategory } from "./categories";
+import { localePath, type Locale } from "@/i18n/locales";
 import { calculatorPath, categoryHref } from "./paths";
 import type { CalculatorIconName, CalculatorMeta, Category, CategoryId } from "./types";
 
@@ -23,27 +24,31 @@ export interface CategorySearchItem {
   description: string;
 }
 
-export function buildSearchIndex(list: readonly CalculatorMeta[]): SearchItem[] {
+/**
+ * `locale` localizes what the search shows (name, summary, category, links);
+ * `name`/`nameBn` always carry both languages so matching works in either.
+ */
+export function buildSearchIndex(list: readonly CalculatorMeta[], locale: Locale = "en"): SearchItem[] {
   return list.map((calc) => ({
     slug: calc.slug,
-    href: calculatorPath(calc.slug),
-    name: calc.name,
-    nameBn: calc.nameBn,
-    summary: calc.summary,
+    href: localePath(locale, calculatorPath(calc.slug)),
+    name: locale === "bn" ? calc.nameBn : calc.name,
+    nameBn: locale === "bn" ? calc.name : calc.nameBn,
+    summary: locale === "bn" ? calc.summaryBn : calc.summary,
     keywords: calc.keywords,
     icon: calc.icon,
     categoryId: calc.category,
-    categoryName: getCategory(calc.category).name,
+    categoryName: locale === "bn" ? getCategory(calc.category).nameBn : getCategory(calc.category).name,
   }));
 }
 
-export function buildCategorySearchIndex(list: readonly Category[]): CategorySearchItem[] {
+export function buildCategorySearchIndex(list: readonly Category[], locale: Locale = "en"): CategorySearchItem[] {
   return list.map((category) => ({
     id: category.id,
-    href: categoryHref(category.id),
-    name: category.name,
-    nameBn: category.nameBn,
-    description: category.description,
+    href: localePath(locale, categoryHref(category.id)),
+    name: locale === "bn" ? category.nameBn : category.name,
+    nameBn: locale === "bn" ? category.name : category.nameBn,
+    description: locale === "bn" ? category.descriptionBn : category.description,
   }));
 }
 

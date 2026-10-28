@@ -13,8 +13,10 @@ function makeCalc(overrides: Partial<CalculatorMeta> = {}): CalculatorMeta {
     category: "everyday",
     icon: "percent",
     summary: "Sample.",
+    summaryBn: "নমুনা।",
     keywords: ["sample"],
     seo: { title: "Sample Calculator", description: "Sample description." },
+    seoBn: { title: "নমুনা ক্যালকুলেটর", description: "নমুনা বর্ণনা।" },
     addedOn: "2026-01-15",
     related: [],
     ...overrides,
@@ -28,7 +30,7 @@ describe("calculator registry", () => {
 
   it("has a route for every calculator", () => {
     for (const calc of calculators) {
-      const page = join(process.cwd(), "src/app/calculators", calc.slug, "page.tsx");
+      const page = join(process.cwd(), "src/app/(en)/calculators", calc.slug, "page.tsx");
       expect(existsSync(page)).toBe(true);
     }
   });

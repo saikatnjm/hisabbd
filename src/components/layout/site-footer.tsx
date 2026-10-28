@@ -5,6 +5,8 @@ import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/layout/logo";
 import { categoryNav, legalNav } from "@/components/layout/nav-links";
 import { Container } from "@/components/ui/container";
+import { localePath, type Locale } from "@/i18n/locales";
+import { ui } from "@/i18n/ui";
 
 /** Fixed when the page is built (pages are static). */
 const COPYRIGHT_YEAR = new Date().getFullYear();
@@ -38,35 +40,42 @@ function FooterNav({
   );
 }
 
-export function SiteFooter() {
-  const calculatorLinks = calculators.map((c) => ({ name: c.name, href: calculatorPath(c.slug) }));
+export function SiteFooter({ locale }: { locale: Locale }) {
+  const t = ui[locale].footer;
+  const calculatorLinks = calculators.map((c) => ({
+    name: locale === "bn" ? c.nameBn : c.name,
+    href: localePath(locale, calculatorPath(c.slug)),
+  }));
 
   return (
     <footer className="border-t border-brand-100 bg-brand-50">
       <Container className="grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Logo />
-          <p className="mt-3 max-w-xs text-sm text-slate-700">
-            {siteConfig.tagline}. <span lang="bn">হিসাব</span> = calculation.
+          <Logo locale={locale} />
+          <p className="mt-3 max-w-xs text-sm text-slate-700" lang={locale}>
+            {locale === "bn" ? siteConfig.taglineBn : siteConfig.tagline}.{" "}
+            <span lang="bn">{locale === "bn" ? t.hisabMeans : null}</span>
+            {locale === "en" && (
+              <>
+                <span lang="bn">হিসাব</span> = calculation.
+              </>
+            )}
           </p>
         </div>
-        <FooterNav id="footer-calculators" title="Calculators" links={calculatorLinks} />
-        <FooterNav id="footer-categories" title="Categories" links={categoryNav} />
-        <FooterNav id="footer-site" title="HisabBD" links={legalNav} />
+        <FooterNav id="footer-calculators" title={t.calculators} links={calculatorLinks} />
+        <FooterNav id="footer-categories" title={t.categories} links={categoryNav(locale)} />
+        <FooterNav id="footer-site" title={siteConfig.name} links={legalNav(locale)} />
       </Container>
 
       <Container>
         <div className="border-t border-brand-100 py-6 text-sm text-slate-600">
-          <p>
-            Results are for general information. For important financial, health or academic
-            decisions, confirm with the relevant institution or a qualified professional.
-          </p>
+          <p>{t.disclaimer}</p>
           <div className="mt-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
             <p>
               © {COPYRIGHT_YEAR} {siteConfig.name}
             </p>
             <p>
-              Made by{" "}
+              {t.madeBy}{" "}
               <a
                 href="https://github.com/saikatnjm"
                 target="_blank"

@@ -1,4 +1,8 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/i18n/locale-context";
+import { ui } from "@/i18n/ui";
 
 /**
  * Card-style calculator form with the primary action and Reset.
@@ -15,6 +19,7 @@ export function CalculatorForm({
   submitLabel: string;
   children: React.ReactNode;
 }) {
+  const t = ui[useLocale()].form;
   return (
     <form
       noValidate
@@ -30,7 +35,7 @@ export function CalculatorForm({
           {submitLabel}
         </Button>
         <Button type="button" variant="secondary" size="lg" onClick={onReset}>
-          Reset
+          {t.reset}
         </Button>
       </div>
     </form>

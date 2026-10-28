@@ -1,6 +1,7 @@
 import type { CalculatorMeta, FaqItem } from "@/calculators/types";
 import { calculatorPath } from "@/calculators/paths";
 import { absoluteUrl, siteConfig } from "@/config/site";
+import { localePath, type Locale } from "@/i18n/locales";
 
 /*
  * schema.org structured data built from registry data, so it always matches
@@ -17,26 +18,26 @@ export interface BreadcrumbEntry {
   path: string;
 }
 
-export function websiteSchema(): Schema {
+export function websiteSchema(locale: Locale = "en"): Schema {
   return {
     "@type": "WebSite",
     name: siteConfig.name,
-    url: absoluteUrl("/"),
-    description: siteConfig.description,
-    inLanguage: siteConfig.language,
+    url: absoluteUrl(localePath(locale, "/")),
+    description: locale === "bn" ? siteConfig.descriptionBn : siteConfig.description,
+    inLanguage: locale,
   };
 }
 
-export function calculatorSchema(calc: CalculatorMeta): Schema {
+export function calculatorSchema(calc: CalculatorMeta, locale: Locale = "en"): Schema {
   return {
     "@type": "WebApplication",
-    name: calc.name,
-    url: absoluteUrl(calculatorPath(calc.slug)),
-    description: calc.seo.description,
+    name: locale === "bn" ? calc.nameBn : calc.name,
+    url: absoluteUrl(localePath(locale, calculatorPath(calc.slug))),
+    description: locale === "bn" ? calc.seoBn.description : calc.seo.description,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: "Any",
     browserRequirements: "Requires JavaScript",
-    inLanguage: siteConfig.language,
+    inLanguage: locale,
     isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: siteConfig.currency },
   };

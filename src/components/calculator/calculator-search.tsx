@@ -14,6 +14,8 @@ import { CategoryIcon } from "@/components/calculator/category-icon";
 import { ArrowRightIcon, SearchIcon } from "@/components/ui/icons";
 import { track } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
+import { useLocale } from "@/i18n/locale-context";
+import { ui } from "@/i18n/ui";
 
 interface Option {
   key: string;
@@ -44,12 +46,12 @@ const toCalculatorOption = (item: SearchItem): Option => ({
   icon: item.icon,
 });
 
-const toCategoryOption = (item: CategorySearchItem): Option => ({
+const toCategoryOption = (item: CategorySearchItem, detail: string): Option => ({
   key: `cat-${item.id}`,
   kind: "category",
   href: item.href,
   label: item.name,
-  detail: "Category",
+  detail,
   categoryId: item.id,
 });
 
@@ -60,6 +62,8 @@ export function CalculatorSearch({
   suggestions,
   upcomingNote,
 }: CalculatorSearchProps) {
+  const locale = useLocale();
+  const t = ui[locale].search;
   const router = useRouter();
   const baseId = useId();
   const inputId = "calculator-search";
@@ -76,19 +80,17 @@ export function CalculatorSearch({
   const options: Option[] = trimmed
     ? [
         ...searchCalculators(calculators, trimmed).map(toCalculatorOption),
-        ...searchCategories(categories, trimmed).map(toCategoryOption),
+        ...searchCategories(categories, trimmed).map((item) => toCategoryOption(item, t.categoryDetail)),
       ]
     : suggestions.map(toCalculatorOption);
 
   const showList = open && options.length > 0;
 
   let message = "";
-  if (trimmed && options.length === 0) message = `Nothing matches “${trimmed}” yet. Try another word.`;
+  if (trimmed && options.length === 0) message = t.noMatch(trimmed);
   else if (!trimmed && options.length === 0 && upcomingNote) message = upcomingNote;
 
-  const status = showList
-    ? `${options.length} suggestion${options.length === 1 ? "" : "s"}. Use up and down arrows to choose.`
-    : message;
+  const status = showList ? t.suggestionsStatus(options.length) : message;
 
   function reportSearch(value: string) {
     if (searchTimer.current) clearTimeout(searchTimer.current);
@@ -136,7 +138,7 @@ export function CalculatorSearch({
       }}
     >
       <label htmlFor={inputId} className="mb-2 block font-display text-lg font-semibold text-slate-900">
-        What do you want to calculate?
+        {t.label}
       </label>
       <div className="relative">
         <SearchIcon className="pointer-events-none absolute top-1/2 left-4 size-6 -translate-y-1/2 text-brand-600" />
@@ -151,7 +153,7 @@ export function CalculatorSearch({
           aria-describedby={statusId}
           autoComplete="off"
           enterKeyHint="go"
-          placeholder="Try age, BMI, GPA or loan"
+          placeholder={t.placeholder}
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
@@ -177,7 +179,7 @@ export function CalculatorSearch({
       <ul
         id={listId}
         role="listbox"
-        aria-label="Suggestions"
+        aria-label={t.suggestionsLabel}
         hidden={!showList}
         className="absolute inset-x-0 top-full z-20 mt-3 max-h-80 overflow-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-lift"
       >

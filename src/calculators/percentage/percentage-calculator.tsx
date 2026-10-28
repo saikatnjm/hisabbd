@@ -9,6 +9,8 @@ import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
 import { ResultStats } from "@/components/calculator/result-stats";
 import { AffixInput, FormField, SegmentedControl } from "@/components/ui/form";
 import { ResultPanel } from "@/components/ui/result";
+import { useLocale } from "@/i18n/locale-context";
+import type { Locale } from "@/i18n/locales";
 import { formatNumber, formatPercent } from "@/lib/format";
 import {
   calculatePercentage,
@@ -37,45 +39,178 @@ interface ModeConfig {
 
 const MODE_ORDER: readonly PercentageMode[] = ["percent-of", "what-percent", "change", "increase-decrease", "reverse"];
 
-const MODES: Record<PercentageMode, ModeConfig> = {
-  "percent-of": {
-    label: "% of a number",
-    sentence: "What is P% of Y?",
-    a: { label: "Percentage (P)", noun: "percentage", suffix: "%", placeholder: "e.g. 15" },
-    b: { label: "Number (Y)", noun: "number", placeholder: "e.g. 2,000" },
+const MODES: Record<Locale, Record<PercentageMode, ModeConfig>> = {
+  en: {
+    "percent-of": {
+      label: "% of a number",
+      sentence: "What is P% of Y?",
+      a: { label: "Percentage (P)", noun: "percentage", suffix: "%", placeholder: "e.g. 15" },
+      b: { label: "Number (Y)", noun: "number", placeholder: "e.g. 2,000" },
+    },
+    "what-percent": {
+      label: "What percent",
+      sentence: "X is what percent of Y?",
+      a: { label: "Part (X)", noun: "part", placeholder: "e.g. 45" },
+      b: { label: "Whole (Y)", noun: "whole", placeholder: "e.g. 60" },
+    },
+    change: {
+      label: "% change",
+      sentence: "What is the percentage change from A to B?",
+      a: { label: "Starting value (A)", noun: "starting value", placeholder: "e.g. 80" },
+      b: { label: "New value (B)", noun: "new value", placeholder: "e.g. 100" },
+    },
+    "increase-decrease": {
+      label: "Increase / decrease",
+      sentence: "Increase or decrease Y by P%.",
+      a: { label: "Number (Y)", noun: "number", placeholder: "e.g. 1,000" },
+      b: { label: "Percentage (P)", noun: "percentage", suffix: "%", placeholder: "e.g. 10" },
+    },
+    reverse: {
+      label: "Find the whole",
+      sentence: "X is P% of what number?",
+      a: { label: "Amount (X)", noun: "amount", placeholder: "e.g. 25" },
+      b: { label: "Percentage (P)", noun: "percentage", suffix: "%", placeholder: "e.g. 20" },
+    },
   },
-  "what-percent": {
-    label: "What percent",
-    sentence: "X is what percent of Y?",
-    a: { label: "Part (X)", noun: "part", placeholder: "e.g. 45" },
-    b: { label: "Whole (Y)", noun: "whole", placeholder: "e.g. 60" },
-  },
-  change: {
-    label: "% change",
-    sentence: "What is the percentage change from A to B?",
-    a: { label: "Starting value (A)", noun: "starting value", placeholder: "e.g. 80" },
-    b: { label: "New value (B)", noun: "new value", placeholder: "e.g. 100" },
-  },
-  "increase-decrease": {
-    label: "Increase / decrease",
-    sentence: "Increase or decrease Y by P%.",
-    a: { label: "Number (Y)", noun: "number", placeholder: "e.g. 1,000" },
-    b: { label: "Percentage (P)", noun: "percentage", suffix: "%", placeholder: "e.g. 10" },
-  },
-  reverse: {
-    label: "Find the whole",
-    sentence: "X is P% of what number?",
-    a: { label: "Amount (X)", noun: "amount", placeholder: "e.g. 25" },
-    b: { label: "Percentage (P)", noun: "percentage", suffix: "%", placeholder: "e.g. 20" },
+  bn: {
+    "percent-of": {
+      label: "সংখ্যার %",
+      sentence: "Y-এর P% কত?",
+      a: { label: "শতকরা (P)", noun: "শতকরা হার", suffix: "%", placeholder: "যেমন 15" },
+      b: { label: "সংখ্যা (Y)", noun: "সংখ্যা", placeholder: "যেমন 2,000" },
+    },
+    "what-percent": {
+      label: "কত শতাংশ",
+      sentence: "X, Y-এর কত শতাংশ?",
+      a: { label: "অংশ (X)", noun: "অংশ", placeholder: "যেমন 45" },
+      b: { label: "পূর্ণ সংখ্যা (Y)", noun: "পূর্ণ সংখ্যা", placeholder: "যেমন 60" },
+    },
+    change: {
+      label: "% পরিবর্তন",
+      sentence: "A থেকে B-তে শতকরা পরিবর্তন কত?",
+      a: { label: "শুরুর মান (A)", noun: "শুরুর মান", placeholder: "যেমন 80" },
+      b: { label: "নতুন মান (B)", noun: "নতুন মান", placeholder: "যেমন 100" },
+    },
+    "increase-decrease": {
+      label: "বাড়ানো / কমানো",
+      sentence: "Y-কে P% বাড়ান বা কমান।",
+      a: { label: "সংখ্যা (Y)", noun: "সংখ্যা", placeholder: "যেমন 1,000" },
+      b: { label: "শতকরা (P)", noun: "শতকরা হার", suffix: "%", placeholder: "যেমন 10" },
+    },
+    reverse: {
+      label: "পূর্ণ সংখ্যা খোঁজা",
+      sentence: "X কোন সংখ্যার P%?",
+      a: { label: "পরিমাণ (X)", noun: "পরিমাণ", placeholder: "যেমন 25" },
+      b: { label: "শতকরা (P)", noun: "শতকরা হার", suffix: "%", placeholder: "যেমন 20" },
+    },
   },
 };
 
-const MODE_OPTIONS = MODE_ORDER.map((mode) => ({ value: mode, label: MODES[mode].label }));
+const STRINGS = {
+  en: {
+    submit: "Calculate",
+    modeLegend: "What do you want to find?",
+    directionLegend: "Increase or decrease?",
+    increase: "Increase",
+    decrease: "Decrease",
+    placeholderTitleFirst: "Your answer will appear here",
+    placeholderTitleFix: "Almost there",
+    placeholderFirst: "Choose what to find, enter two numbers, then select Calculate.",
+    placeholderFix: "Fix the highlighted fields above and the answer will show here.",
+    workedOutAs: "Worked out as:",
+    decreaseOverHundred: "Decreasing by more than 100% takes the number below zero, so the answer is negative.",
+    shareSuffix: "Calculated with HisabBD’s Percentage Calculator.",
+    shareTitle: "Percentage calculated with HisabBD",
+    errOutOfRange:
+      "This is outside what the calculator can handle. Use a number between −1,000,000,000,000 and 1,000,000,000,000 that isn’t extremely close to 0.",
+    errNegative: "Enter a percentage of 0 or more. Choose Decrease to make the number smaller.",
+    errZeroWhole: "The whole can’t be 0: there is no percentage of nothing.",
+    errZeroStart: "The starting value can’t be 0: a percentage change from 0 is undefined.",
+    errZeroPercent: "The percentage can’t be 0: the whole number can’t be found from 0%.",
+    startingValue: "Starting value",
+    newValue: "New value",
+    difference: "Difference",
+    higher: "higher",
+    lower: "lower",
+    startingNumber: "Starting number",
+    amountAdded: "Amount added",
+    amountRemoved: "Amount removed",
+    percentOf: (p: string, y: string, v: string) => ({
+      title: `${p}% of ${y}`,
+      sentence: `${p}% of ${y} is ${v}.`,
+    }),
+    whatPercent: (x: string, y: string, p: string) => ({
+      title: `${x} as a percentage of ${y}`,
+      sentence: `${x} is ${p} of ${y}.`,
+    }),
+    changeTitle: (a: string, b: string) => `Change from ${a} to ${b}`,
+    changeNone: (a: string, b: string) => `From ${a} to ${b} there is no change.`,
+    changeSentence: (a: string, b: string, p: string, dir: "increase" | "decrease") =>
+      `From ${a} to ${b} is a ${p} ${dir}.`,
+    changeValue: (p: string, dir: "increase" | "decrease") => `${p} ${dir}`,
+    incDec: (y: string, p: string, v: string, dir: "increase" | "decrease") => ({
+      title: `${y} ${dir === "increase" ? "increased" : "decreased"} by ${p}%`,
+      sentence: `${y} ${dir === "increase" ? "increased" : "decreased"} by ${p}% is ${v}.`,
+    }),
+    reverse: (x: string, p: string, w: string) => ({
+      title: `${x} is ${p}% of`,
+      sentence: `${x} is ${p}% of ${w}.`,
+    }),
+  },
+  bn: {
+    submit: "হিসাব করুন",
+    modeLegend: "কী বের করতে চান?",
+    directionLegend: "বাড়াবেন না কমাবেন?",
+    increase: "বাড়ান",
+    decrease: "কমান",
+    placeholderTitleFirst: "আপনার উত্তর এখানে দেখা যাবে",
+    placeholderTitleFix: "প্রায় হয়ে গেছে",
+    placeholderFirst: "কী বের করবেন বেছে নিন, দুটি সংখ্যা লিখুন, তারপর “হিসাব করুন” চাপুন।",
+    placeholderFix: "ওপরে চিহ্নিত ঘরগুলো ঠিক করলেই উত্তর এখানে দেখা যাবে।",
+    workedOutAs: "যেভাবে হিসাব হলো:",
+    decreaseOverHundred: "100%-এর বেশি কমালে সংখ্যাটি শূন্যের নিচে নেমে যায়, তাই উত্তর ঋণাত্মক।",
+    shareSuffix: "HisabBD-র শতকরা ক্যালকুলেটরে হিসাব করা।",
+    shareTitle: "HisabBD দিয়ে শতকরা হিসাব",
+    errOutOfRange:
+      "এটি ক্যালকুলেটরের সীমার বাইরে। −1,000,000,000,000 থেকে 1,000,000,000,000-এর মধ্যে এমন সংখ্যা দিন যা 0-এর খুব কাছাকাছি নয়।",
+    errNegative: "শতকরা হার 0 বা তার বেশি দিন। সংখ্যা ছোট করতে চাইলে “কমান” বেছে নিন।",
+    errZeroWhole: "পূর্ণ সংখ্যা 0 হতে পারে না: শূন্যের শতাংশ হয় না।",
+    errZeroStart: "শুরুর মান 0 হতে পারে না: 0 থেকে শতকরা পরিবর্তন সংজ্ঞায়িত নয়।",
+    errZeroPercent: "শতকরা হার 0 হতে পারে না: 0% থেকে পূর্ণ সংখ্যা বের করা যায় না।",
+    startingValue: "শুরুর মান",
+    newValue: "নতুন মান",
+    difference: "পার্থক্য",
+    higher: "বেশি",
+    lower: "কম",
+    startingNumber: "শুরুর সংখ্যা",
+    amountAdded: "যোগ হয়েছে",
+    amountRemoved: "বাদ গেছে",
+    percentOf: (p: string, y: string, v: string) => ({
+      title: `${y}-এর ${p}%`,
+      sentence: `${y}-এর ${p}% হলো ${v}।`,
+    }),
+    whatPercent: (x: string, y: string, p: string) => ({
+      title: `${y}-এর মধ্যে ${x} কত শতাংশ`,
+      sentence: `${x} হলো ${y}-এর ${p}।`,
+    }),
+    changeTitle: (a: string, b: string) => `${a} থেকে ${b}-তে পরিবর্তন`,
+    changeNone: (a: string, b: string) => `${a} থেকে ${b}-তে কোনো পরিবর্তন নেই।`,
+    changeSentence: (a: string, b: string, p: string, dir: "increase" | "decrease") =>
+      `${a} থেকে ${b} মানে ${p} ${dir === "increase" ? "বৃদ্ধি" : "হ্রাস"}।`,
+    changeValue: (p: string, dir: "increase" | "decrease") =>
+      `${p} ${dir === "increase" ? "বৃদ্ধি" : "হ্রাস"}`,
+    incDec: (y: string, p: string, v: string, dir: "increase" | "decrease") => ({
+      title: `${y}-কে ${p}% ${dir === "increase" ? "বাড়ালে" : "কমালে"}`,
+      sentence: `${y}-কে ${p}% ${dir === "increase" ? "বাড়ালে" : "কমালে"} হয় ${v}।`,
+    }),
+    reverse: (x: string, p: string, w: string) => ({
+      title: `${x} যে সংখ্যার ${p}%`,
+      sentence: `${x} হলো ${w}-এর ${p}%।`,
+    }),
+  },
+} as const;
 
-const DIRECTION_OPTIONS: readonly { value: PercentageDirection; label: string }[] = [
-  { value: "increase", label: "Increase" },
-  { value: "decrease", label: "Decrease" },
-];
+type Strings = (typeof STRINGS)[Locale];
 
 const FIELD_IDS: Record<PercentageField, string> = { a: "percentage-a", b: "percentage-b" };
 
@@ -92,20 +227,20 @@ function fmtPercent(value: number): string {
   return formatPercent(value, { decimals: 4 });
 }
 
-function errorMessage(mode: PercentageMode, error: PercentageError): string {
-  const config = MODES[mode][error.field];
+function errorMessage(t: Strings, locale: Locale, mode: PercentageMode, error: PercentageError): string {
+  const config = MODES[locale][mode][error.field];
   switch (error.code) {
     case "missing":
     case "invalid":
-      return numberErrorMessage(error.code, { label: config.noun });
+      return numberErrorMessage(error.code, { label: config.noun }, locale);
     case "out-of-range":
-      return `This is outside what the calculator can handle. Use a number between −1,000,000,000,000 and 1,000,000,000,000 that isn’t extremely close to 0.`;
+      return t.errOutOfRange;
     case "negative":
-      return "Enter a percentage of 0 or more. Choose Decrease to make the number smaller.";
+      return t.errNegative;
     case "zero":
-      if (mode === "what-percent") return "The whole can’t be 0: there is no percentage of nothing.";
-      if (mode === "change") return "The starting value can’t be 0: a percentage change from 0 is undefined.";
-      return "The percentage can’t be 0: the whole number can’t be found from 0%.";
+      if (mode === "what-percent") return t.errZeroWhole;
+      if (mode === "change") return t.errZeroStart;
+      return t.errZeroPercent;
   }
 }
 
@@ -116,79 +251,79 @@ interface Summary {
   value: string;
   /** Plain-language sentence with the numbers. */
   sentence: string;
-  /** Formula with the numbers filled in. */
+  /** Formula with the numbers filled in (language-free). */
   working: string;
 }
 
-function summarize(r: PercentageResult): Summary {
+function summarize(t: Strings, r: PercentageResult): Summary {
   switch (r.mode) {
-    case "percent-of":
+    case "percent-of": {
+      const s = t.percentOf(fmt(r.percent), fmt(r.base), fmt(r.value));
       return {
-        title: `${fmt(r.percent)}% of ${fmt(r.base)}`,
+        ...s,
         value: fmt(r.value),
-        sentence: `${fmt(r.percent)}% of ${fmt(r.base)} is ${fmt(r.value)}.`,
         working: `${fmt(r.percent)} ÷ 100 × ${fmt(r.base)} = ${fmt(r.value)}`,
       };
-    case "what-percent":
+    }
+    case "what-percent": {
+      const s = t.whatPercent(fmt(r.part), fmt(r.whole), fmtPercent(r.percent));
       return {
-        title: `${fmt(r.part)} as a percentage of ${fmt(r.whole)}`,
+        ...s,
         value: fmtPercent(r.percent),
-        sentence: `${fmt(r.part)} is ${fmtPercent(r.percent)} of ${fmt(r.whole)}.`,
         working: `${fmt(r.part)} ÷ ${fmt(r.whole)} × 100 = ${fmtPercent(r.percent)}`,
       };
+    }
     case "change": {
-      const word = r.direction === "none" ? "no change" : r.direction;
-      const value =
-        r.direction === "none" ? "0%" : `${fmtPercent(Math.abs(r.percent))} ${r.direction}`;
+      const dir = r.direction;
       return {
-        title: `Change from ${fmt(r.from)} to ${fmt(r.to)}`,
-        value,
+        title: t.changeTitle(fmt(r.from), fmt(r.to)),
+        value: dir === "none" ? "0%" : t.changeValue(fmtPercent(Math.abs(r.percent)), dir),
         sentence:
-          r.direction === "none"
-            ? `From ${fmt(r.from)} to ${fmt(r.to)} there is no change.`
-            : `From ${fmt(r.from)} to ${fmt(r.to)} is a ${fmtPercent(Math.abs(r.percent))} ${word}.`,
+          dir === "none"
+            ? t.changeNone(fmt(r.from), fmt(r.to))
+            : t.changeSentence(fmt(r.from), fmt(r.to), fmtPercent(Math.abs(r.percent)), dir),
         working: `(${fmt(r.to)} − ${fmt(r.from)}) ÷ ${fmt(Math.abs(r.from))} × 100 = ${fmtPercent(r.percent)}`,
       };
     }
     case "increase-decrease": {
-      const verb = r.direction === "increase" ? "increased" : "decreased";
       const sign = r.direction === "increase" ? "+" : "−";
+      const s = t.incDec(fmt(r.base), fmt(r.percent), fmt(r.value), r.direction);
       return {
-        title: `${fmt(r.base)} ${verb} by ${fmt(r.percent)}%`,
+        ...s,
         value: fmt(r.value),
-        sentence: `${fmt(r.base)} ${verb} by ${fmt(r.percent)}% is ${fmt(r.value)}.`,
         working: `${fmt(r.base)} × (1 ${sign} ${fmt(r.percent)} ÷ 100) = ${fmt(r.value)}`,
       };
     }
-    case "reverse":
+    case "reverse": {
+      const s = t.reverse(fmt(r.part), fmt(r.percent), fmt(r.whole));
       return {
-        title: `${fmt(r.part)} is ${fmt(r.percent)}% of`,
+        ...s,
         value: fmt(r.whole),
-        sentence: `${fmt(r.part)} is ${fmt(r.percent)}% of ${fmt(r.whole)}.`,
         working: `${fmt(r.part)} ÷ (${fmt(r.percent)} ÷ 100) = ${fmt(r.whole)}`,
       };
+    }
   }
 }
 
-function extraStats(r: PercentageResult): { label: string; value: string; wide?: boolean }[] {
+function extraStats(t: Strings, r: PercentageResult): { label: string; value: string; wide?: boolean }[] {
   switch (r.mode) {
     case "change":
       return [
-        { label: "Starting value", value: fmt(r.from) },
-        { label: "New value", value: fmt(r.to) },
+        { label: t.startingValue, value: fmt(r.from) },
+        { label: t.newValue, value: fmt(r.to) },
         {
-          label: "Difference",
+          label: t.difference,
           value:
             r.direction === "none"
               ? "0"
-              : `${fmt(Math.abs(r.difference))} ${r.direction === "increase" ? "higher" : "lower"}`,
+              : `${fmt(Math.abs(r.difference))} ${r.direction === "increase" ? t.higher : t.lower}`,
           wide: true,
         },
       ];
     case "increase-decrease":
       return [
-        { label: "Starting number", value: fmt(r.base) },
-        { label: r.direction === "increase" ? "Amount added" : "Amount removed", value: fmt(r.amount) },
+        { label: t.startingNumber, value: fmt(r.base) },
+        { label: r.direction === "increase" ? t.amountAdded : t.amountRemoved, value: fmt(r.amount) },
       ];
     default:
       return [];
@@ -196,6 +331,9 @@ function extraStats(r: PercentageResult): { label: string; value: string; wide?:
 }
 
 export function PercentageCalculator() {
+  const locale = useLocale();
+  const t = STRINGS[locale];
+  const modes = MODES[locale];
   const [mode, setMode] = useState<PercentageMode>("percent-of");
   const [direction, setDirection] = useState<PercentageDirection>("increase");
   const [a, setA] = useState("");
@@ -207,11 +345,17 @@ export function PercentageCalculator() {
     b: useRef<HTMLInputElement>(null),
   };
 
-  const config = MODES[mode];
+  const modeOptions = MODE_ORDER.map((value) => ({ value, label: modes[value].label }));
+  const directionOptions: readonly { value: PercentageDirection; label: string }[] = [
+    { value: "increase", label: t.increase },
+    { value: "decrease", label: t.decrease },
+  ];
+
+  const config = modes[mode];
   const calc = submitted ? calculatePercentage(mode, a, b, { direction }) : null;
   const errorFor = (field: PercentageField) => {
     const error = calc && !calc.ok ? calc.errors.find((e) => e.field === field) : undefined;
-    return error ? errorMessage(mode, error) : undefined;
+    return error ? errorMessage(t, locale, mode, error) : undefined;
   };
   const result = calc?.ok ? calc.result : null;
 
@@ -249,11 +393,11 @@ export function PercentageCalculator() {
 
   return (
     <div>
-      <CalculatorForm onSubmit={onSubmit} onReset={onReset} submitLabel="Calculate">
+      <CalculatorForm onSubmit={onSubmit} onReset={onReset} submitLabel={t.submit}>
         <SegmentedControl
           name="percentage-mode"
-          legend="What do you want to find?"
-          options={MODE_OPTIONS}
+          legend={t.modeLegend}
+          options={modeOptions}
           value={mode}
           onChange={changeMode}
         />
@@ -283,8 +427,8 @@ export function PercentageCalculator() {
           <div className="mt-5">
             <SegmentedControl
               name="percentage-direction"
-              legend="Increase or decrease?"
-              options={DIRECTION_OPTIONS}
+              legend={t.directionLegend}
+              options={directionOptions}
               value={direction}
               onChange={setDirection}
             />
@@ -294,16 +438,14 @@ export function PercentageCalculator() {
 
       <CalculatorResultArea
         revealKey={revealCount}
-        announcement={result ? summarize(result).sentence : ""}
+        announcement={result ? summarize(t, result).sentence : ""}
         result={result && <PercentageResultView result={result} />}
         placeholder={
           <ResultPlaceholder
-            title={calc ? "Almost there" : "Your answer will appear here"}
+            title={calc ? t.placeholderTitleFix : t.placeholderTitleFirst}
             preview={<p className="font-display text-4xl font-bold tracking-tight">–</p>}
           >
-            {calc
-              ? "Fix the highlighted fields above and the answer will show here."
-              : "Choose what to find, enter two numbers, then select Calculate."}
+            {calc ? t.placeholderFix : t.placeholderFirst}
           </ResultPlaceholder>
         }
       />
@@ -312,8 +454,9 @@ export function PercentageCalculator() {
 }
 
 function PercentageResultView({ result: r }: { result: PercentageResult }) {
-  const summary = summarize(r);
-  const stats = extraStats(r);
+  const t = STRINGS[useLocale()];
+  const summary = summarize(t, r);
+  const stats = extraStats(t, r);
 
   return (
     <div className="space-y-4">
@@ -325,19 +468,17 @@ function PercentageResultView({ result: r }: { result: PercentageResult }) {
         <p className="rounded-xl bg-white/70 px-4 py-3 text-slate-800">{summary.sentence}</p>
         {stats.length > 0 && <ResultStats items={stats} className="mt-5" />}
         <p className="mt-4 text-sm text-slate-600">
-          Worked out as: <span className="font-medium text-slate-800">{summary.working}</span>
+          {t.workedOutAs} <span className="font-medium text-slate-800">{summary.working}</span>
         </p>
         {r.mode === "increase-decrease" && r.decreaseOverHundred && (
-          <p className="mt-3 text-sm text-slate-700">
-            Decreasing by more than 100% takes the number below zero, so the answer is negative.
-          </p>
+          <p className="mt-3 text-sm text-slate-700">{t.decreaseOverHundred}</p>
         )}
       </ResultPanel>
 
       <ResultActions
         key={`${summary.sentence}|${summary.working}`}
-        text={`${summary.sentence} (${summary.working}). Calculated with HisabBD’s Percentage Calculator.`}
-        shareTitle="Percentage calculated with HisabBD"
+        text={`${summary.sentence} (${summary.working}). ${t.shareSuffix}`}
+        shareTitle={t.shareTitle}
       />
     </div>
   );

@@ -13,6 +13,8 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
 import { breadcrumbSchema, calculatorSchema, faqSchema } from "@/lib/seo/structured-data";
+import { localePath, type Locale } from "@/i18n/locales";
+import { ui } from "@/i18n/ui";
 
 /**
  * Shared page shell for every calculator: breadcrumb, H1 and intro from the
@@ -24,26 +26,31 @@ export function CalculatorPage({
   calculator,
   children,
   content,
+  locale = "en",
 }: {
   calculator: CalculatorMeta;
   /** The interactive calculator (a small Client Component). */
   children: React.ReactNode;
   /** Explanatory content (Server Component). */
   content?: React.ReactNode;
+  locale?: Locale;
 }) {
+  const t = ui[locale];
+  const bn = locale === "bn";
   const category = getCategory(calculator.category);
-  const faqs = calculator.faqs ?? [];
+  const faqs = (bn ? calculator.faqsBn : calculator.faqs) ?? [];
+  const name = bn ? calculator.nameBn : calculator.name;
   const crumbs = [
-    { name: "Home", path: "/" },
-    { name: "Calculators", path: CALCULATORS_PATH },
-    { name: calculator.name, path: calculatorPath(calculator.slug) },
+    { name: t.nav.home, path: localePath(locale, "/") },
+    { name: t.nav.calculators, path: localePath(locale, CALCULATORS_PATH) },
+    { name, path: localePath(locale, calculatorPath(calculator.slug)) },
   ];
 
   return (
     <article>
       <JsonLd
         schemas={[
-          calculatorSchema(calculator),
+          calculatorSchema(calculator, locale),
           breadcrumbSchema(crumbs),
           ...(faqs.length > 0 ? [faqSchema(faqs)] : []),
         ]}
@@ -52,38 +59,41 @@ export function CalculatorPage({
         <Container className="py-5 sm:py-8">
           <Breadcrumbs
             items={[
-              { name: "Home", href: "/" },
-              { name: "Calculators", href: CALCULATORS_PATH },
-              { name: calculator.name },
+              { name: t.nav.home, href: localePath(locale, "/") },
+              { name: t.nav.calculators, href: localePath(locale, CALCULATORS_PATH) },
+              { name },
             ]}
           />
           <div className="mt-4 flex items-center gap-4 sm:mt-6">
             <CalculatorIconTile icon={calculator.icon} category={calculator.category} size="lg" className="bg-white" />
             <div className="min-w-0">
-              <h1 className="font-display text-3xl leading-tight font-bold tracking-tight text-slate-900 sm:text-5xl">
-                {calculator.name}
+              <h1
+                lang={locale}
+                className="font-display text-3xl leading-tight font-bold tracking-tight text-slate-900 sm:text-5xl"
+              >
+                {name}
               </h1>
-              <p lang="bn" className="text-sm text-slate-600">
-                {calculator.nameBn}
+              <p lang={bn ? "en" : "bn"} className="text-sm text-slate-600">
+                {bn ? calculator.name : calculator.nameBn}
               </p>
             </div>
           </div>
-          <p className="mt-3 max-w-2xl text-lg text-pretty text-slate-700 sm:mt-4">{calculator.summary}</p>
+          <p className="mt-3 max-w-2xl text-lg text-pretty text-slate-700 sm:mt-4">{bn ? calculator.summaryBn : calculator.summary}</p>
           <Link
-            href={categoryHref(category.id)}
+            href={localePath(locale, categoryHref(category.id))}
             className="mt-3 inline-flex min-h-9 items-center gap-2 rounded-lg bg-white/80 py-1 pr-3 pl-1 text-sm font-semibold text-slate-700 transition-colors hover:bg-white hover:text-brand-800"
           >
             <CategoryIcon category={category.id} size="sm" />
-            More {category.name} calculators
+            {t.calculatorPage.moreInCategory(bn ? category.nameBn : category.name)}
           </Link>
-          <CalculatorPageActions slug={calculator.slug} name={calculator.name} />
+          <CalculatorPageActions slug={calculator.slug} name={name} />
         </Container>
       </div>
 
       <Container className="py-6 sm:py-10">
         <div className="max-w-3xl">
           <CalculatorProvider slug={calculator.slug}>{children}</CalculatorProvider>
-          <NextCalculators calculator={calculator} />
+          <NextCalculators calculator={calculator} locale={locale} />
         </div>
       </Container>
 
@@ -97,14 +107,14 @@ export function CalculatorPage({
                 id="faq-heading"
                 className="mb-4 font-display text-2xl font-bold tracking-tight text-slate-900"
               >
-                Frequently asked questions
+                {t.calculatorPage.faqHeading}
               </h2>
               <FaqList items={faqs} />
             </section>
           )}
         </div>
 
-        <RelatedCalculators calculator={calculator} className="mt-12" />
+        <RelatedCalculators calculator={calculator} locale={locale} className="mt-12" />
       </Container>
     </article>
   );
