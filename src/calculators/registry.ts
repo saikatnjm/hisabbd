@@ -5,13 +5,17 @@ import { bmiCalculator } from "./bmi/meta";
 import { cgpaCalculator } from "./cgpa/meta";
 import { dateDifferenceCalculator } from "./date-difference/meta";
 import { discountCalculator } from "./discount/meta";
+import { dpsCalculator } from "./dps/meta";
 import { emiCalculator } from "./emi/meta";
+import { fdrCalculator } from "./fdr/meta";
 import { gpaCalculator } from "./gpa/meta";
 import { jobAgeCalculator } from "./job-age/meta";
 import { landCalculator } from "./land/meta";
+import { mfsChargeCalculator } from "./mfs-charge/meta";
 import { percentageCalculator } from "./percentage/meta";
 import { profitLossCalculator } from "./profit-loss/meta";
 import { salaryCalculator } from "./salary/meta";
+import { sanchayapatraCalculator } from "./sanchayapatra/meta";
 import { sscHscGpaCalculator } from "./ssc-hsc-gpa/meta";
 import { vatCalculator } from "./vat/meta";
 import { CATEGORY_IDS, type CalculatorMeta, type CategoryId } from "./types";
@@ -42,6 +46,10 @@ export const calculators: readonly CalculatorMeta[] = [
   amountInWordsCalculator,
   vatCalculator,
   banglaDateCalculator,
+  sanchayapatraCalculator,
+  mfsChargeCalculator,
+  fdrCalculator,
+  dpsCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

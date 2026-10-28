@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import { OG_IMAGE } from "@/calculators/metadata";
+import { homeOgImage, OG_IMAGE_SIZE } from "@/calculators/metadata";
 import { HomePage } from "@/components/home/home-page";
 import { siteConfig } from "@/config/site";
 import { HREFLANG } from "@/i18n/locales";
+
+const ogImage = homeOgImage("en");
 
 export const metadata: Metadata = {
   alternates: {
@@ -17,13 +19,13 @@ export const metadata: Metadata = {
     url: "/",
     title: `${siteConfig.name}: ${siteConfig.tagline}`,
     description: siteConfig.description,
-    images: [OG_IMAGE],
+    images: [{ ...ogImage, ...OG_IMAGE_SIZE }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.name}: ${siteConfig.tagline}`,
     description: siteConfig.description,
-    images: [OG_IMAGE.url],
+    images: [ogImage.url],
   },
 };
 

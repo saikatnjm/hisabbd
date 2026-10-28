@@ -48,7 +48,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   }));
 
   return (
-    <footer className="border-t border-brand-100 bg-brand-50">
+    <footer className="border-t border-brand-100 bg-brand-50 print:hidden">
       <Container className="grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo locale={locale} />

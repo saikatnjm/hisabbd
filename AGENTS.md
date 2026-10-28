@@ -45,6 +45,51 @@ If Node ≥ 20.9 is available locally, the same `npm run …` scripts work direc
 7. **The registry is the source of truth.** Home, search, category pages, related links, footer, sitemap, JSON-LD and `/bn` routes all derive from `src/calculators/registry.ts` and `page-registry.tsx`. Don't hand-maintain lists elsewhere.
 8. **Static only.** No server actions, API routes, runtime data fetching or new runtime dependencies without a strong reason. Current production dependencies: `next`, `react`, `react-dom`. Nothing else.
 9. **Accessibility.** Use the shared `FormField` / `AffixInput` / `SegmentedControl` / `CalculatorForm` / `CalculatorResultArea` components; they wire up labels, `aria-invalid`, `aria-describedby`, live-region announcements and focus. Use `inputMode="decimal"` with `type="text"` for numeric inputs, not `type="number"`.
+10. **Every page is an SEO landing page for a real search.** No calculator, guide or page ships unless it meets "SEO and landing-page criteria" below. This is a standing rule from the site owner.
+
+## SEO and landing-page criteria
+
+Apply this checklist when proposing, building or reviewing any page or feature. The goal is that people in Bangladesh searching for something HisabBD does land on a page that answers it, and that the page shows what HisabBD stands for.
+
+**Core identity (every page must express it):**
+- Free, no signup.
+- Accurate, with cited and dated sources for anything rule-dependent.
+- Made for Bangladesh: ৳, lakh/crore, local rules and calendar.
+- Bilingual, Bangla-first.
+- Private: inputs never leave the device.
+- Fast on any phone.
+
+**1. Start from search intent.**
+- Before building, name the real queries in Bangla, English and Banglish, e.g. "আজকের বাংলা তারিখ", "bcs age calculator", "jomir hisab".
+- One page per intent. Don't build pages nobody searches for, and don't split one intent across several thin pages.
+- Put the main Bangla and English phrasing in `seo.title` / `seoBn.title`, the H1 and the `keywords`.
+
+**2. Landing-page anatomy.**
+- One clear H1 that matches the query.
+- The tool or the direct answer at the top, before long text.
+- A worked example, the formula and the assumptions (`content.tsx` / `content.bn.tsx`).
+- FAQs that answer follow-up questions.
+- "Rules last reviewed" (`updatedOn`) on rule-dependent pages.
+- Internal links in running text: calculator ↔ guide ↔ related calculators. Every new page must link to and be linked from at least two existing pages.
+- A clear next step (Try next, a related guide, Use again).
+
+**3. Technical SEO (most of it comes from the shared components; don't bypass them).**
+- A unique title (≤ 60 characters, without the site name) and description (~150 characters) for each locale.
+- Canonical plus hreflang `en-BD` / `bn-BD` / `x-default` (`pageMetadata`), and the right `<html lang>`.
+- JSON-LD that matches the visible content (`WebApplication`, `Article`, `FAQPage`, `BreadcrumbList`).
+- A sitemap entry with a real `lastModified`.
+- Static, fast, mobile-first, no layout shift.
+- Descriptive link text, and alt text on meaningful images.
+
+**4. Quality over quantity.**
+- No mass-generated near-duplicate pages, keyword stuffing, hidden text, fake reviews or `AggregateRating`.
+- Never guess a regulation to rank for it; cite it or leave it out.
+
+**5. Timing.**
+- Content tied to the Bangladesh calendar (exam results, BCS circulars, the tax deadline, Ramadan, Pohela Boishakh, the budget) goes live 4–6 weeks before its peak.
+
+**6. Record it.**
+- Track each page's target queries and status in `docs/growth-plan.md`. Use Search Console data, once available, to revise titles, content and priorities. See `docs/seo.md` for the mechanics.
 
 ## Where things are
 
@@ -88,7 +133,7 @@ src/lib/                       number, format, plain-date, analytics, saved-calc
 - Mark client components with `"use client"` and keep them small. Content, pages and the calculator page shell are Server Components.
 - Validation functions return discriminated unions: `{ ok: true; result } | { ok: false; errors: { field, code }[] }`. Error **codes** live in logic; human **messages** live in the widget (usually via `numberErrorMessage` in `src/components/calculator/number-messages.ts`).
 - Comments explain *why* and state assumptions. Match the existing density: a doc comment on each export, a numbered rules block at the top of each `logic.ts`.
-- Write in plain, friendly British-leaning English ("favourite", "instalment") and natural Bangla. In new Bangla text use Western digits for numbers (`৳2,500`, `20%`); see `docs/i18n.md` for the exceptions and older pages that still use Bangla digits.
+- Write in plain, friendly British-leaning English ("favourite", "instalment") and natural Bangla. In new Bangla text use Western digits for numbers (`৳2,500`, `20%`); see `docs/i18n.md` for the exceptions.
 - Tailwind utility classes only. Design tokens live in `src/app/globals.css`. Join classes with `cn()` from `src/lib/cn.ts`.
 
 ## Known quirks

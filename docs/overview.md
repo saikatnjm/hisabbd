@@ -55,6 +55,10 @@ Bangla calculator pages are not separate files. A single dynamic route, `src/app
 | `amount-in-words` | Taka Amount in Words / টাকা কথায় লেখার ক্যালকুলেটর | finance | text | Amount in English (lakh/crore and million) and Bangla words for cheques; Bangla digits |
 | `vat-calculator` | VAT Calculator / ভ্যাট ক্যালকুলেটর | finance | receipt | Add or remove VAT (15% standard, sourced reduced rates, custom), paisa-exact |
 | `bangla-date-converter` | Bangla Date Converter / বাংলা তারিখ রূপান্তর | date-time | calendar-day | Today's Bangla date; Gregorian ↔ Bangla (revised 2019 calendar), season, weekday |
+| `sanchayapatra-calculator` | Sanchayapatra Profit Calculator / সঞ্চয়পত্রের মুনাফা ক্যালকুলেটর | finance | seal | Profit per month/quarter or at maturity for 4 schemes, official tiered rates, source tax |
+| `fdr-calculator` | FDR Calculator / এফডিআর ক্যালকুলেটর | finance | vault | Fixed deposit maturity, interest, source tax, excise duty |
+| `dps-calculator` | DPS Calculator / ডিপিএস ক্যালকুলেটর | finance | piggy-bank | Monthly deposit scheme maturity, yearly table, tax, excise |
+| `mfs-cash-out-charge-calculator` | bKash & Nagad Cash Out Charge Calculator / বিকাশ ও নগদ ক্যাশ আউট চার্জ ক্যালকুলেটর | finance | mobile-money | Charge per ৳1,000 by provider and channel; max cash for a balance |
 
 Full specs: [calculators.md](calculators.md).
 
@@ -88,6 +92,9 @@ Rendered by `src/components/calculator/calculator-page.tsx`, top to bottom:
 - **Quick picks**: a chip row under the home search. It shows editor-picked calculators (`featuredSlugs` in `src/calculators/featured.ts`) until the visitor has favourites or recents, then shows those.
 - **Favourites ("Save") and Recently used**: stored in `localStorage`, slugs only. Max 12 favourites and 6 recents.
 - **Copy / Share result**: plain-text summary of the result. Sharing a page sends only the URL.
+- **Share as image**: a branded 1080×1080 result card drawn on the device, shared or downloaded.
+- **Print or save as PDF**: a clean printout of the calculator, inputs and result.
+- **Remembered settings and recent calculations** (this browser only): see [privacy-and-analytics.md](privacy-and-analytics.md).
 - **Language toggle**: a plain link to the same page in the other locale, with no cookie and no redirect.
 - **Bangla digit input**: every numeric field accepts `০–৯` and commas.
 - **Optional analytics**: GA4 and/or Umami, off unless env vars are set. Only anonymous events. See [privacy-and-analytics.md](privacy-and-analytics.md).

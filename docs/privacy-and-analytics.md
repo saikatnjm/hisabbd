@@ -54,6 +54,8 @@ It exports `gaEnabled`, `umamiEnabled` and `analyticsEnabled`. The Privacy page 
 | `related_calculator_clicked` | `from`, `to`, `placement: "next" \| "related"` | `AnalyticsClickListener` via `relatedLinkAttributes()` |
 | `result_copied` | `calculator` | `ResultActions` |
 | `result_shared` | `calculator` | `ResultActions` |
+| `result_image_shared` | `calculator`, `method: "share" \| "download"` | `ResultActions` (Share as image) |
+| `result_printed` | `calculator` | `ResultActions` (Print or save as PDF) |
 | `page_shared` | `calculator`, `method: "share" \| "copy"` | `CalculatorPageActions` |
 | `favorite_toggled` | `calculator`, `favorite` (boolean) | `CalculatorPageActions` |
 
@@ -101,6 +103,10 @@ It exports `gaEnabled`, `umamiEnabled` and `analyticsEnabled`. The Privacy page 
 - It is an external store for `useSyncExternalStore`: there is an in-memory cache keyed on the raw string, a listener set, and a `storage` event subscription for cross-tab sync. The server snapshot is an empty list.
 - `rememberRecent(slug)` is called by `CalculatorProvider`. `toggleFavorite(slug)` is called by the Save button.
 - Used by `QuickPicks` on the home page ("Your calculators").
+
+## Share as image
+
+"Share as image" (`src/lib/result-card.ts`) draws a 1080×1080 PNG of the result in the visitor's browser: calculator name, the result text without the HisabBD credit sentence, the tagline, and the page address. Nothing is uploaded. The image goes to the share sheet (where the browser can share files) or is downloaded, and from there it's the visitor's choice where it goes, the same as Copy/Share. Analytics records only the slug and whether it was shared or downloaded.
 
 ## Embeds
 

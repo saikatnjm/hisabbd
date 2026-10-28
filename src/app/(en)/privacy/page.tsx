@@ -68,8 +68,8 @@ export default function PrivacyPage() {
               : ", a privacy-focused analytics service that doesn’t use cookies,"}{" "}
             to count page visits and a few anonymous actions: opening a calculator,
             completing a calculation, searching (the number of results only, not what you typed),
-            clicking a search result or a related calculator, saving a calculator, and copying or
-            sharing a result. Each event records only which calculator it was.{" "}
+            clicking a search result or a related calculator, saving a calculator, and copying,
+            sharing, saving as an image or printing a result. Each event records only which calculator it was.{" "}
             <strong>The values you enter and the results you get are never sent.</strong> If your
             browser sends a “Do Not Track” signal, Umami collects nothing.
           </p>

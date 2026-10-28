@@ -51,7 +51,7 @@ export function CalculatorPageActions({ slug, name }: { slug: string; name: stri
   }
 
   return (
-    <div className="mt-3 flex flex-wrap items-center gap-2">
+    <div className="mt-3 flex flex-wrap items-center gap-2 print:hidden">
       <button type="button" aria-pressed={isFavorite} onClick={onToggleFavorite} className={buttonClasses}>
         <StarIcon className={cn("size-5", isFavorite ? "fill-sun-300 text-finance-ink" : "text-slate-500")} />
         {isFavorite ? t.saved : t.save}

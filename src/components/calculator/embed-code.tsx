@@ -14,7 +14,7 @@ export function EmbedCode({ slug, name, locale }: { slug: string; name: string; 
   const code = `<iframe src="${absoluteUrl(embedPath(locale, slug))}" title="${name} | HisabBD" width="100%" height="900" style="border:0;max-width:720px" loading="lazy"></iframe>`;
 
   return (
-    <details className="mt-10 rounded-xl border border-slate-200 bg-white p-4 text-sm">
+    <details className="mt-10 rounded-xl border border-slate-200 bg-white p-4 text-sm print:hidden">
       <summary className="cursor-pointer font-semibold text-slate-800">{t.summary}</summary>
       <p className="mt-3 text-slate-700">{t.intro}</p>
       <label htmlFor={id} className="mt-3 block font-medium text-slate-800">

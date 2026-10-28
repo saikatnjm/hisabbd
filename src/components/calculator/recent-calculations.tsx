@@ -27,7 +27,7 @@ export function RecentCalculations({ onRestore }: { onRestore: (inputs: Readonly
   if (entries.length === 0 || now === 0) return null;
 
   return (
-    <section aria-labelledby="recent-calculations-heading" className="mt-8 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+    <section aria-labelledby="recent-calculations-heading" className="mt-8 rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 print:hidden">
       <h2 id="recent-calculations-heading" className="font-display text-lg font-semibold text-slate-900">
         {t.title}
       </h2>

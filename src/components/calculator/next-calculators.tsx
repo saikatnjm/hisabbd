@@ -17,7 +17,7 @@ export function NextCalculators({ calculator, locale = "en" }: { calculator: Cal
   if (next.length === 0) return null;
 
   return (
-    <nav aria-labelledby="next-calculators-heading" className="mt-8">
+    <nav aria-labelledby="next-calculators-heading" className="mt-8 print:hidden">
       <h2 id="next-calculators-heading" className="font-display text-lg font-semibold text-slate-900">
         {ui[locale].calculatorPage.tryNext}
       </h2>

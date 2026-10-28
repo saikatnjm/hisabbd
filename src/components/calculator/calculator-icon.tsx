@@ -9,12 +9,16 @@ import {
   GraduationIcon,
   LandIcon,
   LandmarkIcon,
+  MobileMoneyIcon,
   PercentIcon,
+  PiggyBankIcon,
   ReceiptIcon,
   ScaleIcon,
+  SealIcon,
   TagIcon,
   TextIcon,
   TrendingIcon,
+  VaultIcon,
   WalletIcon,
 } from "@/components/ui/icons";
 import { categoryTheme } from "@/components/calculator/category-theme";
@@ -37,6 +41,10 @@ const icons: Record<CalculatorIconName, (p: React.SVGProps<SVGSVGElement>) => Re
   text: TextIcon,
   receipt: ReceiptIcon,
   "calendar-day": CalendarDayIcon,
+  seal: SealIcon,
+  vault: VaultIcon,
+  "piggy-bank": PiggyBankIcon,
+  "mobile-money": MobileMoneyIcon,
 };
 
 const sizes = {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { pageMetadata } from "@/calculators/metadata";
+import { guideOgImage, pageMetadata } from "@/calculators/metadata";
 import { GuidePage } from "@/components/pages/guide-page";
 import { guidePages } from "@/guides/page-registry";
 import { guidePath, guides } from "@/guides/registry";
@@ -16,7 +16,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const entry = guidePages[(await params).slug];
   if (!entry) return {};
-  return pageMetadata({ ...entry.meta.seo, path: guidePath(entry.meta.slug) });
+  return pageMetadata({ ...entry.meta.seo, path: guidePath(entry.meta.slug), image: guideOgImage(entry.meta, "en") });
 }
 
 export default async function EnglishGuidePage({ params }: { params: Params }) {

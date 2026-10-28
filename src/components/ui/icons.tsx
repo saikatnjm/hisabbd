@@ -221,6 +221,50 @@ export const CalendarDayIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const SealIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="9" r="6" />
+    <path d="M12 6v6M9.5 9h5M8.5 14l-1.5 7 5-3 5 3-1.5-7" />
+  </Icon>
+);
+
+export const VaultIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="4" width="18" height="15" rx="2" />
+    <circle cx="12" cy="11.5" r="3.5" />
+    <path d="M12 8v1M12 14v1M15.5 11.5h-1M9.5 11.5h-1M6 19v2M18 19v2" />
+  </Icon>
+);
+
+export const PiggyBankIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M5 11a7 6 0 0 1 12-3h2l-1 3 2 1v3h-2l-2 3v2h-3v-1.5a8 8 0 0 1-3 0V20H7v-2.5A6 6 0 0 1 5 11z" />
+    <path d="M10 7.5h3M15.5 11h.01" />
+  </Icon>
+);
+
+export const MobileMoneyIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="6" y="2" width="12" height="20" rx="3" />
+    <path d="M11 18h2M12 7v6M10 9.5c0-1 .9-1.5 2-1.5s2 .5 2 1.3-1 1.2-2 1.2-2 .4-2 1.2.9 1.3 2 1.3 2-.5 2-1.5" />
+  </Icon>
+);
+
+export const ImageIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <circle cx="9" cy="10" r="1.75" />
+    <path d="M21 16l-5-5-8 9" />
+  </Icon>
+);
+
+export const PrinterIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2" />
+    <rect x="7" y="14" width="10" height="7" rx="1" />
+  </Icon>
+);
+
 export const TrashIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />

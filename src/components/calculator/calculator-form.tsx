@@ -30,7 +30,7 @@ export function CalculatorForm({
       className="rounded-2xl border border-slate-200 bg-white p-5 shadow-lift sm:p-6"
     >
       {children}
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-6 flex flex-wrap gap-3 print:hidden">
         <Button type="submit" size="lg" className="grow sm:grow-0">
           {submitLabel}
         </Button>

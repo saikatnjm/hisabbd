@@ -14,7 +14,7 @@ const navLinkClasses =
 export function SiteHeader({ locale }: { locale: Locale }) {
   const t = ui[locale].nav;
   return (
-    <header className="relative border-b border-slate-200 bg-white">
+    <header className="relative border-b border-slate-200 bg-white print:hidden">
       <Container className="flex h-16 items-center justify-between gap-2">
         <Logo locale={locale} />
         <div className="flex items-center gap-1">

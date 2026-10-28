@@ -10,7 +10,7 @@ Agents should start at [`../AGENTS.md`](../AGENTS.md) for the hard rules and com
 | --- | --- | --- |
 | [overview.md](overview.md) | Product, audience, every page and URL, user-facing features | You need to know what the site does |
 | [architecture.md](architecture.md) | Tech stack, directory map, data flow, rendering model, routing | You are changing structure or adding pages |
-| [calculators.md](calculators.md) | Spec for all 16 calculators: inputs, formulas, limits, outputs, edge cases | You are touching calculator logic or content |
+| [calculators.md](calculators.md) | Spec for all 20 calculators: inputs, formulas, limits, outputs, edge cases | You are touching calculator logic or content |
 | [adding-a-calculator.md](adding-a-calculator.md) | Step-by-step checklist with file templates | You are adding a calculator |
 | [i18n.md](i18n.md) | English/Bangla system: paths, strings, content, digits | You are writing or translating UI text |
 | [seo.md](seo.md) | Metadata, canonical, hreflang, sitemap, robots, JSON-LD, verification | You are changing titles, URLs or structured data |
@@ -28,7 +28,7 @@ Agents should start at [`../AGENTS.md`](../AGENTS.md) for the hard rules and com
 - **Runtime dependencies:** `next`, `react`, `react-dom` only.
 - **Hosting:** Vercel. Every page is statically generated at build time.
 - **Locales:** `en` (default, at `/`) and `bn` (at `/bn`). hreflang `en-BD` / `bn-BD`.
-- **Calculators (16):** age, BMI, GPA, CGPA, percentage, discount, profit/loss, EMI/loan, salary, date difference, government job age, SSC/HSC GPA, land area, amount in words, VAT, Bangla date converter.
+- **Calculators (20):** age, BMI, GPA, CGPA, percentage, discount, profit/loss, EMI/loan, salary, date difference, government job age, SSC/HSC GPA, land area, amount in words, VAT, Bangla date converter, Sanchayapatra, FDR, DPS, bKash/Nagad cash-out charge.
 - **Guides (7):** government job age limit, SSC/HSC GPA, land measurement, age from date of birth, CGPA, how EMI is calculated, percentages (`/guides`).
 - **CI:** GitHub Actions runs `npm run check` and the Playwright smoke tests on every pull request.
 - **Embeds:** every calculator can be framed by other sites at `/embed/<en|bn>/<slug>`.

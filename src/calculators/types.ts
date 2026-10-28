@@ -28,6 +28,10 @@ export const CALCULATOR_ICONS = [
   "text",
   "receipt",
   "calendar-day",
+  "seal",
+  "vault",
+  "piggy-bank",
+  "mobile-money",
 ] as const;
 
 export type CalculatorIconName = (typeof CALCULATOR_ICONS)[number];

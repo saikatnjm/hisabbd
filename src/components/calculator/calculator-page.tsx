@@ -15,6 +15,7 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
 import { breadcrumbSchema, calculatorSchema, faqSchema } from "@/lib/seo/structured-data";
 import { guidePath, getGuidesForCalculator } from "@/guides/registry";
+import { absoluteUrl } from "@/config/site";
 import { formatPlainDate } from "@/lib/format";
 import { parsePlainDate } from "@/lib/plain-date";
 import { localePath, type Locale } from "@/i18n/locales";
@@ -109,12 +110,17 @@ export function CalculatorPage({
 
       <Container className="py-6 sm:py-10">
         <div className="max-w-3xl">
-          <CalculatorProvider slug={calculator.slug}>{children}</CalculatorProvider>
+          <CalculatorProvider slug={calculator.slug} name={name}>
+            {children}
+          </CalculatorProvider>
           <NextCalculators calculator={calculator} locale={locale} />
+          <p className="mt-6 hidden text-sm text-slate-600 print:block">
+            {name} · HisabBD · {absoluteUrl(localePath(locale, calculatorPath(calculator.slug)))}
+          </p>
         </div>
       </Container>
 
-      <Container className="pb-12 sm:pb-16">
+      <Container className="pb-12 sm:pb-16 print:hidden">
         <div className="max-w-3xl space-y-10 sm:space-y-12">
           {content}
 
