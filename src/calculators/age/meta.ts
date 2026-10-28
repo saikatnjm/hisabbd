@@ -15,12 +15,12 @@ export const ageCalculator: CalculatorMeta = {
       "Find your exact age in years, months and days on any date. See total days and weeks lived and your next birthday. Free and works on any phone.",
   },
   seoBn: {
-    title: "বয়স ক্যালকুলেটর: বছর, মাস ও দিনে সঠিক বয়স",
+    title: "বয়স ক্যালকুলেটর: জন্ম তারিখ দিয়ে সঠিক বয়স বের করুন",
     description:
       "জন্ম তারিখ দিয়ে যেকোনো দিনে আপনার সঠিক বয়স বের করুন বছর, মাস ও দিনে। মোট দিন, সপ্তাহ আর পরের জন্মদিনও দেখুন। ফ্রি, যেকোনো ফোনে চলে।",
   },
   addedOn: "2026-10-05",
-  related: ["date-difference-calculator", "bmi-calculator"],
+  related: ["government-job-age-calculator", "date-difference-calculator", "bmi-calculator"],
   faqs: [
     {
       question: "How is age calculated?",

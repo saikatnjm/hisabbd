@@ -31,7 +31,7 @@ export const gpaCalculator: CalculatorMeta = {
       "লেটার গ্রেড (A+ থেকে F) ও ক্রেডিট থেকে বাংলাদেশের বিশ্ববিদ্যালয়ের ৪.০০ স্কেলে সেমিস্টার জিপিএ হিসাব করুন। দশমিক ক্রেডিটও চলে। ফ্রি ও দ্রুত।",
   },
   addedOn: "2026-10-05",
-  related: ["cgpa-calculator", "percentage-calculator"],
+  related: ["cgpa-calculator", "ssc-hsc-gpa-calculator", "percentage-calculator"],
   faqs: [
     {
       question: "How is GPA calculated?",
@@ -61,7 +61,7 @@ export const gpaCalculator: CalculatorMeta = {
     {
       question: "Can I use it for SSC or HSC results?",
       answer:
-        "No. School and college (SSC/HSC) GPA follows its own rules, so a simple credit-weighted average would be misleading there. This calculator is for university-style letter grades and credits.",
+        "Not this one. SSC and HSC GPA follows its own rules (a 5.00 scale and the 4th-subject bonus), so a credit-weighted average would be misleading. Use the SSC & HSC GPA Calculator instead. This calculator is for university-style letter grades and credits.",
     },
   ],
   faqsBn: [
@@ -93,7 +93,7 @@ export const gpaCalculator: CalculatorMeta = {
     {
       question: "এসএসসি বা এইচএসসি ফলাফলের জন্য কি ব্যবহার করা যাবে?",
       answer:
-        "না। স্কুল-কলেজের (এসএসসি/এইচএসসি) জিপিএ-র নিজস্ব নিয়ম আছে — যেমন ঐচ্ছিক/চতুর্থ বিষয় — তাই সাধারণ ক্রেডিট-ওজনের গড় সেখানে বিভ্রান্তিকর হতো। এই ক্যালকুলেটর বিশ্ববিদ্যালয়ের লেটার গ্রেড ও ক্রেডিটের জন্য।",
+        "এটি দিয়ে নয়। স্কুল-কলেজের (এসএসসি/এইচএসসি) জিপিএ-র নিজস্ব নিয়ম আছে — ৫.০০ স্কেল আর চতুর্থ বিষয়ের বোনাস — তাই সাধারণ ক্রেডিট-ওজনের গড় সেখানে বিভ্রান্তিকর হতো। এর জন্য এসএসসি ও এইচএসসি জিপিএ ক্যালকুলেটর ব্যবহার করুন। এই ক্যালকুলেটর বিশ্ববিদ্যালয়ের লেটার গ্রেড ও ক্রেডিটের জন্য।",
     },
   ],
 };

@@ -10,7 +10,7 @@ Agents should start at [`../AGENTS.md`](../AGENTS.md) for the hard rules and com
 | --- | --- | --- |
 | [overview.md](overview.md) | Product, audience, every page and URL, user-facing features | You need to know what the site does |
 | [architecture.md](architecture.md) | Tech stack, directory map, data flow, rendering model, routing | You are changing structure or adding pages |
-| [calculators.md](calculators.md) | Spec for all 10 calculators: inputs, formulas, limits, outputs, edge cases | You are touching calculator logic or content |
+| [calculators.md](calculators.md) | Spec for all 14 calculators: inputs, formulas, limits, outputs, edge cases | You are touching calculator logic or content |
 | [adding-a-calculator.md](adding-a-calculator.md) | Step-by-step checklist with file templates | You are adding a calculator |
 | [i18n.md](i18n.md) | English/Bangla system: paths, strings, content, digits | You are writing or translating UI text |
 | [seo.md](seo.md) | Metadata, canonical, hreflang, sitemap, robots, JSON-LD, verification | You are changing titles, URLs or structured data |
@@ -19,6 +19,7 @@ Agents should start at [`../AGENTS.md`](../AGENTS.md) for the hard rules and com
 | [lib-reference.md](lib-reference.md) | API reference for `src/lib` (number, format, plain-date, etc.) | You need a helper's exact behaviour |
 | [development.md](development.md) | Setup, Docker, scripts, tests, env vars, deployment, troubleshooting | You are running, testing or deploying |
 | [glossary.md](glossary.md) | Bangladesh-specific and project terms | You see an unfamiliar word |
+| [growth-plan.md](growth-plan.md) | Search and growth plan Nov 2026 – Jul 2027: indexing, new calculators backlog (N1…), technical SEO (T1…), content (C1…), distribution (D1…) | You are picking up growth or SEO work |
 
 ## Facts at a glance
 
@@ -27,7 +28,8 @@ Agents should start at [`../AGENTS.md`](../AGENTS.md) for the hard rules and com
 - **Runtime dependencies:** `next`, `react`, `react-dom` only.
 - **Hosting:** Vercel. Every page is statically generated at build time.
 - **Locales:** `en` (default, at `/`) and `bn` (at `/bn`). hreflang `en-BD` / `bn-BD`.
-- **Calculators (10):** age, BMI, GPA, CGPA, percentage, discount, profit/loss, EMI/loan, salary, date difference.
+- **Calculators (14):** age, BMI, GPA, CGPA, percentage, discount, profit/loss, EMI/loan, salary, date difference, government job age, SSC/HSC GPA, land area, amount in words.
+- **Embeds:** every calculator can be framed by other sites at `/embed/<en|bn>/<slug>`.
 - **Categories (5):** `health`, `education`, `finance`, `everyday`, `date-time`.
 - **Currency / timezone:** BDT (৳) / Asia/Dhaka. Numbers are grouped South Asian style: `1,00,000`.
 - **Brand colour:** `#006a4e` (Bangladesh flag green).

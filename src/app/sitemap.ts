@@ -26,6 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...pages.flatMap((path) => localizedEntries(path)),
     ...categories.flatMap((c) => localizedEntries(categoryHref(c.id))),
-    ...calculators.flatMap((calc) => localizedEntries(calculatorPath(calc.slug), calc.addedOn)),
+    ...calculators.flatMap((calc) => localizedEntries(calculatorPath(calc.slug), calc.updatedOn ?? calc.addedOn)),
   ];
 }

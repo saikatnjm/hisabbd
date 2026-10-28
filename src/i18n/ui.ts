@@ -38,6 +38,8 @@ export interface UiStrings {
     faqHeading: string;
     tryNext: string;
     related: string;
+    /** e.g. "Last reviewed: 28 October 2026". */
+    lastReviewed: (date: string) => string;
   };
   actions: {
     copyResult: string;
@@ -54,6 +56,14 @@ export interface UiStrings {
     shareThisCalculator: string;
   };
   form: { reset: string };
+  embed: {
+    /** Summary of the "embed this calculator" disclosure on calculator pages. */
+    summary: string;
+    intro: string;
+    codeLabel: string;
+    /** Attribution link under an embedded calculator. */
+    poweredBy: (name: string) => string;
+  };
   footer: {
     calculators: string;
     categories: string;
@@ -98,6 +108,7 @@ const en: UiStrings = {
     faqHeading: "Frequently asked questions",
     tryNext: "Try next",
     related: "Related calculators",
+    lastReviewed: (date) => `Rules last reviewed: ${date}`,
   },
   actions: {
     copyResult: "Copy result",
@@ -114,6 +125,13 @@ const en: UiStrings = {
     shareThisCalculator: "this calculator",
   },
   form: { reset: "Reset" },
+  embed: {
+    summary: "Add this calculator to your website",
+    intro:
+      "Copy this code into your page. It is free. The calculator runs inside your page, and nothing typed into it is sent to you or to HisabBD.",
+    codeLabel: "Embed code",
+    poweredBy: (name) => `${name} by HisabBD: open the full page with formula and FAQ`,
+  },
   footer: {
     calculators: "Calculators",
     categories: "Categories",
@@ -158,6 +176,7 @@ const bn: UiStrings = {
     faqHeading: "সচরাচর জিজ্ঞাসা",
     tryNext: "এরপর দেখুন",
     related: "সম্পর্কিত ক্যালকুলেটর",
+    lastReviewed: (date) => `নিয়মগুলো সর্বশেষ যাচাই: ${date}`,
   },
   actions: {
     copyResult: "ফলাফল কপি করুন",
@@ -174,6 +193,13 @@ const bn: UiStrings = {
     shareThisCalculator: "এই ক্যালকুলেটরটি",
   },
   form: { reset: "রিসেট" },
+  embed: {
+    summary: "আপনার ওয়েবসাইটে এই ক্যালকুলেটর যোগ করুন",
+    intro:
+      "এই কোডটি কপি করে আপনার পেজে বসান। এটি ফ্রি। ক্যালকুলেটরটি আপনার পেজের ভেতরেই চলে, আর এতে লেখা কোনো তথ্য আপনার বা HisabBD-র কাছে পাঠানো হয় না।",
+    codeLabel: "এমবেড কোড",
+    poweredBy: (name) => `HisabBD-র ${name}: সূত্র ও প্রশ্নোত্তরসহ পুরো পেজ দেখুন`,
+  },
   footer: {
     calculators: "ক্যালকুলেটর",
     categories: "বিভাগ",

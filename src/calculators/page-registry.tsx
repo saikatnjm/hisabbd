@@ -3,6 +3,10 @@ import { AgeCalculator } from "./age/age-calculator";
 import { AgeCalculatorContent } from "./age/content";
 import { AgeCalculatorContentBn } from "./age/content.bn";
 import { ageCalculator } from "./age/meta";
+import { AmountInWordsCalculator } from "./amount-in-words/amount-in-words-calculator";
+import { AmountInWordsContent } from "./amount-in-words/content";
+import { AmountInWordsContentBn } from "./amount-in-words/content.bn";
+import { amountInWordsCalculator } from "./amount-in-words/meta";
 import { BmiCalculator } from "./bmi/bmi-calculator";
 import { BmiCalculatorContent } from "./bmi/content";
 import { BmiCalculatorContentBn } from "./bmi/content.bn";
@@ -27,6 +31,14 @@ import { GpaCalculator } from "./gpa/gpa-calculator";
 import { GpaCalculatorContent } from "./gpa/content";
 import { GpaCalculatorContentBn } from "./gpa/content.bn";
 import { gpaCalculator } from "./gpa/meta";
+import { JobAgeCalculator } from "./job-age/job-age-calculator";
+import { JobAgeCalculatorContent } from "./job-age/content";
+import { JobAgeCalculatorContentBn } from "./job-age/content.bn";
+import { jobAgeCalculator } from "./job-age/meta";
+import { LandCalculator } from "./land/land-calculator";
+import { LandCalculatorContent } from "./land/content";
+import { LandCalculatorContentBn } from "./land/content.bn";
+import { landCalculator } from "./land/meta";
 import { PercentageCalculator } from "./percentage/percentage-calculator";
 import { PercentageCalculatorContent } from "./percentage/content";
 import { PercentageCalculatorContentBn } from "./percentage/content.bn";
@@ -39,6 +51,10 @@ import { SalaryCalculator } from "./salary/salary-calculator";
 import { SalaryCalculatorContent } from "./salary/content";
 import { SalaryCalculatorContentBn } from "./salary/content.bn";
 import { salaryCalculator } from "./salary/meta";
+import { SscHscGpaCalculator } from "./ssc-hsc-gpa/ssc-hsc-gpa-calculator";
+import { SscHscGpaCalculatorContent } from "./ssc-hsc-gpa/content";
+import { SscHscGpaCalculatorContentBn } from "./ssc-hsc-gpa/content.bn";
+import { sscHscGpaCalculator } from "./ssc-hsc-gpa/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -69,6 +85,10 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: emiCalculator, Calculator: EmiCalculator, Content: EmiCalculatorContent, ContentBn: EmiCalculatorContentBn },
       { meta: salaryCalculator, Calculator: SalaryCalculator, Content: SalaryCalculatorContent, ContentBn: SalaryCalculatorContentBn },
       { meta: dateDifferenceCalculator, Calculator: DateDifferenceCalculator, Content: DateDifferenceContent, ContentBn: DateDifferenceContentBn },
+      { meta: jobAgeCalculator, Calculator: JobAgeCalculator, Content: JobAgeCalculatorContent, ContentBn: JobAgeCalculatorContentBn },
+      { meta: sscHscGpaCalculator, Calculator: SscHscGpaCalculator, Content: SscHscGpaCalculatorContent, ContentBn: SscHscGpaCalculatorContentBn },
+      { meta: landCalculator, Calculator: LandCalculator, Content: LandCalculatorContent, ContentBn: LandCalculatorContentBn },
+      { meta: amountInWordsCalculator, Calculator: AmountInWordsCalculator, Content: AmountInWordsContent, ContentBn: AmountInWordsContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

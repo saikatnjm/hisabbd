@@ -48,6 +48,10 @@ Bangla calculator pages are not separate files. A single dynamic route, `src/app
 | `emi-calculator` | EMI / Loan Calculator / ইএমআই / লোন ক্যালকুলেটর | finance | landmark | Reducing-balance EMI, total interest, yearly amortisation summary |
 | `salary-calculator` | Salary Calculator / বেতন ক্যালকুলেটর | finance | wallet | Gross to net with user-entered deductions (percent or fixed) |
 | `date-difference-calculator` | Date Difference Calculator / তারিখের পার্থক্য ক্যালকুলেটর | date-time | calendar-range | Years/months/days between dates, optional inclusive end, Sun–Thu working days |
+| `government-job-age-calculator` | Government Job Age Calculator / সরকারি চাকরির বয়স ক্যালকুলেটর | date-time | briefcase | Age on a circular's date, eligibility against min/max (+ relaxation), eligible birth-date window |
+| `ssc-hsc-gpa-calculator` | SSC & HSC GPA Calculator / এসএসসি ও এইচএসসি জিপিএ ক্যালকুলেটর | education | certificate | Board 5.00 GPA with the 4th-subject bonus, cap and fail rule |
+| `land-calculator` | Land Area Calculator / জমির পরিমাপ ক্যালকুলেটর | everyday | land | Convert decimal/katha/bigha/acre/sq ft…; area from sides (rectangle, four sides, triangle) |
+| `amount-in-words` | Taka Amount in Words / টাকা কথায় লেখার ক্যালকুলেটর | finance | text | Amount in English (lakh/crore and million) and Bangla words for cheques; Bangla digits |
 
 Full specs: [calculators.md](calculators.md).
 
@@ -89,5 +93,5 @@ Rendered by `src/components/calculator/calculator-page.tsx`, top to bottom:
 
 - Accounts, server-side storage, user data of any kind.
 - Statutory rules that change over time (income tax slabs, provident fund rates) and lender-specific loan terms.
-- SSC/HSC GPA (the 4th/optional subject rules differ; a weighted average would mislead).
+- Rate-dependent calculators (tax, savings certificates, zakat, MFS charges) until their figures can be taken from an official source with a date. See [growth-plan.md](growth-plan.md).
 - Paid APIs or third-party font services. Fonts are self-hosted by `next/font`.

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import { shareablePath } from "@/calculators/paths";
 import { Button } from "@/components/ui/button";
 import { CopyIcon, ShareIcon } from "@/components/ui/icons";
 import { useCalculatorSlug } from "@/components/calculator/calculator-context";
@@ -24,9 +25,12 @@ export function ResultActions({ text, shareTitle }: { text: string; shareTitle: 
   const [status, setStatus] = useState("");
   const slug = useCalculatorSlug();
 
+  /** The full calculator page, even when the widget is embedded on another site. */
+  const pageUrl = () => `${window.location.origin}${shareablePath(window.location.pathname)}`;
+
   async function copy() {
     try {
-      await navigator.clipboard.writeText(`${text}\n${window.location.href}`);
+      await navigator.clipboard.writeText(`${text}\n${pageUrl()}`);
       setStatus(t.copied);
       if (slug) track({ name: "result_copied", calculator: slug });
     } catch {
@@ -36,7 +40,7 @@ export function ResultActions({ text, shareTitle }: { text: string; shareTitle: 
 
   async function share() {
     try {
-      await navigator.share({ title: shareTitle, text, url: window.location.href });
+      await navigator.share({ title: shareTitle, text, url: pageUrl() });
       setStatus("");
       if (slug) track({ name: "result_shared", calculator: slug });
     } catch (error) {

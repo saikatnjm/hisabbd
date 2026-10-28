@@ -16,7 +16,7 @@ import { Section } from "@/components/ui/section";
 import { siteConfig } from "@/config/site";
 import { localePath, type Locale } from "@/i18n/locales";
 import { cn } from "@/lib/cn";
-import { websiteSchema } from "@/lib/seo/structured-data";
+import { organizationSchema, websiteSchema } from "@/lib/seo/structured-data";
 
 /** Decorative keypad in the hero. Colours reuse the category tokens. */
 const heroKeys = [
@@ -158,7 +158,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <JsonLd schemas={[websiteSchema(locale)]} />
+      <JsonLd schemas={[organizationSchema(), websiteSchema(locale)]} />
       {/* Hero */}
       <section
         aria-labelledby="hero-heading"

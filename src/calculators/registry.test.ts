@@ -73,6 +73,13 @@ describe("validateRegistry", () => {
     }
   });
 
+  it("checks updatedOn when set", () => {
+    expect(validateRegistry([makeCalc({ updatedOn: "2026-02-01" })])).toEqual([]);
+    for (const updatedOn of ["2026-02-30", "2026-01-14"]) {
+      expect(validateRegistry([makeCalc({ updatedOn })])).toHaveLength(1);
+    }
+  });
+
   it("rejects empty SEO fields", () => {
     expect(validateRegistry([makeCalc({ seo: { title: " ", description: "x" } })])).toHaveLength(1);
   });

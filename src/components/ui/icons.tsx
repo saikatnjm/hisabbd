@@ -177,6 +177,35 @@ export const BookIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const BriefcaseIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="7" width="18" height="13" rx="2" />
+    <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18" />
+  </Icon>
+);
+
+export const CertificateIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="4" width="18" height="12" rx="2" />
+    <path d="M7 8h10M7 12h5" />
+    <circle cx="16" cy="16" r="2.5" />
+    <path d="M14.5 18l-.5 3 2-1 2 1-.5-3" />
+  </Icon>
+);
+
+export const LandIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3 7l6-3 6 3 6-3v13l-6 3-6-3-6 3z" />
+    <path d="M9 4v13M15 7v13" />
+  </Icon>
+);
+
+export const TextIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M4 6h16M4 10h16M4 14h10M4 18h7" />
+  </Icon>
+);
+
 export const TrashIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />

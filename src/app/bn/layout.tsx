@@ -1,21 +1,14 @@
-import type { Metadata } from "next";
 import { LocaleShell } from "@/components/layout/locale-shell";
-import { siteConfig } from "@/config/site";
-import { SetHtmlLang } from "./set-html-lang";
+import { RootDocument, rootMetadata, rootViewport } from "@/components/layout/root-document";
 
-export const metadata: Metadata = {
-  title: {
-    default: `${siteConfig.name} — ${siteConfig.taglineBn}`,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.descriptionBn,
-};
+export const metadata = rootMetadata("bn");
+export const viewport = rootViewport;
 
+/** Root layout for Bangla pages under /bn: renders <html lang="bn">. */
 export default function BanglaLayout({ children }: { children: React.ReactNode }) {
   return (
-    <LocaleShell locale="bn">
-      <SetHtmlLang lang="bn" />
-      {children}
-    </LocaleShell>
+    <RootDocument locale="bn">
+      <LocaleShell locale="bn">{children}</LocaleShell>
+    </RootDocument>
   );
 }

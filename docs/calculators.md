@@ -1,6 +1,6 @@
 # Calculator specifications
 
-The exact behaviour of all 10 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
+The exact behaviour of all 14 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
 
 ## Shared conventions
 
@@ -97,7 +97,7 @@ The exact behaviour of all 10 calculators. Each section mirrors the numbered rul
 | D | 2.00 | 40–44 |
 | F | 0.00 | 0–39 |
 
-Scales are data. To support another one, add a `GradingScale` object to `GRADING_SCALES`. SSC/HSC scales are deliberately excluded because the 4th-subject rules make a weighted average misleading.
+Scales are data. To support another one, add a `GradingScale` object to `GRADING_SCALES`. SSC/HSC is a separate calculator (below) because the 4th-subject rule makes a weighted average misleading.
 
 **Row rules:** a row with name, grade and credits all blank is ignored. Any other row needs a grade and credits. Credits must be > 0 and ≤ 30 (decimals allowed). At least one complete course is required.
 
@@ -273,15 +273,85 @@ This is computed as `P·r ÷ (1 − (1+r)^−n)` using `log1p`/`expm1`, which st
 
 ---
 
+## Government Job Age Calculator
+
+`src/calculators/job-age/` · slug `government-job-age-calculator` · category `date-time` · `updatedOn` set (rules are dated)
+
+**Inputs:** date of birth; the circular's "age as on" date (default today); preset `BCS (21–32)`, `Other government jobs (18–32)` or `Custom` (min/max whole years 0–70); optional relaxation 0–10 extra years.
+
+**API:** `calculateJobAge(input)`, `checkJobAge(birth, ref, limits)`, `JOB_AGE_PRESETS` (sourced, dated data).
+
+**Rules:**
+1. Age is counted like the Age Calculator (complete years, months, days; 29 Feb → 28 Feb in common years).
+2. `effectiveMax = max + relaxation`.
+3. Eligible when completed years ≥ min **and** completed years ≤ effectiveMax. Aged 32 years 11 months counts as 32, which meets a 32 maximum; the limit is passed on the 33rd birthday.
+4. `borderline` when completed years equal effectiveMax. The page warns that some circulars read the limit as "must not have turned N" and that the circular's printed date-of-birth range wins. The official convention could not be verified.
+5. The eligible date-of-birth window runs from (reference − (effectiveMax+1) years) + 1 day to reference − min years. Each end is adjusted by at most one day around 29 February so the window always agrees with rule 3.
+
+**Example:** born 20 May 1994, age counted on 1 Nov 2026, BCS → 32 y 5 m 12 d, eligible (borderline), eligible if born 2 Nov 1993 – 1 Nov 2005.
+
+**Sources:** maximum age 32 for direct recruitment (2026 act); BCS 21–32 as on the circular date. Links are in `logic.ts`.
+
+---
+
+## SSC & HSC GPA Calculator
+
+`src/calculators/ssc-hsc-gpa/` · slug `ssc-hsc-gpa-calculator` · category `education`
+
+**Inputs:** exam SSC | HSC (only changes the default row count, 9 or 6, and labels); main-subject rows (name optional + grade), max 15; one optional 4th-subject grade.
+
+**Board scale (`BD_BOARD_5_SCALE`):** A+ 5 (80–100), A 4 (70–79), A- 3.5 (60–69), B 3 (50–59), C 2 (40–49), D 1 (33–39), F 0 (0–32).
+
+**Rules:**
+1. Each main subject adds its grade point. Two-paper subjects count once, with the combined grade.
+2. The 4th subject adds `max(0, GP − 2)` (A+ +3, A +2, A- +1.5, B +1, else 0). It is not in the divisor, and failing it does not fail the student.
+3. GPA = (Σ main GP + bonus) ÷ number of main subjects entered, capped at 5.00. The divisor is never hard-coded.
+4. Any main subject F → fail, GPA 0.00, failed subjects listed.
+5. Also returns the GPA without the 4th subject; the widget shows the difference after rounding both to 2 dp.
+
+**Examples:** main points 26.5 over 6 subjects + A in the 4th → (26.5 + 2) ÷ 6 = 4.75 (4.42 without). Main 29 + A+ → 32 ÷ 6 = 5.33 → shown as 5.00 (`capped`).
+
+**Caveat:** this matches widely published board practice; no official circular was found online. The page tells students to check their board's notice.
+
+---
+
+## Land Area Calculator
+
+`src/calculators/land/` · slug `land-calculator` · category `everyday`
+
+**Modes:** `convert` (amount + unit → all units) and `measure` (shape `rectangle` | four sides | `triangle`, length unit ft / হাত 1.5 ft / গজ 3 ft / metre).
+
+**Units in sq ft:** sq ft 1; sq m 1/0.3048²; sq yd 9; decimal (শতাংশ) 435.6; ojutangsho (অযুতাংশ) 4.356; katha 720 (editable katha size 1–10,000); bigha = 20 × katha; acre 43,560; hectare 10,000 sq m.
+
+**Rules:** four sides ≈ average(north, south) × average(east, west), labelled approximate. Triangle uses Heron's formula; an impossible triangle gives `not-a-triangle` on the longest side. Total area is ≤ 10^12 sq ft (`area-too-large`). Katha and bigha vary by region, so the page says so and tells users to confirm with a surveyor and the deed.
+
+---
+
+## Taka Amount in Words
+
+`src/calculators/amount-in-words/` · slug `amount-in-words` · category `finance`
+
+**Input:** a Taka amount from 0 to ৳9,99,99,99,99,999.99, with at most 2 decimals (`too-many-decimals`; trailing zeros are fine). Paisa is parsed from the string, never by float multiplication.
+
+**Output:**
+- English, Indian system: "One Lakh Twenty-Five Thousand Three Hundred Taka and Fifty Paisa Only".
+- English, international system (million).
+- Bangla: "এক লক্ষ পঁচিশ হাজার তিনশত টাকা পঞ্চাশ পয়সা মাত্র". Words for 0–99 come from `BANGLA_NUMBERS_0_99` (tested); hundreds use শত; লক্ষ/কোটি; crore counts are worded recursively.
+- Grouped digits in both scripts ("1,25,300.50" / "১,২৫,৩০০.৫০").
+
+Each line has its own copy button.
+
+---
+
 ## Per-calculator metadata (registry)
 
-All calculators currently have `addedOn: "2026-10-05"`. Related links:
+The original 10 have `addedOn: "2026-10-05"`; the 4 above have `"2026-10-28"`. Related links:
 
 | Slug | `related` |
 | --- | --- |
-| age-calculator | date-difference-calculator, bmi-calculator |
+| age-calculator | government-job-age-calculator, date-difference-calculator, bmi-calculator |
 | bmi-calculator | age-calculator |
-| gpa-calculator | cgpa-calculator, percentage-calculator |
+| gpa-calculator | cgpa-calculator, ssc-hsc-gpa-calculator, percentage-calculator |
 | cgpa-calculator | gpa-calculator, percentage-calculator |
 | percentage-calculator | discount-calculator, profit-loss-calculator, gpa-calculator |
 | discount-calculator | percentage-calculator, profit-loss-calculator |
@@ -289,7 +359,11 @@ All calculators currently have `addedOn: "2026-10-05"`. Related links:
 | emi-calculator | salary-calculator, percentage-calculator |
 | salary-calculator | emi-calculator, percentage-calculator |
 | date-difference-calculator | age-calculator |
+| government-job-age-calculator | age-calculator, date-difference-calculator |
+| ssc-hsc-gpa-calculator | gpa-calculator, cgpa-calculator |
+| land-calculator | percentage-calculator |
+| amount-in-words | discount-calculator, salary-calculator |
 
 Featured (home "Try:" chips and search suggestions), in order: age, bmi, gpa, emi, percentage, salary.
 
-Each calculator has 10–12 FAQs in both `faqs` and `faqsBn`.
+Each calculator has 8–12 FAQs in both `faqs` and `faqsBn`.

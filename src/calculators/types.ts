@@ -22,6 +22,10 @@ export const CALCULATOR_ICONS = [
   "trending",
   "landmark",
   "wallet",
+  "briefcase",
+  "certificate",
+  "land",
+  "text",
 ] as const;
 
 export type CalculatorIconName = (typeof CALCULATOR_ICONS)[number];
@@ -59,6 +63,12 @@ export interface CalculatorMeta {
   seoBn: SeoFields;
   /** Publish date (YYYY-MM-DD). Drives "Recently added" — real data only. */
   addedOn: string;
+  /**
+   * Last date the rules or figures were checked (YYYY-MM-DD), on or after
+   * `addedOn`. Set it when a calculator depends on rules that change (age
+   * limits, rates). Shown as "Last reviewed" and used as the sitemap lastModified.
+   */
+  updatedOn?: string;
   /** Slugs of related calculators (must exist in the registry). */
   related: readonly string[];
   faqs?: readonly FaqItem[];

@@ -74,6 +74,16 @@ It exports `gaEnabled`, `umamiEnabled` and `analyticsEnabled`. The Privacy page 
 - `rememberRecent(slug)` is called by `CalculatorProvider`. `toggleFavorite(slug)` is called by the Save button.
 - Used by `QuickPicks` on the home page ("Your calculators").
 
+## Embeds
+
+`/embed/<locale>/<slug>` (`src/app/embed/[locale]/`) renders one calculator widget for other websites to put in an `<iframe>`. The snippet is offered under "Add this calculator to your website" on each calculator page (`components/calculator/embed-code.tsx`).
+
+- **No analytics scripts load in embeds** (`RootDocument analytics={false}`), so no cookies are set on other people's sites. `track()` is a no-op there.
+- Inputs stay in the iframe, exactly as on the full page.
+- Copy/Share in an embed links to the full calculator page (`shareablePath`), never to the embed URL.
+- Embeds are `noindex` with a canonical to the full page, and they are excluded from the sitemap.
+- Only `/embed/*` may be framed: it sends `Content-Security-Policy: frame-ancestors *` instead of `X-Frame-Options: SAMEORIGIN` (`next.config.ts`).
+
 ## Hosting logs
 
 Vercel may log standard request data (IP, user agent, path). The Privacy page says so. The app itself adds no logging.

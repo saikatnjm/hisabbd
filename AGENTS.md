@@ -47,7 +47,7 @@ AGENTS.md                      ← you are here
 docs/                          ← full documentation (start at docs/README.md)
 src/app/(en)/…                 English routes (route group, no URL prefix)
 src/app/bn/…                   Bangla routes (/bn prefix)
-src/app/layout.tsx             root <html>, fonts, global metadata, analytics script
+src/components/layout/root-document.tsx  <html>, font, global metadata, analytics (used by both root layouts)
 src/app/sitemap.ts, robots.ts  generated from the registry
 src/calculators/registry.ts    list of all calculators + validateRegistry()
 src/calculators/page-registry.tsx  slug → {meta, Calculator, Content, ContentBn} (drives /bn pages)
@@ -71,6 +71,7 @@ src/lib/                       number, format, plain-date, analytics, saved-calc
 | Number, money, date helpers | `docs/lib-reference.md` |
 | Env vars, Docker, deploy, tests | `docs/development.md` |
 | Unfamiliar Bangladesh terms (lakh, paisa, UGC, TDS…) | `docs/glossary.md` |
+| SEO, growth, which calculator to build next | `docs/growth-plan.md` (items are numbered: N1, T3, C2…) |
 
 ## Code conventions
 
@@ -85,6 +86,5 @@ src/lib/                       number, format, plain-date, analytics, saved-calc
 ## Known quirks
 
 - `hisabbd-bangla-i18n.patch` at the repo root is an exported git patch of the Bangla i18n commit. It is not used by the build. Ignore it unless asked.
-- Some older comments, such as the one in `src/calculators/registry.ts`, say English routes live at `src/app/calculators/<slug>`. The real path is `src/app/(en)/calculators/<slug>/page.tsx`.
-- `<html lang>` is rendered as `en` by the root layout. `/bn` pages switch it to `bn` on the client via `src/app/bn/set-html-lang.tsx`.
+- There is no `src/app/layout.tsx`: `src/app/(en)/layout.tsx` and `src/app/bn/layout.tsx` are separate root layouts (each renders `<html lang>` via `RootDocument`). Unmatched URLs render `src/app/global-not-found.tsx` (`experimental.globalNotFound`).
 - `src/calculators/upcoming.ts` is only shown when the registry is empty. It is effectively dormant.
