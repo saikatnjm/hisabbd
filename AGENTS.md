@@ -27,7 +27,7 @@ docker compose run --rm e2e                   # Playwright smoke tests in Chromi
 
 If Node ≥ 20.9 is available locally, the same `npm run …` scripts work directly.
 
-**Definition of done for any code change:** `npm run check` passes.
+**Definition of done for any code change:** `npm run check` passes, and `docker compose run --rm e2e` passes for UI changes. GitHub Actions (`.github/workflows/ci.yml`) runs both on every pull request. A new calculator also needs an entry in `e2e/calculator-inputs.ts`.
 
 ## Hard rules (do not break these)
 
@@ -83,7 +83,7 @@ src/lib/                       number, format, plain-date, analytics, saved-calc
 - Mark client components with `"use client"` and keep them small. Content, pages and the calculator page shell are Server Components.
 - Validation functions return discriminated unions: `{ ok: true; result } | { ok: false; errors: { field, code }[] }`. Error **codes** live in logic; human **messages** live in the widget (usually via `numberErrorMessage` in `src/components/calculator/number-messages.ts`).
 - Comments explain *why* and state assumptions. Match the existing density: a doc comment on each export, a numbered rules block at the top of each `logic.ts`.
-- Write in plain, friendly British-leaning English ("favourite", "instalment") and natural Bangla. In Bangla text the codebase keeps Western digits for numbers (`৳2,500`, `20%`).
+- Write in plain, friendly British-leaning English ("favourite", "instalment") and natural Bangla. In new Bangla text use Western digits for numbers (`৳2,500`, `20%`); see `docs/i18n.md` for the exceptions and older pages that still use Bangla digits.
 - Tailwind utility classes only. Design tokens live in `src/app/globals.css`. Join classes with `cn()` from `src/lib/cn.ts`.
 
 ## Known quirks

@@ -7,9 +7,11 @@ import { CALCULATOR_INPUTS } from "./calculator-inputs";
 /**
  * Submits the form until the widget reacts. A click that lands before React
  * hydrates does a native (empty) form submit and reloads the page, so retry.
+ * `prepare` runs before each attempt (e.g. clearing pre-filled fields).
  */
-async function submitUntil(page: Page, submit: string, check: () => Promise<void>) {
+async function submitUntil(page: Page, submit: string, check: () => Promise<void>, prepare?: () => Promise<void>) {
   await expect(async () => {
+    await prepare?.();
     await page.getByRole("button", { name: submit, exact: true }).click();
     await check();
   }).toPass({ timeout: 15_000, intervals: [250, 500, 1_000] });
@@ -32,9 +34,20 @@ for (const calc of calculators) {
       await expect(announcement).toHaveText("");
 
       // Empty form: at least one field error (aria-invalid, or a list-level error message).
+      // Fields some widgets pre-fill (e.g. today's date) are cleared first.
       const fieldErrors = page.locator('form [aria-invalid="true"], form [id$="-error"]');
       await expect(fieldErrors).toHaveCount(0);
-      await submitUntil(page, inputs.submit[locale], () => expect(fieldErrors.first()).toBeVisible({ timeout: 1_000 }));
+      const clearFields = async () => {
+        for (const field of inputs.fields) {
+          if (field.kind !== "select") await page.getByLabel(field.label[locale], { exact: true }).fill("");
+        }
+      };
+      await submitUntil(
+        page,
+        inputs.submit[locale],
+        () => expect(fieldErrors.first()).toBeVisible({ timeout: 1_000 }),
+        clearFields,
+      );
 
       for (const field of inputs.fields) {
         const control = page.getByLabel(field.label[locale], { exact: true });

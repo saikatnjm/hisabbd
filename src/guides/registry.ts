@@ -1,3 +1,7 @@
+import { ageFromDateOfBirthGuide } from "./age-from-date-of-birth/meta";
+import { cgpaCalculationGuide } from "./cgpa-calculation/meta";
+import { howEmiIsCalculatedGuide } from "./how-emi-is-calculated/meta";
+import { percentageCalculationGuide } from "./percentage-calculation/meta";
 import { governmentJobAgeLimitGuide } from "./government-job-age-limit/meta";
 import { landMeasurementUnitsGuide } from "./land-measurement-units/meta";
 import { sscHscGpaCalculationGuide } from "./ssc-hsc-gpa-calculation/meta";
@@ -15,6 +19,10 @@ export const guides: readonly GuideMeta[] = [
   governmentJobAgeLimitGuide,
   sscHscGpaCalculationGuide,
   landMeasurementUnitsGuide,
+  ageFromDateOfBirthGuide,
+  cgpaCalculationGuide,
+  howEmiIsCalculatedGuide,
+  percentageCalculationGuide,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

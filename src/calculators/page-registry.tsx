@@ -7,6 +7,10 @@ import { AmountInWordsCalculator } from "./amount-in-words/amount-in-words-calcu
 import { AmountInWordsContent } from "./amount-in-words/content";
 import { AmountInWordsContentBn } from "./amount-in-words/content.bn";
 import { amountInWordsCalculator } from "./amount-in-words/meta";
+import { BanglaDateCalculator } from "./bangla-date/bangla-date-calculator";
+import { BanglaDateCalculatorContent } from "./bangla-date/content";
+import { BanglaDateCalculatorContentBn } from "./bangla-date/content.bn";
+import { banglaDateCalculator } from "./bangla-date/meta";
 import { BmiCalculator } from "./bmi/bmi-calculator";
 import { BmiCalculatorContent } from "./bmi/content";
 import { BmiCalculatorContentBn } from "./bmi/content.bn";
@@ -55,6 +59,10 @@ import { SscHscGpaCalculator } from "./ssc-hsc-gpa/ssc-hsc-gpa-calculator";
 import { SscHscGpaCalculatorContent } from "./ssc-hsc-gpa/content";
 import { SscHscGpaCalculatorContentBn } from "./ssc-hsc-gpa/content.bn";
 import { sscHscGpaCalculator } from "./ssc-hsc-gpa/meta";
+import { VatCalculator } from "./vat/vat-calculator";
+import { VatCalculatorContent } from "./vat/content";
+import { VatCalculatorContentBn } from "./vat/content.bn";
+import { vatCalculator } from "./vat/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -89,6 +97,8 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: sscHscGpaCalculator, Calculator: SscHscGpaCalculator, Content: SscHscGpaCalculatorContent, ContentBn: SscHscGpaCalculatorContentBn },
       { meta: landCalculator, Calculator: LandCalculator, Content: LandCalculatorContent, ContentBn: LandCalculatorContentBn },
       { meta: amountInWordsCalculator, Calculator: AmountInWordsCalculator, Content: AmountInWordsContent, ContentBn: AmountInWordsContentBn },
+      { meta: vatCalculator, Calculator: VatCalculator, Content: VatCalculatorContent, ContentBn: VatCalculatorContentBn },
+      { meta: banglaDateCalculator, Calculator: BanglaDateCalculator, Content: BanglaDateCalculatorContent, ContentBn: BanglaDateCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

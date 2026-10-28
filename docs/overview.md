@@ -25,6 +25,7 @@ Every page exists in English at the path shown and in Bangla with the `/bn` pref
 | `/calculators` | All calculators, grouped by category | `src/app/(en)/calculators/page.tsx` → `src/components/pages/calculators-index.tsx` |
 | `/calculators/<slug>` | One calculator page (10 of them, listed below) | `src/app/(en)/calculators/<slug>/page.tsx` → `CalculatorPage` |
 | `/categories/<id>` | Category page: calculators in one category plus links to the other categories | `src/app/(en)/categories/[category]/page.tsx` → `src/components/pages/category-page.tsx` |
+| `/guides`, `/guides/<slug>` | Guides hub and 7 explanatory articles, each leading to a calculator | `src/app/(en)/guides/` → `src/components/pages/guide{s-index,-page}.tsx` |
 | `/about` | What HisabBD does, how the calculations work, limits | `src/app/(en)/about/page.tsx` |
 | `/privacy` | Privacy policy. Its text adapts to which analytics are enabled. | `src/app/(en)/privacy/page.tsx` |
 | `/terms` | Terms of use | `src/app/(en)/terms/page.tsx` |
@@ -52,6 +53,8 @@ Bangla calculator pages are not separate files. A single dynamic route, `src/app
 | `ssc-hsc-gpa-calculator` | SSC & HSC GPA Calculator / এসএসসি ও এইচএসসি জিপিএ ক্যালকুলেটর | education | certificate | Board 5.00 GPA with the 4th-subject bonus, cap and fail rule |
 | `land-calculator` | Land Area Calculator / জমির পরিমাপ ক্যালকুলেটর | everyday | land | Convert decimal/katha/bigha/acre/sq ft…; area from sides (rectangle, four sides, triangle) |
 | `amount-in-words` | Taka Amount in Words / টাকা কথায় লেখার ক্যালকুলেটর | finance | text | Amount in English (lakh/crore and million) and Bangla words for cheques; Bangla digits |
+| `vat-calculator` | VAT Calculator / ভ্যাট ক্যালকুলেটর | finance | receipt | Add or remove VAT (15% standard, sourced reduced rates, custom), paisa-exact |
+| `bangla-date-converter` | Bangla Date Converter / বাংলা তারিখ রূপান্তর | date-time | calendar-day | Today's Bangla date; Gregorian ↔ Bangla (revised 2019 calendar), season, weekday |
 
 Full specs: [calculators.md](calculators.md).
 
@@ -93,5 +96,5 @@ Rendered by `src/components/calculator/calculator-page.tsx`, top to bottom:
 
 - Accounts, server-side storage, user data of any kind.
 - Statutory rules that change over time (income tax slabs, provident fund rates) and lender-specific loan terms.
-- Rate-dependent calculators (tax, savings certificates, zakat, MFS charges) until their figures can be taken from an official source with a date. See [growth-plan.md](growth-plan.md).
+- Rate-dependent calculators (tax, savings certificates, zakat, MFS charges, admission scores) until their figures can be taken from an official source with a date. See [growth-plan.md](growth-plan.md).
 - Paid APIs or third-party font services. Fonts are self-hosted by `next/font`.

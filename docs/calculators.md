@@ -1,6 +1,6 @@
 # Calculator specifications
 
-The exact behaviour of all 14 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
+The exact behaviour of all 16 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
 
 ## Shared conventions
 
@@ -343,9 +343,70 @@ Each line has its own copy button.
 
 ---
 
+## VAT Calculator
+
+`src/calculators/vat/` · slug `vat-calculator` · category `finance` · `updatedOn` set (rates are dated)
+
+**Inputs:** mode `add` (price excluding VAT → including) or `remove` (price including VAT → net + VAT inside); rate preset (Standard 15%, Reduced 10% / 7.5% / 5% for some goods and services, or Custom 0–100); amount ৳0.01–10^12.
+
+**API:** `calculateVat(mode, rawAmount, rawRate)`, `vatOnNet`, `vatInGross`; data `VAT_RATE_PRESETS`, `VAT_RATE_SOURCES`, `VAT_RATES_CHECKED_ON`.
+
+**Rules:**
+- Add: VAT = net × r ÷ 100.
+- Remove: VAT = gross × r ÷ (100 + r).
+- Money is rounded to paisa (half away from zero) so that net + VAT = gross exactly.
+- Supplementary duty, advance tax, VAT deducted at source and tariff values are **not** modelled.
+- The result warns about the common mistake of taking r% of the gross: 15% of ৳1,150 is ৳172.50, but the VAT inside is ৳150.
+
+**Examples:**
+- ৳1,000 + 15% = ৳1,150.
+- ৳1,150 including 15% → ৳1,000 + ৳150.
+- ৳2,499.50 + 15% → VAT ৳374.93, total ৳2,874.43.
+- ৳1,000 including 15% → ৳869.57 + ৳130.43.
+
+**Sources (checked 28 Oct 2026):** NBR VAT FAQ (standard rate 15%); PwC Worldwide Tax Summaries, Bangladesh (reduced rates for specific goods and services). Review after each budget.
+
+---
+
+## Bangla Date Converter
+
+`src/calculators/bangla-date/` · slug `bangla-date-converter` · category `date-time` · `updatedOn` set
+
+**Modes:**
+- Gregorian → Bangla (default; the date defaults to today).
+- Bangla → Gregorian (year, month, day).
+
+"Today's Bangla date" shows above the form after hydration.
+
+**Rules (revised Bangladesh calendar, 2019):**
+- 1 Boishakh = 14 April every year.
+- Boishakh–Ashwin have 31 days each; Kartik–Magh and Chaitra have 30; Falgun has 29, or 30 when it contains 29 February (full Gregorian leap rule).
+- Bangabda = Gregorian year − 593 from 14 April, otherwise − 594.
+- Seasons: two months each, starting with গ্রীষ্ম.
+- Valid range: Bangabda 1–8000.
+- This calendar can differ from West Bengal's traditional calendar.
+
+**Anchors (tested):**
+
+| Gregorian | Bangla |
+| --- | --- |
+| 21 Feb | 8 Falgun |
+| 26 Mar | 12 Chaitra |
+| 16 Dec | 1 Poush |
+| 28 Oct 2026 | 12 Kartik 1433 |
+| 29 Feb 2028 | 16 Falgun 1434 |
+
+Every day from 2020 to 2030 round-trips.
+
+**Digits:** the main result uses Bangla digits ("১২ কার্তিক ১৪৩৩ বঙ্গাব্দ"), a documented exception; a Western-digit form is shown too.
+
+**Sources:** Dhaka Tribune (22 Oct 2019, Bangla Academy on the revision) and The Daily Star (Feb 2020, fixed national-day dates). Links are in `logic.ts`.
+
+---
+
 ## Per-calculator metadata (registry)
 
-The original 10 have `addedOn: "2026-10-05"`; the 4 above have `"2026-10-28"`. Related links:
+The original 10 have `addedOn: "2026-10-05"`; the 6 added since have `"2026-10-28"`. Related links:
 
 | Slug | `related` |
 | --- | --- |
@@ -363,6 +424,8 @@ The original 10 have `addedOn: "2026-10-05"`; the 4 above have `"2026-10-28"`. R
 | ssc-hsc-gpa-calculator | gpa-calculator, cgpa-calculator |
 | land-calculator | percentage-calculator |
 | amount-in-words | discount-calculator, salary-calculator |
+| vat-calculator | discount-calculator, profit-loss-calculator, percentage-calculator |
+| bangla-date-converter | date-difference-calculator, age-calculator |
 
 Featured (home "Try:" chips and search suggestions), in order: age, bmi, gpa, emi, percentage, salary.
 

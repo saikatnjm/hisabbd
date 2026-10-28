@@ -22,7 +22,8 @@ Below, `<name>` is the folder (e.g. `vat`), `<slug>` is the URL id (e.g. `vat-ca
 - [ ] 9. If it needs a new icon, add it to `CALCULATOR_ICONS` (`types.ts`), `components/ui/icons.tsx` and the map in `components/calculator/calculator-icon.tsx`
 - [ ] 10. Optionally, add it to `featuredSlugs` (`featured.ts`) and to other calculators' `related`
 - [ ] 11. If it introduces a new category, see "New category" below
-- [ ] 12. Run `npm run check`
+- [ ] 12. Add its inputs to `CALCULATOR_INPUTS` in `e2e/calculator-inputs.ts` (labels and submit text from the widget's `STRINGS`, both locales)
+- [ ] 13. Run `npm run check` and `docker compose run --rm e2e`
 
 Nothing else needs editing. Home, `/calculators`, category pages, search, related links, footer, sitemap, JSON-LD and the `/bn` route all pick it up from the registry.
 
@@ -239,6 +240,7 @@ Category pages, nav, sitemap and search update automatically.
 ## Final checks
 
 - `npm run check` passes (the registry and page-registry tests catch missing routes and fields).
+- `docker compose run --rm e2e` passes (it fails for a calculator without an `e2e/calculator-inputs.ts` entry).
 - Open `/calculators/<slug>` and `/bn/calculators/<slug>`: labels, errors, result, copy/share text and FAQ are in the right language.
 - Try Bangla digits and `1,00,000` in every numeric field.
 - Keyboard only: Tab through, submit with errors (focus jumps to the first error), Reset.
