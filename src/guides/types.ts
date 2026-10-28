@@ -1,0 +1,26 @@
+import type { SeoFields } from "@/calculators/types";
+
+/**
+ * Server-safe guide metadata (no React), like CalculatorMeta. A guide is an
+ * explanatory article that answers a common question and sends the reader to
+ * one calculator. URLs are derived from `slug`: /guides/<slug> and
+ * /bn/guides/<slug>.
+ */
+export interface GuideMeta {
+  /** Unique id and URL segment, e.g. "government-job-age-limit". */
+  slug: string;
+  /** H1 and card title. */
+  title: string;
+  titleBn: string;
+  /** One or two sentences: page intro, card text. */
+  summary: string;
+  summaryBn: string;
+  seo: SeoFields;
+  seoBn: SeoFields;
+  /** Slug of the calculator this guide leads to (must exist in the calculator registry). */
+  calculator: string;
+  /** Publish date (YYYY-MM-DD). */
+  publishedOn: string;
+  /** Last substantive review (YYYY-MM-DD), on or after publishedOn. */
+  updatedOn?: string;
+}

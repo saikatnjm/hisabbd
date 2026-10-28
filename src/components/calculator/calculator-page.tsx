@@ -14,6 +14,7 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
 import { breadcrumbSchema, calculatorSchema, faqSchema } from "@/lib/seo/structured-data";
+import { guidePath, getGuidesForCalculator } from "@/guides/registry";
 import { formatPlainDate } from "@/lib/format";
 import { parsePlainDate } from "@/lib/plain-date";
 import { localePath, type Locale } from "@/i18n/locales";
@@ -44,6 +45,7 @@ export function CalculatorPage({
   const faqs = (bn ? calculator.faqsBn : calculator.faqs) ?? [];
   const name = bn ? calculator.nameBn : calculator.name;
   const reviewed = calculator.updatedOn ? parsePlainDate(calculator.updatedOn) : null;
+  const guide = getGuidesForCalculator(calculator.slug)[0];
   const crumbs = [
     { name: t.nav.home, path: localePath(locale, "/") },
     { name: t.nav.calculators, path: localePath(locale, CALCULATORS_PATH) },
@@ -84,6 +86,16 @@ export function CalculatorPage({
           </div>
           <p className="mt-3 max-w-2xl text-lg text-pretty text-slate-700 sm:mt-4">{bn ? calculator.summaryBn : calculator.summary}</p>
           {reviewed && <p className="mt-2 text-sm text-slate-600">{t.calculatorPage.lastReviewed(formatPlainDate(reviewed, { locale }))}</p>}
+          {guide && (
+            <p className="mt-2">
+              <Link
+                href={localePath(locale, guidePath(guide.slug))}
+                className="text-sm font-semibold text-brand-700 underline underline-offset-4"
+              >
+                {t.guides.readGuide(bn ? guide.titleBn : guide.title)}
+              </Link>
+            </p>
+          )}
           <Link
             href={localePath(locale, categoryHref(category.id))}
             className="mt-3 inline-flex min-h-9 items-center gap-2 rounded-lg bg-white/80 py-1 pr-3 pl-1 text-sm font-semibold text-slate-700 transition-colors hover:bg-white hover:text-brand-800"
