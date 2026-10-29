@@ -70,6 +70,9 @@ test.describe("guides", () => {
         const response = await page.goto(path);
         expect(response?.status(), path).toBe(200);
         await expect(page.getByRole("heading", { level: 1, name: locale === "bn" ? guide.titleBn : guide.title })).toBeVisible();
+        await expect(page.getByRole("region", { name: ui[locale].guides.shortAnswer, exact: true })).toContainText(
+          locale === "bn" ? guide.answerBn : guide.answer,
+        );
         const calculatorHref = localePath(locale, calculatorPath(guide.calculator));
         expect(await page.locator(`main a[href="${calculatorHref}"]`).count(), path).toBeGreaterThanOrEqual(2);
         // JSON-LD isn't rendered text, so check the HTML itself.
@@ -105,4 +108,13 @@ test("sitemap lists every calculator and guide in both locales", async ({ reques
     }
   }
   expect(paths.some((p) => p.startsWith("/embed/")), "embeds stay out of the sitemap").toBe(false);
+});
+
+test("llms.txt is served as plain text and lists the guides", async ({ request }) => {
+  const response = await request.get("/llms.txt");
+  expect(response.status()).toBe(200);
+  expect(response.headers()["content-type"]).toContain("text/plain");
+  const text = await response.text();
+  expect(text.startsWith("# HisabBD")).toBe(true);
+  for (const guide of guides) expect(text, guide.slug).toContain(guidePath(guide.slug));
 });

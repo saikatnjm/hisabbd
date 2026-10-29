@@ -8,6 +8,10 @@ export const daysBetweenDatesGuide: GuideMeta = {
     "Count the days between two dates by hand: whether to include the end date, calendar months and days, leap years, and working days without Fridays and Saturdays.",
   summaryBn:
     "দুই তারিখের মধ্যে কত দিন, হাতে গুনে বের করুন: শেষ দিন ধরবেন কি না, মাস-দিনের হিসাব, অধিবর্ষ, আর শুক্র-শনি বাদে কর্মদিবস — উদাহরণসহ।",
+  answer:
+    "Subtract the earlier date from the later one. By the usual rule the end date isn’t counted, so 1 to 2 January is 1 day; for leave or rentals where both days count, add 1. For example, 1 January to 31 December 2026 is 364 days, or 365 with the end date.",
+  answerBn:
+    "পরের তারিখ থেকে আগের তারিখ বাদ দিন। সাধারণ নিয়মে শেষ দিন গোনা হয় না, তাই 1 থেকে 2 জানুয়ারি 1 দিন; ছুটি বা ভাড়ার মতো হিসাবে দুই দিনই গুনলে 1 যোগ করুন। যেমন 1 জানুয়ারি থেকে 31 ডিসেম্বর 2026 হলো 364 দিন, শেষ দিনসহ 365।",
   seo: {
     title: "Days Between Two Dates: How to Count, With Working Days",
     description:

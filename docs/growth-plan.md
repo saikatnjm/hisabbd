@@ -34,13 +34,13 @@ Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped 
 
 | ID | What | Target queries |
 | --- | --- | --- |
-| H4 | Guide 22: "এসএসসি/এইচএসসি গ্রেডিং পদ্ধতি: কত নম্বরে কোন গ্রেড". Marks → letter grade → grade point, the 33% pass mark, and the separate pass rule for written, MCQ and practical parts, **if a board source confirms it**. This is a different intent from "how GPA is calculated". | কত নম্বর পেলে A+, hsc grading system, grade point table |
+| H4 ✅ (folded) | **No separate page.** Checked 29 Oct: the marks → grade table is already in the GPA guide, and the separate pass rule for written, MCQ and practical parts has no official source (only Q&A sites), so a separate page would be thin and would split one intent. Instead, the GPA guide's grade-table heading now reads "কত নম্বর পেলে A+…", its short answer gives the marks for A+, A and A-, and the calculator has the matching keywords. Revisit if Search Console shows grading queries landing on the wrong page. | কত নম্বর পেলে A+, hsc grading system, grade point table |
 | H5 | Guide 23: "ভর্তিতে জিপিএ কীভাবে লাগে". Covers combined SSC+HSC GPA, GPA without the 4th subject (the calculator already shows it) and per-subject grade minimums. Its table is filled **only** from published 2026-27 circulars: DU applications open 11 Nov, and medical waits for the DGME notice. Bump `dateModified` as each circular arrives. It leads into N13. | ভর্তির জন্য জিপিএ কত লাগে, চতুর্থ বিষয় ছাড়া জিপিএ, medical admission gpa requirement |
 | H6 | N13 admission score calculator: build one preset per circular as each is published (see §6). | — |
 | H7 | Guide 24, optional: HSC GPA to percentage or CGPA for applications abroad. The honest answer is that no official conversion exists, so show what applicants are asked for and say to use transcript marks. Do it only if it can be sourced and Trends shows demand. Otherwise drop it. | hsc gpa to percentage |
 | H8 | Guide 25: "স্কুলে ভর্তির বয়স: 1 জানুয়ারি অনুযায়ী বয়স হিসাব" → Age calculator. Write it only from the 2027 school admission policy (Nov–Dec lottery season). | ভর্তির বয়স হিসাব, class 1 admission age |
 
-Also in season: refresh the government job age guide with the 50th BCS circular date once it is published (~1 Nov), and write the electricity bill guide (already open).
+Also in season: the next general BCS circular is the **52nd**, planned for November 2026 with no exact date yet ([Prothom Alo, 24 Sep 2026](https://en.prothomalo.com/youth/education/su7x69iyig)). The 50th came out in Nov 2025, and the 51st was a special BCS for doctors (circular 24 Sep 2026), which the job-age guide already cites. When the 52nd circular publishes, check its age limit and reference date against the BCS preset in `src/calculators/job-age/logic.ts` and the guide, then bump `updatedOn`. Also write the electricity bill guide (already open).
 
 **Guide cadence:** at most 2 guides a week. Each is 600–1,200 words, passes `seo-criteria.test.ts` and opens with a quick answer (L2). On a young domain, 25 strong guides beat 100 thin ones: Google's scaled-content rules penalise volume without substance.
 
@@ -56,9 +56,9 @@ Also in season: refresh the government job age guide with the 50th BCS circular 
 | ID | Who | What |
 | --- | --- | --- |
 | L1 | Agent | (= T10) IndexNow: a key file in `public/` and a CI step after each production deploy that submits changed URLs (from the sitemap's `lastModified`). Bing and Yandex recrawl within hours instead of weeks. No runtime dependency. |
-| L2 | Agent | **Answer-first pages.** Add a shared `QuickAnswer` block at the top of every guide and calculator content page: a 2–3 sentence direct answer containing the key number. Use question-shaped H2s in the words people search, one self-contained idea per paragraph, tables for scales and rates, a worked example, and a "Sources (checked <date>)" list. Add a test that every guide has a quick answer in both languages. AI engines quote self-contained passages, and Google uses them for featured snippets. Do the HSC pages first, then the other 20 guides. |
+| L2 ✅ (guides) | Agent | **Built for all 21 guides:** a required `answer` / `answerBn` in `GuideMeta`, shown first under "The short answer" / "সংক্ষেপে উত্তর" and used as the `Article` `abstract`; `seo-criteria.test.ts` checks every guide has one. Calculator pages still to do; their tool already sits at the top. The original brief: **Answer-first pages.** Add a shared `QuickAnswer` block at the top of every guide and calculator content page: a 2–3 sentence direct answer containing the key number. Use question-shaped H2s in the words people search, one self-contained idea per paragraph, tables for scales and rates, a worked example, and a "Sources (checked <date>)" list. Add a test that every guide has a quick answer in both languages. AI engines quote self-contained passages, and Google uses them for featured snippets. Do the HSC pages first, then the other 20 guides. |
 | L3 | Owner | Decide on AI *training* crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot). Search and answer crawlers are already allowed. **Recommendation: keep allowing them.** The pages are public and free and hold no user data, and being in models' knowledge helps "HisabBD" brand recall. |
-| L4 | Agent | `public/llms.txt`: a plain-text index of every calculator and guide in both languages, generated from the registries at build time. It's cheap, but no major engine has confirmed using it, so it comes after L1 and L2. |
+| L4 ✅ | Agent | **Built** as `/llms.txt`, prerendered from the registries (`src/lib/seo/llms-txt.ts`), with each guide's short answer. The original brief: `public/llms.txt`, a plain-text index of every calculator and guide in both languages, generated from the registries at build time. It's cheap, but no major engine has confirmed using it, so it comes after L1 and L2. |
 | L5 | Owner → agent | (= T7) A contact page, a "How we check our numbers" methodology section and `sameAs` links to an official Facebook page. Engines weigh who stands behind education and money answers. Blocked on a public email. |
 | L6 | Owner | Measure AI referrals with a saved GA4 exploration on session source (chatgpt.com, perplexity.ai, copilot.microsoft.com, gemini.google.com). No new events, so privacy is unchanged. |
 
@@ -76,14 +76,25 @@ Also in season: refresh the government job age guide with the 50th BCS circular 
 | 29–30 Oct | H0 (owner), H1, L1 |
 | 31 Oct | H2 |
 | by 1 Nov | H3 |
-| 1–15 Nov | H4, L2 on the HSC pages, BCS job-age refresh |
-| from 11 Nov | H5 and H6 as circulars publish |
-| Nov–Dec | H8, L2 for the remaining guides, L4, L5; H7 only if it passes the gate |
+| 29 Oct | ✅ H4 folded into the GPA guide, ✅ L2 for all guides, ✅ L4 |
+| 1–7 Nov | Board challenge guide: add the fee and process once the board notice publishes |
+| Nov, when published | 52nd BCS circular → job-age refresh |
+| from 11 Nov | H5 and H6 as circulars publish (DU applications open 11 Nov) |
+| Nov–Dec | H8, L2 for calculator pages, L5; H7 only if it passes the gate |
 | Weekly | Search Console and Bing: indexed pages and the GPA pages' queries; AI referrals (L6) |
 
 ## Status (updated 29 Oct 2026)
 
-### Built on branch `plan/hsc-results-seo-geo` (not yet merged)
+### Built on branch `feat/grading-guide-quick-answers` (not yet merged)
+
+| Item | What | Where |
+| --- | --- | --- |
+| L2 (guides) | Short answer at the top of all 21 guides in both languages, as `Article` `abstract` too; a test requires one per guide; the duplicate "short answer" sections in three guides were removed or renamed | `src/guides/*/meta.ts`, `components/pages/guide-page.tsx` |
+| L4 | `/llms.txt` from the registries, with every calculator and guide in both languages | `src/app/llms.txt/route.ts`, `src/lib/seo/llms-txt.ts` |
+| H4 (folded) | "কত নম্বর পেলে A+" targeted in the GPA guide's grade-table heading and short answer, plus calculator keywords; no separate page (see H4) | `src/guides/ssc-hsc-gpa-calculation/` |
+| – | Facts corrected: the next general BCS is the 52nd (Nov 2026, date not set) | this file |
+
+### Shipped in PR #8 (`plan/hsc-results-seo-geo`)
 
 | Item | What | Where |
 | --- | --- | --- |
@@ -242,7 +253,7 @@ N1–N4 and T3 shipped, so the bottleneck is now **getting indexed and getting t
 | When | Event | Searches it drives | HisabBD response |
 | --- | --- | --- | --- |
 | 31 Oct 2026 (moved from 29 Oct) | HSC 2026 results published; re-evaluation applications 1–7 Nov | "HSC GPA calculator", "জিপিএ বের করার নিয়ম", 4th-subject rules | N2 |
-| ~1 Nov 2026 | 50th BCS circular expected; government job entry age limit is 32 (2026 law) | "BCS age calculator", "চাকরির বয়স ক্যালকুলেটর", "age on circular date" | N1 + existing Age Calculator |
+| Nov 2026, date not set | 52nd BCS circular planned (the 50th came out in Nov 2025; the 51st was a special BCS for doctors, Sep 2026); government job entry age limit is 32 (2026 law) | "BCS age calculator", "চাকরির বয়স ক্যালকুলেটর", "age on circular date" | N1 + existing Age Calculator |
 | Nov 2026 – Feb 2027 | University admission season | GPA requirements, GPA/CGPA conversions | N2, guides |
 | 30 Nov 2026 | Individual income tax return deadline, AY 2026-27 | "income tax calculator 2026-27", "আয়কর ক্যালকুলেটর", rebate | N8 (only if sourced in time) |
 | ~8 Feb 2027 (approx.) | Ramadan 1448 begins | "zakat calculator", "যাকাত হিসাব", nisab, gold price per bhori | N6, N7 (ship by 15 Jan) |
@@ -449,7 +460,8 @@ Researched 28 Oct 2026. Re-check before shipping anything that depends on these.
 
 - HSC 2026 results moved to 31 Oct, 11:00; re-evaluation 1–7 Nov (checked 29 Oct): [Daily Star](https://www.thedailystar.net/news/education/news/hsc-2026-results-october-31-how-check-your-results-online-and-sms-4308776); earlier 29 Oct reports: [Bangla Tribune](https://www.banglatribune.com/educations/976516/), [Jugantor](https://www.jugantor.com/national/1175199)
 - HSC 2026 results date (original): [Prothom Alo](https://en.prothomalo.com/youth/education/s133co1qkz), [Dhaka Tribune](https://www.dhakatribune.com/bangladesh/education/422687/hsc-results-likely-between-october-25-and-29)
-- 50th BCS circular and age limit: [Prothom Alo](https://en.prothomalo.com/youth/er1f8bugw9), [Jago News (age limit 32 bill)](https://www.jagonews24.com/en/national/news/91510), [Dhaka Tribune (BCS age 32 gazette)](https://www.dhakatribune.com/bangladesh/367871/gazette-published-increasing-the-maximum-age-for)
+- Next general BCS is the 52nd, planned for Nov 2026 (checked 29 Oct): [Prothom Alo, 24 Sep 2026](https://en.prothomalo.com/youth/education/su7x69iyig); 51st special BCS circular: [Observer](https://www.observerbd.com/news/595312)
+- 50th BCS circular (Nov 2025) and age limit: [Prothom Alo](https://en.prothomalo.com/youth/er1f8bugw9), [Jago News (age limit 32 bill)](https://www.jagonews24.com/en/national/news/91510), [Dhaka Tribune (BCS age 32 gazette)](https://www.dhakatribune.com/bangladesh/367871/gazette-published-increasing-the-maximum-age-for)
 - Tax AY 2026-27 deadline and conflicting slabs: [bdtaxguide.com](https://bdtaxguide.com/tax-slabs-2026-27), [hsa.com.bd](https://hsa.com.bd/tax-calculator), [ayakor.com](https://ayakor.com/)
 - Savings certificate rates: [Ittefaq](https://en.ittefaq.com.bd/10518/sanchayapatra-interest-rate-revised), [UNB](https://unb.com.bd/category/Bangladesh/5-year-bangladesh-sanchayapatra-2025-revised-profit-rates/153636), [teamzlab calculator](https://tool.teamzlab.com/bd/sanchayapatra-calculator/)
 - MFS cash-out charges: [Daily Observer, Jun 2026](https://observerbd.com/news/564792)

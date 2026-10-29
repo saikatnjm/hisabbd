@@ -36,7 +36,7 @@ export function SscHscGpaCalculationGuideContentBn() {
         </p>
       </ContentSection>
 
-      <ContentSection id="grade-points" title="গ্রেড পয়েন্ট আর চতুর্থ বিষয়ের বোনাস">
+      <ContentSection id="grade-points" title="কত নম্বর পেলে A+: গ্রেড, গ্রেড পয়েন্ট আর চতুর্থ বিষয়ের বোনাস">
         <p>বোর্ডের 5.00 স্কেলে প্রতিটি লেটার গ্রেডের পয়েন্ট, আর সেটি চতুর্থ বিষয়ে হলে কত বোনাস:</p>
         <div className="overflow-x-auto">
           <table className={table}>

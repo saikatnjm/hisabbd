@@ -8,6 +8,10 @@ export const banglaCalendarGuide: GuideMeta = {
     "The rules of Bangladesh’s revised Bangla calendar: month lengths, Pohela Boishakh on 14 April, the leap-year Falgun, the six seasons and the national days’ Bangla dates.",
   summaryBn:
     "বাংলাদেশের সংশোধিত বাংলা ক্যালেন্ডারের নিয়ম: কোন মাস কত দিনের, পহেলা বৈশাখ কেন 14 এপ্রিল, অধিবর্ষে ফাল্গুন, ছয় ঋতু আর জাতীয় দিবসগুলোর বাংলা তারিখ।",
+  answer:
+    "In Bangladesh’s revised Bangla calendar the year starts on 14 April, Pohela Boishakh. Boishakh to Ashwin have 31 days, Falgun has 29 (30 in a leap year) and the other months 30. The Bangla year is the English year minus 593 from 14 April, or minus 594 before it, so 14 April 2026 begins 1433.",
+  answerBn:
+    "বাংলাদেশের সংশোধিত বাংলা পঞ্জিকায় বছর শুরু 14 এপ্রিল, পহেলা বৈশাখে। বৈশাখ থেকে আশ্বিন 31 দিনের, ফাল্গুন 29 দিনের (অধিবর্ষে 30), বাকি মাস 30 দিনের। 14 এপ্রিল থেকে ইংরেজি সাল থেকে 593, তার আগে 594 বাদ দিলে বাংলা সাল মেলে, তাই 14 এপ্রিল 2026 থেকে 1433।",
   seo: {
     title: "Bangla Calendar 1433: Month Names, Days and Rules",
     description:

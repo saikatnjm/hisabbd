@@ -8,6 +8,10 @@ export const howEmiIsCalculatedGuide: GuideMeta = {
     "The reducing-balance EMI formula step by step, how each instalment splits into interest and principal, and why a flat rate costs more, with a full worked example.",
   summaryBn:
     "রিডিউসিং-ব্যালান্স পদ্ধতিতে ইএমআইয়ের সূত্র ধাপে ধাপে, প্রতিটি কিস্তিতে সুদ ও আসলের ভাগ, আর একই হারে ফ্ল্যাট রেট কেন বেশি খরচের, একটি পুরো উদাহরণসহ।",
+  answer:
+    "EMI = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), where r is the yearly rate ÷ 12 ÷ 100 and n the number of months. A ৳5,00,000 loan at 9% for 5 years costs ৳10,379 a month and ৳1,22,751 in interest; the same 9% as a flat rate costs ৳12,083 a month.",
+  answerBn:
+    "ইএমআই = P × r × (1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), যেখানে r = বার্ষিক সুদ ÷ 12 ÷ 100 আর n = মাসের সংখ্যা। ৳5,00,000 ঋণ 9% সুদে 5 বছরে মাসে ৳10,379, মোট সুদ ৳1,22,751; একই 9% ফ্ল্যাট রেটে হলে মাসে ৳12,083।",
   seo: {
     title: "How EMI Is Calculated: Formula and Worked Example",
     description:

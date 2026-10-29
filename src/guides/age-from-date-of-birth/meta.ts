@@ -8,6 +8,10 @@ export const ageFromDateOfBirthGuide: GuideMeta = {
     "Work out exact age by hand: complete years, then complete months, then days, with month-end and 29 February birthdays explained in a worked example.",
   summaryBn:
     "হাতে হিসাব করে সঠিক বয়স বের করুন: আগে পূর্ণ বছর, তারপর পূর্ণ মাস, শেষে দিন। মাসের শেষ দিন আর 29 ফেব্রুয়ারির জন্মদিনের নিয়মসহ, উদাহরণ দিয়ে।",
+  answer:
+    "Count forward from the date of birth: the birthdays that have passed are your complete years, the complete months since the last birthday come next, and what is left is days. Someone born on 15 March 2000 is 26 years, 7 months and 14 days old on 29 October 2026.",
+  answerBn:
+    "জন্ম তারিখ থেকে সামনে গুনুন: যতগুলো জন্মদিন পেরিয়েছে, ততগুলো পূর্ণ বছর; শেষ জন্মদিন থেকে পূর্ণ মাস, আর যা বাকি থাকে তা দিন। 15 মার্চ 2000-এ জন্ম হলে 29 অক্টোবর 2026-এ বয়স 26 বছর 7 মাস 14 দিন।",
   seo: {
     title: "Calculate Age From Date of Birth: Years, Months, Days",
     description:

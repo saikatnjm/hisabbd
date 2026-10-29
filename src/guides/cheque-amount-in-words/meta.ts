@@ -8,6 +8,10 @@ export const chequeAmountInWordsGuide: GuideMeta = {
     "Write any Taka amount in words on a cheque, in English and Bangla: crore, lakh and thousand groups, paisa, ending with “Only”, and the mistakes that get cheques returned.",
   summaryBn:
     "চেকে যেকোনো টাকার অঙ্ক বাংলা ও ইংরেজি কথায় লিখুন: কোটি-লক্ষ-হাজারের ভাগ, পয়সা, শেষে “মাত্র”, আর যে ভুলে চেক ফেরত আসতে পারে — উদাহরণসহ।",
+  answer:
+    "Split the amount into crore, lakh, thousand and hundred groups, write each group in words, then add “Taka”, any paisa and “Only”. Groups that are zero are left out, so ৳1,00,000 is “One Lakh Taka Only”, or in Bangla “এক লক্ষ টাকা মাত্র”.",
+  answerBn:
+    "অঙ্কটিকে কোটি, লক্ষ, হাজার ও শত ঘরে ভাগ করে প্রতিটি ঘর কথায় লিখুন, তারপর “টাকা”, পয়সা থাকলে পয়সা, আর শেষে “মাত্র”। শূন্য ঘর বাদ যায়, তাই ৳1,00,000 হলো “এক লক্ষ টাকা মাত্র”, ইংরেজিতে “One Lakh Taka Only”।",
   seo: {
     title: "How to Write Amount in Words on a Cheque in Bangladesh",
     description:

@@ -15,6 +15,13 @@ export interface GuideMeta {
   /** One or two sentences: page intro, card text. */
   summary: string;
   summaryBn: string;
+  /**
+   * The direct answer, shown first on the page: 2–3 sentences with the key
+   * formula or number and a worked figure, readable on its own. Search
+   * snippets and AI answers quote passages like this. Plain text, no links.
+   */
+  answer: string;
+  answerBn: string;
   seo: SeoFields;
   seoBn: SeoFields;
   /** Slug of the calculator this guide leads to (must exist in the calculator registry). */

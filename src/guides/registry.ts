@@ -72,8 +72,8 @@ export function validateGuides(list: readonly GuideMeta[], calculatorSlugs: read
     if (slugs.has(guide.slug)) errors.push(`Duplicate guide slug: "${guide.slug}"`);
     slugs.add(guide.slug);
 
-    const texts = [guide.title, guide.titleBn, guide.summary, guide.summaryBn, guide.seo.title, guide.seo.description, guide.seoBn.title, guide.seoBn.description];
-    if (texts.some((text) => !text.trim())) errors.push(`Missing title, summary or SEO text in guide "${guide.slug}"`);
+    const texts = [guide.title, guide.titleBn, guide.summary, guide.summaryBn, guide.answer, guide.answerBn, guide.seo.title, guide.seo.description, guide.seoBn.title, guide.seoBn.description];
+    if (texts.some((text) => !text.trim())) errors.push(`Missing title, summary, answer or SEO text in guide "${guide.slug}"`);
     if (!calculatorSlugs.includes(guide.calculator)) {
       errors.push(`Guide "${guide.slug}" links to unknown calculator "${guide.calculator}"`);
     }

@@ -8,6 +8,10 @@ export const vatCalculationGuide: GuideMeta = {
     "The formulas for adding VAT to a price and taking it out of a VAT-inclusive price, why 15% of the total is the wrong answer, and quick shortcuts, with worked examples.",
   summaryBn:
     "দামের ওপর ভ্যাট যোগ আর ভ্যাটসহ দাম থেকে ভ্যাট বাদ দেওয়ার সূত্র, মোট দামের 15% ধরা কেন ভুল, আর দ্রুত হিসাবের সহজ কৌশল, উদাহরণসহ।",
+  answer:
+    "To add VAT, multiply by (1 + rate ÷ 100): ৳1,000 plus 15% VAT is ৳1,150. To take VAT out of an inclusive price, use price × rate ÷ (100 + rate): ৳1,150 includes ৳150 VAT. Taking 15% of the inclusive total is the common mistake; it gives ৳172.50.",
+  answerBn:
+    "ভ্যাট যোগ করতে দামকে (1 + হার ÷ 100) দিয়ে গুণ করুন: ৳1,000-এ 15% ভ্যাট যোগ করলে ৳1,150। ভ্যাটসহ দাম থেকে ভ্যাট বের করতে দাম × হার ÷ (100 + হার): ৳1,150-এ ভ্যাট ৳150। মোট দামের 15% ধরা সাধারণ ভুল; তাতে আসে ৳172.50।",
   seo: {
     title: "VAT Calculation Formula Bangladesh: Add or Remove 15%",
     description:

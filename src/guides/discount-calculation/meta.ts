@@ -8,6 +8,10 @@ export const discountCalculationGuide: GuideMeta = {
     "The formulas for the price after a discount and the amount you save, why 20% plus an extra 10% is only 28% off, and how to find the original price, with worked examples.",
   summaryBn:
     "ছাড়ের পর দাম আর কত টাকা বাঁচল তা বের করার সূত্র, 20% আর অতিরিক্ত 10% ছাড় মিলে কেন মাত্র 28%, আর ছাড়ের দাম থেকে আসল দাম বের করার নিয়ম, উদাহরণসহ।",
+  answer:
+    "Price after discount = original price × (1 − discount ÷ 100), so ৳2,500 with 20% off is ৳2,000, a saving of ৳500. Two discounts multiply rather than add: 20% plus an extra 10% is 28% off, not 30%.",
+  answerBn:
+    "ছাড়ের পর দাম = আসল দাম × (1 − ছাড় ÷ 100), তাই ৳2,500-এ 20% ছাড়ে দাম ৳2,000, সাশ্রয় ৳500। দুটো ছাড় যোগ হয় না, গুণ হয়: 20% আর তার ওপর আরও 10% মানে মোট 28% ছাড়, 30% নয়।",
   seo: {
     title: "How to Calculate Discount: 20% Off and Stacked Offers",
     description:

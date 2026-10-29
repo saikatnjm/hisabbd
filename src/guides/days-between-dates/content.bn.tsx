@@ -16,7 +16,7 @@ export function DaysBetweenDatesGuideContentBn() {
 
   return (
     <>
-      <ContentSection id="answer" title="সংক্ষেপে: শেষ দিন ধরবেন, নাকি ধরবেন না">
+      <ContentSection id="answer" title="আগে ঠিক করুন: শেষ দিন ধরবেন, নাকি ধরবেন না">
         <p>
           দুই তারিখের মধ্যে কত দিন, তা বের করার আগে একটি সিদ্ধান্ত নিতে হয়: <strong>শেষ দিনটি গোনা হবে কি না</strong>।
           সাধারণ নিয়মে শেষ দিন ধরা হয় না: 1 জানুয়ারি থেকে 2 জানুয়ারি মানে <strong>1 দিন</strong>, ঠিক যেমন মাঝখানে

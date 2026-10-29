@@ -176,7 +176,7 @@ Explanatory articles that answer a common question and lead to one calculator (g
 
 ```
 src/guides/
-  types.ts            GuideMeta: slug, title/titleBn, summary/summaryBn, seo/seoBn, calculator, publishedOn, updatedOn?
+  types.ts            GuideMeta: slug, title/titleBn, summary/summaryBn, answer/answerBn, seo/seoBn, calculator, publishedOn, updatedOn?
   paths.ts            GUIDES_PATH ("/guides"), guidePath(slug)
   registry.ts         `guides` list + validateGuides + getGuide + getGuidesForCalculator
   page-registry.tsx   slug → { meta, Content, ContentBn } (drives both locales' routes)
@@ -185,8 +185,9 @@ src/guides/
 ```
 
 - **Routes:** `/guides` and `/bn/guides` (hub, `GuidesIndexPage`), `/guides/[slug]` and `/bn/guides/[slug]` (static, `GuidePage`).
-- **`GuidePage`:** breadcrumbs, H1, summary, published/updated dates, the article, a call-to-action card for the calculator, and links to other guides.
-- **JSON-LD:** `Organization`, `Article`, `BreadcrumbList`.
+- **`GuidePage`:** breadcrumbs, H1, summary, published/updated dates, the short answer ("The short answer" / "সংক্ষেপে উত্তর", from `answer` / `answerBn`), the article, a call-to-action card for the calculator, and links to other guides.
+- **JSON-LD:** `Organization`, `Article` (the short answer is its `abstract`), `BreadcrumbList`.
+- **`/llms.txt`:** lists every calculator and guide, with each guide's short answer (`src/lib/seo/llms-txt.ts`, prerendered by `src/app/llms.txt/route.ts`).
 - **Linking:** each calculator with a guide shows "Read the guide: …" under its summary. Guides appear in the header nav, the footer, and the sitemap (`lastModified = updatedOn ?? publishedOn`).
 
 **Adding a guide:**
@@ -194,7 +195,9 @@ src/guides/
 2. Add the meta to `guides` in `registry.ts`.
 3. Add the entry to `page-registry.tsx`.
 
-Tests fail if the calculator slug is unknown or Bangla text is missing. Write Bangla first, reuse the calculator's worked-example numbers, and don't add FAQ sections (FAQs live on the calculator page).
+Tests fail if the calculator slug is unknown, Bangla text is missing, or the short answer is outside 150–350 characters (English) or 120–350 (Bangla). Write Bangla first, reuse the calculator's worked-example numbers, and don't add FAQ sections (FAQs live on the calculator page).
+
+**Writing the short answer:** 2–3 plain sentences that answer the guide's main question on their own: the formula or rule, then one worked figure (e.g. "৳1,150 includes ৳150 VAT"). Use numbers that appear in the article and that the calculator reproduces. Don't add links, and don't repeat it as the article's first section. Search snippets and AI answers quote this passage.
 
 ## Related calculators
 
