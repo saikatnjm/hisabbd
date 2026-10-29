@@ -1,3 +1,9 @@
+import { discountCalculationGuide } from "./discount-calculation/meta";
+import { profitLossCalculationGuide } from "./profit-loss-calculation/meta";
+import { salaryGrossToNetGuide } from "./salary-gross-to-net/meta";
+import { daysBetweenDatesGuide } from "./days-between-dates/meta";
+import { chequeAmountInWordsGuide } from "./cheque-amount-in-words/meta";
+import { goldBhoriGramGuide } from "./gold-bhori-gram/meta";
 import { sanchayapatraProfitGuide } from "./sanchayapatra-profit/meta";
 import { fdrVsDpsGuide } from "./fdr-vs-dps/meta";
 import { bkashCashOutChargeGuide } from "./bkash-cash-out-charge/meta";
@@ -37,6 +43,12 @@ export const guides: readonly GuideMeta[] = [
   zakatNisabGuide,
   bmiExplainedGuide,
   banglaCalendarGuide,
+  discountCalculationGuide,
+  profitLossCalculationGuide,
+  salaryGrossToNetGuide,
+  daysBetweenDatesGuide,
+  chequeAmountInWordsGuide,
+  goldBhoriGramGuide,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

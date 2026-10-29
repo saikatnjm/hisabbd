@@ -21,11 +21,7 @@ function findCategory(id: string) {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const category = findCategory((await params).category);
   if (!category) return {};
-  return pageMetadata({
-    title: `${category.name} Calculators`,
-    description: `${category.description} Free, fast and easy to use on any phone.`,
-    path: categoryHref(category.id),
-  });
+  return pageMetadata({ ...category.seo, path: categoryHref(category.id) });
 }
 
 export default async function CategoryPage({ params }: { params: Params }) {

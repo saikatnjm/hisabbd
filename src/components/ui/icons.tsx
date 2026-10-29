@@ -279,6 +279,12 @@ export const GoldBarIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const PlugIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4" />
+  </Icon>
+);
+
 export const TrashIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />

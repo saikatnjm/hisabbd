@@ -1,4 +1,22 @@
 import type { ComponentType } from "react";
+import { DiscountCalculationGuideContent } from "./discount-calculation/content";
+import { DiscountCalculationGuideContentBn } from "./discount-calculation/content.bn";
+import { discountCalculationGuide } from "./discount-calculation/meta";
+import { ProfitLossCalculationGuideContent } from "./profit-loss-calculation/content";
+import { ProfitLossCalculationGuideContentBn } from "./profit-loss-calculation/content.bn";
+import { profitLossCalculationGuide } from "./profit-loss-calculation/meta";
+import { SalaryGrossToNetGuideContent } from "./salary-gross-to-net/content";
+import { SalaryGrossToNetGuideContentBn } from "./salary-gross-to-net/content.bn";
+import { salaryGrossToNetGuide } from "./salary-gross-to-net/meta";
+import { DaysBetweenDatesGuideContent } from "./days-between-dates/content";
+import { DaysBetweenDatesGuideContentBn } from "./days-between-dates/content.bn";
+import { daysBetweenDatesGuide } from "./days-between-dates/meta";
+import { ChequeAmountInWordsGuideContent } from "./cheque-amount-in-words/content";
+import { ChequeAmountInWordsGuideContentBn } from "./cheque-amount-in-words/content.bn";
+import { chequeAmountInWordsGuide } from "./cheque-amount-in-words/meta";
+import { GoldBhoriGramGuideContent } from "./gold-bhori-gram/content";
+import { GoldBhoriGramGuideContentBn } from "./gold-bhori-gram/content.bn";
+import { goldBhoriGramGuide } from "./gold-bhori-gram/meta";
 import { SanchayapatraProfitGuideContent } from "./sanchayapatra-profit/content";
 import { SanchayapatraProfitGuideContentBn } from "./sanchayapatra-profit/content.bn";
 import { sanchayapatraProfitGuide } from "./sanchayapatra-profit/meta";
@@ -70,6 +88,12 @@ const entries: GuidePageEntry[] = [
   { meta: zakatNisabGuide, Content: ZakatNisabGuideContent, ContentBn: ZakatNisabGuideContentBn },
   { meta: bmiExplainedGuide, Content: BmiExplainedGuideContent, ContentBn: BmiExplainedGuideContentBn },
   { meta: banglaCalendarGuide, Content: BanglaCalendarGuideContent, ContentBn: BanglaCalendarGuideContentBn },
+  { meta: discountCalculationGuide, Content: DiscountCalculationGuideContent, ContentBn: DiscountCalculationGuideContentBn },
+  { meta: profitLossCalculationGuide, Content: ProfitLossCalculationGuideContent, ContentBn: ProfitLossCalculationGuideContentBn },
+  { meta: salaryGrossToNetGuide, Content: SalaryGrossToNetGuideContent, ContentBn: SalaryGrossToNetGuideContentBn },
+  { meta: daysBetweenDatesGuide, Content: DaysBetweenDatesGuideContent, ContentBn: DaysBetweenDatesGuideContentBn },
+  { meta: chequeAmountInWordsGuide, Content: ChequeAmountInWordsGuideContent, ContentBn: ChequeAmountInWordsGuideContentBn },
+  { meta: goldBhoriGramGuide, Content: GoldBhoriGramGuideContent, ContentBn: GoldBhoriGramGuideContentBn },
 ];
 
 export const guidePages: Record<string, GuidePageEntry> = Object.fromEntries(

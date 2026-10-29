@@ -1,6 +1,6 @@
 # Calculator specifications
 
-The exact behaviour of all 22 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
+The exact behaviour of all 23 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
 
 ## Shared conventions
 
@@ -533,6 +533,44 @@ Where a provider's own pages disagree (Nagad's regular app, bKash ATM), there is
 
 ---
 
+## Electricity Bill Calculator
+
+`src/calculators/electricity/` · slug `electricity-bill-calculator` · category `everyday` · `updatedOn` set
+
+**Modes:**
+- Units used.
+- Meter readings (previous and current).
+- Recharge amount (prepaid): the most units whose full monthly bill fits the amount.
+
+**Inputs:** sanctioned load in kW (no default; e.g. 2), single- or three-phase, postpaid or prepaid. An "Edit tariff" section has every rate, editable, with "Use BERC rates" to restore them.
+
+**Tariff (LT-A residential)** from BERC orders of 3 June 2026 (memo …26.2521) and the 4 June rollback (…26.2569):
+
+| Units | Rate per unit |
+| --- | --- |
+| 0–50 lifeline, only if the whole month is ≤ 50 | ৳4.63 |
+| 0–75 | ৳5.26 |
+| 76–200 | ৳8.50 |
+| 201–300 | ৳9.10 |
+| 301–400 | ৳9.62 |
+| 401–600 | ৳15.01 |
+| 600+ | ৳17.35 |
+
+Other charges:
+- Demand charge: ৳42 per kW per month, on sanctioned load.
+- Prepaid rebate: 0.5% of the pre-VAT bill (BERC conditions).
+- **As reported, and editable:** meter rent ৳40 single-phase / ৳250 three-phase, and VAT 5% on energy + demand charge + meter rent (TBS, 31 Aug 2026; Amar Desh, 19 Sep 2026).
+
+**Rule:** progressive slabs. Each rate applies only to the units inside its slab (Daily Star, May and June 2026).
+
+**Examples:**
+- 200 units, 2 kW, single-phase, postpaid: energy ৳1,457 + demand ৳84 + rent ৳40 + VAT ৳79.05 = ৳1,660.05.
+- 51 units leaves the lifeline: ৳268.26 energy.
+
+**Review:** after each BERC tariff order.
+
+---
+
 ## Per-calculator metadata (registry)
 
 The original 10 have `addedOn: "2026-10-05"`; the 10 added on 28 Oct have `"2026-10-28"` and zakat/gold `"2026-10-29"`. Related links:
@@ -560,6 +598,7 @@ The original 10 have `addedOn: "2026-10-05"`; the 10 added on 28 Oct have `"2026
 | mfs-cash-out-charge-calculator | vat-calculator, percentage-calculator, amount-in-words |
 | zakat-calculator | gold-calculator, sanchayapatra-calculator, dps-calculator |
 | gold-calculator | zakat-calculator, percentage-calculator, vat-calculator |
+| electricity-bill-calculator | vat-calculator, percentage-calculator, salary-calculator |
 
 Only the first 3 related entries are shown on a page, so put the most important links first; `seo-criteria.test.ts` counts only shown links.
 

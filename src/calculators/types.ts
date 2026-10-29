@@ -6,8 +6,15 @@ export interface Category {
   id: CategoryId;
   name: string;
   nameBn: string;
+  /** One sentence for tiles and the page intro. */
   description: string;
   descriptionBn: string;
+  /** Search title and description for the category landing page (site name is appended). */
+  seo: SeoFields;
+  seoBn: SeoFields;
+  /** A short paragraph under the intro: what people use these calculators for, in plain words. */
+  about: string;
+  aboutBn: string;
 }
 
 /** Icon keys a calculator can use (rendered by components/calculator/calculator-icon.tsx). */
@@ -34,6 +41,7 @@ export const CALCULATOR_ICONS = [
   "mobile-money",
   "crescent",
   "gold-bar",
+  "plug",
 ] as const;
 
 export type CalculatorIconName = (typeof CALCULATOR_ICONS)[number];
