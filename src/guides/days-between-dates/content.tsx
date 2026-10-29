@@ -16,7 +16,7 @@ export function DaysBetweenDatesGuideContent() {
 
   return (
     <>
-      <ContentSection id="answer" title="The short answer: count the end date or not">
+      <ContentSection id="answer" title="First decide: count the end date or not">
         <p>
           Before you count the days between two dates, decide one thing: <strong>is the end date counted?</strong>{" "}
           By the usual rule it is not. From 1 January to 2 January is <strong>1 day</strong>, the same as counting

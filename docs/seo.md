@@ -69,6 +69,8 @@ Root defaults (`rootMetadata(locale)` in `src/components/layout/root-document.ts
 
 The 404 page is `noindex`.
 
+`/llms.txt` (`src/app/llms.txt/route.ts`, prerendered) is a Markdown index for AI assistants and answer engines: the site's principles, every calculator and every guide in both languages, with each guide's short answer. It is built from the registries, so it needs no upkeep.
+
 After each production deploy, changed URLs are submitted to IndexNow (Bing, Yandex and others) by `scripts/indexnow.mjs`; see [development.md](development.md) → Deployment.
 
 ## Structured data (JSON-LD)
@@ -82,7 +84,7 @@ Builders in `src/lib/seo/structured-data.ts`, rendered by `components/seo/json-l
 | `WebApplication` | Each calculator page | meta (localized name/description), `applicationCategory: UtilitiesApplication`, free `Offer` in BDT, `inLanguage` |
 | `BreadcrumbList` | Calculator pages, category pages, `/calculators` index | Localized trail, e.g. Home › Calculators › Name |
 | `FAQPage` | Calculator pages with FAQs | `faqs` or `faqsBn`, matching what is visible on the page |
-| `Article` | Guide pages (`/guides/<slug>`) | guide meta: localized headline/description, `datePublished`, `dateModified`, author and publisher → Organization `@id` (the Organization is included in the same graph) |
+| `Article` | Guide pages (`/guides/<slug>`) | guide meta: localized headline/description, `abstract` (the short answer shown first), `datePublished`, `dateModified`, author and publisher → Organization `@id` (the Organization is included in the same graph) |
 
 Rule: only mark up what is visible. FAQ schema uses the same list the page renders in that language.
 

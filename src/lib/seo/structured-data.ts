@@ -49,6 +49,8 @@ export function articleSchema(guide: GuideMeta, locale: Locale = "en"): Schema {
     "@type": "Article",
     headline: bn ? guide.titleBn : guide.title,
     description: bn ? guide.seoBn.description : guide.seo.description,
+    // The short answer shown at the top of the article.
+    abstract: bn ? guide.answerBn : guide.answer,
     url: absoluteUrl(localePath(locale, guidePath(guide.slug))),
     inLanguage: locale,
     datePublished: guide.publishedOn,

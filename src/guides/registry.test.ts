@@ -13,6 +13,8 @@ function makeGuide(overrides: Partial<GuideMeta> = {}): GuideMeta {
     titleBn: "নমুনা গাইড",
     summary: "Sample.",
     summaryBn: "নমুনা।",
+    answer: "Sample answer.",
+    answerBn: "নমুনা উত্তর।",
     seo: { title: "Sample guide", description: "Sample description." },
     seoBn: { title: "নমুনা গাইড", description: "নমুনা বর্ণনা।" },
     calculator: "age-calculator",

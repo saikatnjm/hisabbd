@@ -39,7 +39,7 @@ export function SscHscGpaCalculationGuideContent() {
         </p>
       </ContentSection>
 
-      <ContentSection id="grade-points" title="Grade points and the 4th subject bonus">
+      <ContentSection id="grade-points" title="Marks for A+ and every grade, grade points and the 4th subject bonus">
         <p>
           The points for each letter grade on the board’s 5.00 scale, and the bonus it earns as a 4th
           subject:

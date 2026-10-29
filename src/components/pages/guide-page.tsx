@@ -20,9 +20,9 @@ function displayDate(iso: string, locale: Locale): string {
 }
 
 /**
- * A guide article: breadcrumb, H1, summary and dates, the article itself, a
- * call to action for its calculator, and other guides. Article and
- * BreadcrumbList structured data match what is shown.
+ * A guide article: breadcrumb, H1, summary and dates, the short answer, the
+ * article itself, a call to action for its calculator, and other guides.
+ * Article and BreadcrumbList structured data match what is shown.
  */
 export function GuidePage({ guide, locale, content }: { guide: GuideMeta; locale: Locale; content: React.ReactNode }) {
   const t = ui[locale];
@@ -62,6 +62,16 @@ export function GuidePage({ guide, locale, content }: { guide: GuideMeta; locale
 
       <Container className="py-8 sm:py-12">
         <div className="max-w-3xl space-y-10 sm:space-y-12">
+          <section
+            aria-labelledby="short-answer-heading"
+            className="rounded-2xl border border-brand-200 bg-brand-50 p-5 sm:p-6"
+          >
+            <h2 id="short-answer-heading" className="font-display text-xl font-bold text-slate-900">
+              {t.guides.shortAnswer}
+            </h2>
+            <p className="mt-2 text-lg text-pretty text-slate-800">{bn ? guide.answerBn : guide.answer}</p>
+          </section>
+
           {content}
 
           {calculator && (

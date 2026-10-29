@@ -36,6 +36,20 @@ describe("SEO landing-page criteria", () => {
     expect(problems).toEqual([]);
   });
 
+  it("guides open with a short answer in both languages (2–3 sentences)", () => {
+    const problems = guides.flatMap((g) =>
+      (
+        [
+          ["en", g.answer, 150, 350],
+          ["bn", g.answerBn, 120, 350],
+        ] as const
+      )
+        .filter(([, text, min, max]) => text.length < min || text.length > max)
+        .map(([locale, text, min, max]) => `${g.slug} ${locale} answer is ${text.length} chars (${min}–${max})`),
+    );
+    expect(problems).toEqual([]);
+  });
+
   it("category pages have well-sized titles and descriptions in both languages", () => {
     const problems = categories.flatMap((c) => [...seoProblems(c.id, c.seo, "en"), ...seoProblems(c.id, c.seoBn, "bn")]);
     expect(problems).toEqual([]);

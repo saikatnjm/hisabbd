@@ -26,23 +26,6 @@ export function BoardChallengeGpaGuideContent() {
 
   return (
     <>
-      <ContentSection id="short-answer" title="The short answer">
-        <p>
-          When a main subject goes up one grade, your GPA rises by{" "}
-          <strong>(new grade point − old grade point) ÷ number of main subjects</strong>. With HSC’s 6 main subjects,
-          A to A+ adds about 0.17 and A- to A adds about 0.08.
-        </p>
-        <p>
-          The biggest change is when an F in a main subject becomes a D: the whole result turns from a fail into a
-          pass. If your GPA is already 5.00, or the 4th subject could only rise as far as C, your GPA does not change at
-          all. To check with your own grades, change one grade in the{" "}
-          <Link href={calculator} className={link}>
-            SSC &amp; HSC GPA Calculator
-          </Link>{" "}
-          and compare the two GPAs.
-        </p>
-      </ContentSection>
-
       <ContentSection id="dates" title="HSC 2026: results and application dates">
         <ul>
           <li>

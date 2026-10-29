@@ -29,7 +29,7 @@ export function GoldBhoriGramGuideContentBn() {
 
   return (
     <>
-      <ContentSection id="answer" title="সংক্ষেপে: এক ভরি = 11.664 গ্রাম">
+      <ContentSection id="answer" title="এক ভরি = 11.664 গ্রাম">
         <p>
           বাংলাদেশে <strong>এক ভরি সোনা = 11.664 গ্রাম</strong>। ভরিকে তোলাও বলা হয়, ওজন একই। বাংলাদেশ জুয়েলার্স
           সমিতি (বাজুস) প্রতিটি দামের বিজ্ঞপ্তিতে লেখে “প্রতি ভরি (11.664 গ্রাম)”, তাই দোকানের দাম, রসিদ আর পত্রিকার

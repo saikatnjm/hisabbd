@@ -71,6 +71,8 @@ export interface UiStrings {
     published: (date: string) => string;
     updated: (date: string) => string;
     moreGuides: string;
+    /** Heading of the direct answer at the top of a guide. */
+    shortAnswer: string;
   };
   history: {
     title: string;
@@ -171,6 +173,7 @@ const en: UiStrings = {
     published: (date) => `Published ${date}`,
     updated: (date) => `Updated ${date}`,
     moreGuides: "More guides",
+    shortAnswer: "The short answer",
   },
   history: {
     title: "Your recent calculations",
@@ -267,6 +270,7 @@ const bn: UiStrings = {
     published: (date) => `প্রকাশ: ${date}`,
     updated: (date) => `হালনাগাদ: ${date}`,
     moreGuides: "আরও গাইড",
+    shortAnswer: "সংক্ষেপে উত্তর",
   },
   history: {
     title: "আপনার সাম্প্রতিক হিসাব",

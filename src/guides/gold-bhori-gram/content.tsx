@@ -29,7 +29,7 @@ export function GoldBhoriGramGuideContent() {
 
   return (
     <>
-      <ContentSection id="answer" title="The short answer: 1 bhori = 11.664 grams">
+      <ContentSection id="answer" title="1 bhori = 11.664 grams">
         <p>
           In Bangladesh, <strong>one bhori of gold is 11.664 grams</strong>. The bhori (also written vori) is the
           same weight as the tola. BAJUS, the Bangladesh Jewellers Association, writes “per bhori (11.664
