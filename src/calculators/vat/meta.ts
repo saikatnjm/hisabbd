@@ -44,7 +44,7 @@ export const vatCalculator: CalculatorMeta = {
   },
   addedOn: "2026-10-28",
   updatedOn: "2026-10-28",
-  related: ["discount-calculator", "profit-loss-calculator", "mfs-cash-out-charge-calculator", "percentage-calculator"],
+  related: ["amount-in-words", "mfs-cash-out-charge-calculator", "discount-calculator", "profit-loss-calculator", "percentage-calculator"],
   faqs: [
     {
       question: "What is the VAT rate in Bangladesh?",

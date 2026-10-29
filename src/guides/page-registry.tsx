@@ -1,4 +1,25 @@
 import type { ComponentType } from "react";
+import { SanchayapatraProfitGuideContent } from "./sanchayapatra-profit/content";
+import { SanchayapatraProfitGuideContentBn } from "./sanchayapatra-profit/content.bn";
+import { sanchayapatraProfitGuide } from "./sanchayapatra-profit/meta";
+import { FdrVsDpsGuideContent } from "./fdr-vs-dps/content";
+import { FdrVsDpsGuideContentBn } from "./fdr-vs-dps/content.bn";
+import { fdrVsDpsGuide } from "./fdr-vs-dps/meta";
+import { BkashCashOutChargeGuideContent } from "./bkash-cash-out-charge/content";
+import { BkashCashOutChargeGuideContentBn } from "./bkash-cash-out-charge/content.bn";
+import { bkashCashOutChargeGuide } from "./bkash-cash-out-charge/meta";
+import { VatCalculationGuideContent } from "./vat-calculation/content";
+import { VatCalculationGuideContentBn } from "./vat-calculation/content.bn";
+import { vatCalculationGuide } from "./vat-calculation/meta";
+import { ZakatNisabGuideContent } from "./zakat-nisab/content";
+import { ZakatNisabGuideContentBn } from "./zakat-nisab/content.bn";
+import { zakatNisabGuide } from "./zakat-nisab/meta";
+import { BmiExplainedGuideContent } from "./bmi-explained/content";
+import { BmiExplainedGuideContentBn } from "./bmi-explained/content.bn";
+import { bmiExplainedGuide } from "./bmi-explained/meta";
+import { BanglaCalendarGuideContent } from "./bangla-calendar/content";
+import { BanglaCalendarGuideContentBn } from "./bangla-calendar/content.bn";
+import { banglaCalendarGuide } from "./bangla-calendar/meta";
 import { AgeFromDateOfBirthGuideContent } from "./age-from-date-of-birth/content";
 import { AgeFromDateOfBirthGuideContentBn } from "./age-from-date-of-birth/content.bn";
 import { ageFromDateOfBirthGuide } from "./age-from-date-of-birth/meta";
@@ -42,6 +63,13 @@ const entries: GuidePageEntry[] = [
   { meta: cgpaCalculationGuide, Content: CgpaCalculationGuideContent, ContentBn: CgpaCalculationGuideContentBn },
   { meta: howEmiIsCalculatedGuide, Content: HowEmiIsCalculatedGuideContent, ContentBn: HowEmiIsCalculatedGuideContentBn },
   { meta: percentageCalculationGuide, Content: PercentageCalculationGuideContent, ContentBn: PercentageCalculationGuideContentBn },
+  { meta: sanchayapatraProfitGuide, Content: SanchayapatraProfitGuideContent, ContentBn: SanchayapatraProfitGuideContentBn },
+  { meta: fdrVsDpsGuide, Content: FdrVsDpsGuideContent, ContentBn: FdrVsDpsGuideContentBn },
+  { meta: bkashCashOutChargeGuide, Content: BkashCashOutChargeGuideContent, ContentBn: BkashCashOutChargeGuideContentBn },
+  { meta: vatCalculationGuide, Content: VatCalculationGuideContent, ContentBn: VatCalculationGuideContentBn },
+  { meta: zakatNisabGuide, Content: ZakatNisabGuideContent, ContentBn: ZakatNisabGuideContentBn },
+  { meta: bmiExplainedGuide, Content: BmiExplainedGuideContent, ContentBn: BmiExplainedGuideContentBn },
+  { meta: banglaCalendarGuide, Content: BanglaCalendarGuideContent, ContentBn: BanglaCalendarGuideContentBn },
 ];
 
 export const guidePages: Record<string, GuidePageEntry> = Object.fromEntries(

@@ -6,6 +6,8 @@ import {
   CalendarIcon,
   CalendarRangeIcon,
   CertificateIcon,
+  CrescentIcon,
+  GoldBarIcon,
   GraduationIcon,
   LandIcon,
   LandmarkIcon,
@@ -45,6 +47,8 @@ const icons: Record<CalculatorIconName, (p: React.SVGProps<SVGSVGElement>) => Re
   vault: VaultIcon,
   "piggy-bank": PiggyBankIcon,
   "mobile-money": MobileMoneyIcon,
+  crescent: CrescentIcon,
+  "gold-bar": GoldBarIcon,
 };
 
 const sizes = {

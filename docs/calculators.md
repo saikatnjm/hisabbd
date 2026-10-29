@@ -1,6 +1,6 @@
 # Calculator specifications
 
-The exact behaviour of all 20 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
+The exact behaviour of all 22 calculators. Each section mirrors the numbered rules block at the top of that calculator's `logic.ts`, which is authoritative. Tests in `logic.test.ts` pin the examples.
 
 ## Shared conventions
 
@@ -484,9 +484,58 @@ Where a provider's own pages disagree (Nagad's regular app, bKash ATM), there is
 
 ---
 
+## Zakat Calculator
+
+`src/calculators/zakat/` · slug `zakat-calculator` · category `finance` · `updatedOn` set
+
+**Inputs** (all optional, but at least one asset):
+- cash in hand;
+- bank and savings, including DPS, FDR and Sanchayapatra principal;
+- gold and silver (weight in bhori or grams, plus the price per bhori);
+- business stock at sale value;
+- money owed to you that you expect back;
+- other assets;
+- minus debts and bills due now.
+
+**Nisab:** the basis is the user's choice, silver (the default) or gold; the choice is remembered.
+
+**Rules:**
+- Nisab is 52.5 bhori (612.36 g) of silver or 7.5 bhori (87.48 g) of gold, priced at the price per bhori the user enters. No prices are preset; the page links to BAJUS.
+- Zakat is 2.5% of net wealth when net wealth ≥ nisab. The comparison is in whole paisa.
+
+**The page says:**
+- This is a general calculation, not a fatwa.
+- Scholars differ on jewellery in personal use; ask a trusted scholar.
+- No Islamic Foundation nisab in Taka was found for 1447/1448 (checked 29 Oct 2026).
+
+**Example:** ৳7,00,000 net with the silver nisab at ৳4,000 per bhori (nisab ৳2,10,000) → ৳17,500 due.
+
+## Gold Price & Bhori Calculator
+
+`src/calculators/gold/` · slug `gold-calculator` · category `everyday`. Shared units are in `gold/units.ts`, which zakat also uses.
+
+**Units:** 1 bhori = 11.664 g = 16 ana; 1 ana = 6 roti; 1 roti = 10 point. The point is the least standardised unit; the page says so.
+
+**Modes:**
+- Convert weight between bhori/ana/roti/point and grams.
+- Price: weight × the price per bhori for the purity (22K, 21K, 18K, traditional), plus an optional making charge (% or ৳ per bhori).
+
+**VAT:**
+- Default: "included in the price". Since the FY2026-27 budget, VAT on gold is a fixed ৳2,500 per bhori, and BAJUS publishes VAT-inclusive prices (Daily Star, 30 Jun 2026; Observer, 18 Jun 2026).
+- The user can add VAT as % or ৳ per bhori from their bill.
+- Silver VAT is not confirmed (sources conflict).
+
+**Examples:**
+- 2 bhori 5 ana 3 roti = 2.34375 bhori = 27.3375 g.
+- 1 bhori 8 ana at ৳2,20,000 per bhori = ৳3,30,000.
+
+**Review:** VAT after each budget.
+
+---
+
 ## Per-calculator metadata (registry)
 
-The original 10 have `addedOn: "2026-10-05"`; the 10 added since have `"2026-10-28"`. Related links:
+The original 10 have `addedOn: "2026-10-05"`; the 10 added on 28 Oct have `"2026-10-28"` and zakat/gold `"2026-10-29"`. Related links:
 
 | Slug | `related` |
 | --- | --- |
@@ -509,6 +558,10 @@ The original 10 have `addedOn: "2026-10-05"`; the 10 added since have `"2026-10-
 | sanchayapatra-calculator | fdr-calculator, dps-calculator, emi-calculator |
 | fdr-calculator / dps-calculator | each other, sanchayapatra-calculator, emi-calculator |
 | mfs-cash-out-charge-calculator | vat-calculator, percentage-calculator, amount-in-words |
+| zakat-calculator | gold-calculator, sanchayapatra-calculator, dps-calculator |
+| gold-calculator | zakat-calculator, percentage-calculator, vat-calculator |
+
+Only the first 3 related entries are shown on a page, so put the most important links first; `seo-criteria.test.ts` counts only shown links.
 
 Featured (home "Try:" chips and search suggestions), in order: age, bmi, gpa, emi, percentage, salary.
 

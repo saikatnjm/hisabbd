@@ -10,6 +10,9 @@ export const salaryCalculator: CalculatorMeta = {
   summaryBn: "গ্রস বেতন ও কর্তন থেকে আনুমানিক নিট (হাতে পাওয়া) বেতন বের করুন।",
   keywords: [
     "salary",
+    "বেতন হিসাব",
+    "নিট বেতন",
+    "হাতে পাওয়া বেতন",
     "take home",
     "take-home salary",
     "net salary",

@@ -29,7 +29,7 @@ export const dateDifferenceCalculator: CalculatorMeta = {
       "দুটি তারিখের মধ্যে দিন, সপ্তাহ, মাস ও বছর গণনা করুন। শেষ দিন ধরে বা বাদ দিয়ে, আর শুক্র-শনিবার বাদে দিনের হিসাবও দেখুন।",
   },
   addedOn: "2026-10-05",
-  related: ["age-calculator"],
+  related: ["age-calculator", "bangla-date-converter", "government-job-age-calculator"],
   faqs: [
     {
       question: "Is the end date counted?",

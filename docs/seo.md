@@ -3,6 +3,14 @@
 All SEO output is derived from the registry and `siteConfig`, so it always matches what the page shows.
 
 > **Standing rule:** every page must be an SEO landing page for a real Bangladesh search that expresses HisabBD's core identity. The checklist is in [`../AGENTS.md`](../AGENTS.md) → "SEO and landing-page criteria" (hard rule 10). This file covers the mechanics.
+>
+> `src/calculators/seo-criteria.test.ts` checks it automatically for every calculator and guide:
+> - titles of 20–60 characters, without the site name;
+> - descriptions of 100–165 characters (English) or 90–175 (Bangla);
+> - a Bangla title on Bangla pages, and no duplicate titles;
+> - at least 5 keywords, including 2 in Bangla;
+> - at least 5 FAQs, the same number in each language;
+> - at least 2 inbound links, from other calculators' related lists or from guides.
 
 ## Page metadata
 
