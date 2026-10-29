@@ -9,7 +9,8 @@ import { localePath } from "@/i18n/locales";
  * /llms.txt (https://llmstxt.org): a plain Markdown index of the site for AI
  * assistants and answer engines. Built from the registries, like the sitemap,
  * so it always matches the pages. Each guide carries its short answer, which
- * is the same text shown at the top of the guide.
+ * is the same text shown at the top of the guide, and each calculator its
+ * first FAQ, which is the direct answer to the page's main question.
  */
 
 function en(path: string): string {
@@ -24,8 +25,10 @@ function bn(path: string): string {
 export function buildLlmsTxt(calculators: readonly CalculatorMeta[], guides: readonly GuideMeta[]): string {
   const calculatorLines = calculators.map((c) => {
     const path = calculatorPath(c.slug);
+    const faq = c.faqs?.[0];
+    const answer = faq ? ` ${faq.question} ${faq.answer}` : "";
     const reviewed = c.updatedOn ? ` Rules last reviewed ${c.updatedOn}.` : "";
-    return `- [${c.name}](${en(path)}): ${c.summary}${reviewed} Bangla: [${c.nameBn}](${bn(path)})`;
+    return `- [${c.name}](${en(path)}): ${c.summary}${answer}${reviewed} Bangla: [${c.nameBn}](${bn(path)})`;
   });
   const guideLines = guides.map((g) => {
     const path = guidePath(g.slug);

@@ -69,7 +69,7 @@ Root defaults (`rootMetadata(locale)` in `src/components/layout/root-document.ts
 
 The 404 page is `noindex`.
 
-`/llms.txt` (`src/app/llms.txt/route.ts`, prerendered) is a Markdown index for AI assistants and answer engines: the site's principles, every calculator and every guide in both languages, with each guide's short answer. It is built from the registries, so it needs no upkeep.
+`/llms.txt` (`src/app/llms.txt/route.ts`, prerendered) is a Markdown index for AI assistants and answer engines: the site's principles, every calculator and every guide in both languages, with each guide's short answer and each calculator's first FAQ (the direct answer to its main question). It is built from the registries, so it needs no upkeep.
 
 After each production deploy, changed URLs are submitted to IndexNow (Bing, Yandex and others) by `scripts/indexnow.mjs`; see [development.md](development.md) → Deployment.
 

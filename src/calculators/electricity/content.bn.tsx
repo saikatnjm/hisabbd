@@ -245,6 +245,13 @@ export function ElectricityCalculatorContentBn() {
           ক্যালকুলেটর এই ব্রাউজারে আপনার মিটারের ধরন ও অনুমোদিত লোড মনে রাখে, আর আপনার লেখা কিছুই ডিভাইসের বাইরে
           যায় না।
         </p>
+        <p>
+          নতুন এসি বা ফ্রিজে বিল কত বাড়বে জানতে চান? ওয়াট আর ঘণ্টা থেকে ইউনিট বের করার নিয়ম পড়ুন{" "}
+          <Link href={localePath("bn", guidePath("electricity-units-appliances"))} className={link}>
+            এসি, ফ্যান, ফ্রিজে কত ইউনিট বিদ্যুৎ খরচ হয়
+          </Link>{" "}
+          গাইডে, তারপর সেই ইউনিট আপনার স্বাভাবিক ইউনিটের সঙ্গে যোগ করে এখানে হিসাব করুন।
+        </p>
       </ContentSection>
 
       <ContentSection id="sources" title="সূত্র ও তারিখ">

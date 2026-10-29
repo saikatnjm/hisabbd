@@ -40,7 +40,7 @@ Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped 
 | H7 | Guide 24, optional: HSC GPA to percentage or CGPA for applications abroad. The honest answer is that no official conversion exists, so show what applicants are asked for and say to use transcript marks. Do it only if it can be sourced and Trends shows demand. Otherwise drop it. | hsc gpa to percentage |
 | H8 | Guide 25: "স্কুলে ভর্তির বয়স: 1 জানুয়ারি অনুযায়ী বয়স হিসাব" → Age calculator. Write it only from the 2027 school admission policy (Nov–Dec lottery season). | ভর্তির বয়স হিসাব, class 1 admission age |
 
-Also in season: the next general BCS circular is the **52nd**, planned for November 2026 with no exact date yet ([Prothom Alo, 24 Sep 2026](https://en.prothomalo.com/youth/education/su7x69iyig)). The 50th came out in Nov 2025, and the 51st was a special BCS for doctors (circular 24 Sep 2026), which the job-age guide already cites. When the 52nd circular publishes, check its age limit and reference date against the BCS preset in `src/calculators/job-age/logic.ts` and the guide, then bump `updatedOn`. Also write the electricity bill guide (already open).
+Also in season: the next general BCS circular is the **52nd**, planned for November 2026 with no exact date yet ([Prothom Alo, 24 Sep 2026](https://en.prothomalo.com/youth/education/su7x69iyig)). The 50th came out in Nov 2025, and the 51st was a special BCS for doctors (circular 24 Sep 2026), which the job-age guide already cites. When the 52nd circular publishes, check its age limit and reference date against the BCS preset in `src/calculators/job-age/logic.ts` and the guide, then bump `updatedOn`. The electricity guide is built (appliance units; see Status).
 
 **Guide cadence:** at most 2 guides a week. Each is 600–1,200 words, passes `seo-criteria.test.ts` and opens with a quick answer (L2). On a young domain, 25 strong guides beat 100 thin ones: Google's scaled-content rules penalise volume without substance.
 
@@ -85,7 +85,15 @@ Also in season: the next general BCS circular is the **52nd**, planned for Novem
 
 ## Status (updated 29 Oct 2026)
 
-### Built on branch `feat/grading-guide-quick-answers` (not yet merged)
+### Built on branch `feat/calculator-answers-electricity-guide` (not yet merged)
+
+| Item | What | Where |
+| --- | --- | --- |
+| C2 (22) | Guide: how many units an AC, fan or fridge uses, from watts and hours, and what those units add to a bill under the June 2026 slabs. It targets "এসি চালালে কত ইউনিট বিদ্যুৎ খরচ হয়", which the calculator page didn't cover. Example bills are pinned by tests in `electricity/logic.test.ts`; slab rates come from the tariff data. Appliance watts are labelled as examples. | `/guides/electricity-units-appliances`, `src/guides/electricity-units-appliances/` |
+| L2 (calculators) | **Decided against a short-answer box on calculator pages.** The tool is already first, and FAQ #1 is the direct answer, marked up as `FAQPage`; a box would repeat it on the same page. Instead `/llms.txt` now carries each calculator's first FAQ. | `src/lib/seo/llms-txt.ts` |
+| N8 | Income tax checked 29 Oct. Confirmed: Finance Act 2026 (Act No. 96, 30 June 2026) s.160 puts the AY 2026-27 to 2030-31 rates in its Schedule 2 Part 1, and Parliament passed the revised ৳4 lakh general threshold (Manab Zamin, 30 Jun 2026; the ৳3.75 lakh figure was the original proposal). **Still blocked:** Schedule 2 is printed separately and not on bdlaws, and nbr.gov.bd blocks automated downloads (403), including the 2026-27 income tax circular. The women/65+ threshold (৳4.25 vs 4.5 lakh) and the minimum tax still conflict in secondary sources. **Owner:** download the NBR circular PDF in a browser and add it to the repo, and the agent can build N8 from it. | |
+
+### Shipped in PR #9 (`feat/grading-guide-quick-answers`)
 
 | Item | What | Where |
 | --- | --- | --- |
@@ -197,7 +205,7 @@ N9 Bangla date converter, N11 VAT calculator, guides 4–7 and Q4 CI (details be
 | T7 contact page + methodology | ⏳ Needs a public contact email from the owner |
 | N8 Income tax | ⏳ Needs the official Finance Act 2026 / NBR slab text by ~10 Nov 2026, else July 2027 |
 | N13 Admission score calculators (new) | ⏳ Blocked: 2026-27 circulars not yet confirmed (checked 28 Oct, see §6 N13 notes) |
-| Guide for the electricity bill (new page); refresh seasonal windows yearly (Ramadan 1449 dates) | ⏳ Next |
+| Refresh seasonal windows yearly (Ramadan 1449 dates) | ⏳ Before Jan 2028 |
 | Q5 Branch protection on `main` requiring the CI checks | ⏳ **Owner action** (GitHub → Settings → Branches) |
 
 ## 1. Summary
@@ -433,7 +441,7 @@ Links from other sites are the main constraint for a new domain. All outreach co
 | 1 Apr 2027 | Promote N9 for Pohela Boishakh (14 Apr) |
 | May – Jul 2027 | N2 refresh for SSC; after the budget (early Jun) refresh all rate data; N8 for AY 2027-28 in July |
 
-**Data review reminders** (put them in a calendar): electricity tariff in `src/calculators/electricity/logic.ts` (after each BERC order); `src/calculators/seasonal.ts` (add the Ramadan 1449 window before Jan 2028); Bangla calendar guide (`src/guides/bangla-calendar`) is tied to 1433, so update it to 1434 by early March 2027; gold VAT in `src/calculators/gold/logic.ts` (after each budget); zakat page and guide: re-check for an Islamic Foundation nisab announcement in January 2027; Sanchayapatra rates and source tax in `src/calculators/sanchayapatra/logic.ts` (every Jan and Jul; bump `updatedOn`), bank source tax and excise bands in `src/calculators/fdr/deposit-tax.ts` (after each June budget), MFS charges in `src/calculators/mfs-charge/logic.ts` (quarterly), savings certificate rates (Jan and Jul), MFS charges (quarterly), gold price (the page asks the user for it), tax slabs (July), government job age rule and BCS presets in `src/calculators/job-age/logic.ts` (each new BCS circular, and when the law changes; bump `updatedOn`), admission formulas (each circular).
+**Data review reminders** (put them in a calendar): electricity tariff in `src/calculators/electricity/logic.ts` (after each BERC order; the appliance guide's example bills are pinned by tests, so a tariff change fails them until the guide's text is updated too); `src/calculators/seasonal.ts` (add the Ramadan 1449 window before Jan 2028); Bangla calendar guide (`src/guides/bangla-calendar`) is tied to 1433, so update it to 1434 by early March 2027; gold VAT in `src/calculators/gold/logic.ts` (after each budget); zakat page and guide: re-check for an Islamic Foundation nisab announcement in January 2027; Sanchayapatra rates and source tax in `src/calculators/sanchayapatra/logic.ts` (every Jan and Jul; bump `updatedOn`), bank source tax and excise bands in `src/calculators/fdr/deposit-tax.ts` (after each June budget), MFS charges in `src/calculators/mfs-charge/logic.ts` (quarterly), savings certificate rates (Jan and Jul), MFS charges (quarterly), gold price (the page asks the user for it), tax slabs (July), government job age rule and BCS presets in `src/calculators/job-age/logic.ts` (each new BCS circular, and when the law changes; bump `updatedOn`), admission formulas (each circular).
 
 ## 11. Engineering and quality
 

@@ -254,6 +254,13 @@ export function ElectricityCalculatorContent() {
           The calculator remembers your meter type and sanctioned load in this browser, and nothing you type
           leaves your device.
         </p>
+        <p>
+          Wondering what a new AC or fridge will add? Work out its units from its watts and hours with{" "}
+          <Link href={localePath("en", guidePath("electricity-units-appliances"))} className={link}>
+            how many units an AC, fan or fridge uses
+          </Link>
+          , then add them to your usual units here.
+        </p>
       </ContentSection>
 
       <ContentSection id="sources" title="Sources and dates">

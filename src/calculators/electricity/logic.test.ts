@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import { APPLIANCE_EXAMPLES, monthlyUnits } from "@/guides/electricity-units-appliances/examples";
+import { roundTo } from "@/lib/number";
 import {
   billFor,
   calculateElectricityBill,
@@ -250,5 +252,31 @@ describe("calculateElectricityBill", () => {
     expect(r.bill.lines[1]?.amount).toBe(1125);
     // 394.50 + 1,125 + 84 = 1,603.50; VAT 80.18 (80.175 rounded half up)
     expect(r.bill.total).toBe(1683.68);
+  });
+});
+
+// The worked examples in the appliance units guide (src/guides/electricity-units-appliances).
+describe("appliance units guide examples", () => {
+  const total = (units: number) => billFor(units, 2, "postpaid", single).total;
+
+  it("a 1,500 W AC for 8 hours a day adds 360 units: 150 → 510 units is ৳1,213.80 → ৳5,359.31", () => {
+    expect(monthlyUnits(1500, 8)).toBe(360);
+    expect(total(150)).toBe(1213.8);
+    expect(total(510)).toBe(5359.31);
+    expect(roundTo(total(510) - total(150), 2)).toBe(4145.51);
+    expect(roundTo((total(510) - total(150)) / 360, 2)).toBe(11.52);
+  });
+
+  it("a 75 W fan for 10 hours a day takes a 40-unit lifeline home out of the lifeline", () => {
+    expect(monthlyUnits(75, 10)).toBe(22.5);
+    expect(total(40)).toBe(324.66);
+    expect(total(62.5)).toBe(475.39);
+    expect(roundTo(total(62.5) - total(40), 2)).toBe(150.73);
+    expect(total(50)).toBe(373.28);
+    expect(total(51)).toBe(411.87);
+  });
+
+  it("the example table's monthly units", () => {
+    expect(APPLIANCE_EXAMPLES.map((a) => monthlyUnits(a.watts, a.hoursPerDay))).toEqual([1.8, 22.5, 15, 21, 360]);
   });
 });
