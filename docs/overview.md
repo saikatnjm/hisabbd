@@ -25,7 +25,7 @@ Every page exists in English at the path shown and in Bangla with the `/bn` pref
 | `/calculators` | All calculators, grouped by category | `src/app/(en)/calculators/page.tsx` → `src/components/pages/calculators-index.tsx` |
 | `/calculators/<slug>` | One calculator page (10 of them, listed below) | `src/app/(en)/calculators/<slug>/page.tsx` → `CalculatorPage` |
 | `/categories/<id>` | Category page: calculators in one category plus links to the other categories | `src/app/(en)/categories/[category]/page.tsx` → `src/components/pages/category-page.tsx` |
-| `/guides`, `/guides/<slug>` | Guides hub and 7 explanatory articles, each leading to a calculator | `src/app/(en)/guides/` → `src/components/pages/guide{s-index,-page}.tsx` |
+| `/guides`, `/guides/<slug>` | Guides hub and 14 explanatory articles, each leading to a calculator | `src/app/(en)/guides/` → `src/components/pages/guide{s-index,-page}.tsx` |
 | `/about` | What HisabBD does, how the calculations work, limits | `src/app/(en)/about/page.tsx` |
 | `/privacy` | Privacy policy. Its text adapts to which analytics are enabled. | `src/app/(en)/privacy/page.tsx` |
 | `/terms` | Terms of use | `src/app/(en)/terms/page.tsx` |
@@ -58,6 +58,8 @@ Bangla calculator pages are not separate files. A single dynamic route, `src/app
 | `sanchayapatra-calculator` | Sanchayapatra Profit Calculator / সঞ্চয়পত্রের মুনাফা ক্যালকুলেটর | finance | seal | Profit per month/quarter or at maturity for 4 schemes, official tiered rates, source tax |
 | `fdr-calculator` | FDR Calculator / এফডিআর ক্যালকুলেটর | finance | vault | Fixed deposit maturity, interest, source tax, excise duty |
 | `dps-calculator` | DPS Calculator / ডিপিএস ক্যালকুলেটর | finance | piggy-bank | Monthly deposit scheme maturity, yearly table, tax, excise |
+| `zakat-calculator` | Zakat Calculator / যাকাত ক্যালকুলেটর | finance | crescent | Net zakatable wealth, silver or gold nisab, 2.5% due, breakdown |
+| `gold-calculator` | Gold Price & Bhori Calculator / সোনার দাম ও ভরি ক্যালকুলেটর | everyday | gold-bar | Bhori/ana/roti ↔ grams; price with making charge and VAT |
 | `mfs-cash-out-charge-calculator` | bKash & Nagad Cash Out Charge Calculator / বিকাশ ও নগদ ক্যাশ আউট চার্জ ক্যালকুলেটর | finance | mobile-money | Charge per ৳1,000 by provider and channel; max cash for a balance |
 
 Full specs: [calculators.md](calculators.md).

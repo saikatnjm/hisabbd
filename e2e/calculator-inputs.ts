@@ -136,4 +136,18 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Tenure", bn: "মেয়াদ" }, value: "5" },
     ],
   },
+  "zakat-calculator": {
+    submit: { en: "Calculate zakat", bn: "যাকাত হিসাব করুন" },
+    fields: [
+      { label: { en: "Cash in hand", bn: "হাতে নগদ টাকা" }, value: "500000" },
+      { label: { en: "Silver price per bhori", bn: "রুপার প্রতি ভরির দাম" }, value: "4000" },
+    ],
+  },
+  "gold-calculator": {
+    submit: { en: "Calculate price", bn: "দাম হিসাব করুন" },
+    fields: [
+      { label: { en: "Bhori", bn: "ভরি" }, value: "1" },
+      { label: { en: "Price per bhori", bn: "প্রতি ভরির দাম" }, value: "220000" },
+    ],
+  },
 };

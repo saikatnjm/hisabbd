@@ -38,7 +38,18 @@ N9 Bangla date converter, N11 VAT calculator, guides 4–7 and Q4 CI (details be
 
 ### Shipped: merged in PR #4 (personalization)
 
-### Built on branch `feat/share-savings-mfs` (not yet merged)
+### Built on branch `feat/zakat-gold-guides-seo` (not yet merged)
+
+| Item | What | Where |
+| --- | --- | --- |
+| N6 | Zakat Calculator: all common assets minus debts, silver or gold nisab (user choice, user-entered BAJUS prices), 2.5%, careful non-fatwa wording; live ~3 months before Ramadan 1448 | `/calculators/zakat-calculator` |
+| N7 | Gold Price & Bhori Calculator: bhori/ana/roti/point ↔ grams, price with making charge, VAT included by default (fixed ৳2,500/bhori since FY2026-27) | `/calculators/gold-calculator` |
+| C2 (8–14) | 7 more guides: Sanchayapatra profit, FDR vs DPS, bKash cash-out charge, VAT calculation, zakat nisab, BMI explained, Bangla calendar (14 in total) | `/guides/…` |
+| Q7 | SEO criteria as tests (`seo-criteria.test.ts`): title and description lengths, unique titles, Bangla keywords, FAQs in both languages, at least 2 *shown* inbound links. Fixed what it found (Bangla date converter had 0 inbound links; BMI, land, amount in words and VAT had 1; some reverse links were hidden past the 3 shown) | `src/calculators/seo-criteria.test.ts` |
+
+### Shipped: merged in PR #5 (share, savings, MFS)
+
+### Built on branch `feat/share-savings-mfs` (merged as PR #5)
 
 | Item | What | Where |
 | --- | --- | --- |
@@ -78,8 +89,8 @@ N9 Bangla date converter, N11 VAT calculator, guides 4–7 and Q4 CI (details be
 | T7 contact page + methodology | ⏳ Needs a public contact email from the owner |
 | N8 Income tax | ⏳ Needs the official Finance Act 2026 / NBR slab text by ~10 Nov 2026, else July 2027 |
 | N13 Admission score calculators (new) | ⏳ Blocked: 2026-27 circulars not yet confirmed (checked 28 Oct, see §6 N13 notes) |
-| C2 guide 8 (zakat, January); guides for Sanchayapatra/DPS and bKash charges (new pages need supporting guides) | ⏳ Not started |
-| N6, N7 (zakat, gold), N12 (electricity) | ⏳ Need verified official figures (see rules in §6) |
+| Guides for the remaining calculators without one (discount, profit/loss, salary, date difference, amount in words, gold, job-age variants) | ⏳ Next |
+| N12 (electricity) | ⏳ Needs verified BERC tariff figures |
 | Q5 Branch protection on `main` requiring the CI checks | ⏳ **Owner action** (GitHub → Settings → Branches) |
 
 ## 1. Summary
@@ -315,7 +326,7 @@ Links from other sites are the main constraint for a new domain. All outreach co
 | 1 Apr 2027 | Promote N9 for Pohela Boishakh (14 Apr) |
 | May – Jul 2027 | N2 refresh for SSC; after the budget (early Jun) refresh all rate data; N8 for AY 2027-28 in July |
 
-**Data review reminders** (put them in a calendar): Sanchayapatra rates and source tax in `src/calculators/sanchayapatra/logic.ts` (every Jan and Jul; bump `updatedOn`), bank source tax and excise bands in `src/calculators/fdr/deposit-tax.ts` (after each June budget), MFS charges in `src/calculators/mfs-charge/logic.ts` (quarterly), savings certificate rates (Jan and Jul), MFS charges (quarterly), gold price (the page asks the user for it), tax slabs (July), government job age rule and BCS presets in `src/calculators/job-age/logic.ts` (each new BCS circular, and when the law changes; bump `updatedOn`), admission formulas (each circular).
+**Data review reminders** (put them in a calendar): Bangla calendar guide (`src/guides/bangla-calendar`) is tied to 1433, so update it to 1434 by early March 2027; gold VAT in `src/calculators/gold/logic.ts` (after each budget); zakat page and guide: re-check for an Islamic Foundation nisab announcement in January 2027; Sanchayapatra rates and source tax in `src/calculators/sanchayapatra/logic.ts` (every Jan and Jul; bump `updatedOn`), bank source tax and excise bands in `src/calculators/fdr/deposit-tax.ts` (after each June budget), MFS charges in `src/calculators/mfs-charge/logic.ts` (quarterly), savings certificate rates (Jan and Jul), MFS charges (quarterly), gold price (the page asks the user for it), tax slabs (July), government job age rule and BCS presets in `src/calculators/job-age/logic.ts` (each new BCS circular, and when the law changes; bump `updatedOn`), admission formulas (each circular).
 
 ## 11. Engineering and quality
 

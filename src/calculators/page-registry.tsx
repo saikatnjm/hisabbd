@@ -39,6 +39,10 @@ import { FdrCalculator } from "./fdr/fdr-calculator";
 import { FdrCalculatorContent } from "./fdr/content";
 import { FdrCalculatorContentBn } from "./fdr/content.bn";
 import { fdrCalculator } from "./fdr/meta";
+import { GoldCalculator } from "./gold/gold-calculator";
+import { GoldCalculatorContent } from "./gold/content";
+import { GoldCalculatorContentBn } from "./gold/content.bn";
+import { goldCalculator } from "./gold/meta";
 import { GpaCalculator } from "./gpa/gpa-calculator";
 import { GpaCalculatorContent } from "./gpa/content";
 import { GpaCalculatorContentBn } from "./gpa/content.bn";
@@ -79,6 +83,10 @@ import { VatCalculator } from "./vat/vat-calculator";
 import { VatCalculatorContent } from "./vat/content";
 import { VatCalculatorContentBn } from "./vat/content.bn";
 import { vatCalculator } from "./vat/meta";
+import { ZakatCalculator } from "./zakat/zakat-calculator";
+import { ZakatCalculatorContent } from "./zakat/content";
+import { ZakatCalculatorContentBn } from "./zakat/content.bn";
+import { zakatCalculator } from "./zakat/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -119,6 +127,8 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: mfsChargeCalculator, Calculator: MfsChargeCalculator, Content: MfsChargeCalculatorContent, ContentBn: MfsChargeCalculatorContentBn },
       { meta: fdrCalculator, Calculator: FdrCalculator, Content: FdrCalculatorContent, ContentBn: FdrCalculatorContentBn },
       { meta: dpsCalculator, Calculator: DpsCalculator, Content: DpsCalculatorContent, ContentBn: DpsCalculatorContentBn },
+      { meta: zakatCalculator, Calculator: ZakatCalculator, Content: ZakatCalculatorContent, ContentBn: ZakatCalculatorContentBn },
+      { meta: goldCalculator, Calculator: GoldCalculator, Content: GoldCalculatorContent, ContentBn: GoldCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

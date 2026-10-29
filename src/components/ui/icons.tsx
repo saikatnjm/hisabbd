@@ -265,6 +265,20 @@ export const PrinterIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const CrescentIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" />
+    <path d="M17 4l.6 1.4L19 6l-1.4.6L17 8l-.6-1.4L15 6l1.4-.6z" />
+  </Icon>
+);
+
+export const GoldBarIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3 19l3-7h12l3 7z" />
+    <path d="M7.5 12l2-5h5l2 5" />
+  </Icon>
+);
+
 export const TrashIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />

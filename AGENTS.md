@@ -45,7 +45,12 @@ If Node ≥ 20.9 is available locally, the same `npm run …` scripts work direc
 7. **The registry is the source of truth.** Home, search, category pages, related links, footer, sitemap, JSON-LD and `/bn` routes all derive from `src/calculators/registry.ts` and `page-registry.tsx`. Don't hand-maintain lists elsewhere.
 8. **Static only.** No server actions, API routes, runtime data fetching or new runtime dependencies without a strong reason. Current production dependencies: `next`, `react`, `react-dom`. Nothing else.
 9. **Accessibility.** Use the shared `FormField` / `AffixInput` / `SegmentedControl` / `CalculatorForm` / `CalculatorResultArea` components; they wire up labels, `aria-invalid`, `aria-describedby`, live-region announcements and focus. Use `inputMode="decimal"` with `type="text"` for numeric inputs, not `type="number"`.
-10. **Every page is an SEO landing page for a real search.** No calculator, guide or page ships unless it meets "SEO and landing-page criteria" below. This is a standing rule from the site owner.
+10. **Every page is an SEO landing page for a real search.** No calculator, guide or page ships unless it meets "SEO and landing-page criteria" below. This is a standing rule from the site owner. `src/calculators/seo-criteria.test.ts` enforces the measurable parts:
+    - title and description lengths;
+    - unique titles;
+    - Bangla and English keywords;
+    - FAQs in both languages;
+    - at least 2 inbound links.
 
 ## SEO and landing-page criteria
 

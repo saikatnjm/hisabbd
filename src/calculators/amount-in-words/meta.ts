@@ -46,7 +46,7 @@ export const amountInWordsCalculator: CalculatorMeta = {
       "টাকার অঙ্ক লিখলেই বাংলা ও ইংরেজি কথায় পেয়ে যাবেন — লক্ষ, কোটি, পয়সাসহ, শেষে “মাত্র” / “Only”। চেকে লেখার জন্য সরাসরি কপি করুন।",
   },
   addedOn: "2026-10-28",
-  related: ["discount-calculator", "salary-calculator", "mfs-cash-out-charge-calculator"],
+  related: ["land-calculator", "vat-calculator", "salary-calculator", "mfs-cash-out-charge-calculator"],
   faqs: [
     {
       question: "How do I write ৳1,25,300.50 in words?",

@@ -32,6 +32,8 @@ export const CALCULATOR_ICONS = [
   "vault",
   "piggy-bank",
   "mobile-money",
+  "crescent",
+  "gold-bar",
 ] as const;
 
 export type CalculatorIconName = (typeof CALCULATOR_ICONS)[number];

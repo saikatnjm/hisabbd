@@ -20,7 +20,7 @@ export const ageCalculator: CalculatorMeta = {
       "জন্ম তারিখ দিয়ে যেকোনো দিনে আপনার সঠিক বয়স বের করুন বছর, মাস ও দিনে। মোট দিন, সপ্তাহ আর পরের জন্মদিনও দেখুন। ফ্রি, যেকোনো ফোনে চলে।",
   },
   addedOn: "2026-10-05",
-  related: ["government-job-age-calculator", "date-difference-calculator", "bmi-calculator"],
+  related: ["government-job-age-calculator", "date-difference-calculator", "bmi-calculator", "bangla-date-converter"],
   faqs: [
     {
       question: "How is age calculated?",
