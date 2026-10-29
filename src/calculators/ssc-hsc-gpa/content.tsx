@@ -1,5 +1,10 @@
+import Link from "next/link";
 import { ContentSection } from "@/components/ui/content-section";
+import { BOARD_CHALLENGE_SOURCES } from "@/guides/board-challenge-gpa/sources";
+import { guidePath } from "@/guides/paths";
+import { localePath } from "@/i18n/locales";
 
+const link = "font-semibold text-brand-700 underline underline-offset-4";
 const cell = "px-3 py-2";
 const head = "px-3 py-2 font-semibold";
 
@@ -120,6 +125,28 @@ export function SscHscGpaCalculatorContent() {
           such as Dakhil and Alim. We could not find an official circular that states them online, and boards can
           change their rules, so treat this as an estimate. Check your board’s result notice: your official result is
           the one that counts.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="results-and-challenge" title="Results and board challenge">
+        <p>
+          Board results are published on{" "}
+          <a href={BOARD_CHALLENGE_SOURCES.results.url} target="_blank" rel="noopener" className={link}>
+            {BOARD_CHALLENGE_SOURCES.results.title}
+          </a>{" "}
+          and each board’s website. HSC 2026 results come out on 31 October 2026, and board challenge applications run
+          from 1 to 7 November (
+          <a href={BOARD_CHALLENGE_SOURCES.dates.url} target="_blank" rel="noopener" className={link}>
+            {BOARD_CHALLENGE_SOURCES.dates.title}
+          </a>
+          ).
+        </p>
+        <p>
+          Thinking of a challenge? Change one grade above and compare the GPAs, or read{" "}
+          <Link href={localePath("en", guidePath("board-challenge-gpa"))} className={link}>
+            how much a board challenge can change your GPA
+          </Link>
+          .
         </p>
       </ContentSection>
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { calculatorPath } from "@/calculators/paths";
 import { ContentSection } from "@/components/ui/content-section";
+import { guidePath } from "@/guides/paths";
 import { localePath } from "@/i18n/locales";
 
 const link = "font-semibold text-brand-700 underline underline-offset-4";
@@ -162,6 +163,18 @@ export function SscHscGpaCalculationGuideContentBn() {
           </Link>{" "}
           দিন: জিপিএ, পাস না ফেল, চতুর্থ বিষয়ের বোনাস আর চতুর্থ বিষয় ছাড়া জিপিএ একসঙ্গে দেখা যাবে। তবে
           আনুষ্ঠানিক ফলাফলের জন্য সবসময় আপনার বোর্ডের প্রকাশিত ফলাফল আর বিজ্ঞপ্তিই দেখুন।
+        </p>
+      </ContentSection>
+
+      <ContentSection id="board-challenge" title="ফলের পর: খাতা চ্যালেঞ্জ করবেন কি?">
+        <p>
+          কোনো মূল বিষয়ে এক গ্রেড বাড়লে জিপিএ বাড়ে (নতুন পয়েন্ট − পুরোনো পয়েন্ট) ÷ মূল বিষয়ের সংখ্যা: এইচএসসির 6টি
+          বিষয়ে A থেকে A+ হলে প্রায় 0.17। মূল বিষয়ের F বদলে D হলে ফেল থেকে পাস হয়, আর জিপিএ 5.00 হলে আর বাড়ে না।
+          ফি দেওয়ার আগে পড়ুন{" "}
+          <Link href={localePath("bn", guidePath("board-challenge-gpa"))} className={link}>
+            খাতা চ্যালেঞ্জে জিপিএ কত বাড়তে পারে
+          </Link>
+          , এইচএসসি 2026-এর তারিখ ও সূত্রসহ।
         </p>
       </ContentSection>
     </>

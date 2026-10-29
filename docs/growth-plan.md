@@ -4,7 +4,92 @@ How HisabBD gets indexed, ranks for what people in Bangladesh actually search, a
 
 Items are numbered so agents can pick one up ("implement C2", "do Q1"). Shipped items are marked ✅ and listed under Status. Every new calculator must still follow the hard rules in [`../AGENTS.md`](../AGENTS.md): privacy, both languages, pure logic, and no guessed regulations.
 
-## Status (updated 28 Oct 2026)
+## Next: HSC results, more guides, search and answer engines (written 29 Oct 2026)
+
+**Core-value gate.** Nothing below ships unless it passes all five checks:
+
+1. A HisabBD calculator answers the question, or the page leads to one on its first screen.
+2. Every rule it states (grades, dates, fees, GPA requirements) cites an official source with a checked-on date. No rumours and no "expected" figures.
+3. It is written Bangla-first, with equal English.
+4. No input leaves the device, and no result appears in a URL or an analytics event.
+5. It is static and fast on a phone.
+
+**Why this order.** HSC 2026 results are published on **Saturday 31 Oct 2026 at 11:00**. The date was moved from 29 Oct ([Daily Star](https://www.thedailystar.net/news/education/news/hsc-2026-results-october-31-how-check-your-results-online-and-sms-4308776)). Re-evaluation applications run **1–7 Nov**. The site is **not indexed yet**: a `site:` search on 29 Oct returned nothing. Search therefore can't catch the results-day peak, and that traffic has to come from sharing (D1). Search and AI answers pay off later, during the admission season (Nov 2026 – Feb 2027) and around the 2027 SSC and HSC results. The pages built now are for those.
+
+### Before results (29–31 Oct)
+
+| ID | Who | What |
+| --- | --- | --- |
+| H0 | Owner, today | T1: verify Google Search Console and Bing Webmaster Tools, submit `/sitemap.xml` (108 URLs) and request indexing for the SSC/HSC GPA calculator and guide in both languages. Bing counts twice, because its index also feeds ChatGPT search, Copilot and DuckDuckGo. |
+| H1 | Agent | Refresh the SSC/HSC GPA calculator and guide for results season. Add a dated "HSC 2026 results" note that links to the official result sites and the board's re-evaluation notice. Add a FAQ for "my result's GPA differs from my own calculation" (the 4th subject and the 5.00 cap), then set `updatedOn`. Keep the evergreen title, with no "2026" in it. **Link to the official notice instead of copying SMS formats:** news reports disagree on the short code (16140 vs 16222), which is exactly the kind of error we don't repeat. |
+| H2 | Owner, 31 Oct from 11:00 | D1: one helpful post per HSC or admission Facebook group, with a worked example ("GPA 4.83 with your 4th subject? Here's how it's calculated") and the calculator link. Answer replies; don't repost. |
+
+### Re-evaluation window (1–7 Nov)
+
+| ID | What | Target queries |
+| --- | --- | --- |
+| H3 | Guide 21: "খাতা চ্যালেঞ্জ: আবেদন করবেন কি? এক গ্রেড বাড়লে জিপিএ কত বাড়ে" / "HSC re-evaluation: will a higher grade change your GPA?". Worked examples from the calculator (what one grade up does to the GPA, with and without the 4th subject, and at the 5.00 cap). Dates, fee and process come only from the board notice. Links go to and from the GPA calculator and the GPA guide. Live by 1 Nov, and update it every year. | এইচএসসি খাতা চ্যালেঞ্জ, পুনঃনিরীক্ষা, hsc rescrutiny, board challenge |
+
+### Admission season (Nov 2026 – Feb 2027)
+
+| ID | What | Target queries |
+| --- | --- | --- |
+| H4 | Guide 22: "এসএসসি/এইচএসসি গ্রেডিং পদ্ধতি: কত নম্বরে কোন গ্রেড". Marks → letter grade → grade point, the 33% pass mark, and the separate pass rule for written, MCQ and practical parts, **if a board source confirms it**. This is a different intent from "how GPA is calculated". | কত নম্বর পেলে A+, hsc grading system, grade point table |
+| H5 | Guide 23: "ভর্তিতে জিপিএ কীভাবে লাগে". Covers combined SSC+HSC GPA, GPA without the 4th subject (the calculator already shows it) and per-subject grade minimums. Its table is filled **only** from published 2026-27 circulars: DU applications open 11 Nov, and medical waits for the DGME notice. Bump `dateModified` as each circular arrives. It leads into N13. | ভর্তির জন্য জিপিএ কত লাগে, চতুর্থ বিষয় ছাড়া জিপিএ, medical admission gpa requirement |
+| H6 | N13 admission score calculator: build one preset per circular as each is published (see §6). | — |
+| H7 | Guide 24, optional: HSC GPA to percentage or CGPA for applications abroad. The honest answer is that no official conversion exists, so show what applicants are asked for and say to use transcript marks. Do it only if it can be sourced and Trends shows demand. Otherwise drop it. | hsc gpa to percentage |
+| H8 | Guide 25: "স্কুলে ভর্তির বয়স: 1 জানুয়ারি অনুযায়ী বয়স হিসাব" → Age calculator. Write it only from the 2027 school admission policy (Nov–Dec lottery season). | ভর্তির বয়স হিসাব, class 1 admission age |
+
+Also in season: refresh the government job age guide with the 50th BCS circular date once it is published (~1 Nov), and write the electricity bill guide (already open).
+
+**Guide cadence:** at most 2 guides a week. Each is 600–1,200 words, passes `seo-criteria.test.ts` and opens with a quick answer (L2). On a young domain, 25 strong guides beat 100 thin ones: Google's scaled-content rules penalise volume without substance.
+
+### Search and answer engines
+
+| Engine | How it finds pages | What we do |
+| --- | --- | --- |
+| Google, including AI Overviews and Gemini | Search Console, sitemap, links | H0/T1, links (D1–D5) |
+| Bing, which also powers ChatGPT search, Copilot, DuckDuckGo and Yahoo | Webmaster Tools, sitemap, IndexNow | H0/T1, L1 |
+| Brave Search | Its own index. No webmaster tools or sitemap submission; it finds pages through links and opted-in Brave users' visits | Links and real visits (D1, D4) |
+| Perplexity, ChatGPT, Claude | Their own search crawlers plus the indexes above | Already allowed: `robots.txt` allows `*` |
+
+| ID | Who | What |
+| --- | --- | --- |
+| L1 | Agent | (= T10) IndexNow: a key file in `public/` and a CI step after each production deploy that submits changed URLs (from the sitemap's `lastModified`). Bing and Yandex recrawl within hours instead of weeks. No runtime dependency. |
+| L2 | Agent | **Answer-first pages.** Add a shared `QuickAnswer` block at the top of every guide and calculator content page: a 2–3 sentence direct answer containing the key number. Use question-shaped H2s in the words people search, one self-contained idea per paragraph, tables for scales and rates, a worked example, and a "Sources (checked <date>)" list. Add a test that every guide has a quick answer in both languages. AI engines quote self-contained passages, and Google uses them for featured snippets. Do the HSC pages first, then the other 20 guides. |
+| L3 | Owner | Decide on AI *training* crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot). Search and answer crawlers are already allowed. **Recommendation: keep allowing them.** The pages are public and free and hold no user data, and being in models' knowledge helps "HisabBD" brand recall. |
+| L4 | Agent | `public/llms.txt`: a plain-text index of every calculator and guide in both languages, generated from the registries at build time. It's cheap, but no major engine has confirmed using it, so it comes after L1 and L2. |
+| L5 | Owner → agent | (= T7) A contact page, a "How we check our numbers" methodology section and `sameAs` links to an official Facebook page. Engines weigh who stands behind education and money answers. Blocked on a public email. |
+| L6 | Owner | Measure AI referrals with a saved GA4 exploration on session source (chatgpt.com, perplexity.ai, copilot.microsoft.com, gemini.google.com). No new events, so privacy is unchanged. |
+
+### Not doing (fails the core-value gate)
+
+- "HSC result 2026 check / marksheet / result by roll" pages. We have no tool for this, can't be more accurate than the boards, and news sites own those searches. H1's single link to the official site is enough.
+- Rumour or "expected" pages (result dates, GPA cutoffs before the circulars are out).
+- A year in evergreen titles, mass "GPA for N subjects" pages, or AI-spun bulk posts.
+- Anything that puts grades or GPAs in URLs or analytics. Share-as-image (S1) already covers sharing.
+
+### Order
+
+| When | Items |
+| --- | --- |
+| 29–30 Oct | H0 (owner), H1, L1 |
+| 31 Oct | H2 |
+| by 1 Nov | H3 |
+| 1–15 Nov | H4, L2 on the HSC pages, BCS job-age refresh |
+| from 11 Nov | H5 and H6 as circulars publish |
+| Nov–Dec | H8, L2 for the remaining guides, L4, L5; H7 only if it passes the gate |
+| Weekly | Search Console and Bing: indexed pages and the GPA pages' queries; AI referrals (L6) |
+
+## Status (updated 29 Oct 2026)
+
+### Built on branch `plan/hsc-results-seo-geo` (not yet merged)
+
+| Item | What | Where |
+| --- | --- | --- |
+| H1 | SSC/HSC GPA calculator: "Results and board challenge" section (official result site, HSC 2026 dates with source) and a board-challenge FAQ in both languages; the GPA guide links to the new guide and is marked updated 29 Oct | `src/calculators/ssc-hsc-gpa/`, `src/guides/ssc-hsc-gpa-calculation/` |
+| H3 | Guide 21: board challenge. It opens with a short answer and covers how much one grade higher adds, three worked examples (pinned by tests in `ssc-hsc-gpa/logic.test.ts`), what is re-checked, and dated sources. **No fee is stated**: the 2026 notice wasn't out on 29 Oct. Once it is, add the fee and process from it and set `updatedOn` | `/guides/board-challenge-gpa`, `src/guides/board-challenge-gpa/` |
+| L1 / T10 | IndexNow after every production deploy; run it by hand once with "all" ticked after merging | `scripts/indexnow.mjs`, `.github/workflows/indexnow.yml`, `public/<key>.txt` |
 
 ### Shipped: merged in PR #1 and live on bd-hisab.vercel.app (verified 28 Oct 2026)
 
@@ -156,7 +241,7 @@ N1–N4 and T3 shipped, so the bottleneck is now **getting indexed and getting t
 
 | When | Event | Searches it drives | HisabBD response |
 | --- | --- | --- | --- |
-| 29 Oct 2026 | HSC 2026 results published | "HSC GPA calculator", "জিপিএ বের করার নিয়ম", 4th-subject rules | N2 |
+| 31 Oct 2026 (moved from 29 Oct) | HSC 2026 results published; re-evaluation applications 1–7 Nov | "HSC GPA calculator", "জিপিএ বের করার নিয়ম", 4th-subject rules | N2 |
 | ~1 Nov 2026 | 50th BCS circular expected; government job entry age limit is 32 (2026 law) | "BCS age calculator", "চাকরির বয়স ক্যালকুলেটর", "age on circular date" | N1 + existing Age Calculator |
 | Nov 2026 – Feb 2027 | University admission season | GPA requirements, GPA/CGPA conversions | N2, guides |
 | 30 Nov 2026 | Individual income tax return deadline, AY 2026-27 | "income tax calculator 2026-27", "আয়কর ক্যালকুলেটর", rebate | N8 (only if sourced in time) |
@@ -362,7 +447,8 @@ Links from other sites are the main constraint for a new domain. All outreach co
 
 Researched 28 Oct 2026. Re-check before shipping anything that depends on these.
 
-- HSC 2026 results date: [Prothom Alo](https://en.prothomalo.com/youth/education/s133co1qkz), [Dhaka Tribune](https://www.dhakatribune.com/bangladesh/education/422687/hsc-results-likely-between-october-25-and-29)
+- HSC 2026 results moved to 31 Oct, 11:00; re-evaluation 1–7 Nov (checked 29 Oct): [Daily Star](https://www.thedailystar.net/news/education/news/hsc-2026-results-october-31-how-check-your-results-online-and-sms-4308776); earlier 29 Oct reports: [Bangla Tribune](https://www.banglatribune.com/educations/976516/), [Jugantor](https://www.jugantor.com/national/1175199)
+- HSC 2026 results date (original): [Prothom Alo](https://en.prothomalo.com/youth/education/s133co1qkz), [Dhaka Tribune](https://www.dhakatribune.com/bangladesh/education/422687/hsc-results-likely-between-october-25-and-29)
 - 50th BCS circular and age limit: [Prothom Alo](https://en.prothomalo.com/youth/er1f8bugw9), [Jago News (age limit 32 bill)](https://www.jagonews24.com/en/national/news/91510), [Dhaka Tribune (BCS age 32 gazette)](https://www.dhakatribune.com/bangladesh/367871/gazette-published-increasing-the-maximum-age-for)
 - Tax AY 2026-27 deadline and conflicting slabs: [bdtaxguide.com](https://bdtaxguide.com/tax-slabs-2026-27), [hsa.com.bd](https://hsa.com.bd/tax-calculator), [ayakor.com](https://ayakor.com/)
 - Savings certificate rates: [Ittefaq](https://en.ittefaq.com.bd/10518/sanchayapatra-interest-rate-revised), [UNB](https://unb.com.bd/category/Bangladesh/5-year-bangladesh-sanchayapatra-2025-revised-profit-rates/153636), [teamzlab calculator](https://tool.teamzlab.com/bd/sanchayapatra-calculator/)

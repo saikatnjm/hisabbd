@@ -1,0 +1,34 @@
+# After Vercel finishes a production deploy, tell IndexNow engines (Bing and
+# the engines it feeds, Yandex, …) which pages changed. See scripts/indexnow.mjs.
+# Run it by hand with "all" ticked for the first submission.
+name: IndexNow
+
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Submit every sitemap URL, not just recent changes
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    name: Submit changed URLs
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      # Repository variable for a custom domain; the script defaults to bd-hisab.vercel.app.
+      SITE_URL: ${{ vars.SITE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/indexnow.mjs ${{ inputs.all && '--all' || '' }}

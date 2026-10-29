@@ -59,6 +59,9 @@ import { landMeasurementUnitsGuide } from "./land-measurement-units/meta";
 import { SscHscGpaCalculationGuideContent } from "./ssc-hsc-gpa-calculation/content";
 import { SscHscGpaCalculationGuideContentBn } from "./ssc-hsc-gpa-calculation/content.bn";
 import { sscHscGpaCalculationGuide } from "./ssc-hsc-gpa-calculation/meta";
+import { BoardChallengeGpaGuideContent } from "./board-challenge-gpa/content";
+import { BoardChallengeGpaGuideContentBn } from "./board-challenge-gpa/content.bn";
+import { boardChallengeGpaGuide } from "./board-challenge-gpa/meta";
 import type { GuideMeta } from "./types";
 
 export interface GuidePageEntry {
@@ -94,6 +97,7 @@ const entries: GuidePageEntry[] = [
   { meta: daysBetweenDatesGuide, Content: DaysBetweenDatesGuideContent, ContentBn: DaysBetweenDatesGuideContentBn },
   { meta: chequeAmountInWordsGuide, Content: ChequeAmountInWordsGuideContent, ContentBn: ChequeAmountInWordsGuideContentBn },
   { meta: goldBhoriGramGuide, Content: GoldBhoriGramGuideContent, ContentBn: GoldBhoriGramGuideContentBn },
+  { meta: boardChallengeGpaGuide, Content: BoardChallengeGpaGuideContent, ContentBn: BoardChallengeGpaGuideContentBn },
 ];
 
 export const guidePages: Record<string, GuidePageEntry> = Object.fromEntries(

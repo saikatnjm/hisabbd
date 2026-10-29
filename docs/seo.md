@@ -69,6 +69,8 @@ Root defaults (`rootMetadata(locale)` in `src/components/layout/root-document.ts
 
 The 404 page is `noindex`.
 
+After each production deploy, changed URLs are submitted to IndexNow (Bing, Yandex and others) by `scripts/indexnow.mjs`; see [development.md](development.md) → Deployment.
+
 ## Structured data (JSON-LD)
 
 Builders in `src/lib/seo/structured-data.ts`, rendered by `components/seo/json-ld.tsx` as one `@graph`. `serializeJsonLd` escapes `<` so the content can't close the script tag.

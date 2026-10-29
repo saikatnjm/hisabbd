@@ -29,6 +29,11 @@ export const sscHscGpaCalculator: CalculatorMeta = {
     "alim gpa",
     "gpa ber korar niyom",
     "4th subject gpa",
+    "board challenge",
+    "rescrutiny",
+    "re-evaluation",
+    "খাতা চ্যালেঞ্জ",
+    "পুনঃনিরীক্ষা",
     "এসএসসি জিপিএ",
     "এইচএসসি জিপিএ",
     "জিপিএ",
@@ -104,6 +109,11 @@ export const sscHscGpaCalculator: CalculatorMeta = {
       answer:
         "This calculator follows widely published board practice; we could not find an official circular stating the rules online. It shows 2 decimals, rounded half up. Your board’s published result is the one that counts.",
     },
+    {
+      question: "How much would a board challenge raise my GPA?",
+      answer:
+        "One grade higher in a main subject adds the difference in grade points divided by your number of main subjects: with 6 HSC subjects, A to A+ adds about 0.17 and A- to A about 0.08. An F that becomes a D turns a fail into a pass. A GPA of 5.00 can’t rise, and a 4th subject that only reaches C adds nothing. Change one grade above to see your own case.",
+    },
   ],
   faqsBn: [
     {
@@ -155,6 +165,11 @@ export const sscHscGpaCalculator: CalculatorMeta = {
       question: "আমার আনুষ্ঠানিক জিপিএ ভিন্ন হতে পারে কেন?",
       answer:
         "এই ক্যালকুলেটর বহুল প্রচলিত বোর্ডের নিয়ম মেনে চলে; নিয়মগুলো জানিয়ে কোনো আনুষ্ঠানিক প্রজ্ঞাপন আমরা অনলাইনে পাইনি। এটি ২ দশমিকে দেখায় (হাফ-আপ রাউন্ড)। আপনার বোর্ডের প্রকাশিত ফলাফলই চূড়ান্ত।",
+    },
+    {
+      question: "খাতা চ্যালেঞ্জে জিপিএ কত বাড়তে পারে?",
+      answer:
+        "কোনো মূল বিষয়ে এক গ্রেড বাড়লে গ্রেড পয়েন্টের পার্থক্যকে মূল বিষয়ের সংখ্যা দিয়ে ভাগ করলে যা হয়, জিপিএ ততটা বাড়ে: এইচএসসির 6টি বিষয়ে A থেকে A+ হলে প্রায় 0.17, A- থেকে A হলে প্রায় 0.08। মূল বিষয়ের F বদলে D হলে ফেল থেকে পাস হয়। জিপিএ 5.00 হলে আর বাড়ে না, আর চতুর্থ বিষয় বড়জোর C পর্যন্ত উঠলে কিছুই যোগ হয় না। ওপরে একটি গ্রেড বদলে নিজের হিসাব দেখুন।",
     },
   ],
 };

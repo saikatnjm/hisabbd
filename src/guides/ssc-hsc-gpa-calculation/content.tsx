@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { calculatorPath } from "@/calculators/paths";
 import { ContentSection } from "@/components/ui/content-section";
+import { guidePath } from "@/guides/paths";
 import { localePath } from "@/i18n/locales";
 
 const link = "font-semibold text-brand-700 underline underline-offset-4";
@@ -182,6 +183,18 @@ export function SscHscGpaCalculationGuideContent() {
           to see your GPA, whether you passed, the 4th subject bonus and your GPA without the 4th
           subject together. For your official result, always go by your board’s published result and
           notice.
+        </p>
+      </ContentSection>
+
+      <ContentSection id="board-challenge" title="After the results: is a board challenge worth it?">
+        <p>
+          One grade higher in a main subject adds (new points − old points) ÷ the number of main
+          subjects: about 0.17 for A to A+ with 6 HSC subjects. An F that becomes a D turns a fail into
+          a pass, while a GPA of 5.00 can’t rise at all. Before you pay, read{" "}
+          <Link href={localePath("en", guidePath("board-challenge-gpa"))} className={link}>
+            how much a board challenge can change your GPA
+          </Link>
+          , with the HSC 2026 dates and sources.
         </p>
       </ContentSection>
     </>
