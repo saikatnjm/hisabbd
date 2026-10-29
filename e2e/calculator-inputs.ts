@@ -150,4 +150,11 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Price per bhori", bn: "প্রতি ভরির দাম" }, value: "220000" },
     ],
   },
+  "electricity-bill-calculator": {
+    submit: { en: "Calculate bill", bn: "বিল হিসাব করুন" },
+    fields: [
+      { label: { en: "Units used this month", bn: "এ মাসে ব্যবহৃত ইউনিট" }, value: "200" },
+      { label: { en: "Sanctioned load", bn: "অনুমোদিত লোড" }, value: "2" },
+    ],
+  },
 };

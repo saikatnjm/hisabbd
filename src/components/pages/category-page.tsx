@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { categories } from "@/calculators/categories";
-import { CALCULATORS_PATH, categoryHref } from "@/calculators/paths";
+import { CALCULATORS_PATH, calculatorPath, categoryHref } from "@/calculators/paths";
 import { getCalculatorsByCategory } from "@/calculators/registry";
 import type { Category } from "@/calculators/types";
 import { CalculatorList } from "@/components/calculator/calculator-list";
@@ -10,13 +10,15 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
 import { localePath, type Locale } from "@/i18n/locales";
 import { ui } from "@/i18n/ui";
-import { breadcrumbSchema } from "@/lib/seo/structured-data";
+import { guidePath, guides } from "@/guides/registry";
+import { breadcrumbSchema, itemListSchema } from "@/lib/seo/structured-data";
 
 interface CategoryStrings {
   heading: (name: string) => string;
   empty: string;
   browseAll: string;
   otherCategories: string;
+  guides: string;
 }
 
 const STRINGS: Record<Locale, CategoryStrings> = {
@@ -25,12 +27,14 @@ const STRINGS: Record<Locale, CategoryStrings> = {
     empty: "No calculators in this category yet.",
     browseAll: "Browse all calculators",
     otherCategories: "Other categories",
+    guides: "Guides: how these calculations work",
   },
   bn: {
     heading: (name) => `${name} বিভাগের ক্যালকুলেটর`,
     empty: "এই বিভাগে এখনো কোনো ক্যালকুলেটর নেই।",
     browseAll: "সব ক্যালকুলেটর দেখুন",
     otherCategories: "অন্যান্য বিভাগ",
+    guides: "গাইড: এই হিসাবগুলো যেভাবে হয়",
   },
 };
 
@@ -42,6 +46,8 @@ export function CategoryPageView({ category, locale }: { category: Category; loc
   const name = bn ? category.nameBn : category.name;
   const items = getCalculatorsByCategory(category.id);
   const others = categories.filter((c) => c.id !== category.id);
+  const slugs = new Set(items.map((c) => c.slug));
+  const categoryGuides = guides.filter((g) => slugs.has(g.calculator));
   const crumbs = [
     { name: nav.home, path: localePath(locale, "/") },
     { name: nav.calculators, path: localePath(locale, CALCULATORS_PATH) },
@@ -50,7 +56,15 @@ export function CategoryPageView({ category, locale }: { category: Category; loc
 
   return (
     <>
-      <JsonLd schemas={[breadcrumbSchema(crumbs)]} />
+      <JsonLd
+        schemas={[
+          breadcrumbSchema(crumbs),
+          itemListSchema(
+            t.heading(name),
+            items.map((c) => ({ name: bn ? c.nameBn : c.name, path: localePath(locale, calculatorPath(c.slug)) })),
+          ),
+        ]}
+      />
       <div className="border-b border-brand-100 bg-brand-50 bg-graph">
         <Container className="py-5 sm:py-8">
           <Breadcrumbs
@@ -69,6 +83,7 @@ export function CategoryPageView({ category, locale }: { category: Category; loc
           <p className="mt-3 max-w-2xl text-lg text-slate-700 sm:mt-4">
             {bn ? category.descriptionBn : category.description}
           </p>
+          <p className="mt-2 max-w-2xl text-slate-600">{bn ? category.aboutBn : category.about}</p>
         </Container>
       </div>
 
@@ -90,6 +105,26 @@ export function CategoryPageView({ category, locale }: { category: Category; loc
             </p>
           }
         />
+
+        {categoryGuides.length > 0 && (
+          <nav aria-labelledby="category-guides" className="mt-12">
+            <h2 id="category-guides" className="mb-3 font-display text-xl font-bold text-slate-900">
+              {t.guides}
+            </h2>
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {categoryGuides.map((g) => (
+                <li key={g.slug}>
+                  <Link
+                    href={localePath(locale, guidePath(g.slug))}
+                    className="font-semibold text-brand-700 underline underline-offset-4"
+                  >
+                    {bn ? g.titleBn : g.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
 
         <nav aria-labelledby="other-categories" className="mt-12">
           <h2 id="other-categories" className="mb-3 font-display text-xl font-bold text-slate-900">

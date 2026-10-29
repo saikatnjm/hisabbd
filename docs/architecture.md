@@ -59,6 +59,7 @@
     │   ├── metadata.ts           pageMetadata(), calculatorMetadata(), OG_IMAGE
     │   ├── search.ts             search index builders + ranking
     │   ├── featured.ts           editor-picked slugs for home/search suggestions
+    │   ├── seasonal.ts           "Useful right now" windows (exam results, Ramadan, Boishakh, budget)
     │   ├── upcoming.ts           names shown only when the registry is empty
     │   ├── education/            grading scales, row-list hook, add/remove row buttons (GPA, CGPA)
     │   └── <name>/               one folder per calculator (see below)

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { guides } from "@/guides/registry";
+import { categories } from "./categories";
 import { calculators, getRelatedCalculators } from "./registry";
 import type { SeoFields } from "./types";
 
@@ -35,11 +36,17 @@ describe("SEO landing-page criteria", () => {
     expect(problems).toEqual([]);
   });
 
+  it("category pages have well-sized titles and descriptions in both languages", () => {
+    const problems = categories.flatMap((c) => [...seoProblems(c.id, c.seo, "en"), ...seoProblems(c.id, c.seoBn, "bn")]);
+    expect(problems).toEqual([]);
+  });
+
   it("no two pages share a title in the same language", () => {
     for (const locale of ["en", "bn"] as const) {
       const titles = [
         ...calculators.map((c) => (locale === "en" ? c.seo : c.seoBn).title),
         ...guides.map((g) => (locale === "en" ? g.seo : g.seoBn).title),
+        ...categories.map((c) => (locale === "en" ? c.seo : c.seoBn).title),
       ];
       const duplicates = titles.filter((t, i) => titles.indexOf(t) !== i);
       expect(duplicates, locale).toEqual([]);

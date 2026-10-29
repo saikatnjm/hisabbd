@@ -21,12 +21,7 @@ function findCategory(id: string) {
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const category = findCategory((await params).category);
   if (!category) return {};
-  return pageMetadata({
-    title: `${category.nameBn} বিভাগের ক্যালকুলেটর`,
-    description: `${category.descriptionBn} ফ্রি, দ্রুত, যেকোনো ফোনে সহজে চলে।`,
-    path: categoryHref(category.id),
-    locale: "bn",
-  });
+  return pageMetadata({ ...category.seoBn, path: categoryHref(category.id), locale: "bn" });
 }
 
 export default async function BanglaCategoryPage({ params }: { params: Params }) {

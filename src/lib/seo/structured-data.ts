@@ -97,6 +97,20 @@ export function faqSchema(faqs: readonly FaqItem[]): Schema {
   };
 }
 
+/** An ordered list of pages, e.g. the calculators on a category page. */
+export function itemListSchema(name: string, items: readonly BreadcrumbEntry[]): Schema {
+  return {
+    "@type": "ItemList",
+    name,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      url: absoluteUrl(item.path),
+    })),
+  };
+}
+
 /** Combines schemas into one JSON-LD document. */
 export function schemaGraph(schemas: readonly Schema[]): Schema {
   return { "@context": "https://schema.org", "@graph": schemas };

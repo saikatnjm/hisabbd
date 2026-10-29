@@ -25,7 +25,7 @@ Every page exists in English at the path shown and in Bangla with the `/bn` pref
 | `/calculators` | All calculators, grouped by category | `src/app/(en)/calculators/page.tsx` → `src/components/pages/calculators-index.tsx` |
 | `/calculators/<slug>` | One calculator page (10 of them, listed below) | `src/app/(en)/calculators/<slug>/page.tsx` → `CalculatorPage` |
 | `/categories/<id>` | Category page: calculators in one category plus links to the other categories | `src/app/(en)/categories/[category]/page.tsx` → `src/components/pages/category-page.tsx` |
-| `/guides`, `/guides/<slug>` | Guides hub and 14 explanatory articles, each leading to a calculator | `src/app/(en)/guides/` → `src/components/pages/guide{s-index,-page}.tsx` |
+| `/guides`, `/guides/<slug>` | Guides hub and 20 explanatory articles, each leading to a calculator | `src/app/(en)/guides/` → `src/components/pages/guide{s-index,-page}.tsx` |
 | `/about` | What HisabBD does, how the calculations work, limits | `src/app/(en)/about/page.tsx` |
 | `/privacy` | Privacy policy. Its text adapts to which analytics are enabled. | `src/app/(en)/privacy/page.tsx` |
 | `/terms` | Terms of use | `src/app/(en)/terms/page.tsx` |
@@ -60,6 +60,7 @@ Bangla calculator pages are not separate files. A single dynamic route, `src/app
 | `dps-calculator` | DPS Calculator / ডিপিএস ক্যালকুলেটর | finance | piggy-bank | Monthly deposit scheme maturity, yearly table, tax, excise |
 | `zakat-calculator` | Zakat Calculator / যাকাত ক্যালকুলেটর | finance | crescent | Net zakatable wealth, silver or gold nisab, 2.5% due, breakdown |
 | `gold-calculator` | Gold Price & Bhori Calculator / সোনার দাম ও ভরি ক্যালকুলেটর | everyday | gold-bar | Bhori/ana/roti ↔ grams; price with making charge and VAT |
+| `electricity-bill-calculator` | Electricity Bill Calculator / বিদ্যুৎ বিল ক্যালকুলেটর | everyday | plug | BERC 2026 residential slabs, demand charge, meter rent, VAT; units, readings or recharge mode |
 | `mfs-cash-out-charge-calculator` | bKash & Nagad Cash Out Charge Calculator / বিকাশ ও নগদ ক্যাশ আউট চার্জ ক্যালকুলেটর | finance | mobile-money | Charge per ৳1,000 by provider and channel; max cash for a balance |
 
 Full specs: [calculators.md](calculators.md).
@@ -91,6 +92,8 @@ Rendered by `src/components/calculator/calculator-page.tsx`, top to bottom:
 ## User-facing features
 
 - **Search** (home, 404, calculators index): an accessible combobox that matches calculators and categories on word prefixes across English and Bangla names, summary, keywords and slug. Runs client-side over a small serialized index. Details in [architecture.md](architecture.md#search).
+- **Useful right now** (home): calculators for the current Bangladesh season (HSC/SSC results, Ramadan and zakat, Pohela Boishakh, the budget), worked out from the visitor's date. Data in `src/calculators/seasonal.ts`.
+- **Category pages** are landing pages: each has its own search title and description (`seo`/`seoBn`), an intro, the calculators, the guides for those calculators and `ItemList` JSON-LD.
 - **Quick picks**: a chip row under the home search. It shows editor-picked calculators (`featuredSlugs` in `src/calculators/featured.ts`) until the visitor has favourites or recents, then shows those.
 - **Favourites ("Save") and Recently used**: stored in `localStorage`, slugs only. Max 12 favourites and 6 recents.
 - **Copy / Share result**: plain-text summary of the result. Sharing a page sends only the URL.

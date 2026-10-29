@@ -33,7 +33,7 @@ export const salaryCalculator: CalculatorMeta = {
       "গ্রস বেতন আর আপনার দেওয়া কর্তনগুলো থেকে মাসিক ও বাৎসরিক নিট বেতনের আনুমানিক হিসাব করুন। ফ্রি, প্রাইভেট, যেকোনো ফোনে চলে।",
   },
   addedOn: "2026-10-05",
-  related: ["emi-calculator", "dps-calculator", "sanchayapatra-calculator", "percentage-calculator"],
+  related: ["emi-calculator", "dps-calculator", "electricity-bill-calculator", "sanchayapatra-calculator", "percentage-calculator"],
   faqs: [
     {
       question: "What is the difference between gross and net salary?",

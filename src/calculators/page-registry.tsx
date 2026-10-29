@@ -31,6 +31,10 @@ import { DpsCalculator } from "./dps/dps-calculator";
 import { DpsCalculatorContent } from "./dps/content";
 import { DpsCalculatorContentBn } from "./dps/content.bn";
 import { dpsCalculator } from "./dps/meta";
+import { ElectricityCalculator } from "./electricity/electricity-calculator";
+import { ElectricityCalculatorContent } from "./electricity/content";
+import { ElectricityCalculatorContentBn } from "./electricity/content.bn";
+import { electricityCalculator } from "./electricity/meta";
 import { EmiCalculator } from "./emi/emi-calculator";
 import { EmiCalculatorContent } from "./emi/content";
 import { EmiCalculatorContentBn } from "./emi/content.bn";
@@ -129,6 +133,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: dpsCalculator, Calculator: DpsCalculator, Content: DpsCalculatorContent, ContentBn: DpsCalculatorContentBn },
       { meta: zakatCalculator, Calculator: ZakatCalculator, Content: ZakatCalculatorContent, ContentBn: ZakatCalculatorContentBn },
       { meta: goldCalculator, Calculator: GoldCalculator, Content: GoldCalculatorContent, ContentBn: GoldCalculatorContentBn },
+      { meta: electricityCalculator, Calculator: ElectricityCalculator, Content: ElectricityCalculatorContent, ContentBn: ElectricityCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

@@ -14,6 +14,7 @@ import {
   MobileMoneyIcon,
   PercentIcon,
   PiggyBankIcon,
+  PlugIcon,
   ReceiptIcon,
   ScaleIcon,
   SealIcon,
@@ -49,6 +50,7 @@ const icons: Record<CalculatorIconName, (p: React.SVGProps<SVGSVGElement>) => Re
   "mobile-money": MobileMoneyIcon,
   crescent: CrescentIcon,
   "gold-bar": GoldBarIcon,
+  plug: PlugIcon,
 };
 
 const sizes = {
