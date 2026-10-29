@@ -19,6 +19,7 @@ import { governmentJobAgeLimitGuide } from "./government-job-age-limit/meta";
 import { landMeasurementUnitsGuide } from "./land-measurement-units/meta";
 import { sscHscGpaCalculationGuide } from "./ssc-hsc-gpa-calculation/meta";
 import { boardChallengeGpaGuide } from "./board-challenge-gpa/meta";
+import { electricityUnitsAppliancesGuide } from "./electricity-units-appliances/meta";
 import type { GuideMeta } from "./types";
 
 export { GUIDES_PATH, guidePath } from "./paths";
@@ -51,6 +52,7 @@ export const guides: readonly GuideMeta[] = [
   chequeAmountInWordsGuide,
   goldBhoriGramGuide,
   boardChallengeGpaGuide,
+  electricityUnitsAppliancesGuide,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

@@ -62,6 +62,9 @@ import { sscHscGpaCalculationGuide } from "./ssc-hsc-gpa-calculation/meta";
 import { BoardChallengeGpaGuideContent } from "./board-challenge-gpa/content";
 import { BoardChallengeGpaGuideContentBn } from "./board-challenge-gpa/content.bn";
 import { boardChallengeGpaGuide } from "./board-challenge-gpa/meta";
+import { ElectricityUnitsAppliancesGuideContent } from "./electricity-units-appliances/content";
+import { ElectricityUnitsAppliancesGuideContentBn } from "./electricity-units-appliances/content.bn";
+import { electricityUnitsAppliancesGuide } from "./electricity-units-appliances/meta";
 import type { GuideMeta } from "./types";
 
 export interface GuidePageEntry {
@@ -98,6 +101,7 @@ const entries: GuidePageEntry[] = [
   { meta: chequeAmountInWordsGuide, Content: ChequeAmountInWordsGuideContent, ContentBn: ChequeAmountInWordsGuideContentBn },
   { meta: goldBhoriGramGuide, Content: GoldBhoriGramGuideContent, ContentBn: GoldBhoriGramGuideContentBn },
   { meta: boardChallengeGpaGuide, Content: BoardChallengeGpaGuideContent, ContentBn: BoardChallengeGpaGuideContentBn },
+  { meta: electricityUnitsAppliancesGuide, Content: ElectricityUnitsAppliancesGuideContent, ContentBn: ElectricityUnitsAppliancesGuideContentBn },
 ];
 
 export const guidePages: Record<string, GuidePageEntry> = Object.fromEntries(

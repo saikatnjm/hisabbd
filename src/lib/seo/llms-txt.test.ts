@@ -28,4 +28,9 @@ describe("buildLlmsTxt", () => {
   it("carries each guide's short answer", () => {
     expect(guides.filter((g) => !text.includes(g.answer)).map((g) => g.slug)).toEqual([]);
   });
+
+  it("carries each calculator's first FAQ answer", () => {
+    const missing = calculators.filter((c) => c.faqs?.[0] && !text.includes(c.faqs[0].answer)).map((c) => c.slug);
+    expect(missing).toEqual([]);
+  });
 });
