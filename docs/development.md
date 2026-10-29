@@ -102,6 +102,7 @@ All optional. Copy `.env.example` to `.env.local` for local use (`.env*` is git-
 - The output is entirely static (all routes pre-rendered), with security headers from `next.config.ts`.
 - The live site is `https://bd-hisab.vercel.app` (the Vercel production domain, used as the canonical fallback) unless `NEXT_PUBLIC_SITE_URL` is set.
 - After deploy, submit `<site>/sitemap.xml` in Search Console and Bing Webmaster Tools.
+- **IndexNow.** `.github/workflows/indexnow.yml` runs `scripts/indexnow.mjs` when Vercel reports a successful **Production** deployment. The script submits the sitemap URLs whose `lastModified` is within the last 7 days, plus the home, calculators and guides hubs, to `api.indexnow.org`. This reaches Bing and the engines it feeds, plus Yandex and others. The key is the `public/<32 hex>.txt` file; keep exactly one. For the first submission, or after a domain change, run the workflow by hand (Actions → IndexNow → Run workflow) with "all" ticked. For a custom domain, set the repository variable `SITE_URL`. Test locally without submitting: `docker compose run --rm --no-deps app node scripts/indexnow.mjs --dry-run`.
 
 ## Git and commits
 

@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { roundTo } from "@/lib/number";
 import {
   BD_BOARD_5_SCALE,
   calculateSscHscGpa,
@@ -237,5 +238,37 @@ describe("calculateSscHscGpa validation", () => {
     const calc = calculateSscHscGpa([row("X")], "X", tiny);
     expect(calc.ok && calc.result.gpa).toBe(5); // (4 + 2) ÷ 1 = 6 → capped
     expect(calculateSscHscGpa([row("A+")], "", tiny).ok).toBe(false);
+  });
+});
+
+// The worked examples in the board challenge guide (src/guides/board-challenge-gpa).
+describe("board challenge guide examples", () => {
+  const gpa2 = (rows: SubjectRowInput[], fourth: string) => roundTo(ok(rows, fourth).gpa, 2);
+
+  it("A- to A in English raises 4.75 to 4.83; A to A+ in Bangla or the 4th subject gives 4.92", () => {
+    expect(gpa2(rowsOf("A", "A-", "A+", "A", "A+", "A+"), "A")).toBe(4.75);
+    expect(gpa2(rowsOf("A", "A", "A+", "A", "A+", "A+"), "A")).toBe(4.83);
+    expect(gpa2(rowsOf("A+", "A-", "A+", "A", "A+", "A+"), "A")).toBe(4.92);
+    expect(gpa2(rowsOf("A", "A-", "A+", "A", "A+", "A+"), "A+")).toBe(4.92);
+    // A 4th-subject change leaves the GPA without the 4th subject alone.
+    expect(roundTo(ok(rowsOf("A", "A-", "A+", "A", "A+", "A+"), "A+").gpaWithoutFourth, 2)).toBe(4.42);
+  });
+
+  it("an F in English that becomes a D turns a fail into GPA 2.83", () => {
+    expect(ok(rowsOf("B", "F", "A-", "B", "A-", "B"), "C").status).toBe("fail");
+    const passed = ok(rowsOf("B", "D", "A-", "B", "A-", "B"), "C");
+    expect(passed.status).toBe("pass");
+    expect(roundTo(passed.gpa, 2)).toBe(2.83);
+  });
+
+  it("a GPA already at 5.00 does not change", () => {
+    expect(gpa2(rowsOf("A+", "A", "A+", "A+", "A+", "A+"), "A+")).toBe(5);
+    expect(gpa2(rowsOf("A+", "A+", "A+", "A+", "A+", "A+"), "A+")).toBe(5);
+  });
+
+  it("a 4th subject rising to C or below adds nothing", () => {
+    const base = rowsOf("A", "A-", "A+", "A", "A+", "A+");
+    expect(ok(base, "C").gpa).toBe(ok(base, "D").gpa);
+    expect(ok(base, "C").gpa).toBe(ok(base, "F").gpa);
   });
 });

@@ -20,4 +20,5 @@ export const sscHscGpaCalculationGuide: GuideMeta = {
   },
   calculator: "ssc-hsc-gpa-calculator",
   publishedOn: "2026-10-28",
+  updatedOn: "2026-10-29",
 };

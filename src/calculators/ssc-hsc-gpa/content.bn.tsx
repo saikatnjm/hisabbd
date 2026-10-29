@@ -1,5 +1,10 @@
+import Link from "next/link";
 import { ContentSection } from "@/components/ui/content-section";
+import { BOARD_CHALLENGE_SOURCES } from "@/guides/board-challenge-gpa/sources";
+import { guidePath } from "@/guides/paths";
+import { localePath } from "@/i18n/locales";
 
+const link = "font-semibold text-brand-700 underline underline-offset-4";
 const cell = "px-3 py-2";
 const head = "px-3 py-2 font-semibold";
 
@@ -118,6 +123,28 @@ export function SscHscGpaCalculatorContentBn() {
           বোর্ডের চর্চার সাথে মেলে। নিয়মগুলো জানিয়ে কোনো আনুষ্ঠানিক প্রজ্ঞাপন আমরা অনলাইনে পাইনি, আর বোর্ড নিয়ম
           বদলাতে পারে, তাই এটিকে একটি আনুমানিক হিসাব হিসেবে নিন। নিজের বোর্ডের ফলাফল বিজ্ঞপ্তি দেখুন: আপনার
           আনুষ্ঠানিক ফলাফলই চূড়ান্ত।
+        </p>
+      </ContentSection>
+
+      <ContentSection id="results-and-challenge" title="ফলাফল ও খাতা চ্যালেঞ্জ">
+        <p>
+          বোর্ডের ফল প্রকাশ হয়{" "}
+          <a href={BOARD_CHALLENGE_SOURCES.results.url} target="_blank" rel="noopener" className={link}>
+            {BOARD_CHALLENGE_SOURCES.results.title}
+          </a>{" "}
+          ও প্রতিটি বোর্ডের ওয়েবসাইটে। এইচএসসি 2026-এর ফল 31 অক্টোবর 2026, আর খাতা চ্যালেঞ্জের আবেদন 1 থেকে 7
+          নভেম্বর (
+          <a href={BOARD_CHALLENGE_SOURCES.dates.url} target="_blank" rel="noopener" className={link}>
+            {BOARD_CHALLENGE_SOURCES.dates.title}
+          </a>
+          )।
+        </p>
+        <p>
+          খাতা চ্যালেঞ্জের কথা ভাবছেন? ওপরে একটি গ্রেড বদলে দুটো জিপিএ তুলনা করুন, অথবা পড়ুন{" "}
+          <Link href={localePath("bn", guidePath("board-challenge-gpa"))} className={link}>
+            খাতা চ্যালেঞ্জে জিপিএ কত বাড়তে পারে
+          </Link>
+          ।
         </p>
       </ContentSection>
 
