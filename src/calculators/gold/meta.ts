@@ -67,7 +67,7 @@ export const goldCalculator: CalculatorMeta = {
   },
   addedOn: "2026-10-29",
   updatedOn: "2026-10-29",
-  related: ["zakat-calculator", "percentage-calculator", "vat-calculator"],
+  related: ["zakat-calculator", "weight-converter", "percentage-calculator", "vat-calculator"],
   faqs: [
     {
       question: "How many grams is 1 bhori of gold?",

@@ -175,4 +175,10 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Time (n)", bn: "সময় (n)" }, value: "5" },
     ],
   },
+  "weight-converter": {
+    submit: { en: "Convert", bn: "রূপান্তর করুন" },
+    fields: [
+      { label: { en: "Weight", bn: "ওজন" }, value: "2" },
+    ],
+  },
 };

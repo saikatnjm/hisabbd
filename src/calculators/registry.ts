@@ -26,6 +26,7 @@ import { CATEGORY_IDS, type CalculatorMeta, type CategoryId } from "./types";
 
 export { calculatorPath } from "./paths";
 import { interestCalculator } from "./interest/meta";
+import { weightConverter } from "./weight/meta";
 
 /**
  * Registry of all published calculators.
@@ -60,6 +61,7 @@ export const calculators: readonly CalculatorMeta[] = [
   electricityCalculator,
   pregnancyCalculator,
   interestCalculator,
+  weightConverter,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

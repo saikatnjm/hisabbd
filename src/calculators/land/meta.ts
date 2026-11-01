@@ -67,7 +67,7 @@ export const landCalculator: CalculatorMeta = {
       "শতাংশ, কাঠা, বিঘা, একর ও বর্গফুটে জমির হিসাব করুন, অথবা ফুট, হাত বা গজে চার দিকের মাপ দিয়ে জমির পরিমাণ বের করুন। এলাকা অনুযায়ী কাঠার মাপ বদলানো যায়।",
   },
   addedOn: "2026-10-28",
-  related: ["percentage-calculator"],
+  related: ["percentage-calculator", "weight-converter"],
   faqs: [
     {
       question: "How many square feet are in 1 decimal (shotangsho)?",
