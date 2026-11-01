@@ -39,6 +39,13 @@ export default function AboutPage() {
             assumes.
           </li>
         </ul>
+        <p>
+          See{" "}
+          <Link href="/methodology" className="font-semibold text-brand-700 underline underline-offset-4">
+            how we check our numbers
+          </Link>{" "}
+          and when each rule was last reviewed.
+        </p>
       </ContentSection>
       <ContentSection id="limits" title="Limits">
         <p>

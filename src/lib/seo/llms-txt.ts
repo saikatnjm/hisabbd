@@ -56,6 +56,7 @@ export function buildLlmsTxt(calculators: readonly CalculatorMeta[], guides: rea
     "",
     `- [All calculators](${en("/calculators")}) · [সব ক্যালকুলেটর](${bn("/calculators")})`,
     `- [All guides](${en("/guides")}) · [সব গাইড](${bn("/guides")})`,
+    `- [How we check our numbers](${en("/methodology")}): formulas tested against worked examples, official dated sources, and when each rule was last reviewed`,
     `- [About](${en("/about")}) · [Privacy](${en("/privacy")})`,
     "",
   ].join("\n");

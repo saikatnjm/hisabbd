@@ -122,3 +122,16 @@ test("llms.txt is served as plain text and lists the guides", async ({ request }
   expect(text.startsWith("# HisabBD")).toBe(true);
   for (const guide of guides) expect(text, guide.slug).toContain(guidePath(guide.slug));
 });
+
+test.describe("methodology", () => {
+  for (const locale of LOCALES) {
+    test(`lists every calculator with a rules review date (${locale})`, async ({ page }) => {
+      const response = await page.goto(localePath(locale, "/methodology"));
+      expect(response?.status()).toBe(200);
+      for (const calc of calculators.filter((c) => c.updatedOn)) {
+        const href = localePath(locale, calculatorPath(calc.slug));
+        expect(await page.locator(`main a[href="${href}"]`).count(), calc.slug).toBeGreaterThanOrEqual(1);
+      }
+    });
+  }
+});

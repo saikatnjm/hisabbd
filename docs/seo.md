@@ -61,7 +61,7 @@ Root defaults (`rootMetadata(locale)` in `src/components/layout/root-document.ts
 
 ## Sitemap and robots
 
-`src/app/sitemap.ts` emits one entry **per locale** for `/`, `/calculators`, `/guides`, `/about`, `/privacy`, `/terms`, every `/categories/<id>`, every `/calculators/<slug>` and every `/guides/<slug>` (`lastModified = updatedOn ?? publishedOn`). Each entry carries `alternates.languages` (en-BD, bn-BD, x-default). Calculator entries use `lastModified = updatedOn ?? addedOn`. Set `updatedOn` in meta whenever a calculator's rules or figures are re-checked; it also shows as "Rules last reviewed: <date>" on the page.
+`src/app/sitemap.ts` emits one entry **per locale** for `/`, `/calculators`, `/guides`, `/about`, `/methodology`, `/privacy`, `/terms`, every `/categories/<id>`, every `/calculators/<slug>` and every `/guides/<slug>` (`lastModified = updatedOn ?? publishedOn`). Each entry carries `alternates.languages` (en-BD, bn-BD, x-default). Calculator entries use `lastModified = updatedOn ?? addedOn`. Set `updatedOn` in meta whenever a calculator's rules or figures are re-checked; it also shows as "Rules last reviewed: <date>" on the page.
 
 `src/app/manifest.ts` serves `/manifest.webmanifest` (name, theme colour, icon) so the site can be added to a phone's home screen.
 

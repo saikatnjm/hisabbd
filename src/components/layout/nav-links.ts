@@ -32,6 +32,7 @@ export function legalNav(locale: Locale): readonly NavLink[] {
   return [
     { name: t.guides, href: localePath(locale, GUIDES_PATH) },
     { name: t.about, href: localePath(locale, "/about") },
+    { name: t.methodology, href: localePath(locale, "/methodology") },
     { name: t.privacy, href: localePath(locale, "/privacy") },
     { name: t.terms, href: localePath(locale, "/terms") },
   ];

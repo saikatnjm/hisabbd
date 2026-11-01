@@ -23,7 +23,7 @@ function localizedEntries(path: string, lastModified?: string): MetadataRoute.Si
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ["/", CALCULATORS_PATH, GUIDES_PATH, "/about", "/privacy", "/terms"];
+  const pages = ["/", CALCULATORS_PATH, GUIDES_PATH, "/about", "/methodology", "/privacy", "/terms"];
   return [
     ...pages.flatMap((path) => localizedEntries(path)),
     ...categories.flatMap((c) => localizedEntries(categoryHref(c.id))),

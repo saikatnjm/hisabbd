@@ -83,22 +83,22 @@ Also in season: the next general BCS circular is the **52nd**, planned for Novem
 | Nov–Dec | H8, L2 for calculator pages, L5; H7 only if it passes the gate |
 | Weekly | Search Console and Bing: indexed pages and the GPA pages' queries; AI referrals (L6) |
 
-## Ten traffic plans (written 1 Nov 2026, revised after keyword research)
+## Ten traffic plans (written 1 Nov 2026, revised after keyword research; all shipped 1 Nov 2026)
 
 Chosen against the core-value gate above. Keyword research ran as four parallel agents (Sonnet for finance and health, Haiku for converters and a gap scan) using live search results; there are no volume tools, so demand is judged from who ranks, Bangla Q&A and news coverage, and textbook use. Each plan ships as one commit on `main`.
 
 | # | Plan | Target searches (from research) | Evidence and decision |
 | --- | --- | --- | --- |
 | P1 ✅ | Board challenge guide: the official 2026 fee and process | এইচএসসি খাতা চ্যালেঞ্জ ফি, board challenge 2026 | Applications 1–7 Nov; ৳150 per paper confirmed by Prothom Alo and The Daily Star |
-| P2 | Pregnancy due date calculator | ডেলিভারির তারিখ, প্রেগন্যান্সি ক্যালকুলেটর, কত সপ্তাহ, edd calculator | Only Indian Bangla tools rank. Bangla title leads with “ডেলিভারির তারিখ”. No cycle-length adjustment (no authoritative source) |
-| P3 | Simple and compound interest (সরল ও চক্রবৃদ্ধি মুনাফা) | চক্রবৃদ্ধি মুনাফা নির্ণয়, সরল মুনাফার সূত্র, compound interest calculator | Class 8–10 textbook topic: the ranking pages have no calculator, and the calculators are Indian (₹). Use textbook notation (I = Pnr, C = P(1 + r)ⁿ) and a year-by-year table |
-| P4 | Weight converter: মণ, সের, ছটাক, তোলা ↔ kg, g, lb | ১ মণ কত কেজি, ছটাক কত গ্রাম | Strong Bangla demand, one weak Bangla tool. Show both the 40 kg market মণ and the traditional 37.32 kg |
-| P5 | Height converter: feet-inches ↔ cm, m (plus হাত, গজ) | 5 ফুট 4 ইঞ্চি কত সেমি, feet to cm | Job circulars (police, BGB) give height in feet-inches. Medium demand, no Bangla tool |
-| P6 | Fever check and °F ↔ °C converter | জ্বর কত হলে, ১০০ ডিগ্রি জ্বর কত সেলসিয়াস | The fever intent beats a bare converter. Threshold 38 °C / 100.4 °F (NHS), cited; no diagnosis |
-| P7 | Calorie calculator (BMR and daily calories) | ক্যালরি ক্যালকুলেটর, দৈনিক কত ক্যালরি দরকার, BMR calculator | Mifflin–St Jeor (Am J Clin Nutr 1990), with activity multipliers labelled as a convention. Adults only. No Bangladeshi competitor |
-| P8 | Rod (steel bar) weight calculator | রডের ওজন হিসাব, rod weight calculator bangladesh | Gap scan's top pick (construction). Weight follows from steel's density (d²/162 kg per metre), and prices are user-entered |
-| P9 | Calculator pages list every guide for them; guides hub grouped by topic | (internal links) | More pages per visit; each guide linked from more places |
-| P10 | “How we check our numbers” page: every rule-dependent figure with its source and checked date, generated from the data files | (trust for health and money pages) | Health calculators added this round need visible methodology |
+| P2 ✅ | Pregnancy due date calculator | ডেলিভারির তারিখ, প্রেগন্যান্সি ক্যালকুলেটর, কত সপ্তাহ, edd calculator | Only Indian Bangla tools rank. Bangla title leads with “ডেলিভারির তারিখ”. No cycle-length adjustment (no authoritative source) |
+| P3 ✅ | Simple and compound interest (সরল ও চক্রবৃদ্ধি মুনাফা) | চক্রবৃদ্ধি মুনাফা নির্ণয়, সরল মুনাফার সূত্র, compound interest calculator | Class 8–10 textbook topic: the ranking pages have no calculator, and the calculators are Indian (₹). Use textbook notation (I = Pnr, C = P(1 + r)ⁿ) and a year-by-year table |
+| P4 ✅ | Weight converter: মণ, সের, ছটাক, তোলা ↔ kg, g, lb | ১ মণ কত কেজি, ছটাক কত গ্রাম | Strong Bangla demand, one weak Bangla tool. Show both the 40 kg market মণ and the traditional 37.32 kg |
+| P5 ✅ | Height converter: feet-inches ↔ cm, m (plus হাত, গজ) | 5 ফুট 4 ইঞ্চি কত সেমি, feet to cm | Job circulars (police, BGB) give height in feet-inches. Medium demand, no Bangla tool |
+| P6 ✅ | Fever check and °F ↔ °C converter | জ্বর কত হলে, ১০০ ডিগ্রি জ্বর কত সেলসিয়াস | The fever intent beats a bare converter. Threshold 38 °C / 100.4 °F (NHS), cited; no diagnosis |
+| P7 ✅ | Calorie calculator (BMR and daily calories) | ক্যালরি ক্যালকুলেটর, দৈনিক কত ক্যালরি দরকার, BMR calculator | Mifflin–St Jeor (Am J Clin Nutr 1990), with activity multipliers labelled as a convention. Adults only. No Bangladeshi competitor |
+| P8 ✅ | Rod (steel bar) weight calculator | রডের ওজন হিসাব, rod weight calculator bangladesh | Gap scan's top pick (construction). Weight follows from steel's density (d²/162 kg per metre), and prices are user-entered |
+| P9 ✅ | Calculator pages list every guide for them; guides hub grouped by topic | (internal links) | More pages per visit; each guide linked from more places |
+| P10 ✅ | “How we check our numbers” page: every rule-dependent figure with its source and checked date, generated from the data files | (trust for health and money pages) | Health calculators added this round need visible methodology |
 
 **Backlog from the research (not this round):**
 
@@ -113,7 +113,26 @@ Chosen against the core-value gate above. Keyword research ran as four parallel 
 
 **Skipped:** taka to dollar (needs live rates), sehri and iftar times (must come from the Islamic Foundation timetable, not computed), gas and WASA bills (no published tariff tables found), loan prepayment (each bank's own fees), and average or ratio pages (too thin).
 
-## Status (updated 29 Oct 2026)
+## Status (updated 1 Nov 2026)
+
+### Shipped on `main`, 1 Nov 2026 (one commit per plan)
+
+| Plan | Commit | Live at |
+| --- | --- | --- |
+| P1 Board challenge 2026 fee and process | `93f4c6f` | `/guides/board-challenge-gpa` |
+| P2 Pregnancy due date calculator | `d87869b` | `/calculators/pregnancy-calculator` |
+| P3 Simple and compound interest | `fe876b4` | `/calculators/interest-calculator` |
+| P4 Weight converter (মণ, সের) | `01a7919` | `/calculators/weight-converter` |
+| P5 Height converter | `b345bfb` | `/calculators/height-converter` |
+| P6 Fever temperature converter | `dfeebef` | `/calculators/temperature-converter` |
+| P7 Calorie calculator | `d879cd2` | `/calculators/calorie-calculator` |
+| P8 Rod weight calculator | `65b79cb` | `/calculators/rod-weight-calculator` |
+| P9 All guides on calculator pages; hub grouped by topic | `0d65f51` | `/guides` |
+| P10 How we check our numbers | this commit | `/methodology` |
+
+The site went from 24 to 31 calculators (62 calculator pages with Bangla), plus `/methodology` in both languages. Every new page has worked examples pinned by tests, dated sources where a rule or medical guidance applies, Bangla and English content, at least two inbound links, preview images, and an entry in the browser tests.
+
+## Status (29 Oct 2026)
 
 ### Built on branch `feat/calculator-answers-electricity-guide` (not yet merged)
 

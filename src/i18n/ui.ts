@@ -11,6 +11,8 @@ export interface UiStrings {
     home: string;
     allCalculators: string;
     about: string;
+    /** How we check our numbers (methodology page). */
+    methodology: string;
     privacy: string;
     terms: string;
     categories: string;
@@ -114,6 +116,7 @@ const en: UiStrings = {
     home: "Home",
     allCalculators: "All calculators",
     about: "About",
+    methodology: "How we check",
     privacy: "Privacy",
     terms: "Terms",
     categories: "Categories",
@@ -212,6 +215,7 @@ const bn: UiStrings = {
     home: "হোম",
     allCalculators: "সব ক্যালকুলেটর",
     about: "আমাদের সম্পর্কে",
+    methodology: "যেভাবে যাচাই করি",
     privacy: "গোপনীয়তা",
     terms: "শর্তাবলী",
     categories: "বিভাগ",

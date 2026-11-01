@@ -45,6 +45,12 @@ export default function BanglaAboutPage() {
             ধরা হয়েছে।
           </li>
         </ul>
+        <p>
+          <Link href={localePath("bn", "/methodology")} className="font-semibold text-brand-700 underline underline-offset-4">
+            আমরা কীভাবে হিসাব যাচাই করি
+          </Link>{" "}
+          আর কোন নিয়ম শেষ কবে যাচাই হয়েছে, তা দেখুন।
+        </p>
       </ContentSection>
       <ContentSection id="limits" title="সীমাবদ্ধতা">
         <p>
