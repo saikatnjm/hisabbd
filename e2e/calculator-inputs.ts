@@ -26,6 +26,11 @@ export interface CalculatorInputs {
   fields: FieldInput[];
 }
 
+/** A date `days` before today (YYYY-MM-DD), for inputs that must stay recent. */
+function daysAgo(days: number): string {
+  return new Date(Date.now() - days * 86_400_000).toISOString().slice(0, 10);
+}
+
 export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
   "age-calculator": {
     submit: { en: "Calculate age", bn: "বয়স হিসাব করুন" },
@@ -156,5 +161,10 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Units used this month", bn: "এ মাসে ব্যবহৃত ইউনিট" }, value: "200" },
       { label: { en: "Sanctioned load", bn: "অনুমোদিত লোড" }, value: "2" },
     ],
+  },
+  "pregnancy-calculator": {
+    submit: { en: "Calculate due date", bn: "ডেলিভারির তারিখ বের করুন" },
+    // Must be within 44 weeks of today, so it is relative.
+    fields: [{ label: { en: "First day of your last period", bn: "শেষ মাসিক শুরুর তারিখ" }, value: daysAgo(100) }],
   },
 };

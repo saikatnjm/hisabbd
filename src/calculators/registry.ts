@@ -7,6 +7,7 @@ import { dateDifferenceCalculator } from "./date-difference/meta";
 import { discountCalculator } from "./discount/meta";
 import { dpsCalculator } from "./dps/meta";
 import { electricityCalculator } from "./electricity/meta";
+import { pregnancyCalculator } from "./pregnancy/meta";
 import { emiCalculator } from "./emi/meta";
 import { fdrCalculator } from "./fdr/meta";
 import { goldCalculator } from "./gold/meta";
@@ -56,6 +57,7 @@ export const calculators: readonly CalculatorMeta[] = [
   zakatCalculator,
   goldCalculator,
   electricityCalculator,
+  pregnancyCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

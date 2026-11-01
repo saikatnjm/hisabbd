@@ -83,22 +83,35 @@ Also in season: the next general BCS circular is the **52nd**, planned for Novem
 | Nov–Dec | H8, L2 for calculator pages, L5; H7 only if it passes the gate |
 | Weekly | Search Console and Bing: indexed pages and the GPA pages' queries; AI referrals (L6) |
 
-## Ten traffic plans (written 1 Nov 2026)
+## Ten traffic plans (written 1 Nov 2026, revised after keyword research)
 
-Chosen against the core-value gate above: each answers a real Bangladesh search, a HisabBD calculator does the work, rules are cited or there are none, Bangla-first, nothing leaves the device. Built and shipped in this order; each is one commit on `main`.
+Chosen against the core-value gate above. Keyword research ran as four parallel agents (Sonnet for finance and health, Haiku for converters and a gap scan) using live search results; there are no volume tools, so demand is judged from who ranks, Bangla Q&A and news coverage, and textbook use. Each plan ships as one commit on `main`.
 
-| # | Plan | Target searches | Why now |
+| # | Plan | Target searches (from research) | Evidence and decision |
 | --- | --- | --- | --- |
-| P1 | Board challenge guide: the official 2026 fee and process (৳150 per paper, online only, no refund) and what it costs per subject | এইচএসসি খাতা চ্যালেঞ্জ ফি, board challenge 2026 | Applications run 1–7 Nov |
-| P2 | Pregnancy due date calculator (LMP + 280 days, gestational age, trimester) | প্রেগন্যান্সি ক্যালকুলেটর, ডেলিভারি ডেট, কত সপ্তাহ চলছে | Large evergreen Bangla demand; privacy matters most for health |
-| P3 | Simple and compound interest calculator | সরল সুদ, চক্রবৃদ্ধি সুদের সূত্র, compound interest calculator | Students (school maths) and savers; links FDR, DPS, EMI |
-| P4 | Length and height converter: feet-inch ↔ cm/m, হাত, গজ | 5 ফুট 4 ইঞ্চি কত সেমি, feet to cm, হাত গজ | Height on forms and job circulars; BD traditional units |
-| P5 | Weight converter with মণ, সের, ছটাক ↔ kg, pound | ১ মণ কত কেজি, সের থেকে কেজি | BD-specific units, like the land calculator |
-| P6 | Temperature converter with fever guidance (°F ↔ °C) | ১০০ ডিগ্রি ফারেনহাইট কত সেলসিয়াস, জ্বর কত হলে | Thermometers read °F, weather reads °C |
-| P7 | Calorie calculator (BMR and daily energy, Mifflin–St Jeor) | ক্যালরি ক্যালকুলেটর, BMR calculator, দৈনিক কত ক্যালরি | Pairs with BMI |
-| P8 | Calculator pages list every guide for them; guides hub grouped by topic | (internal links) | More pages per visit; each guide linked from more places |
-| P9 | “How we check our numbers” page with every rule-dependent figure, its source and checked date, generated from the data files | (trust: E-E-A-T for health and money pages) | New health calculators need visible methodology |
-| P10 | Related links, featured and seasonal picks for the new pages; growth plan and report | (internal links) | New pages need ≥ 2 inbound links each |
+| P1 ✅ | Board challenge guide: the official 2026 fee and process | এইচএসসি খাতা চ্যালেঞ্জ ফি, board challenge 2026 | Applications 1–7 Nov; ৳150 per paper confirmed by Prothom Alo and The Daily Star |
+| P2 | Pregnancy due date calculator | ডেলিভারির তারিখ, প্রেগন্যান্সি ক্যালকুলেটর, কত সপ্তাহ, edd calculator | Only Indian Bangla tools rank. Bangla title leads with “ডেলিভারির তারিখ”. No cycle-length adjustment (no authoritative source) |
+| P3 | Simple and compound interest (সরল ও চক্রবৃদ্ধি মুনাফা) | চক্রবৃদ্ধি মুনাফা নির্ণয়, সরল মুনাফার সূত্র, compound interest calculator | Class 8–10 textbook topic: the ranking pages have no calculator, and the calculators are Indian (₹). Use textbook notation (I = Pnr, C = P(1 + r)ⁿ) and a year-by-year table |
+| P4 | Weight converter: মণ, সের, ছটাক, তোলা ↔ kg, g, lb | ১ মণ কত কেজি, ছটাক কত গ্রাম | Strong Bangla demand, one weak Bangla tool. Show both the 40 kg market মণ and the traditional 37.32 kg |
+| P5 | Height converter: feet-inches ↔ cm, m (plus হাত, গজ) | 5 ফুট 4 ইঞ্চি কত সেমি, feet to cm | Job circulars (police, BGB) give height in feet-inches. Medium demand, no Bangla tool |
+| P6 | Fever check and °F ↔ °C converter | জ্বর কত হলে, ১০০ ডিগ্রি জ্বর কত সেলসিয়াস | The fever intent beats a bare converter. Threshold 38 °C / 100.4 °F (NHS), cited; no diagnosis |
+| P7 | Calorie calculator (BMR and daily calories) | ক্যালরি ক্যালকুলেটর, দৈনিক কত ক্যালরি দরকার, BMR calculator | Mifflin–St Jeor (Am J Clin Nutr 1990), with activity multipliers labelled as a convention. Adults only. No Bangladeshi competitor |
+| P8 | Rod (steel bar) weight calculator | রডের ওজন হিসাব, rod weight calculator bangladesh | Gap scan's top pick (construction). Weight follows from steel's density (d²/162 kg per metre), and prices are user-entered |
+| P9 | Calculator pages list every guide for them; guides hub grouped by topic | (internal links) | More pages per visit; each guide linked from more places |
+| P10 | “How we check our numbers” page: every rule-dependent figure with its source and checked date, generated from the data files | (trust for health and money pages) | Health calculators added this round need visible methodology |
+
+**Backlog from the research (not this round):**
+
+| Idea | Why later | When |
+| --- | --- | --- |
+| Fitra calculator | The Islamic Foundation sets the rate yearly; make it a dated input | Publish mid-January 2027 |
+| Ovulation / fertile window | A mode of the pregnancy page, with a “not contraception” note | After P2 data |
+| Infant vaccine dates (EPI) | Strong demand, but the 2026 schedule is changing (typhoid vaccine); needs the official DGHS table | When the official table is found |
+| Faraiz (inheritance) | Highest demand, but the rules need scholarly and legal review | After a reviewed rule set |
+| Tax rebate | Blocked with N8 on the Finance Act Schedule 2 text | Before the July 2027 filing |
+| Brick, sand and cement estimate | Mortar ratios and dry-volume factors are conventions; needs an engineering source | After P8 |
+
+**Skipped:** taka to dollar (needs live rates), sehri and iftar times (must come from the Islamic Foundation timetable, not computed), gas and WASA bills (no published tariff tables found), loan prepayment (each bank's own fees), and average or ratio pages (too thin).
 
 ## Status (updated 29 Oct 2026)
 

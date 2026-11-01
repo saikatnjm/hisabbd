@@ -35,6 +35,10 @@ import { ElectricityCalculator } from "./electricity/electricity-calculator";
 import { ElectricityCalculatorContent } from "./electricity/content";
 import { ElectricityCalculatorContentBn } from "./electricity/content.bn";
 import { electricityCalculator } from "./electricity/meta";
+import { PregnancyCalculator } from "./pregnancy/pregnancy-calculator";
+import { PregnancyCalculatorContent } from "./pregnancy/content";
+import { PregnancyCalculatorContentBn } from "./pregnancy/content.bn";
+import { pregnancyCalculator } from "./pregnancy/meta";
 import { EmiCalculator } from "./emi/emi-calculator";
 import { EmiCalculatorContent } from "./emi/content";
 import { EmiCalculatorContentBn } from "./emi/content.bn";
@@ -134,6 +138,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: zakatCalculator, Calculator: ZakatCalculator, Content: ZakatCalculatorContent, ContentBn: ZakatCalculatorContentBn },
       { meta: goldCalculator, Calculator: GoldCalculator, Content: GoldCalculatorContent, ContentBn: GoldCalculatorContentBn },
       { meta: electricityCalculator, Calculator: ElectricityCalculator, Content: ElectricityCalculatorContent, ContentBn: ElectricityCalculatorContentBn },
+      { meta: pregnancyCalculator, Calculator: PregnancyCalculator, Content: PregnancyCalculatorContent, ContentBn: PregnancyCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

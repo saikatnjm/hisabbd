@@ -8,7 +8,9 @@ import {
   CertificateIcon,
   CrescentIcon,
   GoldBarIcon,
+  FlameIcon,
   GraduationIcon,
+  HeartIcon,
   LandIcon,
   LandmarkIcon,
   MobileMoneyIcon,
@@ -16,13 +18,16 @@ import {
   PiggyBankIcon,
   PlugIcon,
   ReceiptIcon,
+  RulerIcon,
   ScaleIcon,
   SealIcon,
   TagIcon,
   TextIcon,
+  ThermometerIcon,
   TrendingIcon,
   VaultIcon,
   WalletIcon,
+  WeightIcon,
 } from "@/components/ui/icons";
 import { categoryTheme } from "@/components/calculator/category-theme";
 import { cn } from "@/lib/cn";
@@ -51,6 +56,11 @@ const icons: Record<CalculatorIconName, (p: React.SVGProps<SVGSVGElement>) => Re
   crescent: CrescentIcon,
   "gold-bar": GoldBarIcon,
   plug: PlugIcon,
+  heart: HeartIcon,
+  ruler: RulerIcon,
+  weight: WeightIcon,
+  thermometer: ThermometerIcon,
+  flame: FlameIcon,
 };
 
 const sizes = {

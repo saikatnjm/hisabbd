@@ -20,7 +20,7 @@ export const bmiCalculator: CalculatorMeta = {
       "উচ্চতা (সেমি বা ফুট-ইঞ্চি) ও ওজন (কেজি বা পাউন্ড) থেকে বিএমআই বের করুন। WHO-র প্রাপ্তবয়স্ক ক্যাটাগরি আর আপনার উচ্চতার স্বাস্থ্যকর ওজনের সীমা দেখুন।",
   },
   addedOn: "2026-10-05",
-  related: ["age-calculator"],
+  related: ["age-calculator", "pregnancy-calculator"],
   faqs: [
     {
       question: "How is BMI calculated?",

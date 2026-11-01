@@ -285,6 +285,33 @@ export const PlugIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const RulerIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="2.5" y="8" width="19" height="8" rx="1.5" />
+    <path d="M7 8v3M11 8v4M15 8v3M19 8v4" />
+  </Icon>
+);
+
+export const WeightIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="6" r="2.5" />
+    <path d="M7 9h10l3 11H4z" />
+  </Icon>
+);
+
+export const ThermometerIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M10 13.5V5a2 2 0 0 1 4 0v8.5a4 4 0 1 1-4 0z" />
+    <path d="M12 9v6" />
+  </Icon>
+);
+
+export const FlameIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 21a6 6 0 0 1-6-6c0-4 3-6 4-10 2 2 3 4 3 6 1-1 1.5-2 1.5-3 2 2 3.5 4.5 3.5 7a6 6 0 0 1-6 6z" />
+  </Icon>
+);
+
 export const TrashIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3" />

@@ -42,6 +42,11 @@ export const CALCULATOR_ICONS = [
   "crescent",
   "gold-bar",
   "plug",
+  "heart",
+  "ruler",
+  "weight",
+  "thermometer",
+  "flame",
 ] as const;
 
 export type CalculatorIconName = (typeof CALCULATOR_ICONS)[number];
