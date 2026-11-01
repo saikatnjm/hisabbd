@@ -188,4 +188,10 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Inches", bn: "ইঞ্চি" }, value: "4" },
     ],
   },
+  "temperature-converter": {
+    submit: { en: "Convert", bn: "রূপান্তর করুন" },
+    fields: [
+      { label: { en: "Temperature", bn: "তাপমাত্রা" }, value: "102" },
+    ],
+  },
 };

@@ -28,6 +28,7 @@ export { calculatorPath } from "./paths";
 import { interestCalculator } from "./interest/meta";
 import { weightConverter } from "./weight/meta";
 import { heightConverter } from "./height/meta";
+import { temperatureConverter } from "./temperature/meta";
 
 /**
  * Registry of all published calculators.
@@ -64,6 +65,7 @@ export const calculators: readonly CalculatorMeta[] = [
   interestCalculator,
   weightConverter,
   heightConverter,
+  temperatureConverter,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

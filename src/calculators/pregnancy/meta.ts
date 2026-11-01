@@ -48,7 +48,7 @@ export const pregnancyCalculator: CalculatorMeta = {
       "শেষ মাসিকের প্রথম দিন থেকে সম্ভাব্য ডেলিভারির তারিখ, এখন কত সপ্তাহ চলছে আর কোন ত্রৈমাসিক জেনে নিন। ফ্রি, আর আপনার তথ্য আপনার ফোনেই থাকে।",
   },
   addedOn: "2026-11-01",
-  related: ["date-difference-calculator", "age-calculator", "bmi-calculator"],
+  related: ["date-difference-calculator", "age-calculator", "temperature-converter", "bmi-calculator"],
   faqs: [
     {
       question: "How is the due date calculated?",
