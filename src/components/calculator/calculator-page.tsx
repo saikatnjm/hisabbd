@@ -46,7 +46,7 @@ export function CalculatorPage({
   const faqs = (bn ? calculator.faqsBn : calculator.faqs) ?? [];
   const name = bn ? calculator.nameBn : calculator.name;
   const reviewed = calculator.updatedOn ? parsePlainDate(calculator.updatedOn) : null;
-  const guide = getGuidesForCalculator(calculator.slug)[0];
+  const calculatorGuides = getGuidesForCalculator(calculator.slug);
   const crumbs = [
     { name: t.nav.home, path: localePath(locale, "/") },
     { name: t.nav.calculators, path: localePath(locale, CALCULATORS_PATH) },
@@ -87,15 +87,19 @@ export function CalculatorPage({
           </div>
           <p className="mt-3 max-w-2xl text-lg text-pretty text-slate-700 sm:mt-4">{bn ? calculator.summaryBn : calculator.summary}</p>
           {reviewed && <p className="mt-2 text-sm text-slate-600">{t.calculatorPage.lastReviewed(formatPlainDate(reviewed, { locale }))}</p>}
-          {guide && (
-            <p className="mt-2">
-              <Link
-                href={localePath(locale, guidePath(guide.slug))}
-                className="text-sm font-semibold text-brand-700 underline underline-offset-4"
-              >
-                {t.guides.readGuide(bn ? guide.titleBn : guide.title)}
-              </Link>
-            </p>
+          {calculatorGuides.length > 0 && (
+            <ul className="mt-2 space-y-1">
+              {calculatorGuides.map((guide) => (
+                <li key={guide.slug}>
+                  <Link
+                    href={localePath(locale, guidePath(guide.slug))}
+                    className="text-sm font-semibold text-brand-700 underline underline-offset-4"
+                  >
+                    {t.guides.readGuide(bn ? guide.titleBn : guide.title)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           )}
           <Link
             href={localePath(locale, categoryHref(category.id))}

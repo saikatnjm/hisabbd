@@ -64,6 +64,10 @@ test.describe("guides", () => {
       expect(hub?.status()).toBe(200);
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
       await expect(page.getByRole("heading", { level: 1, name: ui[locale].guides.hubTitle })).toBeVisible();
+      // Grouped by topic, the hub still links every guide.
+      for (const guide of guides) {
+        expect(await page.locator(`main a[href="${localePath(locale, guidePath(guide.slug))}"]`).count(), guide.slug).toBe(1);
+      }
 
       for (const guide of guides) {
         const path = localePath(locale, guidePath(guide.slug));
