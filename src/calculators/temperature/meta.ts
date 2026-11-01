@@ -39,7 +39,7 @@ export const temperatureConverter: CalculatorMeta = {
       "ফারেনহাইট থেকে সেলসিয়াসে বদলান আর দেখুন জ্বর কি না: এনএইচএসের মতে 38 °C (100.4 °F) বা বেশি হলে জ্বর। 100 °F = 37.78 °C। ফ্রি, তথ্য ফোনেই থাকে।",
   },
   addedOn: "2026-11-01",
-  related: ["bmi-calculator", "pregnancy-calculator", "age-calculator"],
+  related: ["bmi-calculator", "calorie-calculator", "pregnancy-calculator", "age-calculator"],
   faqs: [
     {
       question: "What temperature is a fever?",

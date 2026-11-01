@@ -111,6 +111,10 @@ import { TemperatureCalculator } from "./temperature/temperature-calculator";
 import { TemperatureCalculatorContent } from "./temperature/content";
 import { TemperatureCalculatorContentBn } from "./temperature/content.bn";
 import { temperatureConverter } from "./temperature/meta";
+import { CalorieCalculator } from "./calorie/calorie-calculator";
+import { CalorieCalculatorContent } from "./calorie/content";
+import { CalorieCalculatorContentBn } from "./calorie/content.bn";
+import { calorieCalculator } from "./calorie/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -159,6 +163,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: weightConverter, Calculator: WeightCalculator, Content: WeightCalculatorContent, ContentBn: WeightCalculatorContentBn },
       { meta: heightConverter, Calculator: HeightCalculator, Content: HeightCalculatorContent, ContentBn: HeightCalculatorContentBn },
       { meta: temperatureConverter, Calculator: TemperatureCalculator, Content: TemperatureCalculatorContent, ContentBn: TemperatureCalculatorContentBn },
+      { meta: calorieCalculator, Calculator: CalorieCalculator, Content: CalorieCalculatorContent, ContentBn: CalorieCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

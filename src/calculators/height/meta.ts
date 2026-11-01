@@ -39,7 +39,7 @@ export const heightConverter: CalculatorMeta = {
       "ফুট-ইঞ্চিতে উচ্চতা সেন্টিমিটার ও মিটারে, বা সেমি থেকে ফুট-ইঞ্চিতে বদলান। 5 ফুট 4 ইঞ্চি = 162.56 সেমি। হাত ও গজসহ, ফ্রি।",
   },
   addedOn: "2026-11-01",
-  related: ["bmi-calculator", "weight-converter", "government-job-age-calculator"],
+  related: ["bmi-calculator", "calorie-calculator", "weight-converter", "government-job-age-calculator"],
   faqs: [
     {
       question: "How many cm is 5 feet 4 inches?",

@@ -194,4 +194,12 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Temperature", bn: "তাপমাত্রা" }, value: "102" },
     ],
   },
+  "calorie-calculator": {
+    submit: { en: "Calculate calories", bn: "ক্যালরি হিসাব করুন" },
+    fields: [
+      { label: { en: "Age", bn: "বয়স" }, value: "30" },
+      { label: { en: "Height", bn: "উচ্চতা" }, value: "170" },
+      { label: { en: "Weight", bn: "ওজন" }, value: "70" },
+    ],
+  },
 };
