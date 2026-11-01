@@ -181,4 +181,11 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Weight", bn: "ওজন" }, value: "2" },
     ],
   },
+  "height-converter": {
+    submit: { en: "Convert height", bn: "উচ্চতা রূপান্তর করুন" },
+    fields: [
+      { label: { en: "Feet", bn: "ফুট" }, value: "5" },
+      { label: { en: "Inches", bn: "ইঞ্চি" }, value: "4" },
+    ],
+  },
 };

@@ -44,7 +44,7 @@ export const jobAgeCalculator: CalculatorMeta = {
   },
   addedOn: "2026-10-28",
   updatedOn: "2026-10-28",
-  related: ["age-calculator", "date-difference-calculator"],
+  related: ["age-calculator", "date-difference-calculator", "height-converter"],
   faqs: [
     {
       question: "What is the age limit for BCS?",

@@ -41,7 +41,7 @@ export const weightConverter: CalculatorMeta = {
       "বাজারে 1 মণ = 40 কেজি, পুরোনো মাপে 37.32 কেজি। মণ, সের, ছটাক, তোলা থেকে কেজি, গ্রাম ও পাউন্ডে আর উল্টো দিকে রূপান্তর করুন, সূত্রসহ।",
   },
   addedOn: "2026-11-01",
-  related: ["land-calculator", "gold-calculator", "percentage-calculator"],
+  related: ["land-calculator", "height-converter", "gold-calculator", "percentage-calculator"],
   faqs: [
     {
       question: "How many kg is 1 maund (মণ)?",
