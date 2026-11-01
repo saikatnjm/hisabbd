@@ -48,7 +48,7 @@ export const fdrCalculator: CalculatorMeta = {
   },
   addedOn: "2026-10-28",
   updatedOn: "2026-10-28",
-  related: ["dps-calculator", "sanchayapatra-calculator", "emi-calculator", "percentage-calculator"],
+  related: ["dps-calculator", "sanchayapatra-calculator", "interest-calculator", "emi-calculator", "percentage-calculator"],
   faqs: [
     {
       question: "How is FDR interest calculated in Bangladesh?",

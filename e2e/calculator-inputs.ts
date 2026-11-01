@@ -167,4 +167,12 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
     // Must be within 44 weeks of today, so it is relative.
     fields: [{ label: { en: "First day of your last period", bn: "শেষ মাসিক শুরুর তারিখ" }, value: daysAgo(100) }],
   },
+  "interest-calculator": {
+    submit: { en: "Calculate interest", bn: "মুনাফা হিসাব করুন" },
+    fields: [
+      { label: { en: "Principal (P)", bn: "আসল (P)" }, value: "100000" },
+      { label: { en: "Interest rate a year (r)", bn: "বার্ষিক মুনাফার হার (r)" }, value: "9" },
+      { label: { en: "Time (n)", bn: "সময় (n)" }, value: "5" },
+    ],
+  },
 };

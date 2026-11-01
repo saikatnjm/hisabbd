@@ -95,6 +95,10 @@ import { ZakatCalculator } from "./zakat/zakat-calculator";
 import { ZakatCalculatorContent } from "./zakat/content";
 import { ZakatCalculatorContentBn } from "./zakat/content.bn";
 import { zakatCalculator } from "./zakat/meta";
+import { InterestCalculator } from "./interest/interest-calculator";
+import { InterestCalculatorContent } from "./interest/content";
+import { InterestCalculatorContentBn } from "./interest/content.bn";
+import { interestCalculator } from "./interest/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -139,6 +143,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: goldCalculator, Calculator: GoldCalculator, Content: GoldCalculatorContent, ContentBn: GoldCalculatorContentBn },
       { meta: electricityCalculator, Calculator: ElectricityCalculator, Content: ElectricityCalculatorContent, ContentBn: ElectricityCalculatorContentBn },
       { meta: pregnancyCalculator, Calculator: PregnancyCalculator, Content: PregnancyCalculatorContent, ContentBn: PregnancyCalculatorContentBn },
+      { meta: interestCalculator, Calculator: InterestCalculator, Content: InterestCalculatorContent, ContentBn: InterestCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

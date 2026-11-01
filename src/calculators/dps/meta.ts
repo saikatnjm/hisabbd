@@ -48,7 +48,7 @@ export const dpsCalculator: CalculatorMeta = {
   },
   addedOn: "2026-10-28",
   updatedOn: "2026-10-28",
-  related: ["fdr-calculator", "sanchayapatra-calculator", "emi-calculator", "percentage-calculator"],
+  related: ["fdr-calculator", "sanchayapatra-calculator", "interest-calculator", "emi-calculator", "percentage-calculator"],
   faqs: [
     {
       question: "How is DPS maturity calculated?",
