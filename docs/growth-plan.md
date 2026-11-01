@@ -83,6 +83,23 @@ Also in season: the next general BCS circular is the **52nd**, planned for Novem
 | Nov–Dec | H8, L2 for calculator pages, L5; H7 only if it passes the gate |
 | Weekly | Search Console and Bing: indexed pages and the GPA pages' queries; AI referrals (L6) |
 
+## Ten traffic plans (written 1 Nov 2026)
+
+Chosen against the core-value gate above: each answers a real Bangladesh search, a HisabBD calculator does the work, rules are cited or there are none, Bangla-first, nothing leaves the device. Built and shipped in this order; each is one commit on `main`.
+
+| # | Plan | Target searches | Why now |
+| --- | --- | --- | --- |
+| P1 | Board challenge guide: the official 2026 fee and process (৳150 per paper, online only, no refund) and what it costs per subject | এইচএসসি খাতা চ্যালেঞ্জ ফি, board challenge 2026 | Applications run 1–7 Nov |
+| P2 | Pregnancy due date calculator (LMP + 280 days, gestational age, trimester) | প্রেগন্যান্সি ক্যালকুলেটর, ডেলিভারি ডেট, কত সপ্তাহ চলছে | Large evergreen Bangla demand; privacy matters most for health |
+| P3 | Simple and compound interest calculator | সরল সুদ, চক্রবৃদ্ধি সুদের সূত্র, compound interest calculator | Students (school maths) and savers; links FDR, DPS, EMI |
+| P4 | Length and height converter: feet-inch ↔ cm/m, হাত, গজ | 5 ফুট 4 ইঞ্চি কত সেমি, feet to cm, হাত গজ | Height on forms and job circulars; BD traditional units |
+| P5 | Weight converter with মণ, সের, ছটাক ↔ kg, pound | ১ মণ কত কেজি, সের থেকে কেজি | BD-specific units, like the land calculator |
+| P6 | Temperature converter with fever guidance (°F ↔ °C) | ১০০ ডিগ্রি ফারেনহাইট কত সেলসিয়াস, জ্বর কত হলে | Thermometers read °F, weather reads °C |
+| P7 | Calorie calculator (BMR and daily energy, Mifflin–St Jeor) | ক্যালরি ক্যালকুলেটর, BMR calculator, দৈনিক কত ক্যালরি | Pairs with BMI |
+| P8 | Calculator pages list every guide for them; guides hub grouped by topic | (internal links) | More pages per visit; each guide linked from more places |
+| P9 | “How we check our numbers” page with every rule-dependent figure, its source and checked date, generated from the data files | (trust: E-E-A-T for health and money pages) | New health calculators need visible methodology |
+| P10 | Related links, featured and seasonal picks for the new pages; growth plan and report | (internal links) | New pages need ≥ 2 inbound links each |
+
 ## Status (updated 29 Oct 2026)
 
 ### Built on branch `feat/calculator-answers-electricity-guide` (not yet merged)

@@ -36,14 +36,22 @@ export function BoardChallengeGpaGuideContent() {
             .
           </li>
           <li>
-            <strong>Board challenge applications:</strong> 1 to 7 November 2026.
+            <strong>Board challenge applications:</strong> 1 to 7 November 2026, online only at{" "}
+            <a href={S.portal.url} target="_blank" rel="noopener" className={link}>
+              {S.portal.title}
+            </a>
+            .
+          </li>
+          <li>
+            <strong>Fee:</strong> ৳150 per paper, paid by bKash, Nagad, Rocket, Upay or Sonali Seba.
           </li>
         </ul>
+        <h3>What it costs per subject</h3>
         <p>
-          The boards announce the application process and the fee per paper in their notice. The 2026 notice had not
-          been published by 29 October, so we don’t print a fee in advance. Last year (2025) applications were online
-          only, a two-paper subject needed both papers, and once paid an application could not be cancelled or
-          refunded. Check this year’s rules in the notice.
+          For a subject with two papers you must apply for both, so it costs 2 × ৳150 = <strong>৳300</strong>; a
+          one-paper subject costs ৳150. Challenging Bangla (1st and 2nd paper) and one one-paper subject comes to ৳450.
+          Once you pay, the subjects can’t be withdrawn and the fee is not refunded, so work out what a higher grade
+          would do to your GPA first (below). You get an SMS on the number you give when the results are out.
         </p>
       </ContentSection>
 
@@ -171,7 +179,7 @@ export function BoardChallengeGpaGuideContent() {
       </ContentSection>
 
       <ContentSection id="sources" title="Sources and dates">
-        <p>Everything here was checked on 29 October 2026. The board’s notice is final.</p>
+        <p>Dates checked on 29 October 2026, the fee and process on 1 November 2026. The board’s notice is final.</p>
         <ul>
           <li>
             Results and application dates:{" "}
@@ -195,9 +203,13 @@ export function BoardChallengeGpaGuideContent() {
             .
           </li>
           <li>
-            The 2025 application process:{" "}
-            <a href={S.process2025.url} target="_blank" rel="noopener" className={link}>
-              {S.process2025.title}
+            The 2026 fee and process:{" "}
+            <a href={S.process2026.url} target="_blank" rel="noopener" className={link}>
+              {S.process2026.title}
+            </a>{" "}
+            and{" "}
+            <a href={S.process2026DailyStar.url} target="_blank" rel="noopener" className={link}>
+              {S.process2026DailyStar.title}
             </a>
             .
           </li>
