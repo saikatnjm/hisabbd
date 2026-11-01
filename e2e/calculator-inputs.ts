@@ -202,4 +202,11 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Weight", bn: "ওজন" }, value: "70" },
     ],
   },
+  "rod-weight-calculator": {
+    submit: { en: "Calculate weight", bn: "ওজন হিসাব করুন" },
+    fields: [
+      { label: { en: "Length of one rod", bn: "একটি রডের দৈর্ঘ্য" }, value: "40" },
+      { label: { en: "Number of rods", bn: "রডের সংখ্যা" }, value: "40" },
+    ],
+  },
 };
