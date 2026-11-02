@@ -71,6 +71,9 @@ import { labourAct2026AmendmentGuide } from "./labour-act-2026-amendment/meta";
 import { GratuityCalculationGuideContent } from "./gratuity-calculation/content";
 import { GratuityCalculationGuideContentBn } from "./gratuity-calculation/content.bn";
 import { gratuityCalculationGuide } from "./gratuity-calculation/meta";
+import { HouseRentLawGuideContent } from "./house-rent-law/content";
+import { HouseRentLawGuideContentBn } from "./house-rent-law/content.bn";
+import { houseRentLawGuide } from "./house-rent-law/meta";
 import type { GuideMeta } from "./types";
 
 export interface GuidePageEntry {
@@ -110,6 +113,7 @@ const entries: GuidePageEntry[] = [
   { meta: electricityUnitsAppliancesGuide, Content: ElectricityUnitsAppliancesGuideContent, ContentBn: ElectricityUnitsAppliancesGuideContentBn },
   { meta: labourAct2026AmendmentGuide, Content: LabourAct2026AmendmentGuideContent, ContentBn: LabourAct2026AmendmentGuideContentBn },
   { meta: gratuityCalculationGuide, Content: GratuityCalculationGuideContent, ContentBn: GratuityCalculationGuideContentBn },
+  { meta: houseRentLawGuide, Content: HouseRentLawGuideContent, ContentBn: HouseRentLawGuideContentBn },
 ];
 
 export const guidePages: Record<string, GuidePageEntry> = Object.fromEntries(
