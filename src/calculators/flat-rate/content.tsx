@@ -105,7 +105,8 @@ export function FlatRateCalculatorContent() {
         <p>
           Each instalment repays part of the loan, so what you owe shrinks. A flat rate ignores that and keeps charging
           on the full amount. In the ৳1,00,000 example you pay ৳12,000 of interest, yet on average you hold only about
-          ৳54,000 of the loan. For a monthly loan repaid over a year, the real rate is roughly 1.8 times the flat rate.
+          ৳54,167 of the loan. For a monthly loan repaid over a year at 5% to 30% flat, the real rate is about 1.7 to 1.8
+          times the flat rate.
           An upfront fee pushes it higher still, because you receive less than you repay.
         </p>
         <p>

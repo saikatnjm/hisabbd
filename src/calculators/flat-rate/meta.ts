@@ -49,12 +49,12 @@ export const flatRateCalculator: CalculatorMeta = {
     {
       question: "How do I convert a flat rate to a reducing rate?",
       answer:
-        "Work out the instalment: (amount + amount × flat rate × years) ÷ number of instalments. Then find the rate at which those instalments are worth exactly the money you received. There is no simple formula; this calculator solves it for you. As a rough guide, the reducing rate is close to 1.8 times the flat rate for monthly loans repaid over a year.",
+        "Work out the instalment: (amount + amount × flat rate × years) ÷ number of instalments. Then find the rate at which those instalments are worth exactly the money you received. There is no simple formula; this calculator solves it for you. As a rough guide, for monthly loans repaid over a year at 5% to 30% flat, the reducing rate is about 1.7 to 1.8 times the flat rate.",
     },
     {
       question: "Why is a flat rate cheaper-looking than it is?",
       answer:
-        "Because the interest is not reduced as you repay. After 6 months of a 12-month loan you owe about half the money, yet you still pay interest on all of it. On ৳1,00,000 at 12% flat, you pay ৳12,000 interest, but on average you hold only about ৳54,000 of the loan.",
+        "Because the interest is not reduced as you repay. After 6 months of a 12-month loan you owe about half the money, yet you still pay interest on all of it. On ৳1,00,000 at 12% flat, you pay ৳12,000 interest, but on average you hold only about ৳54,167 of the loan.",
     },
     {
       question: "How are weekly instalments calculated here?",
@@ -81,12 +81,12 @@ export const flatRateCalculator: CalculatorMeta = {
     {
       question: "ফ্ল্যাট রেট থেকে আসল সুদের হার কীভাবে বের করব?",
       answer:
-        "আগে কিস্তি বের করুন: (ঋণ + ঋণ × ফ্ল্যাট রেট × বছর) ÷ কিস্তির সংখ্যা। তারপর এমন হার খুঁজুন যাতে ওই কিস্তিগুলোর বর্তমান মূল্য আপনার পাওয়া টাকার সমান হয়। এর সহজ সূত্র নেই; এই ক্যালকুলেটর সেটা হিসাব করে দেয়। মোটামুটি, এক বছরের মাসিক কিস্তির ঋণে আসল হার ফ্ল্যাট রেটের প্রায় 1.8 গুণ।",
+        "আগে কিস্তি বের করুন: (ঋণ + ঋণ × ফ্ল্যাট রেট × বছর) ÷ কিস্তির সংখ্যা। তারপর এমন হার খুঁজুন যাতে ওই কিস্তিগুলোর বর্তমান মূল্য আপনার পাওয়া টাকার সমান হয়। এর সহজ সূত্র নেই; এই ক্যালকুলেটর সেটা হিসাব করে দেয়। মোটামুটি, এক বছরের মাসিক কিস্তির ঋণে 5% থেকে 30% ফ্ল্যাট রেটে আসল হার ফ্ল্যাট রেটের প্রায় 1.7 থেকে 1.8 গুণ।",
     },
     {
       question: "ফ্ল্যাট রেট দেখতে কম লাগে কেন?",
       answer:
-        "কারণ কিস্তি দিলেও সুদ কমে না। 12 মাসের ঋণের 6 মাস পর প্রায় অর্ধেক টাকা বাকি, তবু সুদ পুরো টাকার ওপর দিতে হয়। ৳1,00,000-এর 12% ফ্ল্যাট রেটে সুদ ৳12,000, অথচ গড়ে আপনার হাতে থাকে ঋণের প্রায় ৳54,000।",
+        "কারণ কিস্তি দিলেও সুদ কমে না। 12 মাসের ঋণের 6 মাস পর প্রায় অর্ধেক টাকা বাকি, তবু সুদ পুরো টাকার ওপর দিতে হয়। ৳1,00,000-এর 12% ফ্ল্যাট রেটে সুদ ৳12,000, অথচ গড়ে আপনার হাতে থাকে ঋণের প্রায় ৳54,167।",
     },
     {
       question: "সাপ্তাহিক কিস্তি এখানে কীভাবে ধরা হয়?",
