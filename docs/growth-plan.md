@@ -134,6 +134,8 @@ Research ran in parallel (competitor scan, seasonal calendar, mess and cash keyw
 | ✅ Work hours and overtime hours | In/out times and breaks → hours worked, overtime beyond 8 a day (s.100), the week against 48 and 60 (s.102); night shifts handled | A weekly or monthly check before payday; feeds the overtime pay calculator |
 | ✅ Flat rate to real interest rate | NGO and bank flat-rate loans, monthly or weekly, optional upfront fee → real reducing-balance and effective rates (bisection solver). No MRA cap stated: the circular could not be read | “flat rate to reducing rate”, “এনজিও ঋণের কিস্তি”; a check before every loan |
 | ✅ Time calculator (hours and minutes) | Add or subtract durations → hours and minutes, decimal hours, minutes, days | “ঘণ্টা মিনিট যোগ”, “time calculator”; pairs with work hours and overtime |
+| ✅ Unit price comparison | 2–10 packs → price per kg, litre or piece (hali = 4, dozen = 12), cheapest and saving | “কোনটা সস্তা”, “কেজি প্রতি দাম”; every shopping trip |
+| ✅ House rent law guide | Premises Rent Control Act 1991 quoted section by section (standard rent s.15, advance s.10, receipts s.13, eviction s.18); common myths checked against the text | “বাড়ি ভাড়া আইন”; tenants and landlords, especially near January rent rises |
 
 **Watch list: build the same day the official text appears** (from the seasonal research, 2 Nov 2026):
 
