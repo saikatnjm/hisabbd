@@ -113,6 +113,32 @@ Chosen against the core-value gate above. Keyword research ran as four parallel 
 
 **Skipped:** taka to dollar (needs live rates), sehri and iftar times (must come from the Islamic Foundation timetable, not computed), gas and WASA bills (no published tariff tables found), loan prepayment (each bank's own fees), and average or ratio pages (too thin).
 
+## Round 3: tools people come back to (started 2 Nov 2026)
+
+Research ran in parallel (competitor scan, seasonal calendar, mess and cash keywords) and building ran in parallel too: Sonnet agents built calculators in separate git worktrees while the lead built others, then the lead reviewed, fixed and shipped each one. The aim this round is repeat visits: monthly and daily tools, plus work-related calculators for a large mobile audience.
+
+| Shipped | What | Why it brings people back |
+| --- | --- | --- |
+| ✅ Mess meal calculator | Meal rate, each member's cost and balance, the manager's cash | A monthly ritual in student and worker messes; no Bangla web tool found |
+| ✅ Cash counter | Notes and coins by denomination → total | Daily use for shops and cash handlers |
+| ✅ Overtime pay | Labour Act 2006 s.108, twice the ordinary rate; divisor entered by the user because no official text sets one | Monthly payday check for garment and factory workers |
+| ✅ Ovulation calculator | NHS 10–16 days before the next period, next three periods | Monthly; pairs with the pregnancy calculator |
+| ✅ Homepage picks | Leads with Bangladesh-specific tools | First screen shows what makes HisabBD different |
+| ⏳ Job exit benefit (Labour Act gratuity and compensation) | Agent building | A one-off but high-stakes question |
+| ⏳ Earned leave (Labour Act s.117) | Agent building | Yearly, and on leaving a job |
+
+**Watch list: build the same day the official text appears** (from the seasonal research, 2 Nov 2026):
+
+| Trigger | Page | Status |
+| --- | --- | --- |
+| DU 2026-27 admission circular (applications open 11 Nov) | Guide: dates, units, minimum GPA; then a GPA-marks calculator | Dates and exam marks reported; GPA rules not yet published |
+| MBBS 2026-27 DGME circular | Merit marks calculator | Not published |
+| DSHE school admission policy 2027 | Class 1 age-on-1-January calculator | Reports conflict on the age range; wait for the policy |
+| Ministry of Public Administration holiday list 2027 | Holidays and long-weekend planner | Not published (2026's came on 10 Nov 2025) |
+| 52nd BCS circular | Job-age calculator update and guide | Not published |
+| Islamic Foundation fitra rate 2027 | Fitra calculator | Expected near Ramadan (about 8 Feb 2027) |
+| NBR 2026-27 income tax circular (Schedule 2) | Income tax calculator | Blocked: needs the PDF |
+
 ## Status (updated 1 Nov 2026)
 
 ### Shipped on `main`, 1 Nov 2026 (one commit per plan)
