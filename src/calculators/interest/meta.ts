@@ -42,7 +42,7 @@ export const interestCalculator: CalculatorMeta = {
       "আসল, হার ও সময় দিয়ে সরল ও চক্রবৃদ্ধি মুনাফা (সুদ) হিসাব করুন। পাঠ্যবইয়ের সূত্র I = Pnr ও C = P(1 + r)ⁿ, মুনাফা-আসল, পার্থক্য আর বছরওয়ারি টেবিল।",
   },
   addedOn: "2026-11-01",
-  related: ["fdr-calculator", "dps-calculator", "emi-calculator"],
+  related: ["fdr-calculator", "dps-calculator", "flat-rate-calculator", "emi-calculator"],
   faqs: [
     {
       question: "What is the formula for simple interest?",
