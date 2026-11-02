@@ -284,4 +284,13 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Day 1 Break", bn: "দিন 1 বিরতি" }, value: "60" },
     ],
   },
+  "time-calculator": {
+    submit: { en: "Add up time", bn: "সময় যোগ করুন" },
+    fields: [
+      { label: { en: "Time 1 Hours", bn: "সময় 1 ঘণ্টা" }, value: "2" },
+      { label: { en: "Time 1 Minutes", bn: "সময় 1 মিনিট" }, value: "45" },
+      { label: { en: "Time 2 Hours", bn: "সময় 2 ঘণ্টা" }, value: "3" },
+      { label: { en: "Time 2 Minutes", bn: "সময় 2 মিনিট" }, value: "30" },
+    ],
+  },
 };

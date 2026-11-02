@@ -133,6 +133,7 @@ Research ran in parallel (competitor scan, seasonal calendar, mess and cash keyw
 | ✅ Labour Act 2026 amendment guide | What changed for pay and leave, quoted from Act No. 43 of 2026 | Timely: the law took effect on 10 April 2026 |
 | ✅ Work hours and overtime hours | In/out times and breaks → hours worked, overtime beyond 8 a day (s.100), the week against 48 and 60 (s.102); night shifts handled | A weekly or monthly check before payday; feeds the overtime pay calculator |
 | ✅ Flat rate to real interest rate | NGO and bank flat-rate loans, monthly or weekly, optional upfront fee → real reducing-balance and effective rates (bisection solver). No MRA cap stated: the circular could not be read | “flat rate to reducing rate”, “এনজিও ঋণের কিস্তি”; a check before every loan |
+| ✅ Time calculator (hours and minutes) | Add or subtract durations → hours and minutes, decimal hours, minutes, days | “ঘণ্টা মিনিট যোগ”, “time calculator”; pairs with work hours and overtime |
 
 **Watch list: build the same day the official text appears** (from the seasonal research, 2 Nov 2026):
 

@@ -24,6 +24,7 @@ import {
   TagIcon,
   TextIcon,
   ThermometerIcon,
+  ClockIcon,
   TrendingIcon,
   VaultIcon,
   WalletIcon,
@@ -60,6 +61,7 @@ const icons: Record<CalculatorIconName, (p: React.SVGProps<SVGSVGElement>) => Re
   ruler: RulerIcon,
   weight: WeightIcon,
   thermometer: ThermometerIcon,
+  clock: ClockIcon,
   flame: FlameIcon,
 };
 

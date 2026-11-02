@@ -43,7 +43,7 @@ export const banglaDateCalculator: CalculatorMeta = {
   },
   addedOn: "2026-10-28",
   updatedOn: "2026-10-28",
-  related: ["date-difference-calculator", "age-calculator"],
+  related: ["date-difference-calculator", "age-calculator", "time-calculator"],
   faqs: [
     {
       question: "What is today’s Bangla date?",

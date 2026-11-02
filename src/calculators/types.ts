@@ -47,6 +47,7 @@ export const CALCULATOR_ICONS = [
   "weight",
   "thermometer",
   "flame",
+  "clock",
 ] as const;
 
 export type CalculatorIconName = (typeof CALCULATOR_ICONS)[number];

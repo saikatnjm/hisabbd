@@ -37,7 +37,7 @@ export const workHoursCalculator: CalculatorMeta = {
   },
   addedOn: "2026-11-02",
   updatedOn: "2026-11-02",
-  related: ["overtime-calculator", "salary-calculator", "earned-leave-calculator", "date-difference-calculator", "percentage-calculator"],
+  related: ["overtime-calculator", "time-calculator", "earned-leave-calculator", "salary-calculator", "date-difference-calculator"],
   faqs: [
     {
       question: "How do I calculate my working hours for a day?",
