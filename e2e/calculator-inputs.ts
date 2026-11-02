@@ -215,6 +215,11 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Total bazar cost this month", bn: "এ মাসের মোট বাজার খরচ" }, value: "7200" },
       { label: { en: "Member 1 Meals", bn: "সদস্য 1 মিল" }, value: "60" },
       { label: { en: "Member 2 Meals", bn: "সদস্য 2 মিল" }, value: "45" },
+  "cash-counter": {
+    submit: { en: "Count cash", bn: "টাকা গুনুন" },
+    fields: [
+      { label: { en: "৳1000 notes", bn: "৳1000 নোট" }, value: "3" },
+      { label: { en: "৳500 notes", bn: "৳500 নোট" }, value: "4" },
     ],
   },
 };
