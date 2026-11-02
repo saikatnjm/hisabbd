@@ -183,6 +183,14 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Overtime hours this month", bn: "এই মাসের ওভারটাইম ঘণ্টা" }, value: "12.5" },
     ],
   },
+  "earned-leave-calculator": {
+    submit: { en: "Calculate leave", bn: "ছুটি হিসাব করুন" },
+    fields: [
+      { label: { en: "Days worked in the last 12 months", bn: "গত 12 মাসে কাজের দিন" }, value: "300" },
+      { label: { en: "Earned leave carried forward", bn: "জমা থাকা অর্জিত ছুটি" }, value: "50" },
+      { label: { en: "Earned leave already taken", bn: "ইতিমধ্যে ভোগ করা অর্জিত ছুটি" }, value: "14" },
+    ],
+  },
   "weight-converter": {
     submit: { en: "Convert", bn: "রূপান্তর করুন" },
     fields: [
