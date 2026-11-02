@@ -99,6 +99,10 @@ import { InterestCalculator } from "./interest/interest-calculator";
 import { InterestCalculatorContent } from "./interest/content";
 import { InterestCalculatorContentBn } from "./interest/content.bn";
 import { interestCalculator } from "./interest/meta";
+import { FlatRateCalculator } from "./flat-rate/flat-rate-calculator";
+import { FlatRateCalculatorContent } from "./flat-rate/content";
+import { FlatRateCalculatorContentBn } from "./flat-rate/content.bn";
+import { flatRateCalculator } from "./flat-rate/meta";
 import { OvertimeCalculator } from "./overtime/overtime-calculator";
 import { OvertimeCalculatorContent } from "./overtime/content";
 import { OvertimeCalculatorContentBn } from "./overtime/content.bn";
@@ -200,6 +204,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: electricityCalculator, Calculator: ElectricityCalculator, Content: ElectricityCalculatorContent, ContentBn: ElectricityCalculatorContentBn },
       { meta: pregnancyCalculator, Calculator: PregnancyCalculator, Content: PregnancyCalculatorContent, ContentBn: PregnancyCalculatorContentBn },
       { meta: interestCalculator, Calculator: InterestCalculator, Content: InterestCalculatorContent, ContentBn: InterestCalculatorContentBn },
+      { meta: flatRateCalculator, Calculator: FlatRateCalculator, Content: FlatRateCalculatorContent, ContentBn: FlatRateCalculatorContentBn },
       { meta: overtimeCalculator, Calculator: OvertimeCalculator, Content: OvertimeCalculatorContent, ContentBn: OvertimeCalculatorContentBn },
       { meta: leaveCalculator, Calculator: LeaveCalculator, Content: LeaveCalculatorContent, ContentBn: LeaveCalculatorContentBn },
       { meta: settlementCalculator, Calculator: SettlementCalculator, Content: SettlementCalculatorContent, ContentBn: SettlementCalculatorContentBn },

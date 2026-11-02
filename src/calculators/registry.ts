@@ -26,6 +26,7 @@ import { CATEGORY_IDS, type CalculatorMeta, type CategoryId } from "./types";
 
 export { calculatorPath } from "./paths";
 import { interestCalculator } from "./interest/meta";
+import { flatRateCalculator } from "./flat-rate/meta";
 import { overtimeCalculator } from "./overtime/meta";
 import { leaveCalculator } from "./leave/meta";
 import { settlementCalculator } from "./settlement/meta";
@@ -74,6 +75,7 @@ export const calculators: readonly CalculatorMeta[] = [
   electricityCalculator,
   pregnancyCalculator,
   interestCalculator,
+  flatRateCalculator,
   overtimeCalculator,
   leaveCalculator,
   settlementCalculator,

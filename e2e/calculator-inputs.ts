@@ -175,6 +175,14 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Time (n)", bn: "সময় (n)" }, value: "5" },
     ],
   },
+  "flat-rate-calculator": {
+    submit: { en: "Find the real rate", bn: "আসল হার বের করুন" },
+    fields: [
+      { label: { en: "Loan amount", bn: "ঋণের পরিমাণ" }, value: "100000" },
+      { label: { en: "Flat interest rate a year", bn: "বার্ষিক ফ্ল্যাট সুদের হার" }, value: "12" },
+      { label: { en: "Loan term", bn: "ঋণের মেয়াদ" }, value: "12" },
+    ],
+  },
   "overtime-calculator": {
     submit: { en: "Calculate overtime", bn: "ওভারটাইম হিসাব করুন" },
     fields: [
