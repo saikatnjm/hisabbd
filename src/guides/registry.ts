@@ -22,6 +22,7 @@ import { boardChallengeGpaGuide } from "./board-challenge-gpa/meta";
 import { electricityUnitsAppliancesGuide } from "./electricity-units-appliances/meta";
 import { labourAct2026AmendmentGuide } from "./labour-act-2026-amendment/meta";
 import { gratuityCalculationGuide } from "./gratuity-calculation/meta";
+import { houseRentLawGuide } from "./house-rent-law/meta";
 import type { GuideMeta } from "./types";
 
 export { GUIDES_PATH, guidePath } from "./paths";
@@ -57,6 +58,7 @@ export const guides: readonly GuideMeta[] = [
   electricityUnitsAppliancesGuide,
   labourAct2026AmendmentGuide,
   gratuityCalculationGuide,
+  houseRentLawGuide,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
