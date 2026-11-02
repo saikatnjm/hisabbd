@@ -42,6 +42,7 @@ import { expenseSplitCalculator } from "./split/meta";
 import { retirementCalculator } from "./retirement/meta";
 import { workHoursCalculator } from "./work-hours/meta";
 import { timeAddCalculator } from "./time-add/meta";
+import { unitPriceCalculator } from "./unit-price/meta";
 
 /**
  * Registry of all published calculators.
@@ -92,6 +93,7 @@ export const calculators: readonly CalculatorMeta[] = [
   retirementCalculator,
   workHoursCalculator,
   timeAddCalculator,
+  unitPriceCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
