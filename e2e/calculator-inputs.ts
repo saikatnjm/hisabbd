@@ -262,4 +262,10 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Person 2 Paid", bn: "ব্যক্তি 2 দিয়েছেন" }, value: "4000" },
     ],
   },
+  "retirement-date-calculator": {
+    submit: { en: "Find retirement date", bn: "অবসরের তারিখ বের করুন" },
+    fields: [
+      { label: { en: "Date of birth", bn: "জন্ম তারিখ" }, value: "1970-05-15" },
+    ],
+  },
 };

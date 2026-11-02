@@ -128,6 +128,8 @@ Research ran in parallel (competitor scan, seasonal calendar, mess and cash keyw
 | ✅ Earned leave (Labour Act s.117) | Accrual by establishment type, caps, carry-forward, encashment under s.11 and s.119 | Yearly, and on leaving a job |
 | ✅ Expense split | Equal shares and who pays whom, in whole paisa | Every trip and picnic |
 | ✅ Work & Wages category | Salary, overtime, leave, job exit, job age; category pages rewritten | A landing page for Labour Act searches |
+| ✅ Gratuity guide | The s.2(10) formula, the six-month rule, 30 or 45 days, when it is paid | A distinct search: “gratuity calculation” |
+| ✅ Government retirement date (PRL) | Civil Service Act 2018 ss.43, 44, 47; the exact day is an openly stated assumption | Countdown people check again; the agent found the 1974 Act repealed |
 | ✅ Labour Act 2026 amendment guide | What changed for pay and leave, quoted from Act No. 43 of 2026 | Timely: the law took effect on 10 April 2026 |
 
 **Watch list: build the same day the official text appears** (from the seasonal research, 2 Nov 2026):
