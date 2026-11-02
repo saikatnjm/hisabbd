@@ -99,6 +99,10 @@ import { InterestCalculator } from "./interest/interest-calculator";
 import { InterestCalculatorContent } from "./interest/content";
 import { InterestCalculatorContentBn } from "./interest/content.bn";
 import { interestCalculator } from "./interest/meta";
+import { OvertimeCalculator } from "./overtime/overtime-calculator";
+import { OvertimeCalculatorContent } from "./overtime/content";
+import { OvertimeCalculatorContentBn } from "./overtime/content.bn";
+import { overtimeCalculator } from "./overtime/meta";
 import { WeightCalculator } from "./weight/weight-calculator";
 import { WeightCalculatorContent } from "./weight/content";
 import { WeightCalculatorContentBn } from "./weight/content.bn";
@@ -172,6 +176,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: electricityCalculator, Calculator: ElectricityCalculator, Content: ElectricityCalculatorContent, ContentBn: ElectricityCalculatorContentBn },
       { meta: pregnancyCalculator, Calculator: PregnancyCalculator, Content: PregnancyCalculatorContent, ContentBn: PregnancyCalculatorContentBn },
       { meta: interestCalculator, Calculator: InterestCalculator, Content: InterestCalculatorContent, ContentBn: InterestCalculatorContentBn },
+      { meta: overtimeCalculator, Calculator: OvertimeCalculator, Content: OvertimeCalculatorContent, ContentBn: OvertimeCalculatorContentBn },
       { meta: weightConverter, Calculator: WeightCalculator, Content: WeightCalculatorContent, ContentBn: WeightCalculatorContentBn },
       { meta: heightConverter, Calculator: HeightCalculator, Content: HeightCalculatorContent, ContentBn: HeightCalculatorContentBn },
       { meta: temperatureConverter, Calculator: TemperatureCalculator, Content: TemperatureCalculatorContent, ContentBn: TemperatureCalculatorContentBn },

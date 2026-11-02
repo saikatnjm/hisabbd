@@ -20,7 +20,7 @@ export const percentageCalculator: CalculatorMeta = {
       "কোনো সংখ্যার কত শতাংশ, এক সংখ্যা আরেকটির কত শতাংশ, শতকরা পরিবর্তন, বা শতকরা হারে বাড়ানো-কমানো — ধাপে ধাপে সমাধানসহ।",
   },
   addedOn: "2026-10-05",
-  related: ["discount-calculator", "profit-loss-calculator", "gpa-calculator"],
+  related: ["discount-calculator", "overtime-calculator", "profit-loss-calculator", "gpa-calculator"],
   faqs: [
     {
       question: "How do I calculate a percentage of a number?",
