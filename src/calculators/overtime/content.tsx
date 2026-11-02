@@ -68,7 +68,7 @@ export function OvertimeCalculatorContent() {
           <li>Section 102: normally 48 hours a week, at most 60 in any week and 56 a week on average over a year.</li>
         </ul>
         <p>
-          These limits depend on which days and weeks the hours fall in, so the calculator does not check them. Work on
+          These limits depend on which days and weeks the hours fall in, so this calculator does not check them; the work hours calculator does. Work on
           weekly or festival holidays has its own rules in the Act; enter only hours your payslip treats as ordinary
           overtime.
         </p>
@@ -87,7 +87,14 @@ export function OvertimeCalculatorContent() {
           <li>Enter your monthly basic wage.</li>
           <li>Enter the dearness or ad hoc allowance, or leave it blank.</li>
           <li>Enter the hours in a month from your payslip or contract.</li>
-          <li>Enter your overtime hours, decimals allowed (1.5 = 1 hour 30 minutes).</li>
+          <li>
+            Enter your overtime hours, decimals allowed (1.5 = 1 hour 30 minutes). Not sure of the total? Add up your
+            start and finish times in the{" "}
+            <Link href={en("work-hours-calculator")} className={link}>
+              work hours calculator
+            </Link>
+            .
+          </li>
           <li>Select Calculate overtime to see the two hourly rates and the pay.</li>
         </ol>
         <p>

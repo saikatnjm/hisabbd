@@ -39,6 +39,7 @@ import { messMealCalculator } from "./mess/meta";
 import { ovulationCalculator } from "./ovulation/meta";
 import { expenseSplitCalculator } from "./split/meta";
 import { retirementCalculator } from "./retirement/meta";
+import { workHoursCalculator } from "./work-hours/meta";
 
 /**
  * Registry of all published calculators.
@@ -86,6 +87,7 @@ export const calculators: readonly CalculatorMeta[] = [
   ovulationCalculator,
   expenseSplitCalculator,
   retirementCalculator,
+  workHoursCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

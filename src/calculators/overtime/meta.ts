@@ -40,7 +40,7 @@ export const overtimeCalculator: CalculatorMeta = {
   },
   addedOn: "2026-11-02",
   updatedOn: "2026-11-02",
-  related: ["salary-calculator", "job-exit-benefit-calculator", "earned-leave-calculator", "percentage-calculator", "emi-calculator"],
+  related: ["work-hours-calculator", "salary-calculator", "job-exit-benefit-calculator", "earned-leave-calculator", "percentage-calculator", "emi-calculator"],
   faqs: [
     {
       question: "How is overtime calculated in Bangladesh?",

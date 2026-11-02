@@ -131,6 +131,7 @@ Research ran in parallel (competitor scan, seasonal calendar, mess and cash keyw
 | ✅ Gratuity guide | The s.2(10) formula, the six-month rule, 30 or 45 days, when it is paid | A distinct search: “gratuity calculation” |
 | ✅ Government retirement date (PRL) | Civil Service Act 2018 ss.43, 44, 47; the exact day is an openly stated assumption | Countdown people check again; the agent found the 1974 Act repealed |
 | ✅ Labour Act 2026 amendment guide | What changed for pay and leave, quoted from Act No. 43 of 2026 | Timely: the law took effect on 10 April 2026 |
+| ✅ Work hours and overtime hours | In/out times and breaks → hours worked, overtime beyond 8 a day (s.100), the week against 48 and 60 (s.102); night shifts handled | A weekly or monthly check before payday; feeds the overtime pay calculator |
 
 **Watch list: build the same day the official text appears** (from the seasonal research, 2 Nov 2026):
 
@@ -139,10 +140,10 @@ Research ran in parallel (competitor scan, seasonal calendar, mess and cash keyw
 | DU 2026-27 admission circular (applications open 11 Nov) | Guide: dates, units, minimum GPA; then a GPA-marks calculator | Dates and exam marks reported; GPA rules not yet published |
 | MBBS 2026-27 DGME circular | Merit marks calculator | Not published |
 | DSHE school admission policy 2027 | Class 1 age-on-1-January calculator | Reports conflict on the age range; wait for the policy |
-| Ministry of Public Administration holiday list 2027 | Holidays and long-weekend planner | Not published (2026's came on 10 Nov 2025) |
-| 52nd BCS circular | Job-age calculator update and guide | Not published |
+| Ministry of Public Administration holiday list 2027 | Holidays and long-weekend planner | Re-checked 2 Nov 2026: not published; only third-party projections (2026's came on 10 Nov 2025) |
+| 52nd BCS circular | Job-age calculator update and guide | Re-checked 2 Nov 2026: not published |
 | Islamic Foundation fitra rate 2027 | Fitra calculator | Expected near Ramadan (about 8 Feb 2027) |
-| NBR 2026-27 income tax circular (Schedule 2) | Income tax calculator | Blocked: needs the PDF |
+| NBR 2026-27 income tax circular (Schedule 2) | Income tax calculator | Blocked: Finance Act 2026 passed, but press reports conflict on the threshold (৳3.5, 3.75 or 4 lakh); needs the Act or NBR PDF |
 | Official Bangladesh EPI routine schedule (DGHS or WHO WIISE table) | Baby vaccine date calculator | Researched 2 Nov: not machine-readable; reports conflict on typhoid vaccine timing (9 vs 15 months). Owner: save the DGHS card or WHO table PDF into the repo |
 | BDS/PWD brick size and a mortar dry-volume factor | Brick, sand and cement estimator | Researched 2 Nov: only a 2017 news report for the BSTI size; no authoritative dry factor. Owner: provide the specification text |
 

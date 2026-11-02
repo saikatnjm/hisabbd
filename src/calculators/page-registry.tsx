@@ -151,6 +151,10 @@ import { RetirementCalculator } from "./retirement/retirement-calculator";
 import { RetirementCalculatorContent } from "./retirement/content";
 import { RetirementCalculatorContentBn } from "./retirement/content.bn";
 import { retirementCalculator } from "./retirement/meta";
+import { WorkHoursCalculator } from "./work-hours/work-hours-calculator";
+import { WorkHoursCalculatorContent } from "./work-hours/content";
+import { WorkHoursCalculatorContentBn } from "./work-hours/content.bn";
+import { workHoursCalculator } from "./work-hours/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -209,6 +213,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: ovulationCalculator, Calculator: OvulationCalculator, Content: OvulationCalculatorContent, ContentBn: OvulationCalculatorContentBn },
       { meta: expenseSplitCalculator, Calculator: SplitCalculator, Content: SplitCalculatorContent, ContentBn: SplitCalculatorContentBn },
       { meta: retirementCalculator, Calculator: RetirementCalculator, Content: RetirementCalculatorContent, ContentBn: RetirementCalculatorContentBn },
+      { meta: workHoursCalculator, Calculator: WorkHoursCalculator, Content: WorkHoursCalculatorContent, ContentBn: WorkHoursCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

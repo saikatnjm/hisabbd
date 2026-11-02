@@ -37,7 +37,7 @@ export const leaveCalculator: CalculatorMeta = {
   },
   addedOn: "2026-11-02",
   updatedOn: "2026-11-02",
-  related: ["overtime-calculator", "salary-calculator", "date-difference-calculator"],
+  related: ["overtime-calculator", "work-hours-calculator", "salary-calculator", "date-difference-calculator"],
   faqs: [
     {
       question: "How is earned leave calculated under the Bangladesh Labour Act?",

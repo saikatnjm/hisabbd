@@ -268,4 +268,12 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Date of birth", bn: "জন্ম তারিখ" }, value: "1970-05-15" },
     ],
   },
+  "work-hours-calculator": {
+    submit: { en: "Calculate hours", bn: "ঘণ্টা হিসাব করুন" },
+    fields: [
+      { label: { en: "Day 1 Start", bn: "দিন 1 শুরু" }, value: "08:00" },
+      { label: { en: "Day 1 Finish", bn: "দিন 1 শেষ" }, value: "19:00" },
+      { label: { en: "Day 1 Break", bn: "দিন 1 বিরতি" }, value: "60" },
+    ],
+  },
 };
