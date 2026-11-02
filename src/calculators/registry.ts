@@ -72,11 +72,8 @@ export const calculators: readonly CalculatorMeta[] = [
   temperatureConverter,
   calorieCalculator,
   rodWeightCalculator,
-<<<<<<< HEAD
   messMealCalculator,
-=======
   cashCounter,
->>>>>>> feat/cash-counter
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

@@ -119,17 +119,14 @@ import { RodCalculator } from "./rod/rod-calculator";
 import { RodCalculatorContent } from "./rod/content";
 import { RodCalculatorContentBn } from "./rod/content.bn";
 import { rodWeightCalculator } from "./rod/meta";
-<<<<<<< HEAD
 import { MessCalculator } from "./mess/mess-calculator";
 import { MessCalculatorContent } from "./mess/content";
 import { MessCalculatorContentBn } from "./mess/content.bn";
 import { messMealCalculator } from "./mess/meta";
-=======
 import { CashCalculator } from "./cash/cash-calculator";
 import { CashCalculatorContent } from "./cash/content";
 import { CashCalculatorContentBn } from "./cash/content.bn";
 import { cashCounter } from "./cash/meta";
->>>>>>> feat/cash-counter
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -180,11 +177,8 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: temperatureConverter, Calculator: TemperatureCalculator, Content: TemperatureCalculatorContent, ContentBn: TemperatureCalculatorContentBn },
       { meta: calorieCalculator, Calculator: CalorieCalculator, Content: CalorieCalculatorContent, ContentBn: CalorieCalculatorContentBn },
       { meta: rodWeightCalculator, Calculator: RodCalculator, Content: RodCalculatorContent, ContentBn: RodCalculatorContentBn },
-<<<<<<< HEAD
       { meta: messMealCalculator, Calculator: MessCalculator, Content: MessCalculatorContent, ContentBn: MessCalculatorContentBn },
-=======
       { meta: cashCounter, Calculator: CashCalculator, Content: CashCalculatorContent, ContentBn: CashCalculatorContentBn },
->>>>>>> feat/cash-counter
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );
