@@ -8,11 +8,11 @@ import type { CalculatorMeta } from "./types";
  */
 export const featuredSlugs: readonly string[] = [
   "age-calculator",
-  "bmi-calculator",
-  "gpa-calculator",
+  "ssc-hsc-gpa-calculator",
+  "electricity-bill-calculator",
+  "mess-meal-calculator",
+  "land-calculator",
   "emi-calculator",
-  "percentage-calculator",
-  "salary-calculator",
 ];
 
 const FALLBACK_LIMIT = 6;

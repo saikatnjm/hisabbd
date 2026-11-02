@@ -232,4 +232,10 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "৳500 notes", bn: "৳500 নোট" }, value: "4" },
     ],
   },
+  "ovulation-calculator": {
+    submit: { en: "Show my dates", bn: "তারিখ দেখুন" },
+    fields: [
+      { label: { en: "First day of your last period", bn: "শেষ মাসিক শুরুর তারিখ" }, value: daysAgo(10) },
+    ],
+  },
 };
