@@ -65,6 +65,9 @@ import { boardChallengeGpaGuide } from "./board-challenge-gpa/meta";
 import { ElectricityUnitsAppliancesGuideContent } from "./electricity-units-appliances/content";
 import { ElectricityUnitsAppliancesGuideContentBn } from "./electricity-units-appliances/content.bn";
 import { electricityUnitsAppliancesGuide } from "./electricity-units-appliances/meta";
+import { LabourAct2026AmendmentGuideContent } from "./labour-act-2026-amendment/content";
+import { LabourAct2026AmendmentGuideContentBn } from "./labour-act-2026-amendment/content.bn";
+import { labourAct2026AmendmentGuide } from "./labour-act-2026-amendment/meta";
 import type { GuideMeta } from "./types";
 
 export interface GuidePageEntry {
@@ -102,6 +105,7 @@ const entries: GuidePageEntry[] = [
   { meta: goldBhoriGramGuide, Content: GoldBhoriGramGuideContent, ContentBn: GoldBhoriGramGuideContentBn },
   { meta: boardChallengeGpaGuide, Content: BoardChallengeGpaGuideContent, ContentBn: BoardChallengeGpaGuideContentBn },
   { meta: electricityUnitsAppliancesGuide, Content: ElectricityUnitsAppliancesGuideContent, ContentBn: ElectricityUnitsAppliancesGuideContentBn },
+  { meta: labourAct2026AmendmentGuide, Content: LabourAct2026AmendmentGuideContent, ContentBn: LabourAct2026AmendmentGuideContentBn },
 ];
 
 export const guidePages: Record<string, GuidePageEntry> = Object.fromEntries(

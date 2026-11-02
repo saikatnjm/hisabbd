@@ -124,8 +124,11 @@ Research ran in parallel (competitor scan, seasonal calendar, mess and cash keyw
 | ✅ Overtime pay | Labour Act 2006 s.108, twice the ordinary rate; divisor entered by the user because no official text sets one | Monthly payday check for garment and factory workers |
 | ✅ Ovulation calculator | NHS 10–16 days before the next period, next three periods | Monthly; pairs with the pregnancy calculator |
 | ✅ Homepage picks | Leads with Bangladesh-specific tools | First screen shows what makes HisabBD different |
-| ⏳ Job exit benefit (Labour Act gratuity and compensation) | Agent building | A one-off but high-stakes question |
-| ⏳ Earned leave (Labour Act s.117) | Agent building | Yearly, and on leaving a job |
+| ✅ Job exit benefit (Labour Act gratuity and compensation) | Retrenchment, discharge, termination, resignation under the 2026 text; day divisor entered by the user | A one-off but high-stakes question |
+| ✅ Earned leave (Labour Act s.117) | Accrual by establishment type, caps, carry-forward, encashment under s.11 and s.119 | Yearly, and on leaving a job |
+| ✅ Expense split | Equal shares and who pays whom, in whole paisa | Every trip and picnic |
+| ✅ Work & Wages category | Salary, overtime, leave, job exit, job age; category pages rewritten | A landing page for Labour Act searches |
+| ✅ Labour Act 2026 amendment guide | What changed for pay and leave, quoted from Act No. 43 of 2026 | Timely: the law took effect on 10 April 2026 |
 
 **Watch list: build the same day the official text appears** (from the seasonal research, 2 Nov 2026):
 
@@ -138,6 +141,8 @@ Research ran in parallel (competitor scan, seasonal calendar, mess and cash keyw
 | 52nd BCS circular | Job-age calculator update and guide | Not published |
 | Islamic Foundation fitra rate 2027 | Fitra calculator | Expected near Ramadan (about 8 Feb 2027) |
 | NBR 2026-27 income tax circular (Schedule 2) | Income tax calculator | Blocked: needs the PDF |
+| Official Bangladesh EPI routine schedule (DGHS or WHO WIISE table) | Baby vaccine date calculator | Researched 2 Nov: not machine-readable; reports conflict on typhoid vaccine timing (9 vs 15 months). Owner: save the DGHS card or WHO table PDF into the repo |
+| BDS/PWD brick size and a mortar dry-volume factor | Brick, sand and cement estimator | Researched 2 Nov: only a 2017 news report for the BSTI size; no authoritative dry factor. Owner: provide the specification text |
 
 ## Status (updated 1 Nov 2026)
 
