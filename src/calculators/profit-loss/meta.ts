@@ -20,7 +20,7 @@ export const profitLossCalculator: CalculatorMeta = {
       "ক্রয়মূল্য ও বিক্রয়মূল্য দিলেই টাকায় লাভ বা ক্ষতি, খরচের ওপর লাভের শতাংশ আর বিক্রয়মূল্যের ওপর মার্জিন দেখুন। সম্পূর্ণ ফ্রি।",
   },
   addedOn: "2026-10-05",
-  related: ["discount-calculator", "percentage-calculator"],
+  related: ["discount-calculator", "percentage-calculator", "mess-meal-calculator"],
   faqs: [
     {
       question: "How do I calculate profit and loss?",

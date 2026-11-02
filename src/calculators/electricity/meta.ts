@@ -57,7 +57,7 @@ export const electricityCalculator: CalculatorMeta = {
   },
   addedOn: "2026-10-29",
   updatedOn: "2026-10-29",
-  related: ["vat-calculator", "percentage-calculator", "salary-calculator"],
+  related: ["vat-calculator", "mess-meal-calculator", "percentage-calculator", "salary-calculator"],
   faqs: [
     {
       question: "What is the electricity price per unit in Bangladesh in 2026?",

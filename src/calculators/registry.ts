@@ -31,6 +31,7 @@ import { heightConverter } from "./height/meta";
 import { temperatureConverter } from "./temperature/meta";
 import { calorieCalculator } from "./calorie/meta";
 import { rodWeightCalculator } from "./rod/meta";
+import { messMealCalculator } from "./mess/meta";
 
 /**
  * Registry of all published calculators.
@@ -70,6 +71,7 @@ export const calculators: readonly CalculatorMeta[] = [
   temperatureConverter,
   calorieCalculator,
   rodWeightCalculator,
+  messMealCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
