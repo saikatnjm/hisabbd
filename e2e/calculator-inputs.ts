@@ -175,6 +175,14 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Time (n)", bn: "সময় (n)" }, value: "5" },
     ],
   },
+  "overtime-calculator": {
+    submit: { en: "Calculate overtime", bn: "ওভারটাইম হিসাব করুন" },
+    fields: [
+      { label: { en: "Monthly basic wage", bn: "মাসিক মূল মজুরি" }, value: "10000" },
+      { label: { en: "Hours in a month for the hourly rate", bn: "ঘণ্টাপ্রতি হারের জন্য মাসের ঘণ্টা" }, value: "208" },
+      { label: { en: "Overtime hours this month", bn: "এই মাসের ওভারটাইম ঘণ্টা" }, value: "12.5" },
+    ],
+  },
   "weight-converter": {
     submit: { en: "Convert", bn: "রূপান্তর করুন" },
     fields: [
