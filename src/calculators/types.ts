@@ -1,4 +1,4 @@
-export const CATEGORY_IDS = ["health", "education", "finance", "everyday", "date-time"] as const;
+export const CATEGORY_IDS = ["health", "education", "finance", "work", "everyday", "date-time"] as const;
 
 export type CategoryId = (typeof CATEGORY_IDS)[number];
 

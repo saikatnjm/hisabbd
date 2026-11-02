@@ -4,7 +4,7 @@ export const salaryCalculator: CalculatorMeta = {
   slug: "salary-calculator",
   name: "Salary Calculator",
   nameBn: "বেতন ক্যালকুলেটর",
-  category: "finance",
+  category: "work",
   icon: "wallet",
   summary: "Turn your gross salary and deductions into an estimated net, take-home salary.",
   summaryBn: "গ্রস বেতন ও কর্তন থেকে আনুমানিক নিট (হাতে পাওয়া) বেতন বের করুন।",

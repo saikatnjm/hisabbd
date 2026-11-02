@@ -4,7 +4,7 @@ export const jobAgeCalculator: CalculatorMeta = {
   slug: "government-job-age-calculator",
   name: "Government Job Age Calculator",
   nameBn: "সরকারি চাকরির বয়স ক্যালকুলেটর",
-  category: "date-time",
+  category: "work",
   icon: "briefcase",
   summary: "Check if you meet a BCS or government job circular’s age limit on its “age as on” date.",
   summaryBn: "বিসিএস বা সরকারি চাকরির বিজ্ঞপ্তির নির্ধারিত তারিখে আপনার বয়স বয়সসীমার মধ্যে আছে কি না দেখুন।",

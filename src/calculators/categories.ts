@@ -5,22 +5,22 @@ export const categories: readonly Category[] = [
     id: "health",
     name: "Health",
     nameBn: "স্বাস্থ্য",
-    description: "Check your BMI and the healthy weight range for your height.",
-    descriptionBn: "আপনার বিএমআই আর উচ্চতা অনুযায়ী স্বাস্থ্যকর ওজনের সীমা দেখে নিন।",
+    description: "BMI, daily calories, pregnancy due date, ovulation days and fever temperature.",
+    descriptionBn: "বিএমআই, দৈনিক ক্যালরি, প্রেগন্যান্সির ডেলিভারির তারিখ, ওভুলেশনের দিন আর জ্বরের তাপমাত্রা।",
     seo: {
-      title: "Health Calculators: BMI and Healthy Weight",
+      title: "Health Calculators: BMI, Pregnancy, Calories, Fever",
       description:
-        "Free health calculators for Bangladesh: work out your BMI in cm or feet and inches, kg or lb, and see the healthy weight range for your height.",
+        "Free health calculators in English and Bangla: BMI, daily calories, pregnancy due date, ovulation days and fever °F to °C, each with its medical source.",
     },
     seoBn: {
-      title: "স্বাস্থ্য ক্যালকুলেটর: বিএমআই ও সঠিক ওজন",
+      title: "স্বাস্থ্য ক্যালকুলেটর: বিএমআই, প্রেগন্যান্সি, ক্যালরি, জ্বর",
       description:
-        "ফ্রি স্বাস্থ্য ক্যালকুলেটর: সেমি বা ফুট-ইঞ্চি, কেজি বা পাউন্ডে বিএমআই বের করুন, আর আপনার উচ্চতায় স্বাস্থ্যকর ওজনের সীমা দেখুন।",
+        "ফ্রি স্বাস্থ্য ক্যালকুলেটর: বিএমআই, দৈনিক ক্যালরি, প্রেগন্যান্সির ডেলিভারির তারিখ, ওভুলেশনের দিন আর জ্বরের তাপমাত্রা, প্রতিটির চিকিৎসা-সূত্রসহ।",
     },
     about:
-      "These are screening numbers for adults, not a diagnosis. Each page explains the formula, the WHO categories and what the number can and can't tell you.",
+      "These are estimates and screening numbers, not a diagnosis. Each page names its medical source (WHO, NHS, ACOG or the published formula), and the pregnancy and ovulation calculators keep no history on your device.",
     aboutBn:
-      "এগুলো প্রাপ্তবয়স্কদের জন্য প্রাথমিক মাপ, রোগনির্ণয় নয়। প্রতিটি পাতায় সূত্র, WHO-র শ্রেণি আর সংখ্যাটি কী বলে ও কী বলে না, তা ব্যাখ্যা করা আছে।",
+      "এগুলো আনুমানিক হিসাব ও প্রাথমিক মাপ, রোগনির্ণয় নয়। প্রতিটি পাতায় তার চিকিৎসা-সূত্র (WHO, NHS, ACOG বা প্রকাশিত সূত্র) দেওয়া আছে, আর প্রেগন্যান্সি ও ওভুলেশন ক্যালকুলেটর আপনার ডিভাইসে কোনো হিসাব রাখে না।",
   },
   {
     id: "education",
@@ -47,17 +47,17 @@ export const categories: readonly Category[] = [
     id: "finance",
     name: "Finance",
     nameBn: "অর্থ",
-    description: "Loans, savings, salary, VAT, zakat, discounts and mobile money charges in Taka.",
-    descriptionBn: "টাকায় লোন, সঞ্চয়, বেতন, ভ্যাট, যাকাত, ডিসকাউন্ট আর মোবাইল ব্যাংকিংয়ের চার্জ।",
+    description: "Loans, savings, interest, VAT, zakat, discounts and mobile money charges in Taka.",
+    descriptionBn: "টাকায় লোন, সঞ্চয়, মুনাফা, ভ্যাট, যাকাত, ডিসকাউন্ট আর মোবাইল ব্যাংকিংয়ের চার্জ।",
     seo: {
       title: "Finance Calculators Bangladesh: Loan, Savings, VAT",
       description:
-        "Free money calculators in Taka: loan EMI, Sanchayapatra, FDR and DPS, salary, VAT, zakat, discount, profit and bKash charges, with dated sources.",
+        "Free money calculators in Taka: loan EMI, Sanchayapatra, FDR and DPS, interest, VAT, zakat, discount, profit and bKash charges, with dated sources.",
     },
     seoBn: {
       title: "অর্থের ক্যালকুলেটর: লোন, সঞ্চয়, ভ্যাট, যাকাত",
       description:
-        "টাকায় ফ্রি হিসাব: লোনের ইএমআই, সঞ্চয়পত্র, এফডিআর-ডিপিএস, বেতন, ভ্যাট, যাকাত, ডিসকাউন্ট, লাভ-ক্ষতি আর বিকাশ চার্জ, তারিখসহ সূত্রে।",
+        "টাকায় ফ্রি হিসাব: লোনের ইএমআই, সঞ্চয়পত্র, এফডিআর-ডিপিএস, মুনাফা, ভ্যাট, যাকাত, ডিসকাউন্ট, লাভ-ক্ষতি আর বিকাশ চার্জ, তারিখসহ সূত্রে।",
     },
     about:
       "Rates and rules that change, such as savings certificate rates, source tax, VAT or mobile money charges, come from official sources with the date they were checked, and you can always type your own figure.",
@@ -65,41 +65,62 @@ export const categories: readonly Category[] = [
       "যে হার ও নিয়ম বদলায়, যেমন সঞ্চয়পত্রের মুনাফা, উৎসে কর, ভ্যাট বা মোবাইল ব্যাংকিংয়ের চার্জ, সেগুলো যাচাইয়ের তারিখসহ অফিশিয়াল সূত্র থেকে নেওয়া, আর চাইলে নিজের সংখ্যাও লিখতে পারবেন।",
   },
   {
+    id: "work",
+    name: "Work & Wages",
+    nameBn: "চাকরি ও মজুরি",
+    description: "Salary, overtime, earned leave, job exit benefits and government job age limits.",
+    descriptionBn: "বেতন, ওভারটাইম, অর্জিত ছুটি, চাকরি ছাড়লে পাওনা আর সরকারি চাকরির বয়সসীমা।",
+    seo: {
+      title: "Salary & Labour Act Calculators: Overtime, Leave, Gratuity",
+      description:
+        "Free work calculators for Bangladesh: take-home salary, overtime pay, earned leave and job exit benefits under the Labour Act 2006, and BCS age limits.",
+    },
+    seoBn: {
+      title: "চাকরি ও মজুরির ক্যালকুলেটর: ওভারটাইম, ছুটি, গ্র্যাচুইটি",
+      description:
+        "চাকরির ফ্রি হিসাব: হাতে পাওয়া বেতন, ওভারটাইম, অর্জিত ছুটি আর চাকরি ছাড়লে শ্রম আইন অনুযায়ী পাওনা, সঙ্গে বিসিএস ও সরকারি চাকরির বয়সসীমা।",
+    },
+    about:
+      "Labour Act figures are read from the official text on bdlaws, with the date checked and the 2026 amendment included. Where the law leaves something open, such as how a monthly wage becomes a daily or hourly rate, you enter it. Your appointment letter, service rules and the courts decide.",
+    aboutBn:
+      "শ্রম আইনের সংখ্যাগুলো bdlaws-এর অফিশিয়াল পাঠ থেকে, যাচাইয়ের তারিখ আর 2026 সালের সংশোধনীসহ নেওয়া। আইনে যা খোলা রাখা, যেমন মাসিক মজুরি থেকে দৈনিক বা ঘণ্টাপ্রতি হার কীভাবে হবে, তা আপনি নিজে লেখেন। আপনার নিয়োগপত্র, চাকরিবিধি আর আদালতই চূড়ান্ত।",
+  },
+  {
     id: "everyday",
     name: "Everyday",
     nameBn: "দৈনন্দিন",
-    description: "Percentages, land measurement, gold by the bhori and other daily sums.",
-    descriptionBn: "শতকরা, জমির মাপ, ভরিতে সোনার হিসাবসহ দৈনন্দিন নানা হিসাব।",
+    description: "Mess meals, expense splits, cash counting, land, weight and height units, bills and other daily sums.",
+    descriptionBn: "মেসের মিল, খরচ ভাগাভাগি, টাকা গণনা, জমি, ওজন ও উচ্চতার একক, বিল আর দৈনন্দিন নানা হিসাব।",
     seo: {
-      title: "Everyday Calculators: Percent, Land, Gold Bhori",
+      title: "Everyday Calculators: Mess Meal, Land, Weight, Bill Split",
       description:
-        "Free everyday calculators for Bangladesh: percentages, land in decimal, katha and bigha, gold by bhori, ana and roti, and more, in English and Bangla.",
+        "Free everyday calculators for Bangladesh: mess meal rate, expense split, cash counter, land in katha and bigha, মণ to kg, height, electricity bill and more.",
     },
     seoBn: {
-      title: "দৈনন্দিন ক্যালকুলেটর: শতকরা, জমির মাপ, সোনার ভরি",
+      title: "দৈনন্দিন ক্যালকুলেটর: মেসের মিল, জমি, ওজন, খরচ ভাগ",
       description:
-        "দৈনন্দিন ফ্রি ক্যালকুলেটর: শতকরা হিসাব, শতাংশ-কাঠা-বিঘায় জমির মাপ, ভরি-আনা-রতিতে সোনার হিসাব আর আরও অনেক কিছু, বাংলা ও ইংরেজিতে।",
+        "দৈনন্দিন ফ্রি ক্যালকুলেটর: মেসের মিল রেট, খরচ ভাগাভাগি, টাকা গণনা, কাঠা-বিঘায় জমি, মণ থেকে কেজি, উচ্চতা, বিদ্যুৎ বিল আর আরও অনেক কিছু।",
     },
     about:
-      "Built for the units people actually use in Bangladesh: Bangla digits and lakh-crore grouping work in every number box, and local units like katha, bigha and bhori are explained with worked examples.",
+      "Built for the units people actually use in Bangladesh: Bangla digits and lakh-crore grouping work in every number box, and local units like katha, bigha, মণ and bhori are explained with worked examples.",
     aboutBn:
-      "বাংলাদেশে মানুষ যে একক ব্যবহার করে, সেভাবেই তৈরি: প্রতিটি ঘরে বাংলা অঙ্ক ও লাখ-কোটির কমা চলে, আর কাঠা, বিঘা, ভরির মতো স্থানীয় একক উদাহরণসহ ব্যাখ্যা করা।",
+      "বাংলাদেশে মানুষ যে একক ব্যবহার করে, সেভাবেই তৈরি: প্রতিটি ঘরে বাংলা অঙ্ক ও লাখ-কোটির কমা চলে, আর কাঠা, বিঘা, মণ, ভরির মতো স্থানীয় একক উদাহরণসহ ব্যাখ্যা করা।",
   },
   {
     id: "date-time",
     name: "Date & Time",
     nameBn: "তারিখ ও সময়",
-    description: "Exact age, government job age limits, days between dates and today's Bangla date.",
-    descriptionBn: "সঠিক বয়স, সরকারি চাকরির বয়সসীমা, দুই তারিখের ব্যবধান আর আজকের বাংলা তারিখ।",
+    description: "Exact age, days between dates and today's Bangla date.",
+    descriptionBn: "সঠিক বয়স, দুই তারিখের ব্যবধান আর আজকের বাংলা তারিখ।",
     seo: {
-      title: "Date Calculators: Age, Job Age Limit, Bangla Date",
+      title: "Date Calculators: Age, Days Between Dates, Bangla Date",
       description:
-        "Free date calculators for Bangladesh: exact age from date of birth, BCS and government job age limits, days between dates, and today's Bangla date.",
+        "Free date calculators for Bangladesh: exact age from date of birth, days between two dates with or without the end date, and today's Bangla date.",
     },
     seoBn: {
-      title: "তারিখের ক্যালকুলেটর: বয়স, চাকরির বয়স, বাংলা তারিখ",
+      title: "তারিখের ক্যালকুলেটর: বয়স, তারিখের ব্যবধান, বাংলা তারিখ",
       description:
-        "ফ্রি তারিখের ক্যালকুলেটর: জন্ম তারিখ দিয়ে সঠিক বয়স, বিসিএস ও সরকারি চাকরির বয়সসীমা, দুই তারিখের ব্যবধান আর আজকের বাংলা তারিখ।",
+        "ফ্রি তারিখের ক্যালকুলেটর: জন্ম তারিখ দিয়ে সঠিক বয়স, শেষ দিনসহ বা ছাড়া দুই তারিখের ব্যবধান, আর আজকের বাংলা তারিখ।",
     },
     about:
       "Dates are counted as calendar dates, never by dividing days by 365, so leap years and month lengths are always exact, and the result is the same on any phone in any time zone.",

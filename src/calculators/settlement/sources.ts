@@ -10,47 +10,47 @@
 export const SETTLEMENT_SOURCES = {
   /** s.2(10) gratuity; s.2(11) retrenchment; s.2(17) discharge; s.2(49A) month. */
   section2: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ২ (definitions: gratuity, retrenchment, discharge, month)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 2 (definitions: gratuity, retrenchment, discharge, month)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-29070.html",
   },
   /** s.14: "one year", "six months" and "wages" (sub-section 3). */
   section14: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ১৪ (counting a year, six months and wages)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 14 (counting a year, six months and wages)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-29082.html",
   },
   /** s.20: retrenchment. */
   section20: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ২০ (retrenchment)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 20 (retrenchment)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-30090.html",
   },
   /** s.22: discharge. */
   section22: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ২২ (discharge)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 22 (discharge)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-30092.html",
   },
   /** s.23: dismissal and removal for misconduct (not modelled; explained). */
   section23: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ২৩ (misconduct, dismissal)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 23 (misconduct, dismissal)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-30093.html",
   },
   /** s.26: termination by the employer other than by dismissal. */
   section26: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ২৬ (termination by the employer)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 26 (termination by the employer)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-29913.html",
   },
   /** s.27: resignation. */
   section27: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ২৭ (resignation)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 27 (resignation)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-29914.html",
   },
   /** s.30: all dues within 30 working days. */
   section30: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ৩০ (payment of final dues)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 30 (payment of final dues)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-29917.html",
   },
   /** s.11: unused annual leave paid on any exit (not calculated here). */
   section11: {
-    title: "বাংলাদেশ শ্রম আইন, ২০০৬, ধারা ১১ (pay for unused leave)",
+    title: "বাংলাদেশ শ্রম আইন, 2006, ধারা 11 (pay for unused leave)",
     url: "https://bdlaws.minlaw.gov.bd/act-952/section-29079.html",
   },
 } as const;

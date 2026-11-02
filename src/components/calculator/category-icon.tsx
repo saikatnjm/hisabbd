@@ -1,6 +1,7 @@
 import type { CategoryId } from "@/calculators/types";
 import {
   BanknoteIcon,
+  BriefcaseIcon,
   CalculatorIcon,
   CalendarIcon,
   GraduationIcon,
@@ -13,6 +14,7 @@ const icons: Record<CategoryId, (p: React.SVGProps<SVGSVGElement>) => React.Reac
   health: HeartIcon,
   education: GraduationIcon,
   finance: BanknoteIcon,
+  work: BriefcaseIcon,
   everyday: CalculatorIcon,
   "date-time": CalendarIcon,
 };
