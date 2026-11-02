@@ -20,7 +20,7 @@ export const discountCalculator: CalculatorMeta = {
       "দাম আর ডিসকাউন্ট % দিলেই টাকায় চূড়ান্ত দাম ও কত বাঁচল তা দেখুন। অতিরিক্ত ছাড় যোগ করে দুটি ছাড়ের আসল সম্মিলিত শতাংশও জানুন।",
   },
   addedOn: "2026-10-05",
-  related: ["percentage-calculator", "profit-loss-calculator"],
+  related: ["percentage-calculator", "profit-loss-calculator", "cash-counter"],
   faqs: [
     {
       question: "How do I calculate the price after a discount?",

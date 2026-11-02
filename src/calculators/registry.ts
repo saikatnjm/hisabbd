@@ -27,6 +27,7 @@ import { CATEGORY_IDS, type CalculatorMeta, type CategoryId } from "./types";
 export { calculatorPath } from "./paths";
 import { interestCalculator } from "./interest/meta";
 import { weightConverter } from "./weight/meta";
+import { cashCounter } from "./cash/meta";
 import { heightConverter } from "./height/meta";
 import { temperatureConverter } from "./temperature/meta";
 import { calorieCalculator } from "./calorie/meta";
@@ -70,6 +71,7 @@ export const calculators: readonly CalculatorMeta[] = [
   temperatureConverter,
   calorieCalculator,
   rodWeightCalculator,
+  cashCounter,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

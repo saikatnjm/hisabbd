@@ -119,6 +119,10 @@ import { RodCalculator } from "./rod/rod-calculator";
 import { RodCalculatorContent } from "./rod/content";
 import { RodCalculatorContentBn } from "./rod/content.bn";
 import { rodWeightCalculator } from "./rod/meta";
+import { CashCalculator } from "./cash/cash-calculator";
+import { CashCalculatorContent } from "./cash/content";
+import { CashCalculatorContentBn } from "./cash/content.bn";
+import { cashCounter } from "./cash/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -169,6 +173,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: temperatureConverter, Calculator: TemperatureCalculator, Content: TemperatureCalculatorContent, ContentBn: TemperatureCalculatorContentBn },
       { meta: calorieCalculator, Calculator: CalorieCalculator, Content: CalorieCalculatorContent, ContentBn: CalorieCalculatorContentBn },
       { meta: rodWeightCalculator, Calculator: RodCalculator, Content: RodCalculatorContent, ContentBn: RodCalculatorContentBn },
+      { meta: cashCounter, Calculator: CashCalculator, Content: CashCalculatorContent, ContentBn: CashCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

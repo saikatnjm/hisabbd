@@ -209,4 +209,11 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Number of rods", bn: "রডের সংখ্যা" }, value: "40" },
     ],
   },
+  "cash-counter": {
+    submit: { en: "Count cash", bn: "টাকা গুনুন" },
+    fields: [
+      { label: { en: "৳1000 notes", bn: "৳1000 নোট" }, value: "3" },
+      { label: { en: "৳500 notes", bn: "৳500 নোট" }, value: "4" },
+    ],
+  },
 };
