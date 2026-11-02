@@ -191,6 +191,15 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Earned leave already taken", bn: "ইতিমধ্যে ভোগ করা অর্জিত ছুটি" }, value: "14" },
     ],
   },
+  "job-exit-benefit-calculator": {
+    submit: { en: "Calculate job exit benefit", bn: "চাকরি অবসানের সুবিধা হিসাব করুন" },
+    fields: [
+      { label: { en: "How did the job end?", bn: "চাকরি কীভাবে শেষ হলো?" }, value: "retrenchment", kind: "select" },
+      { label: { en: "Last monthly basic wage", bn: "সর্বশেষ মাসিক মূল মজুরি" }, value: "15000" },
+      { label: { en: "Years of continuous service", bn: "অবিচ্ছিন্ন চাকরির বছর" }, value: "5" },
+      { label: { en: "Days in a month for a day’s wage", bn: "দৈনিক মজুরির জন্য মাসের দিন" }, value: "30" },
+    ],
+  },
   "weight-converter": {
     submit: { en: "Convert", bn: "রূপান্তর করুন" },
     fields: [

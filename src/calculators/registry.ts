@@ -28,6 +28,7 @@ export { calculatorPath } from "./paths";
 import { interestCalculator } from "./interest/meta";
 import { overtimeCalculator } from "./overtime/meta";
 import { leaveCalculator } from "./leave/meta";
+import { settlementCalculator } from "./settlement/meta";
 import { weightConverter } from "./weight/meta";
 import { cashCounter } from "./cash/meta";
 import { heightConverter } from "./height/meta";
@@ -73,6 +74,7 @@ export const calculators: readonly CalculatorMeta[] = [
   interestCalculator,
   overtimeCalculator,
   leaveCalculator,
+  settlementCalculator,
   weightConverter,
   heightConverter,
   temperatureConverter,
