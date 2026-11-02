@@ -39,7 +39,7 @@ export const overtimeCalculator: CalculatorMeta = {
       "মূল মজুরি ও মহার্ঘভাতার ঘণ্টাপ্রতি হারের দ্বিগুণ হারে ওভারটাইম মজুরি হিসাব করুন (শ্রম আইন, ধারা ১০৮)। ফ্রি, সূত্র ও উদাহরণসহ, আপনার তথ্য ডিভাইসেই থাকে।",
   },
   addedOn: "2026-11-02",
-  related: ["salary-calculator", "percentage-calculator", "emi-calculator"],
+  related: ["salary-calculator", "job-exit-benefit-calculator", "percentage-calculator", "emi-calculator"],
   faqs: [
     {
       question: "How is overtime calculated in Bangladesh?",
