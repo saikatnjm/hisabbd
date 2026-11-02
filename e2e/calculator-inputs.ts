@@ -284,4 +284,13 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "Day 1 Break", bn: "দিন 1 বিরতি" }, value: "60" },
     ],
   },
+  "unit-price-calculator": {
+    submit: { en: "Compare prices", bn: "দাম তুলনা করুন" },
+    fields: [
+      { label: { en: "Option 1 Price", bn: "অপশন 1 দাম" }, value: "78" },
+      { label: { en: "Option 1 Quantity", bn: "অপশন 1 পরিমাণ" }, value: "1" },
+      { label: { en: "Option 2 Price", bn: "অপশন 2 দাম" }, value: "370" },
+      { label: { en: "Option 2 Quantity", bn: "অপশন 2 পরিমাণ" }, value: "5" },
+    ],
+  },
 };
