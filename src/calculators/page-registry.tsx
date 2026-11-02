@@ -135,6 +135,10 @@ import { OvulationCalculator } from "./ovulation/ovulation-calculator";
 import { OvulationCalculatorContent } from "./ovulation/content";
 import { OvulationCalculatorContentBn } from "./ovulation/content.bn";
 import { ovulationCalculator } from "./ovulation/meta";
+import { SplitCalculator } from "./split/split-calculator";
+import { SplitCalculatorContent } from "./split/content";
+import { SplitCalculatorContentBn } from "./split/content.bn";
+import { expenseSplitCalculator } from "./split/meta";
 import type { CalculatorMeta } from "./types";
 
 export interface CalculatorPageEntry {
@@ -189,6 +193,7 @@ export const calculatorPages: Record<string, CalculatorPageEntry> = Object.fromE
       { meta: messMealCalculator, Calculator: MessCalculator, Content: MessCalculatorContent, ContentBn: MessCalculatorContentBn },
       { meta: cashCounter, Calculator: CashCalculator, Content: CashCalculatorContent, ContentBn: CashCalculatorContentBn },
       { meta: ovulationCalculator, Calculator: OvulationCalculator, Content: OvulationCalculatorContent, ContentBn: OvulationCalculatorContentBn },
+      { meta: expenseSplitCalculator, Calculator: SplitCalculator, Content: SplitCalculatorContent, ContentBn: SplitCalculatorContentBn },
     ] satisfies CalculatorPageEntry[]
   ).map((entry) => [entry.meta.slug, entry]),
 );

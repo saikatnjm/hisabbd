@@ -35,6 +35,7 @@ import { calorieCalculator } from "./calorie/meta";
 import { rodWeightCalculator } from "./rod/meta";
 import { messMealCalculator } from "./mess/meta";
 import { ovulationCalculator } from "./ovulation/meta";
+import { expenseSplitCalculator } from "./split/meta";
 
 /**
  * Registry of all published calculators.
@@ -78,6 +79,7 @@ export const calculators: readonly CalculatorMeta[] = [
   messMealCalculator,
   cashCounter,
   ovulationCalculator,
+  expenseSplitCalculator,
 ];
 
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;

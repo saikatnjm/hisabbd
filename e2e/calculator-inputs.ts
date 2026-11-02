@@ -238,4 +238,11 @@ export const CALCULATOR_INPUTS: Record<string, CalculatorInputs> = {
       { label: { en: "First day of your last period", bn: "শেষ মাসিক শুরুর তারিখ" }, value: daysAgo(10) },
     ],
   },
+  "expense-split-calculator": {
+    submit: { en: "Split the cost", bn: "খরচ ভাগ করুন" },
+    fields: [
+      { label: { en: "Person 1 Paid", bn: "ব্যক্তি 1 দিয়েছেন" }, value: "6000" },
+      { label: { en: "Person 2 Paid", bn: "ব্যক্তি 2 দিয়েছেন" }, value: "4000" },
+    ],
+  },
 };

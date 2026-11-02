@@ -5,11 +5,15 @@ import { ui } from "@/i18n/ui";
 const t = ui.en.history;
 const age = calculatorPath("age-calculator");
 
-/** Calculates an age, retrying the click in case it lands before hydration. */
+/**
+ * Calculates an age, retrying in case the first attempt lands before
+ * hydration. The fill is retried too: hydration resets a controlled input
+ * that was filled too early, which made this test flaky under load.
+ */
 async function calculateAge(page: Page, dateOfBirth: string) {
   const announcement = page.locator('p[aria-live="polite"]');
-  await page.getByLabel("Date of birth", { exact: true }).fill(dateOfBirth);
   await expect(async () => {
+    await page.getByLabel("Date of birth", { exact: true }).fill(dateOfBirth);
     await page.getByRole("button", { name: "Calculate age", exact: true }).click();
     await expect(announcement).not.toHaveText("", { timeout: 1_000 });
   }).toPass({ timeout: 15_000 });

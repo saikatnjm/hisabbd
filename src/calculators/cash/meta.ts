@@ -35,7 +35,7 @@ export const cashCounter: CalculatorMeta = {
       "1000, 500, 200, 100 টাকাসহ সব নোট আর কয়েন কয়টি আছে লিখুন; মোট টাকা, নোট ও কয়েনের সংখ্যা আর মূল্যমান অনুযায়ী টেবিল দেখুন।",
   },
   addedOn: "2026-11-02",
-  related: ["amount-in-words", "discount-calculator", "profit-loss-calculator"],
+  related: ["amount-in-words", "expense-split-calculator", "discount-calculator", "profit-loss-calculator"],
   faqs: [
     {
       question: "How do I count cash with this calculator?",

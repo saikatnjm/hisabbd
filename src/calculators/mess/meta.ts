@@ -37,7 +37,7 @@ export const messMealCalculator: CalculatorMeta = {
       "মাসের বাজার খরচ আর প্রত্যেকের মিল ও জমা দিন: মিল রেট, প্রত্যেক সদস্যের খরচ, কে কত ফেরত পাবেন বা দেবেন, আর ম্যানেজারের হাতে কত রইল। ফ্রি।",
   },
   addedOn: "2026-11-02",
-  related: ["percentage-calculator", "electricity-bill-calculator", "discount-calculator"],
+  related: ["expense-split-calculator", "percentage-calculator", "electricity-bill-calculator", "discount-calculator"],
   faqs: [
     {
       question: "How is the mess meal rate calculated?",
