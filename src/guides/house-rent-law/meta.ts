@@ -9,9 +9,9 @@ export const houseRentLawGuide: GuideMeta = {
   summaryBn:
     "বাড়ী ভাড়া নিয়ন্ত্রণ আইন, 1991-এ মানসম্মত ভাড়া, ভাড়া বাড়ানো, অগ্রিম ভাড়া, রসিদ, উচ্ছেদ ও ভাড়া নিয়ন্ত্রক: ধারা নম্বর আর অফিশিয়াল পাঠের উদ্ধৃতিসহ।",
   answer:
-    "Under the Premises Rent Control Act 1991, rent above the standard rent cannot be recovered, and a Rent Controller fixes standard rent at 15% of the house’s market value a year (ss. 7, 15). Advance rent above one month needs the Controller’s approval (s. 10). A rise from ৳15,000 to ৳16,500 is 10%.",
+    "Under the Premises Rent Control Act 1991, rent above the standard rent cannot be recovered, and on a landlord’s or tenant’s application the Rent Controller fixes standard rent so that a year’s rent equals 15% of the house’s market value (ss. 7, 15). Advance rent above one month needs the Controller’s approval (s. 10). A rise from ৳15,000 to ৳16,500 is 10%.",
   answerBn:
-    "বাড়ী ভাড়া নিয়ন্ত্রণ আইন, 1991 অনুযায়ী মানসম্মত ভাড়ার বেশি ভাড়া আদায়যোগ্য নয়, আর নিয়ন্ত্রক বাড়ির বাজার মূল্যের বছরে 15% হারে মানসম্মত ভাড়া ঠিক করেন (ধারা 7, 15)। নিয়ন্ত্রকের অনুমোদন ছাড়া 1 মাসের বেশি অগ্রিম ভাড়া নেওয়া যায় না (ধারা 10)। ৳15,000 থেকে ৳16,500 হলে ভাড়া বেড়েছে 10%।",
+    "বাড়ী ভাড়া নিয়ন্ত্রণ আইন, 1991 অনুযায়ী মানসম্মত ভাড়ার বেশি ভাড়া আদায়যোগ্য নয়, আর বাড়িওয়ালা বা ভাড়াটিয়ার আবেদনে নিয়ন্ত্রক এমনভাবে মানসম্মত ভাড়া ঠিক করেন যাতে বছরের ভাড়া বাড়ির বাজার মূল্যের 15% হয় (ধারা 7, 15)। নিয়ন্ত্রকের অনুমোদন ছাড়া 1 মাসের বেশি অগ্রিম ভাড়া নেওয়া যায় না (ধারা 10)। ৳15,000 থেকে ৳16,500 হলে ভাড়া বেড়েছে 10%।",
   seo: {
     title: "House Rent Law in Bangladesh: Rent Control Act 1991",
     description:
