@@ -7,7 +7,7 @@ import { numberErrorMessage } from "@/components/calculator/number-messages";
 import { RecentCalculations } from "@/components/calculator/recent-calculations";
 import { ResultActions } from "@/components/calculator/result-actions";
 import { ResultPlaceholder } from "@/components/calculator/result-placeholder";
-import { FormField, Input } from "@/components/ui/form";
+import { FieldMessage, FormField, Input } from "@/components/ui/form";
 import { ResultPanel } from "@/components/ui/result";
 import { useLocale } from "@/i18n/locale-context";
 import type { Locale } from "@/i18n/locales";
@@ -181,9 +181,9 @@ export function CashCalculator() {
           {renderGroup("note", t.notesLegend)}
           {renderGroup("coin", t.coinsLegend)}
           {noneError && (
-            <p role="alert" className="text-sm font-medium text-red-700">
+            <FieldMessage id="cash-counts-error" error>
               {t.none}
-            </p>
+            </FieldMessage>
           )}
         </div>
       </CalculatorForm>
