@@ -512,6 +512,7 @@ function SanchayapatraResultView({ result: r }: { result: SanchayapatraResult })
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle[r.payout]}
         titleId="sanchayapatra-result-heading"
         value={
@@ -538,8 +539,6 @@ function SanchayapatraResultView({ result: r }: { result: SanchayapatraResult })
         <p className="mt-1 text-sm text-slate-600">{t.notePrinted}</p>
         <p className="mt-1 text-sm text-slate-600">{t.notePaisa}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

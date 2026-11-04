@@ -496,6 +496,7 @@ function ZakatResultView({ result: r }: { result: ZakatResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={r.due ? t.titleDue : t.titleNotDue}
         titleId="zakat-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{money(r.zakat)}</p>}
@@ -542,7 +543,6 @@ function ZakatResultView({ result: r }: { result: ZakatResult }) {
         <p className="mt-4 text-sm text-slate-600">{t.yearNote}</p>
         <p className="mt-1 text-sm text-slate-600">{t.disclaimer}</p>
       </ResultPanel>
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

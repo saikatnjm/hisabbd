@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { StarIcon } from "@/components/ui/icons";
 import { useSavedCalculators } from "@/lib/use-saved-calculators";
 import { useLocale } from "@/i18n/locale-context";

@@ -238,6 +238,7 @@ function OvulationResultView({ result: r }: { result: OvulationResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="ovulation-result-heading"
         value={
@@ -267,8 +268,6 @@ function OvulationResultView({ result: r }: { result: OvulationResult }) {
         {r.irregular && <p className="mt-4 font-semibold text-slate-800">{t.irregular}</p>}
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

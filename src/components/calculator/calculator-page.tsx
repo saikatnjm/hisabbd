@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { getCategory } from "@/calculators/categories";
 import { CALCULATORS_PATH, calculatorPath, categoryHref } from "@/calculators/paths";
 import type { CalculatorMeta } from "@/calculators/types";
@@ -62,61 +62,68 @@ export function CalculatorPage({
           ...(faqs.length > 0 ? [faqSchema(faqs)] : []),
         ]}
       />
+      {/* Compact on phones so the first field is on the first screen; page tools sit under the calculator. */}
       <div className="border-b border-brand-100 bg-brand-50 bg-graph">
-        <Container className="py-5 sm:py-8">
-          <Breadcrumbs
-            items={[
-              { name: t.nav.home, href: localePath(locale, "/") },
-              { name: t.nav.calculators, href: localePath(locale, CALCULATORS_PATH) },
-              { name },
-            ]}
-          />
-          <div className="mt-4 flex items-center gap-4 sm:mt-6">
+        <Container className="py-4 sm:py-8">
+          <div className="hidden sm:block">
+            <Breadcrumbs
+              items={[
+                { name: t.nav.home, href: localePath(locale, "/") },
+                { name: t.nav.calculators, href: localePath(locale, CALCULATORS_PATH) },
+                { name },
+              ]}
+            />
+          </div>
+          <div className="flex items-center gap-3 sm:mt-6 sm:gap-4">
             <CalculatorIconTile icon={calculator.icon} category={calculator.category} size="lg" className="bg-white" />
             <div className="min-w-0">
               <h1
                 lang={locale}
-                className="font-display text-3xl leading-tight font-bold tracking-tight text-slate-900 sm:text-5xl"
+                className="font-display text-2xl leading-tight font-bold tracking-tight text-balance text-slate-900 sm:text-5xl"
               >
                 {name}
               </h1>
-              <p lang={bn ? "en" : "bn"} className="text-sm text-slate-600">
+              <p lang={bn ? "en" : "bn"} className="hidden text-sm text-slate-600 sm:block">
                 {bn ? calculator.name : calculator.nameBn}
               </p>
             </div>
           </div>
-          <p className="mt-3 max-w-2xl text-lg text-pretty text-slate-700 sm:mt-4">{bn ? calculator.summaryBn : calculator.summary}</p>
-          {reviewed && <p className="mt-2 text-sm text-slate-600">{t.calculatorPage.lastReviewed(formatPlainDate(reviewed, { locale }))}</p>}
-          {calculatorGuides.length > 0 && (
-            <ul className="mt-2 space-y-1">
-              {calculatorGuides.map((guide) => (
-                <li key={guide.slug}>
-                  <Link
-                    href={localePath(locale, guidePath(guide.slug))}
-                    className="text-sm font-semibold text-brand-700 underline underline-offset-4"
-                  >
-                    {t.guides.readGuide(bn ? guide.titleBn : guide.title)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-          <Link
-            href={localePath(locale, categoryHref(category.id))}
-            className="mt-3 inline-flex min-h-9 items-center gap-2 rounded-lg bg-white/80 py-1 pr-3 pl-1 text-sm font-semibold text-slate-700 transition-colors hover:bg-white hover:text-brand-800"
-          >
-            <CategoryIcon category={category.id} size="sm" />
-            {t.calculatorPage.moreInCategory(bn ? category.nameBn : category.name)}
-          </Link>
-          <CalculatorPageActions slug={calculator.slug} name={name} />
+          <p className="mt-2 max-w-2xl text-base text-pretty text-slate-700 sm:mt-4 sm:text-lg">{bn ? calculator.summaryBn : calculator.summary}</p>
+          {reviewed && <p className="mt-1 text-sm text-slate-600 sm:mt-2">{t.calculatorPage.lastReviewed(formatPlainDate(reviewed, { locale }))}</p>}
         </Container>
       </div>
 
-      <Container className="py-6 sm:py-10">
+      <Container className="py-5 sm:py-10">
         <div className="max-w-3xl">
           <CalculatorProvider slug={calculator.slug} name={name}>
             {children}
           </CalculatorProvider>
+          <div className="mt-6 print:hidden">
+            <div className="flex flex-wrap items-center gap-2">
+              <Link
+                href={localePath(locale, categoryHref(category.id))}
+                className="inline-flex min-h-11 items-center gap-2 rounded-xl border-2 border-slate-200 bg-white py-1 pr-3 pl-1.5 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-300 hover:text-brand-800"
+              >
+                <CategoryIcon category={category.id} size="sm" />
+                {t.calculatorPage.moreInCategory(bn ? category.nameBn : category.name)}
+              </Link>
+            </div>
+            <CalculatorPageActions slug={calculator.slug} name={name} />
+            {calculatorGuides.length > 0 && (
+              <ul className="mt-3 space-y-1">
+                {calculatorGuides.map((guide) => (
+                  <li key={guide.slug}>
+                    <Link
+                      href={localePath(locale, guidePath(guide.slug))}
+                      className="text-sm font-semibold text-brand-700 underline underline-offset-4"
+                    >
+                      {t.guides.readGuide(bn ? guide.titleBn : guide.title)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           <NextCalculators calculator={calculator} locale={locale} />
           <p className="mt-6 hidden text-sm text-slate-600 print:block">
             {name} · HisabBD · {absoluteUrl(localePath(locale, calculatorPath(calculator.slug)))}

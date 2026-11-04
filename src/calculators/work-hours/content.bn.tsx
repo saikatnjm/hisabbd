@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { calculatorPath } from "@/calculators/paths";
 import { OVERTIME_SOURCES as S } from "@/calculators/overtime/sources";
 import { guidePath } from "@/guides/paths";

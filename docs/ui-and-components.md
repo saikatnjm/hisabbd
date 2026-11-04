@@ -3,7 +3,9 @@
 ## Design principles
 
 - **Mobile first.** Most visitors use phones. Touch targets are ≥ 44px (`min-h-11`); inputs are 48px tall (`h-12`) with 16px+ text so iOS doesn't zoom on focus.
-- **Calm, friendly, local.** Bangladesh flag green as the brand colour, a softened flag red as the accent, exercise-book graph paper (`bg-graph`) behind headers, and a decorative calculator keypad in the hero.
+- **Calm, friendly, local.** The "Padma Teal" palette (river teal brand, saffron accent, chosen by the owner in November 2026 from four options), exercise-book graph paper (`bg-graph`) behind headers, and a decorative calculator keypad in the hero.
+- **Light and dark.** Every page works in both themes (see "Dark mode" below); new UI must too.
+- **Calculator first on phones.** The calculator page header is one compact line of title and summary, so the first field is on the first screen; Save/Share, the category link and guides sit under the calculator. Results put Copy/Share right under the big answer (`ResultPanel` `actions`).
 - **Accessible by default.** Semantic HTML, native controls (radio pills, `<details>`, `<select>`), visible focus rings, live regions for results, `prefers-reduced-motion` respected.
 - **No UI library and no icon library.** Tailwind utilities plus a few local primitives and inline SVG icons.
 
@@ -13,10 +15,11 @@ Tailwind v4 `@theme` variables become utilities (`bg-brand-600`, `text-health-in
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--color-brand-50…900` | `#eef9f3` … `#003325`; **600 = `#006a4e`** (flag green) | Primary actions, links, focus ring, header bands |
-| `--color-coral-500` | `#ef4f58` | Accent (softened flag red) |
-| `--color-sun-300` | `#ffd25e` | Text selection |
-| `--color-<category>-soft` / `-ink` | health `#ffe6e3`/`#b42630`, education `#e0edff`/`#1d5bbf`, finance `#fff0c4`/`#855600`, everyday `#d6f1e3`/`#005740`, date-time `#ebe5ff`/`#5a3cc2` | Category tiles, badges, icons (mapped in `components/calculator/category-theme.ts`) |
+| `--color-brand-50…900` | `#eef5f5` … `#053535`; **600 = `#0b6e6e`** (Padma teal) | Primary actions, links, focus ring, header bands |
+| `--color-accent-500` | `#ef8a00` (saffron) | Accent: logo dot, small highlights |
+| `--color-sun-300` | `#ffd66b` | Text selection, favourite star, highlights on the brand band |
+| `--color-<category>-soft` / `-ink` | health `#fbe3df`/`#b22e1a`, education `#dfe8fb`/`#1b4bbb`, finance `#fbf2df`/`#815c13`, work `#e9dffb`/`#561bbb`, everyday `#dffbed`/`#117442`, date-time `#fbdff2`/`#ae197c` | Category tiles, badges, icons (mapped in `components/calculator/category-theme.ts`). Every ink passes AA (4.5:1) on its soft colour in both themes. |
+| `--color-grid` | brand at 7% | The `bg-graph` lines |
 | `--shadow-lift` | soft drop shadow | Cards and the calculator form |
 | `--shadow-key` | inset bottom shadow | Keypad keys |
 | `--font-sans` | system-ui stack with Noto Sans Bengali | Body |
@@ -24,13 +27,21 @@ Tailwind v4 `@theme` variables become utilities (`bg-brand-600`, `text-health-in
 
 Custom utilities and animations: `font-display`, `bg-graph` (28px grid), `.key-drop` (hero keys), `.result-in` (result reveal). Animations only run under `prefers-reduced-motion: no-preference`. Focus style: 3px brand-600 outline, 2px offset. Breakpoints are the Tailwind defaults (sm 640, md 768, lg 1024, xl 1280). Content columns are capped at `max-w-3xl` on calculator pages.
 
+### Dark mode
+
+`<html data-theme="light|dark">` is set before first paint by `THEME_SCRIPT` (`src/lib/theme.ts`, inlined in `RootDocument`'s `<head>`): the visitor's choice from `ThemeToggle` (Auto / Light / Dark, stored as the `site.theme` setting in `hisabbd:prefs`), or the phone's setting when Auto. `globals.css` then **inverts the token scales** under `:root[data-theme="dark"]`: `white` becomes the dark surface, `slate-50…950` run dark to light, `brand-*` and the category pairs get dark-theme values. So ordinary classes (`bg-white`, `text-slate-900`, `bg-brand-600 text-white`) work in both themes without `dark:` variants. Use `dark:` (a custom variant on `data-theme`) only where a colour must not invert, such as the brand-coloured "Why HisabBD" band. Printing always uses light colours; embeds (`/embed`) always stay light.
+
+### Links prefetch on intent
+
+Use `LazyLink` (`components/ui/lazy-link.tsx`) instead of `next/link` (ESLint enforces it). It prefetches when a link is hovered, focused or touched, not when it scrolls into view, which saves a lot of Vercel bandwidth on long lists.
+
 Styling rules: use Tailwind classes only (no CSS modules, no inline `style` except where unavoidable). Combine conditional classes with `cn()`, which joins truthy strings and does **not** resolve conflicts, so pass additive classes only.
 
 ## Primitives (`src/components/ui/`)
 
 | Component | Purpose / API |
 | --- | --- |
-| `Button`, `buttonClasses({ variant, size, className })` | Variants `primary` \| `secondary` \| `ghost`; sizes `md` (min-h-11) \| `lg` (min-h-12). Use `buttonClasses` to style a `<Link>`. `type` defaults to `"button"`. |
+| `Button`, `buttonClasses({ variant, size, className })` | Variants `primary` \| `secondary` \| `ghost`; sizes `sm` (min-h-10) \| `md` (min-h-11) \| `lg` (min-h-12). Use `buttonClasses` to style a `<Link>`. `type` defaults to `"button"`. |
 | `Card`, `cardClasses` | Rounded bordered white box |
 | `Badge` | Small label; pass colour classes |
 | `Container` | Page-width wrapper with side padding |
@@ -39,10 +50,10 @@ Styling rules: use Tailwind classes only (no CSS modules, no inline `style` exce
 | `Label`, `Input` | Base form controls (`Input` handles the `aria-invalid` red state) |
 | `AffixInput` | `Input` with a non-interactive `prefix` (e.g. `৳`) or `suffix` (e.g. `%`, `kg`) |
 | `Select` | Native select with a chevron |
-| `SegmentedControl<T>` | `{ name, legend, options: {value,label}[], value, onChange, hideLegend? }`: radio buttons styled as pills inside a `<fieldset>` |
+| `SegmentedControl<T>` | `{ name, legend, options: {value,label}[], value, onChange, hideLegend? }`: radio buttons styled as pills inside a `<fieldset>`; the chosen one is filled with the brand colour |
 | `FieldMessage` | Hint or error text (errors get an alert icon) |
 | `FormField` | `{ id, label, hint?, error?, children: (control) => ReactNode }`. Renders label + control + error + hint and passes `{ id, aria-invalid, aria-describedby }` to the render-prop control. The error appears directly under the control, before the hint. |
-| `ResultPanel` | `{ title, titleId?, value, children? }`: the big result card. **Not** a live region. |
+| `ResultPanel` | `{ title, titleId?, value, actions?, children? }`: the big result card. Pass `<ResultActions>` as `actions` so Copy/Share sit right under the answer, before the breakdown. **Not** a live region. |
 | `icons.tsx` | Inline SVG icons (`SearchIcon`, `CalendarIcon`, `ScaleIcon`, …), decorative by default (`aria-hidden`) |
 
 ## Calculator building blocks (`src/components/calculator/`)
@@ -62,11 +73,11 @@ Styling rules: use Tailwind classes only (no CSS modules, no inline `style` exce
 
 Shows status messages; remount with `key={text}`. Uses the calculator name from `CalculatorProvider`. |
 | `numberErrorMessage` | – | Code → localized sentence (see [i18n.md](i18n.md)) |
-| `CalculatorPageActions` | client | Save (favourite) and Share-page buttons in the header band |
+| `CalculatorPageActions` | client | Save (favourite) and Share-page buttons, under the calculator |
 | `NextCalculators` | server | "Try next" links under the widget |
 | `RelatedCalculators` | server | Related cards at the bottom |
 | `FaqList` | server | `<details>` accordion |
-| `CalculatorCard`, `CalculatorList` | server | Card (whole card is one link with a visible "Open calculator" cue) and responsive grid |
+| `CalculatorCard`, `CalculatorList` | server | Card (whole card is one link; a compact row on phones, a full card with an "Open calculator" cue from sm up) and responsive grid |
 | `CategoryList`, `CategoryIcon`, `CalculatorIconTile` | server | Category tiles with counts; coloured icon tiles |
 | `CalculatorSearch` | client | Accessible combobox (arrow keys, Enter, Escape) over the serialized index; shows suggestions when empty |
 | `QuickPicks` | client | Home chip row: featured, or the user's favourites and recents |
@@ -78,7 +89,7 @@ Education helpers (`src/calculators/education/`): `useRowList({ createRow, initi
 
 ## Layout (`src/components/layout/`)
 
-`LocaleShell` (skip link → `SiteHeader` → `<main id="main">` → `SiteFooter`), `SiteHeader` (logo, primary nav, language toggle, `MobileMenu`), `SiteFooter` (calculator links, categories, site links, disclaimer, build-year copyright), `Breadcrumbs`, `ProsePage` (About/Privacy/Terms: breadcrumb, H1, intro, optional `updated` date), `nav-links.ts` (single source for nav), `Logo` (÷ on a green tile; the top dot nods to the flag's red circle).
+`LocaleShell` (skip link → `SiteHeader` → `<main id="main">` → `SiteFooter` → `BottomBar`), `SiteHeader` (logo, primary nav from md up, language toggle, search), `BottomBar` (phones only: Home, Search, Saved panel with favourites and recents, Menu panel with pages, categories and `ThemeToggle`), `SiteFooter` (categories, site links, `ThemeToggle`, disclaimer, build-year copyright; calculators are linked from category pages, not the footer), `Breadcrumbs`, `ProsePage` (About/Privacy/Terms: breadcrumb, H1, intro, optional `updated` date), `nav-links.ts` (single source for nav), `Logo` (÷ on a teal tile with a saffron top dot).
 
 ## The widget pattern
 

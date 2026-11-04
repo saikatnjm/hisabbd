@@ -683,6 +683,7 @@ function GoldValueView({ result: r }: { result: GoldValueResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitleValue(purity)}
         titleId="gold-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{money(r.total)}</p>}
@@ -699,7 +700,6 @@ function GoldValueView({ result: r }: { result: GoldValueResult }) {
         <p className="mt-4 text-sm text-slate-600">{t.roundingNote}</p>
         <p className="mt-1 text-sm text-slate-600">{t.scopeNote}</p>
       </ResultPanel>
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }
@@ -720,6 +720,7 @@ function GoldConvertView({ weight: w, enteredIn }: { weight: GoldWeight; entered
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitleConvert}
         titleId="gold-result-heading"
         value={
@@ -731,7 +732,6 @@ function GoldConvertView({ weight: w, enteredIn }: { weight: GoldWeight; entered
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.roundingNote}</p>
       </ResultPanel>
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

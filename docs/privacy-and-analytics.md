@@ -67,7 +67,7 @@ It exports `gaEnabled`, `umamiEnabled` and `analyticsEnabled`. The Privacy page 
 
 `src/lib/preferences.ts`, hook `src/lib/use-preference.ts`, key `hisabbd:prefs`.
 
-- Stores which unit, mode, scale or preset a visitor last chose in each calculator, e.g. BMI cm/ft+in and kg/lb, SSC or HSC, CGPA 4 or 5, EMI rate and tenure units, salary period, percentage mode, VAT mode and rate preset, land units and katha size, Bangla date mode.
+- Stores the light/dark theme choice (`site/theme`: auto, light or dark; read before first paint by `src/lib/theme.ts`) and which unit, mode, scale or preset a visitor last chose in each calculator, e.g. BMI cm/ft+in and kg/lb, SSC or HSC, CGPA 4 or 5, EMI rate and tenure units, salary period, percentage mode, VAT mode and rate preset, land units and katha size, Bangla date mode.
 - **Settings only, never personal values.** A date of birth, grade, price or salary is not a preference.
 - Each preference is declared with its allowed values (`choicePreference`, `numberPreference`) as a module-level constant in the widget. Stored values outside the allowed set are ignored.
 - The server render uses the fallback; the stored choice applies right after hydration. Reset in a calculator keeps preferences.

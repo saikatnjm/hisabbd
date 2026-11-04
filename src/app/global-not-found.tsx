@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { categories } from "@/calculators/categories";
 import { getFeaturedCalculators } from "@/calculators/featured";
 import { CALCULATORS_PATH } from "@/calculators/paths";

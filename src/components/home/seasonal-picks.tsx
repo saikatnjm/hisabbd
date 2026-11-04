@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { activeSeasons } from "@/calculators/seasonal";
 import { CalculatorIconTile } from "@/components/calculator/calculator-icon";
 import type { RecentCalculatorLink } from "@/components/home/home-recent-calculations";

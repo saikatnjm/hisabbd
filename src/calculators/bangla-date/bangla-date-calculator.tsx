@@ -444,6 +444,7 @@ function BanglaDateResultView({ result: r, mode }: { result: BanglaDateResult; m
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />}
         title={mode === "toBangla" ? t.resultTitleBangla(gregorian) : t.resultTitleGregorian(banglaBn)}
         titleId="bangla-date-result-heading"
         value={
@@ -466,7 +467,6 @@ function BanglaDateResultView({ result: r, mode }: { result: BanglaDateResult; m
       >
         <ResultStats items={stats} />
       </ResultPanel>
-      <ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

@@ -36,16 +36,16 @@ export function AffixInput({
       {prefix && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 font-semibold text-slate-500"
+          className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 font-display text-xl font-bold text-brand-700"
         >
           {prefix}
         </span>
       )}
-      <Input className={cn(prefix && "pl-9", suffix && "pr-14", className)} {...props} />
+      <Input className={cn(prefix && "pl-10", suffix && "pr-14", className)} {...props} />
       {suffix && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm font-semibold text-slate-500"
+          className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-sm font-semibold text-slate-600"
         >
           {suffix}
         </span>
@@ -98,7 +98,7 @@ export function SegmentedControl<T extends string>({
         {options.map((option) => (
           <label
             key={option.value}
-            className="relative inline-flex min-h-10 cursor-pointer items-center rounded-lg px-3 text-sm font-semibold text-slate-700 transition-colors hover:text-slate-900 has-[:checked]:bg-white has-[:checked]:text-brand-800 has-[:checked]:shadow-sm has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-brand-600"
+            className="relative inline-flex min-h-10 cursor-pointer items-center rounded-lg px-3 text-sm font-semibold text-slate-700 transition-colors not-has-[:checked]:hover:bg-white not-has-[:checked]:hover:text-slate-900 has-[:checked]:bg-brand-600 has-[:checked]:text-white has-[:checked]:shadow-sm has-[:focus-visible]:outline-3 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-brand-600"
           >
             <input
               type="radio"

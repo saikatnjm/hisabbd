@@ -330,6 +330,7 @@ function GpaResultView({ result: r }: { result: GpaResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="gpa-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight sm:text-6xl">{gpaText(r.gpa)}</p>}
@@ -337,8 +338,6 @@ function GpaResultView({ result: r }: { result: GpaResult }) {
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.roundingNote}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

@@ -315,6 +315,7 @@ function RodResultView({ result: r }: { result: RodResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={heading(t, r)}
         titleId="rod-result-heading"
         value={
@@ -329,8 +330,6 @@ function RodResultView({ result: r }: { result: RodResult }) {
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

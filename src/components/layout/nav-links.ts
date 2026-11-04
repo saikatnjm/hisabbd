@@ -30,6 +30,7 @@ export function categoryNav(locale: Locale): readonly (NavLink & { id: (typeof c
 export function legalNav(locale: Locale): readonly NavLink[] {
   const t = ui[locale].nav;
   return [
+    { name: t.allCalculators, href: localePath(locale, CALCULATORS_PATH) },
     { name: t.guides, href: localePath(locale, GUIDES_PATH) },
     { name: t.about, href: localePath(locale, "/about") },
     { name: t.methodology, href: localePath(locale, "/methodology") },

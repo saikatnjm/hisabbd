@@ -494,6 +494,7 @@ function PercentageResultView({ result: r }: { result: PercentageResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={`${summary.sentence}|${summary.working}`} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={summary.title}
         titleId="percentage-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{summary.value}</p>}
@@ -507,12 +508,6 @@ function PercentageResultView({ result: r }: { result: PercentageResult }) {
           <p className="mt-3 text-sm text-slate-700">{t.decreaseOverHundred}</p>
         )}
       </ResultPanel>
-
-      <ResultActions
-        key={`${summary.sentence}|${summary.working}`}
-        text={shareText(t, r)}
-        shareTitle={t.shareTitle}
-      />
     </div>
   );
 }

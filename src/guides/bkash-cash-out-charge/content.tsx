@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { calculatorPath } from "@/calculators/paths";
 import { BKASH_NEWS_SOURCE, MFS_CHARGE_PRESETS as P } from "@/calculators/mfs-charge/logic";
 import { ContentSection } from "@/components/ui/content-section";

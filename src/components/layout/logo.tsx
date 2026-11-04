@@ -1,13 +1,13 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { localePath, type Locale } from "@/i18n/locales";
 
-/** Mark: a division sign (÷) on a green tile; the top dot nods to the flag's red circle. */
+/** Mark: a division sign (÷) on a green tile; the top dot is the saffron accent. */
 export function LogoMark({ className = "size-9" }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" className={className}>
       <rect width="32" height="32" rx="8" className="fill-brand-600" />
       <rect x="7" y="14.25" width="18" height="3.5" rx="1.75" fill="#fff" />
-      <circle cx="16" cy="8.5" r="3" className="fill-coral-500" />
+      <circle cx="16" cy="8.5" r="3" className="fill-accent-500" />
       <circle cx="16" cy="23.5" r="3" fill="#fff" />
     </svg>
   );

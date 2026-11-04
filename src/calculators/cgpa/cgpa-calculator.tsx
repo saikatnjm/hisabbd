@@ -345,6 +345,7 @@ function CgpaResultView({ result: r, scale }: { result: CgpaResult; scale: Scale
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r, scale)} text={shareText(t, r, scale)} shareTitle={t.shareTitle} />}
         title={t.resultTitle(scaleText(scale))}
         titleId="cgpa-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight sm:text-6xl">{cgpaText(r.cgpa)}</p>}
@@ -352,8 +353,6 @@ function CgpaResultView({ result: r, scale }: { result: CgpaResult; scale: Scale
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.roundingNote}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r, scale)} text={shareText(t, r, scale)} shareTitle={t.shareTitle} />
     </div>
   );
 }

@@ -34,7 +34,7 @@ Agents should start at [`../AGENTS.md`](../AGENTS.md) for the hard rules and com
 - **Embeds:** every calculator can be framed by other sites at `/embed/<en|bn>/<slug>`.
 - **Categories (5):** `health`, `education`, `finance`, `everyday`, `date-time`.
 - **Currency / timezone:** BDT (৳) / Asia/Dhaka. Numbers are grouped South Asian style: `1,00,000`.
-- **Brand colour:** `#006a4e` (Bangladesh flag green).
+- **Brand colour:** `#0b6e6e` (Padma teal), saffron accent `#ef8a00`. Light and dark themes.
 - **Backend / database / accounts:** none.
 
 ## Conventions used in these docs

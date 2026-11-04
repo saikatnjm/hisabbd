@@ -6,6 +6,8 @@ interface ResultPanelProps {
   titleId?: string;
   /** Main result, shown large. */
   value: React.ReactNode;
+  /** Copy / Share / Save buttons, shown right under the main value. */
+  actions?: React.ReactNode;
   /** Optional breakdown/details below the main value. */
   children?: React.ReactNode;
   className?: string;
@@ -15,7 +17,7 @@ interface ResultPanelProps {
  * Prominent calculation result. Announce changes with a separate, short
  * live region in the calculator rather than making this whole panel live.
  */
-export function ResultPanel({ title, titleId, value, children, className }: ResultPanelProps) {
+export function ResultPanel({ title, titleId, value, actions, children, className }: ResultPanelProps) {
   return (
     <section
       aria-labelledby={titleId}
@@ -25,6 +27,7 @@ export function ResultPanel({ title, titleId, value, children, className }: Resu
         {title}
       </h2>
       <div className="mt-2 text-slate-900">{value}</div>
+      {actions && <div className="mt-4">{actions}</div>}
       {children && <div className="mt-5 text-slate-700">{children}</div>}
     </section>
   );

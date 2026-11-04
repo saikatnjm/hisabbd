@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { calculatorPath } from "@/calculators/paths";
 import { calculators } from "@/calculators/registry";
 import { ProsePage } from "@/components/layout/prose-page";

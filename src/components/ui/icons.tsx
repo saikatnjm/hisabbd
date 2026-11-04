@@ -306,6 +306,13 @@ export const ThermometerIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const HomeIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3 11 12 4l9 7" />
+    <path d="M5 10v10h5v-6h4v6h5V10" />
+  </Icon>
+);
+
 export const ClockIcon = (p: IconProps) => (
   <Icon {...p}>
     <circle cx="12" cy="12" r="9" />

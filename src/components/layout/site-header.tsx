@@ -1,7 +1,6 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { LanguageToggle } from "@/components/layout/language-toggle";
 import { Logo } from "@/components/layout/logo";
-import { MobileMenu } from "@/components/layout/mobile-menu";
 import { primaryNav } from "@/components/layout/nav-links";
 import { Container } from "@/components/ui/container";
 import { SearchIcon } from "@/components/ui/icons";
@@ -37,7 +36,6 @@ export function SiteHeader({ locale }: { locale: Locale }) {
             <SearchIcon className="size-5" />
             <span className="sr-only sm:not-sr-only">{t.search}</span>
           </Link>
-          <MobileMenu />
         </div>
       </Container>
     </header>

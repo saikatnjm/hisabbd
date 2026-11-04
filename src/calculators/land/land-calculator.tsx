@@ -669,6 +669,7 @@ function LandResultView({ result: r }: { result: LandResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={summary.title}
         titleId="land-result-heading"
         value={
@@ -727,8 +728,6 @@ function LandResultView({ result: r }: { result: LandResult }) {
         </p>
         <p className="mt-3 text-sm text-slate-600">{t.disclaimer}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

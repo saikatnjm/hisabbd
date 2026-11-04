@@ -184,6 +184,7 @@ function TemperatureResultView({ result: r }: { result: TemperatureResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle(fromText(r))}
         titleId="temperature-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{toText(r)}</p>}
@@ -196,8 +197,6 @@ function TemperatureResultView({ result: r }: { result: TemperatureResult }) {
         )}
         <p className="mt-4 text-sm text-slate-600">{t.disclaimer}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

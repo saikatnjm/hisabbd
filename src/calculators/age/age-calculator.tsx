@@ -286,6 +286,7 @@ function AgeResultView({ result: r }: { result: AgeResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle(formatPlainDate(r.calculationDate, { locale }))}
         titleId="age-result-heading"
         value={
@@ -318,12 +319,6 @@ function AgeResultView({ result: r }: { result: AgeResult }) {
           )}
         </p>
       </ResultPanel>
-
-      <ResultActions
-        key={shareText(t, locale, r)}
-        text={shareText(t, locale, r)}
-        shareTitle={t.shareTitle}
-      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { categories } from "@/calculators/categories";
 import { categoryAnchorId } from "@/calculators/paths";
 import { getCalculatorsByCategory } from "@/calculators/registry";
@@ -16,9 +16,9 @@ function CategoryCardBody({ category, count, locale }: { category: Category; cou
     <>
       <CategoryIcon category={category.id} className="bg-white/80" />
       <div className="min-w-0">
-        <h3 className="font-display text-lg font-semibold text-slate-900">{locale === "bn" ? category.nameBn : category.name}</h3>
-        <p className="mt-0.5 text-sm text-slate-700">{locale === "bn" ? category.descriptionBn : category.description}</p>
-        <p className={cn("mt-2 text-xs font-semibold", theme.ink)}>
+        <h3 className="font-display text-base leading-snug font-semibold text-slate-900 sm:text-lg">{locale === "bn" ? category.nameBn : category.name}</h3>
+        <p className="mt-0.5 hidden text-sm text-slate-700 sm:block">{locale === "bn" ? category.descriptionBn : category.description}</p>
+        <p className={cn("mt-1 text-xs font-semibold sm:mt-2", theme.ink)}>
           {count === 0 ? t.comingSoon : t.count(count)}
         </p>
       </div>
@@ -32,12 +32,12 @@ function CategoryCardBody({ category, count, locale }: { category: Category; cou
  */
 export function CategoryList({ getHref, locale = "en" }: { getHref?: (category: Category) => string; locale?: Locale }) {
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+    <ul className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-3">
       {categories.map((category) => {
         const count = getCalculatorsByCategory(category.id).length;
         const href = getHref?.(category);
         const classes = cn(
-          "flex h-full scroll-mt-6 gap-4 rounded-2xl p-4 lg:flex-col lg:p-5",
+          "flex h-full scroll-mt-6 flex-col gap-2 rounded-2xl p-3 sm:flex-row sm:gap-4 sm:p-4 lg:flex-col lg:p-5",
           categoryTheme[category.id].soft,
         );
         return (

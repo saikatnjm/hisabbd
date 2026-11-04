@@ -427,6 +427,7 @@ function UnitPriceResultView({ result: r }: { result: UnitPriceResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={`${t.resultTitle}: ${cheapestNames(t, r)}`}
         titleId="unit-price-result-heading"
         value={
@@ -469,8 +470,6 @@ function UnitPriceResultView({ result: r }: { result: UnitPriceResult }) {
           </table>
         </div>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

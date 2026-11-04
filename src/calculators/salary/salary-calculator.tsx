@@ -475,6 +475,7 @@ function SalaryResultView({ result: r }: { result: SalaryResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="salary-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{money(r.monthlyNet)}</p>}
@@ -504,8 +505,6 @@ function SalaryResultView({ result: r }: { result: SalaryResult }) {
 
         <p className="mt-4 text-sm text-slate-600">{t.yearlyNote}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

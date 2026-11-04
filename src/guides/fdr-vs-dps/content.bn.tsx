@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { EXCISE_TABLE, exciseBandRanges, SOURCE_TAX_SOURCES } from "@/calculators/fdr/deposit-tax";
 import { calculatorPath } from "@/calculators/paths";
 import { IRD_RATE_ORDER, SOURCE_TAX_RULES } from "@/calculators/sanchayapatra/logic";

@@ -290,6 +290,7 @@ function DateDifferenceResultView({ result: r }: { result: DateDifferenceResult 
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />}
         title={r.includeEndDate ? t.resultTitleIncluded : t.resultTitle}
         titleId="date-diff-result-heading"
         value={
@@ -310,7 +311,6 @@ function DateDifferenceResultView({ result: r }: { result: DateDifferenceResult 
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.holidayNote(weekdayName(dayOfWeek(r.start), locale))}</p>
       </ResultPanel>
-      <ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

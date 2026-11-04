@@ -10,13 +10,16 @@ import { CalculatorSearch } from "@/components/calculator/calculator-search";
 import { QuickPicks, type QuickPick } from "@/components/calculator/quick-picks";
 import { HomeRecentCalculations } from "@/components/home/home-recent-calculations";
 import { SeasonalPicks } from "@/components/home/seasonal-picks";
+import { CategoryIcon } from "@/components/calculator/category-icon";
 import { CategoryList } from "@/components/calculator/category-list";
 import { JsonLd } from "@/components/seo/json-ld";
 import { Container } from "@/components/ui/container";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { BoltIcon, PhoneIcon, TagIcon } from "@/components/ui/icons";
 import { Section } from "@/components/ui/section";
 import { siteConfig } from "@/config/site";
 import { localePath, type Locale } from "@/i18n/locales";
+import { ui } from "@/i18n/ui";
 import { cn } from "@/lib/cn";
 import { organizationSchema, websiteSchema } from "@/lib/seo/structured-data";
 
@@ -189,7 +192,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               <span lang="bn" className="font-semibold text-slate-900">
                 হিসাব
               </span>
-              <span aria-hidden="true" className="font-bold text-coral-500">
+              <span aria-hidden="true" className="font-bold text-accent-500">
                 =
               </span>
               <span>{t.heroBadgeEquals}</span>
@@ -273,12 +276,37 @@ export function HomePage({ locale }: { locale: Locale }) {
 
       {others.length > 0 && (
         <Section id="more-calculators" title={t.moreTitle} className="pt-0 sm:pt-0">
-          <CalculatorList calculators={others} locale={locale} />
+          {/* Grouped by category so the list scans quickly; on phones each calculator is one compact row. */}
+          <div className="space-y-8">
+            {categories.map((category) => {
+              const items = others.filter((calc) => calc.category === category.id);
+              if (items.length === 0) return null;
+              const name = bn ? category.nameBn : category.name;
+              return (
+                <section key={category.id} aria-labelledby={`more-${category.id}`}>
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <h3 id={`more-${category.id}`} className="flex items-center gap-2 font-display text-lg font-semibold text-slate-900">
+                      <CategoryIcon category={category.id} size="sm" />
+                      {name}
+                    </h3>
+                    <Link
+                      href={localePath(locale, categoryHref(category.id))}
+                      className="text-sm font-semibold text-brand-700 underline-offset-4 hover:underline"
+                    >
+                      {ui[locale].card.seeAll}
+                      <span className="sr-only">: {name}</span>
+                    </Link>
+                  </div>
+                  <CalculatorList calculators={items} locale={locale} headingLevel="h4" />
+                </section>
+              );
+            })}
+          </div>
         </Section>
       )}
 
       {/* Why HisabBD */}
-      <section aria-labelledby="why-heading" className="bg-brand-800 py-12 text-white sm:py-16">
+      <section aria-labelledby="why-heading" className="bg-brand-800 py-12 text-white sm:py-16 dark:bg-brand-50 dark:text-slate-900">
         <Container>
           <h2
             id="why-heading"
@@ -291,11 +319,11 @@ export function HomePage({ locale }: { locale: Locale }) {
           <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {t.benefits.map((benefit, index) => (
               <li key={benefit.title}>
-                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/10 text-sun-300">
+                <span className="inline-flex size-12 items-center justify-center rounded-2xl bg-white/10 text-sun-300 dark:bg-brand-100">
                   {benefitIcon(index)}
                 </span>
                 <h3 className="mt-3 font-display text-lg font-semibold">{benefit.title}</h3>
-                <p className="mt-1 text-sm text-brand-100">{benefit.text}</p>
+                <p className="mt-1 text-sm text-brand-100 dark:text-slate-700">{benefit.text}</p>
               </li>
             ))}
           </ul>

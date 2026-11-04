@@ -337,6 +337,7 @@ function InterestResultView({ result: r }: { result: InterestResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={heading(t, r)}
         titleId="interest-result-heading"
         value={
@@ -382,8 +383,6 @@ function InterestResultView({ result: r }: { result: InterestResult }) {
 
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

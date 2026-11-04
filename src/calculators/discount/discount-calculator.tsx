@@ -339,6 +339,7 @@ function DiscountResultView({ result: r }: { result: DiscountResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="discount-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{money(r.finalPrice)}</p>}
@@ -347,8 +348,6 @@ function DiscountResultView({ result: r }: { result: DiscountResult }) {
         <ResultStats items={stats} className="mt-5" />
         <p className="mt-4 text-sm text-slate-600">{t.paisaNote}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

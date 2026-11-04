@@ -514,6 +514,7 @@ function MfsChargeResultView({
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle[r.mode]}
         titleId="mfs-result-heading"
         value={
@@ -542,8 +543,6 @@ function MfsChargeResultView({
         <p className="mt-1 text-sm text-slate-600">{t.paisaNote}</p>
         <p className="mt-1 text-sm text-slate-600">{t.changeNote}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

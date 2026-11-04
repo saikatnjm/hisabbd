@@ -34,7 +34,11 @@ export interface UiStrings {
     categoryDetail: string;
   };
   quickPicks: { try: string; yours: string; saved: string };
-  card: { open: string };
+  /** Light/dark switch (menu and footer). */
+  theme: { label: string; auto: string; light: string; dark: string };
+  /** Bottom bar on phones and its Saved panel. */
+  bottomBar: { label: string; saved: string; savedTitle: string; recentTitle: string; savedEmpty: string; close: string };
+  card: { open: string; seeAll: string };
   categoryList: { comingSoon: string; count: (n: number) => string };
   calculatorPage: {
     moreInCategory: (category: string) => string;
@@ -112,6 +116,15 @@ export interface UiStrings {
 
 const en: UiStrings = {
   skipToContent: "Skip to content",
+  theme: { label: "Theme", auto: "Auto", light: "Light", dark: "Dark" },
+  bottomBar: {
+    label: "Quick navigation",
+    saved: "Saved",
+    savedTitle: "Saved calculators",
+    recentTitle: "Recently used",
+    savedEmpty: "Nothing here yet. Tap Save on any calculator to keep it here. It stays on this device only.",
+    close: "Close",
+  },
   nav: {
     home: "Home",
     allCalculators: "All calculators",
@@ -137,7 +150,7 @@ const en: UiStrings = {
     categoryDetail: "Category",
   },
   quickPicks: { try: "Try:", yours: "Your calculators:", saved: "Saved" },
-  card: { open: "Open calculator" },
+  card: { open: "Open calculator", seeAll: "See all" },
   categoryList: {
     comingSoon: "Coming soon",
     count: (n) => `${n} calculator${n === 1 ? "" : "s"}`,
@@ -211,6 +224,15 @@ const en: UiStrings = {
 
 const bn: UiStrings = {
   skipToContent: "মূল অংশে যান",
+  theme: { label: "থিম", auto: "অটো", light: "লাইট", dark: "ডার্ক" },
+  bottomBar: {
+    label: "দ্রুত নেভিগেশন",
+    saved: "সংরক্ষিত",
+    savedTitle: "সংরক্ষিত ক্যালকুলেটর",
+    recentTitle: "সম্প্রতি ব্যবহৃত",
+    savedEmpty: "এখনো কিছু নেই। যেকোনো ক্যালকুলেটরে “সেভ করুন” চাপলে এখানে থাকবে। শুধু এই ডিভাইসেই থাকে।",
+    close: "বন্ধ করুন",
+  },
   nav: {
     home: "হোম",
     allCalculators: "সব ক্যালকুলেটর",
@@ -235,7 +257,7 @@ const bn: UiStrings = {
     categoryDetail: "বিভাগ",
   },
   quickPicks: { try: "দেখুন:", yours: "আপনার ক্যালকুলেটর:", saved: "সেভ করা" },
-  card: { open: "ক্যালকুলেটর খুলুন" },
+  card: { open: "ক্যালকুলেটর খুলুন", seeAll: "সব দেখুন" },
   categoryList: {
     comingSoon: "শিগগির আসছে",
     count: (n) => `${n}টি ক্যালকুলেটর`,

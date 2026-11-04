@@ -64,10 +64,10 @@ export async function renderResultCard(card: ResultCard): Promise<Blob> {
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas not supported");
 
-  // Background: brand-50 with graph paper, a green band at the top.
-  ctx.fillStyle = "#eef9f3";
+  // Background: brand-50 with graph paper, a teal band at the top.
+  ctx.fillStyle = "#eef5f5";
   ctx.fillRect(0, 0, CARD_SIZE, CARD_SIZE);
-  ctx.strokeStyle = "rgba(0, 106, 78, 0.08)";
+  ctx.strokeStyle = "rgba(11, 110, 110, 0.08)";
   ctx.lineWidth = 2;
   for (let x = 0; x <= CARD_SIZE; x += 40) {
     ctx.beginPath();
@@ -79,11 +79,11 @@ export async function renderResultCard(card: ResultCard): Promise<Blob> {
     ctx.lineTo(CARD_SIZE, x);
     ctx.stroke();
   }
-  ctx.fillStyle = "#006a4e";
+  ctx.fillStyle = "#0b6e6e";
   ctx.fillRect(0, 0, CARD_SIZE, 16);
 
   // Logo tile (÷) and wordmark.
-  ctx.fillStyle = "#006a4e";
+  ctx.fillStyle = "#0b6e6e";
   ctx.beginPath();
   ctx.roundRect(PADDING, PADDING, 88, 88, 20);
   ctx.fill();
@@ -100,7 +100,7 @@ export async function renderResultCard(card: ResultCard): Promise<Blob> {
   // Calculator name.
   const width = CARD_SIZE - PADDING * 2;
   ctx.textBaseline = "alphabetic";
-  ctx.fillStyle = "#005740";
+  ctx.fillStyle = "#095a5a";
   ctx.font = `700 56px ${family}`;
   let y = PADDING + 200;
   for (const line of wrapText(card.calculatorName, width, (s) => ctx.measureText(s).width).slice(0, 2)) {
@@ -140,7 +140,7 @@ export async function renderResultCard(card: ResultCard): Promise<Blob> {
   ctx.fillStyle = "#334155";
   ctx.font = `500 34px ${family}`;
   ctx.fillText(card.tagline, PADDING, CARD_SIZE - PADDING - 52);
-  ctx.fillStyle = "#006a4e";
+  ctx.fillStyle = "#0b6e6e";
   ctx.font = `600 32px ${family}`;
   ctx.fillText(card.pageLabel, PADDING, CARD_SIZE - PADDING);
 

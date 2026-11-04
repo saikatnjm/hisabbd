@@ -243,6 +243,7 @@ function WeightResultView({ result: r }: { result: WeightResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle(inputText(t, r))}
         titleId="weight-result-heading"
         value={
@@ -284,8 +285,6 @@ function WeightResultView({ result: r }: { result: WeightResult }) {
         </div>
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

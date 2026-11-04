@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { categories } from "@/calculators/categories";
 import { categoryHref } from "@/calculators/paths";
 import { getCalculator } from "@/calculators/registry";

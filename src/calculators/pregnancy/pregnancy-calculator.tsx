@@ -275,6 +275,7 @@ function PregnancyResultView({ result: r }: { result: PregnancyResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle(formatPlainDate(r.asOf, { locale }))}
         titleId="pregnancy-result-heading"
         value={
@@ -312,8 +313,6 @@ function PregnancyResultView({ result: r }: { result: PregnancyResult }) {
         </ul>
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

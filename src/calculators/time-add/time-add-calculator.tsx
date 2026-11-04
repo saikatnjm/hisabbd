@@ -262,6 +262,7 @@ function TimeAddResultView({ result: r }: { result: TimeAddResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="time-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{totalText(t, r)}</p>}
@@ -269,8 +270,6 @@ function TimeAddResultView({ result: r }: { result: TimeAddResult }) {
         <ResultStats items={stats} />
         {r.negative && <p className="mt-4 text-slate-800">{t.negativeNote}</p>}
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

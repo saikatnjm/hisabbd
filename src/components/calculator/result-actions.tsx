@@ -102,26 +102,26 @@ export function ResultActions({ text, shareTitle }: { text: string; shareTitle: 
   return (
     <div className="print:hidden">
       <div className="flex flex-wrap gap-2">
-        <Button variant="secondary" onClick={copy}>
-          <CopyIcon className="size-5" />
+        <Button variant="secondary" size="sm" onClick={copy}>
+          <CopyIcon className="size-4" />
           {t.copyResult}
         </Button>
         {canShare && (
-          <Button variant="secondary" onClick={share}>
-            <ShareIcon className="size-5" />
+          <Button variant="secondary" size="sm" onClick={share}>
+            <ShareIcon className="size-4" />
             {t.share}
           </Button>
         )}
-        <Button variant="secondary" onClick={shareImage} disabled={busy}>
-          <ImageIcon className="size-5" />
+        <Button variant="secondary" size="sm" onClick={shareImage} disabled={busy}>
+          <ImageIcon className="size-4" />
           {t.shareImage}
         </Button>
-        <Button variant="secondary" onClick={print}>
-          <PrinterIcon className="size-5" />
+        <Button variant="secondary" size="sm" onClick={print}>
+          <PrinterIcon className="size-4" />
           {t.print}
         </Button>
       </div>
-      <p role="status" className="mt-2 min-h-5 text-sm text-slate-700">
+      <p role="status" className="mt-1 min-h-5 text-sm text-slate-700">
         {status}
       </p>
     </div>

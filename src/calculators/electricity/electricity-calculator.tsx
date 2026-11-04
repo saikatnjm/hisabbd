@@ -712,6 +712,7 @@ function ElectricityResultView({ result: r, edited }: { result: ElectricityResul
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={r.recharge ? t.resultTitleRecharge : t.resultTitleBill}
         titleId="electricity-result-heading"
         value={
@@ -787,8 +788,6 @@ function ElectricityResultView({ result: r, edited }: { result: ElectricityResul
         </p>
         <p className="mt-1 text-sm text-slate-600">{t.differNote}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

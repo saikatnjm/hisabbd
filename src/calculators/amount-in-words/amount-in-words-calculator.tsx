@@ -263,6 +263,7 @@ function AmountInWordsResultView({ result: r }: { result: AmountInWordsResult })
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="amount-in-words-result-heading"
         value={
@@ -283,8 +284,6 @@ function AmountInWordsResultView({ result: r }: { result: AmountInWordsResult })
         </div>
         <ResultStats items={stats} className="mt-5" />
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

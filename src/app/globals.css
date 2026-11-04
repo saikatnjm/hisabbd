@@ -1,44 +1,111 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /*
- * HisabBD design tokens.
- * Brand green is based on the Bangladesh flag green (#006a4e); coral is a softened flag red.
- * Each category owns a soft/ink colour pair used for tiles, badges and cards.
+ * HisabBD design tokens: the "Padma Teal" palette (river teal, saffron accent).
+ * Each category owns a soft/ink colour pair used for tiles, badges and cards;
+ * every ink passes WCAG AA (4.5:1) on its soft colour, in both themes.
+ * Values come from the palette script used to choose them (docs/ui-and-components.md).
  * Breakpoints are Tailwind defaults: sm 640, md 768, lg 1024, xl 1280.
  */
-@theme {
+@theme static {
   --font-sans:
     system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans Bengali", sans-serif;
 
-  --color-brand-50: #eef9f3;
-  --color-brand-100: #d6f1e3;
-  --color-brand-200: #a9e0c6;
-  --color-brand-300: #6fc9a3;
-  --color-brand-400: #2fa97c;
-  --color-brand-500: #078a60;
-  --color-brand-600: #006a4e;
-  --color-brand-700: #005740;
-  --color-brand-800: #004432;
-  --color-brand-900: #003325;
+  --color-brand-50: #eef5f5;
+  --color-brand-100: #dae9e9;
+  --color-brand-200: #b1d1d1;
+  --color-brand-300: #80b4b4;
+  --color-brand-400: #4a9494;
+  --color-brand-500: #237d7d;
+  --color-brand-600: #0b6e6e;
+  --color-brand-700: #095a5a;
+  --color-brand-800: #074646;
+  --color-brand-900: #053535;
 
-  --color-coral-500: #ef4f58;
-  --color-sun-300: #ffd25e;
+  --color-accent-500: #ef8a00;
+  --color-sun-300: #ffd66b;
 
-  --color-health-soft: #ffe6e3;
-  --color-health-ink: #b42630;
-  --color-education-soft: #e0edff;
-  --color-education-ink: #1d5bbf;
-  --color-finance-soft: #fff0c4;
-  --color-finance-ink: #855600;
-  --color-work-soft: #e2eef6;
-  --color-work-ink: #1d5a7c;
-  --color-everyday-soft: #d6f1e3;
-  --color-everyday-ink: #005740;
-  --color-date-time-soft: #ebe5ff;
-  --color-date-time-ink: #5a3cc2;
+  --color-health-soft: #fbe3df;
+  --color-health-ink: #b22e1a;
+  --color-education-soft: #dfe8fb;
+  --color-education-ink: #1b4bbb;
+  --color-finance-soft: #fbf2df;
+  --color-finance-ink: #815c13;
+  --color-work-soft: #e9dffb;
+  --color-work-ink: #561bbb;
+  --color-everyday-soft: #dffbed;
+  --color-everyday-ink: #117442;
+  --color-date-time-soft: #fbdff2;
+  --color-date-time-ink: #ae197c;
+
+  --color-grid: rgb(11 110 110 / 0.07);
 
   --shadow-lift: 0 10px 24px -12px rgb(15 23 42 / 0.28);
   --shadow-key: inset 0 -6px 0 0 rgb(15 23 42 / 0.08);
+}
+
+/*
+ * Dark mode: <html data-theme="dark">, set before paint by the script in
+ * root-document.tsx (the phone's setting, or the visitor's choice). The
+ * neutral, white and brand scales are inverted, so the same utility classes
+ * work in both themes: bg-white becomes the dark surface, text-slate-900 the
+ * light text, bg-brand-600 a brighter teal with dark text on it. Screen only:
+ * printing always uses the light colours.
+ */
+@media screen {
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-white: #121b1c;
+    --color-slate-50: #172324;
+    --color-slate-100: #1c2a2b;
+    --color-slate-200: #283a3c;
+    --color-slate-300: #3a4f51;
+    --color-slate-400: #5e7476;
+    --color-slate-500: #8a9c9e;
+    --color-slate-600: #a9b7b9;
+    --color-slate-700: #c4cfd0;
+    --color-slate-800: #dbe3e4;
+    --color-slate-900: #ebf0f0;
+    --color-slate-950: #f6f9f9;
+
+    --color-brand-50: #162d2d;
+    --color-brand-100: #1f3d3d;
+    --color-brand-200: #326767;
+    --color-brand-300: #3f8a8a;
+    --color-brand-400: #0f9696;
+    --color-brand-500: #10a0a0;
+    --color-brand-600: #11a6a6;
+    --color-brand-700: #14cbcb;
+    --color-brand-800: #62dddd;
+    --color-brand-900: #a6eeee;
+
+    --color-health-soft: #38221e;
+    --color-health-ink: #ef7968;
+    --color-education-soft: #1e2638;
+    --color-education-ink: #7197f0;
+    --color-finance-soft: #38301e;
+    --color-finance-ink: #ecb851;
+    --color-work-soft: #281e38;
+    --color-work-ink: #a87ff1;
+    --color-everyday-soft: #1e382b;
+    --color-everyday-ink: #51ec9e;
+    --color-date-time-soft: #381e30;
+    --color-date-time-ink: #ef68c1;
+
+    --color-red-50: #3a1714;
+    --color-red-600: #f0675a;
+    --color-red-700: #ff9b8f;
+    --color-amber-50: #33280f;
+    --color-amber-300: #7a5a12;
+    --color-amber-950: #ffe7b0;
+
+    --color-grid: rgb(128 180 180 / 0.06);
+    --shadow-lift: 0 10px 24px -12px rgb(0 0 0 / 0.7);
+    --shadow-key: inset 0 -6px 0 0 rgb(0 0 0 / 0.25);
+  }
 }
 
 @theme inline {
@@ -69,8 +136,8 @@
 /* Exercise-book graph paper. */
 @utility bg-graph {
   background-image:
-    linear-gradient(to right, rgb(0 106 78 / 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(0 106 78 / 0.07) 1px, transparent 1px);
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 

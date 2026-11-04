@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { calculatorPath } from "@/calculators/paths";
 import { LT_A_RATES, SLAB_IDS, TARIFF_EFFECTIVE, VAT_PERCENT, type SlabId } from "@/calculators/electricity/logic";
 import { ContentSection } from "@/components/ui/content-section";

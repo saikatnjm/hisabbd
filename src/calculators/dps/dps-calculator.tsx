@@ -562,6 +562,7 @@ function DpsResultView({ result: r }: { result: DpsResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="dps-result-heading"
         value={
@@ -611,8 +612,6 @@ function DpsResultView({ result: r }: { result: DpsResult }) {
 
         <p className="mt-4 text-sm text-slate-600">{t.methodNote(t.methodNames[r.compounding])}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

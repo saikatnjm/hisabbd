@@ -5,6 +5,17 @@ import nextTs from "eslint-config-next/typescript";
 export default defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    // Links prefetch on intent only (see src/components/ui/lazy-link.tsx).
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/components/ui/lazy-link.tsx"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        { paths: [{ name: "next/link", message: "Use LazyLink from @/components/ui/lazy-link: it prefetches on intent only." }] },
+      ],
+    },
+  },
   globalIgnores([
     ".next/**",
     "out/**",

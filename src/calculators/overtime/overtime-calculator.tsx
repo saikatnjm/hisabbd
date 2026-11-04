@@ -298,6 +298,7 @@ function OvertimeResultView({ result: r }: { result: OvertimeResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle(formatNumber(r.hours))}
         titleId="overtime-result-heading"
         value={<p className="font-display text-4xl font-bold tracking-tight break-words sm:text-5xl">{money(r.overtimePay)}</p>}
@@ -306,8 +307,6 @@ function OvertimeResultView({ result: r }: { result: OvertimeResult }) {
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

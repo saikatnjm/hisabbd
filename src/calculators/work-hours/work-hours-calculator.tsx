@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { useState } from "react";
 import { calculatorPath } from "@/calculators/paths";
 import { CalculatorForm } from "@/components/calculator/calculator-form";
@@ -311,6 +311,7 @@ function WorkHoursResultView({ result: r, dayNumber }: { result: WorkHoursResult
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="work-hours-result-heading"
         value={
@@ -360,8 +361,6 @@ function WorkHoursResultView({ result: r, dayNumber }: { result: WorkHoursResult
           </table>
         </div>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

@@ -1,11 +1,10 @@
-import Link from "next/link";
-import { calculatorPath } from "@/calculators/paths";
-import { calculators } from "@/calculators/registry";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { siteConfig } from "@/config/site";
 import { Logo } from "@/components/layout/logo";
 import { categoryNav, legalNav } from "@/components/layout/nav-links";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Container } from "@/components/ui/container";
-import { localePath, type Locale } from "@/i18n/locales";
+import type { Locale } from "@/i18n/locales";
 import { ui } from "@/i18n/ui";
 
 /** Fixed when the page is built (pages are static). */
@@ -42,14 +41,11 @@ function FooterNav({
 
 export function SiteFooter({ locale }: { locale: Locale }) {
   const t = ui[locale].footer;
-  const calculatorLinks = calculators.map((c) => ({
-    name: locale === "bn" ? c.nameBn : c.name,
-    href: localePath(locale, calculatorPath(c.slug)),
-  }));
 
   return (
     <footer className="border-t border-brand-100 bg-brand-50 print:hidden">
-      <Container className="grid gap-8 py-10 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Categories and site links only: every calculator is linked from its category page and /calculators. */}
+      <Container className="grid gap-8 py-10 sm:grid-cols-3">
         <div>
           <Logo locale={locale} />
           <p className="mt-3 max-w-xs text-sm text-slate-700" lang={locale}>
@@ -61,8 +57,10 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               </>
             )}
           </p>
+          <div className="mt-5">
+            <ThemeToggle />
+          </div>
         </div>
-        <FooterNav id="footer-calculators" title={t.calculators} links={calculatorLinks} />
         <FooterNav id="footer-categories" title={t.categories} links={categoryNav(locale)} />
         <FooterNav id="footer-site" title={siteConfig.name} links={legalNav(locale)} />
       </Container>

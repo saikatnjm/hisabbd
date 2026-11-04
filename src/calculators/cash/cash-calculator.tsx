@@ -213,6 +213,7 @@ function CashResultView({ result: r }: { result: CashResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="cash-result-heading"
         value={
@@ -247,8 +248,6 @@ function CashResultView({ result: r }: { result: CashResult }) {
         </div>
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

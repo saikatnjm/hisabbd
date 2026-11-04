@@ -296,6 +296,7 @@ function HeightResultView({ result: r }: { result: HeightResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle(inputText(t, r))}
         titleId="height-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{big}</p>}
@@ -303,8 +304,6 @@ function HeightResultView({ result: r }: { result: HeightResult }) {
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

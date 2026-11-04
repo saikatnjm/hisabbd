@@ -396,6 +396,7 @@ function VatResultView({ result: r }: { result: VatResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle[r.mode]}
         titleId="vat-result-heading"
         value={
@@ -419,8 +420,6 @@ function VatResultView({ result: r }: { result: VatResult }) {
         <p className="mt-4 text-sm text-slate-600">{t.paisaNote}</p>
         <p className="mt-1 text-sm text-slate-600">{t.scopeNote}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

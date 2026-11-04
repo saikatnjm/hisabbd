@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { ContentSection } from "@/components/ui/content-section";
 import { BOARD_CHALLENGE_SOURCES } from "@/guides/board-challenge-gpa/sources";
 import { guidePath } from "@/guides/paths";

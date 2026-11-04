@@ -283,6 +283,7 @@ function SplitResultView({ result: r }: { result: SplitResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="split-result-heading"
         value={<p className="font-display text-5xl font-bold tracking-tight break-words sm:text-6xl">{money(r.people[r.people.length - 1]!.share)}</p>}
@@ -324,8 +325,6 @@ function SplitResultView({ result: r }: { result: SplitResult }) {
           </table>
         </div>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { calculatorPath } from "@/calculators/paths";
 import { ContentSection } from "@/components/ui/content-section";
 import { ZAKAT_SOURCES } from "./logic";

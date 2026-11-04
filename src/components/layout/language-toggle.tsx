@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/i18n/locale-context";
 import { switchLocalePath } from "@/i18n/locales";

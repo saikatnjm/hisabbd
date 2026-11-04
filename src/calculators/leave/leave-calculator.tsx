@@ -430,6 +430,7 @@ function LeaveResultView({ result: r }: { result: LeaveResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="leave-result-heading"
         value={<p className="font-display text-4xl font-bold tracking-tight break-words sm:text-5xl">{days(r.remaining)}</p>}
@@ -442,8 +443,6 @@ function LeaveResultView({ result: r }: { result: LeaveResult }) {
         )}
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

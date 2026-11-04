@@ -254,6 +254,7 @@ function RetirementResultView({ result: r }: { result: RetirementResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={text} text={text} shareTitle={t.shareTitle} />}
         title={t.resultTitle(r.retirementAge)}
         titleId="retirement-result-heading"
         value={
@@ -268,8 +269,6 @@ function RetirementResultView({ result: r }: { result: RetirementResult }) {
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.note}</p>
       </ResultPanel>
-
-      <ResultActions key={text} text={text} shareTitle={t.shareTitle} />
     </div>
   );
 }

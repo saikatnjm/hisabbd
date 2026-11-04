@@ -537,6 +537,7 @@ function JobAgeResultView({ result: r }: { result: JobAgeResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, locale, r)} text={shareText(t, locale, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle(date(r.referenceDate))}
         titleId="job-age-result-heading"
         value={
@@ -567,12 +568,6 @@ function JobAgeResultView({ result: r }: { result: JobAgeResult }) {
         <ResultStats items={stats} className="mt-5" />
         <p className="mt-4 text-sm text-slate-600">{t.circularWins}</p>
       </ResultPanel>
-
-      <ResultActions
-        key={shareText(t, locale, r)}
-        text={shareText(t, locale, r)}
-        shareTitle={t.shareTitle}
-      />
     </div>
   );
 }

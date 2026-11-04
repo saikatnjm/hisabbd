@@ -386,6 +386,7 @@ function EmiResultView({ result: r }: { result: EmiResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="emi-result-heading"
         value={
@@ -456,8 +457,6 @@ function EmiResultView({ result: r }: { result: EmiResult }) {
 
         <p className="mt-4 text-sm text-slate-600">{t.methodNote(r.months)}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

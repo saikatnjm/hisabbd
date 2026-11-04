@@ -20,7 +20,7 @@ export function CalculatorList({
   if (calculators.length === 0) return emptyState ?? null;
 
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
       {calculators.map((calc) => (
         <li key={calc.slug}>
           <CalculatorCard calculator={calc} headingLevel={headingLevel} linkAttributes={linkAttributes?.(calc)} locale={locale} />

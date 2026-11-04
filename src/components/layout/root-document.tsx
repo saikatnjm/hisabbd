@@ -4,6 +4,7 @@ import { OG_IMAGE } from "@/calculators/metadata";
 import { siteConfig } from "@/config/site";
 import { AnalyticsScript } from "@/components/analytics/analytics-script";
 import { HTML_LANG, OG_LOCALE, type Locale } from "@/i18n/locales";
+import { THEME_SCRIPT } from "@/lib/theme";
 import "@/app/globals.css";
 
 /**
@@ -59,7 +60,10 @@ export function rootMetadata(locale: Locale): Metadata {
 export const rootViewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#006a4e",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0b6e6e" },
+    { media: "(prefers-color-scheme: dark)", color: "#121b1c" },
+  ],
 };
 
 /**
@@ -73,12 +77,18 @@ export function RootDocument({
   children,
 }: {
   locale: Locale;
-  /** False for embeds on other sites: no analytics scripts or cookies there. */
+  /** False for embeds on other sites: no analytics scripts or cookies there, and always the light theme. */
   analytics?: boolean;
   children: React.ReactNode;
 }) {
   return (
-    <html lang={HTML_LANG[locale]} className={displayFont.variable}>
+    // data-theme is set by THEME_SCRIPT before hydration, hence suppressHydrationWarning.
+    <html lang={HTML_LANG[locale]} className={displayFont.variable} suppressHydrationWarning>
+      {analytics && (
+        <head>
+          <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        </head>
+      )}
       <body className="flex min-h-dvh flex-col bg-white font-sans text-slate-900 antialiased">
         {children}
         {analytics && <AnalyticsScript />}

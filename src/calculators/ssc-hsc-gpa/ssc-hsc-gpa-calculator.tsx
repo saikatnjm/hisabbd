@@ -534,6 +534,7 @@ function SscHscGpaResultView({
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={share} text={share} shareTitle={t.shareTitle} />}
         title={t.resultTitle(t.examName[exam])}
         titleId="ssc-hsc-gpa-result-heading"
         value={
@@ -555,8 +556,6 @@ function SscHscGpaResultView({
         <ResultStats items={stats} />
         <p className="mt-4 text-sm text-slate-600">{t.roundingNote}</p>
       </ResultPanel>
-
-      <ResultActions key={share} text={share} shareTitle={t.shareTitle} />
     </div>
   );
 }

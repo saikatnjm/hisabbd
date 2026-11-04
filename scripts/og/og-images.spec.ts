@@ -50,7 +50,7 @@ const BRAND = {
   200: cssColor("brand-200"),
   600: cssColor("brand-600"),
   700: cssColor("brand-700"),
-  coral: cssColor("coral-500"),
+  accent: cssColor("accent-500"),
 };
 
 function categoryColors(id: CategoryId) {
@@ -91,7 +91,7 @@ function iconSvg(icon: CalculatorIconName, size: number): string {
 }
 
 const LOGO_MARK = (size: number) =>
-  `<svg viewBox="0 0 32 32" width="${size}" height="${size}"><rect width="32" height="32" rx="8" fill="${BRAND[600]}"/><rect x="7" y="14.25" width="18" height="3.5" rx="1.75" fill="#fff"/><circle cx="16" cy="8.5" r="3" fill="${BRAND.coral}"/><circle cx="16" cy="23.5" r="3" fill="#fff"/></svg>`;
+  `<svg viewBox="0 0 32 32" width="${size}" height="${size}"><rect width="32" height="32" rx="8" fill="${BRAND[600]}"/><rect x="7" y="14.25" width="18" height="3.5" rx="1.75" fill="#fff"/><circle cx="16" cy="8.5" r="3" fill="${BRAND.accent}"/><circle cx="16" cy="23.5" r="3" fill="#fff"/></svg>`;
 
 const CHECK = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 7"/></svg>`;
 
@@ -135,10 +135,10 @@ function renderHtml(card: Card): string {
   body {
     font-family: "Anek Bangla", sans-serif;
     color: #0f172a;
-    background-color: #f6fbf8;
+    background-color: #f1f8f8;
     background-image:
-      linear-gradient(to right, rgb(0 106 78 / 0.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(0 106 78 / 0.07) 1px, transparent 1px);
+      linear-gradient(to right, rgb(11 110 110 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(11 110 110 / 0.07) 1px, transparent 1px);
     background-size: 28px 28px;
     display: flex;
     flex-direction: column;

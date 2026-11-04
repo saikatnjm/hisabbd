@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import type { CalculatorIconName, CategoryId } from "@/calculators/types";
 import { CalculatorIconTile } from "@/components/calculator/calculator-icon";
 import { Container } from "@/components/ui/container";

@@ -38,7 +38,7 @@ export default function PrivacyPage() {
         <p>Your browser also remembers, on this device only:</p>
         <ul>
           <li>which calculators you opened recently and which ones you saved (only their names, for example “age-calculator”);</li>
-          <li>your settings in each calculator, such as cm or feet, kg or lb, HSC or SSC, or your katha size.</li>
+          <li>your settings, such as light or dark theme, cm or feet, kg or lb, HSC or SSC, or your katha size.</li>
         </ul>
         <p>
           None of this is sent to HisabBD. Clearing your browser’s site data removes it, or use the

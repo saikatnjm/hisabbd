@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LazyLink as Link } from "@/components/ui/lazy-link";
 import {
   EXCISE_TABLE,
   exciseBandRanges,

@@ -451,6 +451,7 @@ function BmiResultView({ result: r }: { result: BmiResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="bmi-result-heading"
         value={
@@ -467,8 +468,6 @@ function BmiResultView({ result: r }: { result: BmiResult }) {
         <ResultStats items={stats} className="mt-5" />
         <p className="mt-4 text-sm text-slate-600">{t.screeningNote}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }

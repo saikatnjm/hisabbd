@@ -272,6 +272,7 @@ function ProfitLossResultView({ result: r }: { result: ProfitLossResult }) {
   return (
     <div className="space-y-4">
       <ResultPanel
+        actions={<ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />}
         title={t.resultTitle}
         titleId="profit-loss-result-heading"
         value={
@@ -295,8 +296,6 @@ function ProfitLossResultView({ result: r }: { result: ProfitLossResult }) {
         )}
         <p className="mt-3 text-sm text-slate-600">{t.paisaNote}</p>
       </ResultPanel>
-
-      <ResultActions key={shareText(t, r)} text={shareText(t, r)} shareTitle={t.shareTitle} />
     </div>
   );
 }
