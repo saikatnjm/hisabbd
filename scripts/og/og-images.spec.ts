@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { expect, test } from "@playwright/test";
+import sharp from "sharp";
 import { categories } from "@/calculators/categories";
 import { calculatorOgImage, guideOgImage, homeOgImage, OG_IMAGE_SIZE } from "@/calculators/metadata";
 import { calculators } from "@/calculators/registry";
@@ -301,6 +302,9 @@ for (const job of jobs) {
 
     const file = path.join(PUBLIC_DIR, job.url);
     mkdirSync(path.dirname(file), { recursive: true });
-    await page.screenshot({ path: file, type: "png" });
+    // Palette PNG (quality 90): about a third of the plain screenshot's size
+    // with no visible change, which keeps the repo and each deploy small.
+    const png = await page.screenshot({ type: "png" });
+    await sharp(png).png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 }).toFile(file);
   });
 }
